@@ -1,0 +1,12 @@
+package com.dd2d.domain.code_post.model
+
+import java.time.LocalDateTime
+
+data class CodePostUpdater(
+    val id: Int,
+    val title: String? = null,
+    val code: String? = null,
+    val description: String? = null,
+    val level: Int? = null,
+    val reviewDate: LocalDateTime? = null
+)

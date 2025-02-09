@@ -1,0 +1,49 @@
+package com.dd2d.core.presentation.main_text
+
+import androidx.compose.material3.LocalTextStyle
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.TextUnit
+import androidx.compose.ui.unit.sp
+
+@Composable
+fun MainText(
+    text: String,
+    modifier: Modifier = Modifier,
+    color: Color = Color.Unspecified,
+    fontSize: TextUnit = 14.sp,
+    fontWeight: FontWeight? = null,
+    textStyle: TextStyle = LocalTextStyle.current,
+    fontFamily: FontFamily? = null,
+    textAlign: TextAlign = TextAlign.Start,
+    overFlow: TextOverflow = TextOverflow.Ellipsis,
+    softWrap: Boolean = true,
+    maxLine: Int = 1,
+    minLine: Int = 1,
+    lineHeight: TextUnit = TextUnit.Unspecified,
+    letterSpacing: TextUnit = TextUnit.Unspecified,
+) {
+    Text(
+        text = text,
+        modifier = modifier,
+        color = color,
+        fontSize = fontSize,
+        fontWeight = fontWeight,
+        textAlign = textAlign,
+        overflow = overFlow,
+        softWrap = softWrap,
+        maxLines = maxLine,
+        minLines = minLine,
+        lineHeight = lineHeight,
+        letterSpacing = letterSpacing,
+        style = textStyle,
+        fontFamily = fontFamily
+    )
+}
