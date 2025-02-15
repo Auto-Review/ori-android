@@ -2,43 +2,44 @@ package com.dd2d.presentation.code_post._navigation
 
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import com.dd2d.presentation.code_post.screen.CodePostListScreen
+import com.dd2d.core.presentation.navigation.safePopBackStack
+import com.dd2d.presentation.code_post.screen.CodePostCreateScreen
 import kotlinx.serialization.Serializable
 
-@Serializable
-object CodePostList
 
-fun NavGraphBuilder.codePostListScreen(
+@Serializable
+object CodePostCreate
+
+fun NavGraphBuilder.codePostCreateScreen(
     navController: NavController,
     modifier: Modifier = Modifier.fillMaxSize(),
-    enter: EnterTransition = fadeIn(),
-    exit: ExitTransition = fadeOut(),
-    popEnter: EnterTransition = enter,
-    popExit: ExitTransition = exit,
+    enter: EnterTransition = slideInHorizontally { it },
+    exit: ExitTransition = slideOutHorizontally { it },
+    popEnter: EnterTransition =  enter,
+    popExit: ExitTransition = exit
 ) {
-    composable<CodePostList>(
+    composable<CodePostCreate>(
         enterTransition = { enter },
         exitTransition = { exit },
         popEnterTransition = { popEnter },
         popExitTransition = { popExit }
     ) {
-        CodePostListScreen(
-            onCodePostClick = navController::toCodePost,
-            onCreateClick = navController::toCodePostCreate,
+        CodePostCreateScreen(
+            onBack = navController::safePopBackStack,
             modifier = modifier
         )
     }
 }
 
-fun NavController.toCodePostList() {
-    navigate(CodePostList) {
+fun NavController.toCodePostCreate() {
+    navigate(CodePostCreate) {
         launchSingleTop = true
     }
 }

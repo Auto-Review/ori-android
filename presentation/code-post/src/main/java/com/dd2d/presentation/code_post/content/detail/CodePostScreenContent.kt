@@ -25,14 +25,13 @@ import com.dd2d.core.presentation.main_text.Main400Text
 import com.dd2d.core.presentation.main_text.Main700Text
 import com.dd2d.domain.code_post.model.CodePost
 import com.dd2d.presentation.code_post.R
+import com.dd2d.presentation.code_post.component.detail.CodeComponent
 
 @Composable
 internal fun CodePostScreenContent(
     codePost: CodePost,
     modifier: Modifier = Modifier
 ) {
-    val clip = LocalClipboardManager.current
-
     Surface(
         color = MaterialTheme.colorScheme.surface,
         modifier = modifier
@@ -51,38 +50,13 @@ internal fun CodePostScreenContent(
                 text = codePost.createdAt + " · " + codePost.author.nickname,
                 fontSize = 12.sp
             )
-
-            Surface(
-                shape = RoundedCornerShape(5.dp),
-                color = MaterialTheme.colorScheme.surfaceContainer,
+            CodeComponent(
+                code = codePost.code,
+                onCodeChange = null,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 12.dp)
-            ) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 8.dp, vertical = 12.dp)
-                ){
-                    Row(
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        Main400Text(text = codePost.code.language, fontSize = 12.sp)
-                        VectorIconButton(
-                            res = R.drawable.copy,
-                            iconSize = 16.dp
-                        ) {
-                            clip.setText(AnnotatedString(codePost.code.content))
-                        }
-                    }
-                    Text(
-                        text = codePost.code.content,
-                        fontSize = 16.sp
-                    )
-                }
-            }
+            )
             Main400Text(
                 text = codePost.description,
                 maxLine = 5,

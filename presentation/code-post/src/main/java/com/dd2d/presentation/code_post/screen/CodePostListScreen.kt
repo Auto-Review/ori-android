@@ -1,5 +1,6 @@
 package com.dd2d.presentation.code_post.screen
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -14,6 +15,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.dd2d.core.core.exception.ManagedException
@@ -26,13 +28,18 @@ import com.dd2d.presentation.code_post.content.list.CodePostListViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CodePostListScreen(
+    onCodePostClick: (id: Int) -> Unit,
+    onCreateClick: () -> Unit,
     modifier: Modifier = Modifier.fillMaxSize(),
-    onCodePostClick: (id: Int) -> Unit
 ) {
     val viewModel = hiltViewModel<CodePostListViewModel>()
     val listState by viewModel.codePostListManager.state.collectAsStateWithLifecycle()
 
     var exception by remember { mutableStateOf<ManagedException?>(null) }
+
+    LaunchedEffect(Unit) {
+        viewModel.onRefresh()
+    }
 
     LaunchedEffect(key1 = listState) {
         exception = (listState as? RefreshLazyListState.Error)?.exception
@@ -46,11 +53,12 @@ fun CodePostListScreen(
         modifier = modifier
     ) { innerPadding ->
         CodePostListScreenContent(
-            list = viewModel.codePostListManager.list.take(10).toMutableStateList(),
-            onClick = onCodePostClick,
             state = listState,
+            list = viewModel.codePostListManager.list,
             onNext = viewModel::onNextPage,
             onRefresh = viewModel::onRefresh,
+            onClick = onCodePostClick,
+            onCreate = onCreateClick,
             onSearch = viewModel::search,
             modifier = Modifier
                 .consumeWindowInsets(innerPadding)

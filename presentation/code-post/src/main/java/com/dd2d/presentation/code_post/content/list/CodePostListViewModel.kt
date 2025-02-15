@@ -16,8 +16,9 @@ internal class CodePostListViewModel @Inject constructor(
         initialListOption = CodePostListOptions(),
         scope = viewModelScope,
         flow = codePostRepository::getCodePostList,
+        lazyInit = true
     )
     fun onNextPage() = with(codePostListManager) { loadMore(options.copy(page = options.page + 1)) }
-    fun onRefresh() = with(codePostListManager) { refresh(options.copy(page = 1)) }
+    fun onRefresh() = with(codePostListManager) { refresh(CodePostListOptions()) }
     fun search(searchText: String) = with(codePostListManager) { refresh(options.copy(page = 1, search = searchText)) }
 }
