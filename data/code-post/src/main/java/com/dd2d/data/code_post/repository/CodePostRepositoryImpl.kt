@@ -17,6 +17,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import java.time.LocalDateTime
 import javax.inject.Inject
+import javax.inject.Named
 import kotlin.math.min
 
 object TestServer {
@@ -79,7 +80,7 @@ object TestServer {
 }
 
 class CodePostRepositoryImpl @Inject constructor(
-    private val httpClient: HttpClient
+    @Named("server_client") private val httpClient: HttpClient
 ): CodePostRepository {
     override fun getCodePostList(options: CodePostListOptions): Flow<DataState<Pagination<CodePostListItem>>> = flow {
         val list = TestServer.getList(options)

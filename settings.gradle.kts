@@ -25,6 +25,7 @@ include(":app")
 include(":core:core")
 include(":core:network")
 include(":core:presentation")
+include(":core:presentation-oauth")
 
 include(":domain:code-post")
 include(":data:code-post")

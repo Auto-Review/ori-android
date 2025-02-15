@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="un_support_auth_type">This login option is not available.</string>
+    <string name="auth_fail">Login failed.\nPlease try again.</string>
+    <string name="not_found_credential">No account available for login.</string>
+    <string name="unknown_error_for_auth">An unknown error occurred during login. Please try again later.</string>
+    <string name="auth_with_google">Sign in with Google</string>
+    <string name="no_google_play">Login is not available.\nPlease update Google Play Services to continue.</string>
+</resources>

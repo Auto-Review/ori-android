@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="un_support_auth_type">지원하지 않는 로그인 방식입니다.</string>
+    <string name="auth_fail">로그인에 실패했습니다. 다시 시도해주세요.</string>
+    <string name="not_found_credential">로그인에 사용할 계정을 찾지 못했습니다.</string>
+    <string name="unknown_error_for_auth">로그인 중 알 수 없는 오류가 발생했습니다. 잠시 후 다시 시도해주세요.</string>
+    <string name="auth_with_google">Google로 로그인</string>
+    <string name="no_google_play">로그인 기능을 사용할 수 없습니다.\n최신 버전의 Google Play 서비스를 설치하거나 업데이트해주세요.</string>
+</resources>
