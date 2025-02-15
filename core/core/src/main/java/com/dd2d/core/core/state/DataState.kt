@@ -38,7 +38,7 @@ inline fun <reified T> Flow<T>.asDataState(flowOn: CoroutineDispatcher = Dispatc
             is NoRouteToHostException -> UserException.NetworkException(code = 4, cause = error)
             is InterruptedIOException -> UserException.NetworkException(code = 5, cause = error)
             is IOException -> UserException.NetworkException(code = 6, cause = error)
-            else -> ClientException.UnknownException(code = -1, throwable = error)
+            else -> ClientException.UnknownException(code = -1, cause = error)
         }
         emit(DataState.Error(exception))
     }

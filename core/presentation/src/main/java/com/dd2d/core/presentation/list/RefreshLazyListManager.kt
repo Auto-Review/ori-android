@@ -16,7 +16,7 @@ class RefreshLazyListManager <ListOptions, ListItemModel>(
     initialListOption: ListOptions,
     private val scope: CoroutineScope,
     private val flow: (options: ListOptions) -> Flow<DataState<Pagination<ListItemModel>>>,
-    private val lazyInit: Boolean = false,
+    lazyInit: Boolean = false,
 ) {
     private val _state = MutableStateFlow(initialState)
     val state = _state.asStateFlow()

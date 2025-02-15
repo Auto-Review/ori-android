@@ -41,7 +41,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.dd2d.core.presentation.R
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.launch
 
@@ -124,7 +126,7 @@ fun RefreshLazyColumn(
         ) {
             Icon(
                 imageVector = Icons.Default.KeyboardArrowUp,
-                contentDescription = "맨 위로 이동",
+                contentDescription = stringResource(R.string.scroll_to_top),
                 modifier = Modifier
                     .fillMaxSize()
                     .clip(CircleShape)

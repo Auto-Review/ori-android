@@ -12,8 +12,14 @@ sealed class ClientException(
     ): ClientException(message = message, code = code, cause = cause)
 
     class UnknownException(
-        message: String = "알 수 없는 오류가 발생했습니다.",
+        message: String = "",
         code: Int? = null,
-        throwable: Throwable? = null
-    ): ClientException(message = message, code = code, cause = throwable)
+        cause: Throwable? = null
+    ): ClientException(message = message, code = code, cause = cause)
+
+    class UnsupportedOperationException(
+        message: String = "",
+        code: Int? = null,
+        cause: Throwable? = null
+    ): ClientException(message = message, code = code, cause = cause)
 }

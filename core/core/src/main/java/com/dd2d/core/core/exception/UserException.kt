@@ -8,5 +8,5 @@ sealed class UserException(
     class NetworkException(
         code: Int? = null,
         cause: Throwable? = null
-    ): ClientException(message = "네트워크 연결 상태를 확인해주세요.", code = code, cause = cause)
+    ): ClientException(message = "", code = code, cause = cause)
 }
