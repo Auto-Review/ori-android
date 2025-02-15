@@ -28,6 +28,7 @@ inline fun <reified T> Flow<T>.asDataState(flowOn: CoroutineDispatcher = Dispatc
     .map<T, DataState<T>> { DataState.Success(it) }
     .onStart { emit(DataState.Loading) }
     .catch { error ->
+        error.printStackTrace()
         val exception = when(error) {
             is ManagedException -> error
 

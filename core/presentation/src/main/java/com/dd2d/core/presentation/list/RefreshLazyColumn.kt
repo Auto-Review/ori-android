@@ -55,12 +55,10 @@ fun RefreshLazyColumn(
     refreshState: PullToRefreshState = rememberPullToRefreshState(),
     isRefreshing: Boolean = false,
     indicator: @Composable (BoxScope.() -> Unit) = {
-        Indicator(
-            modifier = Modifier.align(Alignment.TopCenter),
+        RefreshLazyListIndicator(
             isRefreshing = isRefreshing,
-            color = MaterialTheme.colorScheme.primary,
-            containerColor = MaterialTheme.colorScheme.background,
-            state = refreshState
+            refreshState = refreshState,
+            modifier = Modifier.align(Alignment.TopCenter)
         )
     },
     lazyState: LazyListState = rememberLazyListState(),

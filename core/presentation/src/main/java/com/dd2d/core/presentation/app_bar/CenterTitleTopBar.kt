@@ -18,7 +18,7 @@ import com.dd2d.core.presentation.main_text.Main500Text
 @Composable
 fun CenterTitleTopBar(
     title: String,
-    onBack: (() -> Unit)?,
+    onBack: (() -> Unit)? = null,
     modifier: Modifier = Modifier,
     useCloseIcon: Boolean = false,
     actions: @Composable RowScope.() -> Unit = {},
