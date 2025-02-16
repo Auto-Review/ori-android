@@ -11,8 +11,8 @@ import kotlinx.coroutines.flow.Flow
 
 interface CodePostRepository {
     fun getCodePostList(options: CodePostListOptions): Flow<DataState<Pagination<CodePostListItem>>>
-    fun getCodePost(id: Int): Flow<DataState<CodePost>>
     fun getMyCodePostList(options: CodePostListOptions): Flow<DataState<Pagination<CodePostListItem>>>
+    fun getCodePost(id: Int): Flow<DataState<CodePost>>
     fun createCodePost(create: CodePostCreator): Flow<DataState<Int>>
     fun updateCodePost(update: CodePostUpdater): Flow<DataState<Boolean>>
     fun deleteCodePost(id: Int): Flow<DataState<Boolean>>

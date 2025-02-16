@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.jvm)
 
     id("com.google.devtools.ksp")
+    kotlin("plugin.serialization") version "2.0.20"
 }
 java {
     sourceCompatibility = JavaVersion.VERSION_11
@@ -15,13 +16,14 @@ kotlin {
 }
 
 dependencies {
-    implementation(libs.hilt.core)
-    ksp(libs.hilt.android.compiler)
-    implementation(libs.ktor.client.core)
     implementation(libs.kotlin.stdlib) // Kotlin 표준 라이브러리 추가
     implementation(libs.kotlinx.coroutines.core) // 코루틴 라이브러리
 
+    implementation(libs.ktor.client.core)
+    implementation(libs.kotlinx.serialization.json)
+
+    implementation(libs.hilt.core)
+    ksp(libs.hilt.android.compiler)
+
     implementation(project(":core:core"))
-    implementation(project(":data-source:remote:server"))
-    implementation(project(":domain:code-post"))
 }

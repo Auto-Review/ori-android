@@ -95,15 +95,17 @@ internal fun CodePostCreateScreenContent(
                 enabled = validateCodePost(title, code, description)
             ) {
                 keyboard?.hide()
-                onSave(
-                    CodePostCreator(
-                        title = title,
-                        code = code,
-                        level = level,
-                        description = description,
-                        reviewDate = reviewDate
+                reviewDate?.let { date ->
+                    onSave(
+                        CodePostCreator(
+                            title = title,
+                            code = code,
+                            level = level,
+                            description = description,
+                            reviewDate = date
+                        )
                     )
-                )
+                }
             }
         }
     }
