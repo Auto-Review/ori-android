@@ -23,10 +23,13 @@ rootProject.name = "OriAndroid"
 include(":app")
 
 include(":core:core")
+include(":core:data-store")
 include(":core:network")
 include(":core:presentation")
 include(":core:presentation-oauth")
 
+include(":data-source:remote:server")
+include(":data-source:local:data-store")
 include(":domain:code-post")
 include(":data:code-post")
 include(":presentation:code-post")
