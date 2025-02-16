@@ -6,7 +6,8 @@ sealed class UserException(
     cause: Throwable?
 ): ManagedException(message = code?.let { "$message($code)" }?: message, cause = cause) {
     class NetworkException(
+        message: String = "",
         code: Int? = null,
         cause: Throwable? = null
-    ): ClientException(message = "", code = code, cause = cause)
+    ): UserException(message = message, code = code, cause = cause)
 }

@@ -3,6 +3,7 @@ package com.dd2d.core.core.util
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.YearMonth
+import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 
 fun YearMonth.format(pattern: String): String = this.format(DateTimeFormatter.ofPattern(pattern))
@@ -24,3 +25,5 @@ val LocalDateTime.isNotToday: Boolean get() = this.toLocalDate() != LocalDate.no
 
 fun String.dateStringToLocalDate(pattern: String = "yyyy-MM-dd HH:mm:ss"): LocalDate = LocalDate.parse(this, DateTimeFormatter.ofPattern(pattern))
 fun String.dateStringToLocalDateTime(pattern: String = "yyyy-MM-dd HH:mm:ss"): LocalDateTime = LocalDateTime.parse(this, DateTimeFormatter.ofPattern(pattern))
+
+fun LocalDateTime.toUTCString(): String = atOffset(ZoneOffset.UTC).toString()
