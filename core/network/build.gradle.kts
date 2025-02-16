@@ -40,9 +40,11 @@ dependencies {
     implementation(libs.ktor.client.content.negotiation)
     implementation(libs.ktor.client.okhttp)
     implementation(libs.ktor.serialization.kotlinx.json)
+    implementation(libs.ktor.client.auth)
 
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)
 
     implementation(project(":core:core"))
+    implementation(project(":core:data-store"))
 }
