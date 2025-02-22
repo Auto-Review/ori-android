@@ -3,6 +3,8 @@ package com.dd2d.core.presentation.icon
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LocalContentColor
@@ -16,7 +18,7 @@ import com.dd2d.core.presentation.R
 @Composable
 fun PrevButton(
     modifier: Modifier = Modifier,
-    prevIcon: ImageVector = Icons.AutoMirrored.Default.ArrowBack,
+    prevIcon: ImageVector = Icons.AutoMirrored.Default.KeyboardArrowLeft,
     enabled: Boolean = true,
     description: String = stringResource(R.string.prev),
     tint: Color = LocalContentColor.current,
@@ -38,7 +40,7 @@ fun PrevButton(
 @Composable
 fun NextButton(
     modifier: Modifier = Modifier,
-    nextIcon: ImageVector = Icons.AutoMirrored.Default.ArrowForward,
+    nextIcon: ImageVector = Icons.AutoMirrored.Default.KeyboardArrowRight,
     enabled: Boolean = true,
     description: String = stringResource(R.string.next),
     tint: Color = LocalContentColor.current,
