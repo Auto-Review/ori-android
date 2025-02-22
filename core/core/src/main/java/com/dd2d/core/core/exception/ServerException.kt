@@ -12,6 +12,7 @@ sealed class ServerException(
     ): ServerException(message = message, code = code, cause = cause)
 
     class UnAuthorizationException(
+        val notFountToken: Boolean?,
         message: String = "",
         code: Int? = 401,
         cause: Throwable? = null

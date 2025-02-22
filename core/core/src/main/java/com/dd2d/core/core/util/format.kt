@@ -26,4 +26,7 @@ val LocalDateTime.isNotToday: Boolean get() = this.toLocalDate() != LocalDate.no
 fun String.dateStringToLocalDate(pattern: String = "yyyy-MM-dd HH:mm:ss"): LocalDate = LocalDate.parse(this, DateTimeFormatter.ofPattern(pattern))
 fun String.dateStringToLocalDateTime(pattern: String = "yyyy-MM-dd HH:mm:ss"): LocalDateTime = LocalDateTime.parse(this, DateTimeFormatter.ofPattern(pattern))
 
+fun String.utcToLocalDateTime(): LocalDateTime = LocalDateTime.parse(this, DateTimeFormatter.ISO_DATE_TIME)
+fun String.utcToLocalDate(): LocalDate = LocalDateTime.parse(this, DateTimeFormatter.ISO_DATE_TIME).toLocalDate()
+
 fun LocalDateTime.toUTCString(): String = atOffset(ZoneOffset.UTC).toString()
