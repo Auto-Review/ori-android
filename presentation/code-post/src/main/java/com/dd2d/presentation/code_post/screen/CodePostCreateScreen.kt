@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -18,9 +17,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.dd2d.core.core.exception.ManagedException
 import com.dd2d.core.presentation.app_bar.CenterTitleTopBar
 import com.dd2d.core.presentation.dialog.ErrorDialog
-import com.dd2d.core.presentation.icon.VectorIcon
 import com.dd2d.core.presentation.state.UIState
-import com.dd2d.presentation.code_post.R
 import com.dd2d.presentation.code_post.content.create.CodePostCreateScreenContent
 import com.dd2d.presentation.code_post.content.create.CodePostCreateViewModel
 

@@ -1,7 +1,6 @@
 package com.dd2d.presentation.code_post.content.list
 
 import android.content.res.Configuration
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -41,7 +40,6 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.dd2d.core.presentation.icon.AddIcon
-import com.dd2d.core.presentation.icon.CloseIcon
 import com.dd2d.core.presentation.icon.VectorIcon
 import com.dd2d.core.presentation.list.RefreshLazyColumn
 import com.dd2d.core.presentation.list.RefreshLazyListState

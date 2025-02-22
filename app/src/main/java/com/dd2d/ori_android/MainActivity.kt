@@ -1,7 +1,6 @@
 package com.dd2d.ori_android
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -14,18 +13,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.lifecycleScope
 import com.dd2d.core.presentation.theme.AppTheme
 import com.dd2d.domain.local_setting.repository.LocalSettingRepository
 import com.dd2d.ori_android.navigation.AppNavHost
 import com.dd2d.ori_android.navigation.main.MainScreen
 import com.dd2d.presentation.auth._navigation.AuthScreen
 import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @AndroidEntryPoint
