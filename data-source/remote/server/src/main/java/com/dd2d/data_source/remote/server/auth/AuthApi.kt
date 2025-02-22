@@ -6,7 +6,6 @@ import com.dd2d.data_source.remote.server.auth.dto.response.AuthResponseDto
 import io.ktor.client.HttpClient
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
-import io.ktor.client.utils.EmptyContent.headers
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -18,6 +17,6 @@ class AuthApi @Inject constructor(
             setBody(body)
         }
         .headerHandling { headers ->
-            AuthResponseDto(accessToken = headers["accesstoken"]?: "")
+            AuthResponseDto(accessToken = headers["accesstoken"]?.substringAfter(" ")?: "")
         }
 }

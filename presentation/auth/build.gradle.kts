@@ -65,7 +65,8 @@ dependencies {
 
     implementation(project(":core:core"))
     implementation(project(":core:presentation"))
+    implementation(project(":core:presentation-oauth"))
 
     implementation(project(":domain:auth"))
-
+    implementation(project(":domain:local-setting"))
 }

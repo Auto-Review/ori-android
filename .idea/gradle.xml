@@ -23,10 +23,13 @@
             <option value="$PROJECT_DIR$/data-source/local/data-store" />
             <option value="$PROJECT_DIR$/data-source/remote" />
             <option value="$PROJECT_DIR$/data-source/remote/server" />
+            <option value="$PROJECT_DIR$/data/auth" />
             <option value="$PROJECT_DIR$/data/code-post" />
             <option value="$PROJECT_DIR$/domain" />
+            <option value="$PROJECT_DIR$/domain/auth" />
             <option value="$PROJECT_DIR$/domain/code-post" />
             <option value="$PROJECT_DIR$/presentation" />
+            <option value="$PROJECT_DIR$/presentation/auth" />
             <option value="$PROJECT_DIR$/presentation/code-post" />
           </set>
         </option>

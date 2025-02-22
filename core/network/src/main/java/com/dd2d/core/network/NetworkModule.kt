@@ -1,7 +1,6 @@
 package com.dd2d.core.network
 
-import androidx.datastore.preferences.core.stringPreferencesKey
-import com.dd2d.core.data_store.DataStoreManager
+import com.dd2d.core.data_store_manager.DataStoreManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -44,9 +43,7 @@ object NetworkModule {
             install(Auth) {
                 bearer {
                     loadTokens {
-                        val accessToken = dataStoreManager
-                            .getValueByKey(key = stringPreferencesKey(name = "access_token"))?: ""
-                        BearerTokens(accessToken = accessToken, refreshToken = null)
+                        BearerTokens(accessToken = dataStoreManager.getAccessToken(), refreshToken = null)
                     }
                 }
             }

@@ -37,8 +37,8 @@ include(":data:local-setting")
 
 include(":domain:auth")
 include(":data:auth")
+include(":presentation:auth")
 
 include(":domain:code-post")
 include(":data:code-post")
 include(":presentation:code-post")
-include(":presentation:auth")
