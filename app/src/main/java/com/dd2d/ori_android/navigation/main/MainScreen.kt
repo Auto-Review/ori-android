@@ -1,31 +1,23 @@
 package com.dd2d.ori_android.navigation.main
 
-import androidx.compose.animation.EnterTransition
-import androidx.compose.animation.ExitTransition
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import com.dd2d.core.presentation.navigation.navigateWithClearBackStack
 import com.dd2d.ori_android.R
-import com.dd2d.presentation.code_post._navigation.CodePostList
-import com.dd2d.presentation.code_post._navigation.codePostListScreen
 import com.dd2d.presentation.code_post._navigation.toCodePost
 import com.dd2d.presentation.code_post._navigation.toCodePostCreate
 import com.dd2d.presentation.code_post.screen.CodePostListScreen
-import com.dd2d.presentation.code_post.screen.CodePostScreen
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -84,4 +76,8 @@ fun NavGraphBuilder.mainScreen(
             }
         }
     }
+}
+
+fun NavController.toMain() {
+    navigateWithClearBackStack(route = MainScreen, launchSingleTop = true)
 }
