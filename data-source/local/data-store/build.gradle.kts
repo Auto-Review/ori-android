@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "com.dd2d.data_source.loca.data_store"
+    namespace = "com.dd2d.data_source.local.data_store"
     compileSdk = 35
 
     defaultConfig {
@@ -45,5 +45,6 @@ dependencies {
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)
 
-    implementation(project(":core:data-store"))
+    implementation(project(":core:core"))
+    implementation(project(":core:data-store-manager"))
 }

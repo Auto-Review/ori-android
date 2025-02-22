@@ -1,4 +1,4 @@
-package com.dd2d.data_source.loca.data_store
+package com.dd2d.data_source.local.data_store
 
 import org.junit.Test
 

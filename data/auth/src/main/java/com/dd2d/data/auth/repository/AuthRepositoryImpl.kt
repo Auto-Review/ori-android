@@ -1,9 +1,7 @@
 package com.dd2d.data.auth.repository
 
-import androidx.datastore.preferences.core.stringPreferencesKey
 import com.dd2d.core.core.state.DataState
 import com.dd2d.core.core.state.asDataState
-import com.dd2d.core.data_store.DataStoreManager
 import com.dd2d.data.auth.mapper.toAuthRequestDto
 import com.dd2d.data_source.remote.server.auth.AuthApi
 import com.dd2d.domain.auth.model.AuthRequester
@@ -13,7 +11,6 @@ import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class AuthRepositoryImpl @Inject constructor(
-    private val dataStore: DataStoreManager,
     private val authApi: AuthApi,
 ): AuthRepository {
     private val accessTokenKey = stringPreferencesKey("accessToken")
