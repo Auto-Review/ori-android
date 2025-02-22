@@ -46,5 +46,5 @@ dependencies {
     ksp(libs.hilt.android.compiler)
 
     implementation(project(":core:core"))
-    implementation(project(":core:data-store"))
+    implementation(project(":core:data-store-manager"))
 }

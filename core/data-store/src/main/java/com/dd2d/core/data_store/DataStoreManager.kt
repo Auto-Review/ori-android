@@ -15,6 +15,6 @@ interface DataStoreManager {
     suspend fun <T> removeValueByKey(vararg keys: Preferences.Key<T>)
 
     object Key {
-        val accessTokenKey = stringPreferencesKey("access_token")
+        val ACCESS_TOKEN_KEY = stringPreferencesKey("access_token")
     }
 }

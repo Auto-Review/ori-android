@@ -67,14 +67,21 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
 
     implementation(project(":core:core"))
-    implementation(project(":core:presentation"))
-    implementation(project(":core:data-store"))
     implementation(project(":core:network"))
+    implementation(project(":core:data-store-manager"))
+    implementation(project(":core:presentation"))
     implementation(project(":core:presentation-oauth"))
 
     implementation(project(":data-source:local:data-store"))
 
     implementation(project(":data-source:remote:server"))
+
+    implementation(project(":domain:local-setting"))
+    implementation(project(":data:local-setting"))
+
+    implementation(project(":domain:auth"))
+    implementation(project(":data:auth"))
+    implementation(project(":presentation:auth"))
 
     implementation(project(":domain:code-post"))
     implementation(project(":data:code-post"))

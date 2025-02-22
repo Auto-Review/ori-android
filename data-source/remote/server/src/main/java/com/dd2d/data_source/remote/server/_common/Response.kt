@@ -1,9 +1,6 @@
 package com.dd2d.data_source.remote.server._common
 
-import com.dd2d.core.core.exception.ManagedException
-import com.dd2d.core.core.exception.ServerException
 import kotlinx.serialization.Serializable
-import kotlin.time.TimeMark
 
 //sealed interface Response<out T> {
 //    data class Failure(val exception: ServerException): Response<Nothing>

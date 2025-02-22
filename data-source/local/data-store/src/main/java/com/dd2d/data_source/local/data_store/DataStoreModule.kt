@@ -1,6 +1,6 @@
-package com.dd2d.data_source.loca.data_store
+package com.dd2d.data_source.local.data_store
 
-import com.dd2d.core.data_store.DataStoreManager
+import com.dd2d.core.data_store_manager.DataStoreManager
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

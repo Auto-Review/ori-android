@@ -25,15 +25,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.StrokeCap
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 
 
 @Composable
 internal fun AuthComponent(
-    text: String,
+    text: @Composable BoxScope.() -> Unit,
     color: Color,
     modifier: Modifier = Modifier,
     icon: @Composable BoxScope.() -> Unit = {},
@@ -64,14 +62,10 @@ internal fun AuthComponent(
                 modifier = Modifier
                     .weight(0.1F)
             )
-            Text(
-                text = text,
-                fontSize = 16.sp,
-                textAlign = TextAlign.Center,
-                maxLines = 1,
-
-                modifier = Modifier
-                    .weight(1F)
+            Box(
+                contentAlignment = Alignment.Center,
+                content = text,
+                modifier = Modifier.weight(1F)
             )
             Box(
                 contentAlignment = Alignment.Center,
@@ -114,7 +108,9 @@ private fun AuthComponentPrev() {
 //            icon = {
 //                Icon(Icons.Default.Add, null, modifier = Modifier.align(Alignment.CenterStart))
 //            },
-            text = "sign in with google",
+            text = {
+                Text(text = "sign in with google")
+            },
             isLoading = isLoading,
             contentPadding = PaddingValues(horizontal = 24.dp, vertical = 20.dp),
             color = Color.White,

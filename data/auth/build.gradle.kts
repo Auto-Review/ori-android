@@ -21,7 +21,6 @@ dependencies {
     implementation(libs.kotlinx.coroutines.core) // 코루틴 라이브러리
 
     implementation(project(":core:core"))
-    implementation(project(":core:data-store"))
     implementation(project(":data-source:remote:server"))
     implementation(project(":domain:auth"))
 }

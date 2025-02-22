@@ -14,6 +14,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.dd2d.core.core.exception.ClientException
 import com.dd2d.core.core.exception.ManagedException
+import com.dd2d.core.presentation.BuildConfig
 import com.dd2d.core.presentation.R
 import com.dd2d.core.presentation.main_text.Main500Text
 
@@ -24,9 +25,17 @@ fun ErrorDialog(
     confirmText: String = stringResource(R.string.confirm),
     onConfirm: () -> Unit,
 ) {
+    val message =
+        if(BuildConfig.DEBUG) {
+            "${exception.message}\n${exception.cause}"
+        }
+        else {
+            exception.message
+        }
+
     MainDialog(
         title = title,
-        message = exception.message,
+        message = message,
         onDismiss = onConfirm,
         confirmButton = {
             Main500Text(

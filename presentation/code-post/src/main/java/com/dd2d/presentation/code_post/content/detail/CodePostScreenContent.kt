@@ -2,29 +2,22 @@ package com.dd2d.presentation.code_post.content.detail
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalClipboardManager
-import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.dd2d.core.presentation.icon.VectorIconButton
 import com.dd2d.core.presentation.main_text.Main400Text
 import com.dd2d.core.presentation.main_text.Main700Text
 import com.dd2d.domain.code_post.model.CodePost
-import com.dd2d.presentation.code_post.R
 import com.dd2d.presentation.code_post.component.detail.CodeComponent
 
 @Composable

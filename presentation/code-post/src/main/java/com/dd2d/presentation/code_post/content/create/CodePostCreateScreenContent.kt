@@ -48,10 +48,10 @@ internal fun CodePostCreateScreenContent(
     val scrollState = rememberScrollState()
 
     var title by remember { mutableStateOf("") }
-    var code by remember { mutableStateOf(Code(language = "Kotlin", content = "")) }
+    var code by remember { mutableStateOf(Code(language = "java", content = "")) }
     var description by remember  { mutableStateOf("") }
     var level by remember { mutableIntStateOf(0) }
-    var reviewDate by remember { mutableStateOf<LocalDateTime?>(null) }
+    var reviewDate by remember { mutableStateOf<LocalDateTime?>(LocalDateTime.now()) }
 
 
     Surface(
