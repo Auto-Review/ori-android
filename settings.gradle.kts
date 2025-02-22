@@ -44,3 +44,4 @@ include(":data:code-post")
 include(":presentation:code-post")
 
 include(":domain:schedule")
+include(":data:schedule")
