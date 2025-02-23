@@ -6,7 +6,7 @@ import io.ktor.client.statement.HttpResponse
 import io.ktor.http.Headers
 import io.ktor.http.isSuccess
 
-internal suspend inline fun <R> HttpResponse.headerHandling(
+internal inline fun <R> HttpResponse.headerHandling(
     onSuccess: (Headers) -> R,
 ): R = with(status) {
     if(isSuccess()) onSuccess(headers)
@@ -15,6 +15,11 @@ internal suspend inline fun <R> HttpResponse.headerHandling(
 
 internal suspend inline fun <reified R> HttpResponse.bodyHandling(): R = with(status) {
     if(isSuccess()) this@bodyHandling.body<ResponseDTO<R>>().data
+    else throw toServerException()
+}
+
+internal fun HttpResponse.isSuccessOrThrow(): Boolean = with(status) {
+    if(isSuccess()) true
     else throw toServerException()
 }
 
