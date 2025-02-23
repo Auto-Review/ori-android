@@ -13,7 +13,7 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/core" />
             <option value="$PROJECT_DIR$/core/core" />
-            <option value="$PROJECT_DIR$/core/data-store" />
+            <option value="$PROJECT_DIR$/core/data-store-manager" />
             <option value="$PROJECT_DIR$/core/network" />
             <option value="$PROJECT_DIR$/core/presentation" />
             <option value="$PROJECT_DIR$/core/presentation-oauth" />
@@ -25,12 +25,17 @@
             <option value="$PROJECT_DIR$/data-source/remote/server" />
             <option value="$PROJECT_DIR$/data/auth" />
             <option value="$PROJECT_DIR$/data/code-post" />
+            <option value="$PROJECT_DIR$/data/local-setting" />
+            <option value="$PROJECT_DIR$/data/schedule" />
             <option value="$PROJECT_DIR$/domain" />
             <option value="$PROJECT_DIR$/domain/auth" />
             <option value="$PROJECT_DIR$/domain/code-post" />
+            <option value="$PROJECT_DIR$/domain/local-setting" />
+            <option value="$PROJECT_DIR$/domain/schedule" />
             <option value="$PROJECT_DIR$/presentation" />
             <option value="$PROJECT_DIR$/presentation/auth" />
             <option value="$PROJECT_DIR$/presentation/code-post" />
+            <option value="$PROJECT_DIR$/presentation/schedule" />
           </set>
         </option>
         <option name="resolveExternalAnnotations" value="false" />

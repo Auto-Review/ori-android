@@ -4,29 +4,33 @@ import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.NavigationBarItemColors
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.dd2d.core.presentation.icon.VectorIconButton
+import com.dd2d.core.presentation.image.PainterImage
 import com.dd2d.core.presentation.navigation.navigateWithClearBackStack
 import com.dd2d.ori_android.R
-import com.dd2d.presentation.code_post._navigation.toCodePost
 import com.dd2d.presentation.code_post._navigation.toCodePostCreate
-import com.dd2d.presentation.code_post.screen.CodePostListScreen
+import com.dd2d.presentation.schedule._navigation.ScheduleScreen
+import com.dd2d.presentation.schedule._navigation.scheduleScreen
 import kotlinx.serialization.Serializable
 
 @Serializable
 object MainScreen
 
-sealed interface MainScreenDestination {
-    @Serializable data object CodePostList: MainScreenDestination
-}
-
+@OptIn(ExperimentalMaterial3Api::class)
 fun NavGraphBuilder.mainScreen(
     appNavController: NavController,
     modifier: Modifier = Modifier
@@ -38,17 +42,38 @@ fun NavGraphBuilder.mainScreen(
         val items = remember {
             listOf(
                 BottomBarItem(
-                    iconRes = R.drawable.tab_code,
-                    labelRes = null,
-                    destination = MainScreenDestination.CodePostList
+                    iconRes = R.drawable.tab_main,
+                    labelRes = com.dd2d.core.presentation.R.string.tab_main,
+                    destination = ScheduleScreen
                 )
             )
         }
 
         Scaffold(
             contentColor = MaterialTheme.colorScheme.background,
+            topBar = {
+                TopAppBar(
+                    title = { PainterImage(res = com.dd2d.core.presentation.R.drawable.logo) },
+                    actions = {
+                        VectorIconButton(res = com.dd2d.core.presentation.R.drawable.search) {
+
+                        }
+                        VectorIconButton(res = com.dd2d.core.presentation.R.drawable.scrap) {
+
+                        }
+                        VectorIconButton(res = com.dd2d.core.presentation.R.drawable.off_notification) {
+
+                        }
+                    },
+                    colors = TopAppBarDefaults.topAppBarColors(
+                        containerColor = MaterialTheme.colorScheme.background,
+                        actionIconContentColor = MaterialTheme.colorScheme.onSurface,
+                    )
+                )
+            },
             bottomBar = {
                 MainBottomBar(
+                    containerColor = MaterialTheme.colorScheme.onSurface,
                     items = items,
                     onClick = { destination->
                         navController.navigateWithClearBackStack(route = destination, launchSingleTop = true)
@@ -60,19 +85,19 @@ fun NavGraphBuilder.mainScreen(
         ){ inner ->
             NavHost(
                 navController = navController,
-                startDestination = MainScreenDestination.CodePostList,
+                startDestination = ScheduleScreen,
                 modifier = Modifier
                     .consumeWindowInsets(inner)
                     .fillMaxSize()
                     .padding(inner)
             ) {
-                composable<MainScreenDestination.CodePostList> {
-                    CodePostListScreen(
-                        onCodePostClick = appNavController::toCodePost,
-                        onCreateClick = appNavController::toCodePostCreate,
-                        modifier = Modifier.fillMaxSize()
-                    )
-                }
+                scheduleScreen(
+                    navController = navController,
+                    onCodePostCreateClick = appNavController::toCodePostCreate,
+                    onTILPostCreateClick = {
+
+                    }
+                )
             }
         }
     }
