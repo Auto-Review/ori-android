@@ -32,6 +32,7 @@
             <option value="$PROJECT_DIR$/domain/code-post" />
             <option value="$PROJECT_DIR$/domain/local-setting" />
             <option value="$PROJECT_DIR$/domain/schedule" />
+            <option value="$PROJECT_DIR$/domain/til" />
             <option value="$PROJECT_DIR$/presentation" />
             <option value="$PROJECT_DIR$/presentation/auth" />
             <option value="$PROJECT_DIR$/presentation/code-post" />
