@@ -49,3 +49,5 @@ include(":presentation:schedule")
 
 include(":domain:til")
 include(":data:til")
+include(":domain:user")
+include(":data:user")
