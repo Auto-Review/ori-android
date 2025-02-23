@@ -10,4 +10,5 @@
     <string name="scroll_to_top">맨 위로 스크롤</string>
     <string name="prev">이전</string>
     <string name="next">다음</string>
+    <string name="tab_main">MAIN</string>
 </resources>

@@ -67,5 +67,4 @@ dependencies {
     implementation(project(":core:presentation"))
 
     implementation(project(":domain:code-post"))
-
 }
