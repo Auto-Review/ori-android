@@ -28,6 +28,7 @@
             <option value="$PROJECT_DIR$/data/local-setting" />
             <option value="$PROJECT_DIR$/data/schedule" />
             <option value="$PROJECT_DIR$/data/til" />
+            <option value="$PROJECT_DIR$/data/user" />
             <option value="$PROJECT_DIR$/domain" />
             <option value="$PROJECT_DIR$/domain/auth" />
             <option value="$PROJECT_DIR$/domain/code-post" />
