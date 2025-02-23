@@ -14,6 +14,6 @@ interface TILRepository {
     fun getMyTILList(options: TILListOptions): Flow<DataState<Pagination<TILListItem>>>
     fun getTIL(id: Int): Flow<DataState<TIL>>
     fun createTIL(create: TILCreator): Flow<DataState<Int>>
-    fun updateTIL(update: TILUpdater): Flow<DataState<Boolean>>
-    fun deleteTIL(id: Int): Flow<DataState<Boolean>>
+    fun updateTIL(update: TILUpdater): Flow<DataState<Int>>
+    fun deleteTIL(id: Int): Flow<DataState<Int>>
 }

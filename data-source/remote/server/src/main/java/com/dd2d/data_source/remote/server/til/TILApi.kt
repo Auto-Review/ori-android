@@ -5,6 +5,7 @@ import com.dd2d.data_source.remote.server._common.bodyHandling
 import com.dd2d.data_source.remote.server.til.dto.request.TILCreateRequestDto
 import com.dd2d.data_source.remote.server.til.dto.request.TILUpdateRequestDto
 import com.dd2d.data_source.remote.server.til.dto.response.TILListItemResponseDto
+import com.dd2d.data_source.remote.server.til.dto.response.TILResponseDto
 import io.ktor.client.HttpClient
 import io.ktor.client.request.delete
 import io.ktor.client.request.get
@@ -68,7 +69,7 @@ class TILApi @Inject constructor(
             }
         }.bodyHandling()
 
-    suspend fun getTIL(id: Int): TILListItemResponseDto = client
+    suspend fun getTIL(id: Int): TILResponseDto = client
         .get(urlString = "/v1/api/post/til/detail/$id")
         .bodyHandling()
 
