@@ -42,3 +42,7 @@ include(":presentation:auth")
 include(":domain:code-post")
 include(":data:code-post")
 include(":presentation:code-post")
+
+include(":domain:schedule")
+include(":data:schedule")
+include(":presentation:schedule")

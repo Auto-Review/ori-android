@@ -19,22 +19,24 @@ import com.dd2d.core.presentation.main_text.Main400Text
 data class BottomBarItem(
     val iconRes: Int,
     val labelRes: Int?,
-    val destination: MainScreenDestination
+    val destination: Any
 )
 
 @Composable
 fun MainBottomBar(
     items: List<BottomBarItem>,
-    onClick: (destination: MainScreenDestination) -> Unit,
+    onClick: (destination: Any) -> Unit,
     modifier: Modifier = Modifier,
     containerColor: Color = MaterialTheme.colorScheme.background,
     contentColor: Color = MaterialTheme.colorScheme.primary,
     itemColors: NavigationBarItemColors = NavigationBarItemDefaults.colors(
-        selectedIconColor = MaterialTheme.colorScheme.onPrimary,
-        selectedTextColor = MaterialTheme.colorScheme.onPrimary,
-        indicatorColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.7F),
-        unselectedIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
-        unselectedTextColor = MaterialTheme.colorScheme.onSurfaceVariant,
+        selectedIconColor = MaterialTheme.colorScheme.background,
+        selectedTextColor = MaterialTheme.colorScheme.background,
+        indicatorColor = Color.Transparent,
+        unselectedIconColor = MaterialTheme.colorScheme.background.copy(alpha = 0.5F),
+        unselectedTextColor = MaterialTheme.colorScheme.background.copy(alpha = 0.5F),
+        disabledIconColor = MaterialTheme.colorScheme.background.copy(alpha = 0.5F),
+        disabledTextColor = MaterialTheme.colorScheme.background.copy(alpha = 0.5F),
     ),
     initialIndex: Int = 0,
     disableWhenSelected: Boolean = true,

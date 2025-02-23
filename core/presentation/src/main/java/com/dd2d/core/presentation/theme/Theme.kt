@@ -34,12 +34,14 @@ private val LightColorScheme = lightColorScheme(
     onPrimary = Color(0xFFFFFFFF),
 
     background = Color(0xFFFFFFFF),
-    onBackground = Color(0xFF1E1E1E),
+    onBackground = Color.Black,
 
     error = Color(0xFFA93A3A),
 
     surface = Color(0xFFF5F5F5),
-    onSurface = Color.Black,
+    onSurface = Color(0xFF1E1E1E),
+
+    onSurfaceVariant = Color(0xFF979797),
 
 
     surfaceContainer = Color(0xFFF4F6FF),
@@ -47,7 +49,6 @@ private val LightColorScheme = lightColorScheme(
 
 @Composable
 fun AppTheme(
-//    darkMode: Boolean = isSystemInDarkTheme(),
     darkMode: Boolean = false,
     content: @Composable () -> Unit
 ) {
@@ -60,7 +61,6 @@ fun AppTheme(
             large = RoundedCornerShape(30.dp),
             extraLarge = RoundedCornerShape(45.dp),
         ),
-        typography = Typography,
         content = content
     )
 }

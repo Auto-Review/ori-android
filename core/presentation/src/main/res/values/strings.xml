@@ -8,4 +8,7 @@
     <string name="confirm">OK</string>
     <string name="cancel">Cancel</string>
     <string name="scroll_to_top">Scroll to Top</string>
+    <string name="prev">Previous</string>
+    <string name="next">Next</string>
+    <string name="tab_main">MAIN</string>
 </resources>

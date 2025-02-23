@@ -1,34 +1,47 @@
 package com.dd2d.core.presentation.theme
 
-import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import com.dd2d.core.presentation.R
 
-// Set of Material typography styles to start with
-val Typography = Typography(
-    bodyLarge = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Normal,
-        fontSize = 16.sp,
-        lineHeight = 24.sp,
-        letterSpacing = 0.5.sp
-    )
-    /* Other default text styles to override
-    titleLarge = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Normal,
-        fontSize = 22.sp,
-        lineHeight = 28.sp,
-        letterSpacing = 0.sp
+
+val HansFontFamily = FontFamily(
+    Font(R.font.black_han_sans),
+)
+
+class HansTypography internal constructor (
+    val topBarTitle: TextStyle,
+    val tabTitle: TextStyle,
+    val label: TextStyle,
+    val banner: TextStyle,
+)
+
+val hansType = HansTypography(
+    topBarTitle = TextStyle(
+        fontFamily = HansFontFamily,
+        fontWeight = FontWeight.W400,
+        fontSize = 24.sp,
+        lineHeight = 56.sp,
     ),
-    labelSmall = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Medium,
-        fontSize = 11.sp,
-        lineHeight = 16.sp,
-        letterSpacing = 0.5.sp
-    )
-    */
+    tabTitle = TextStyle(
+        fontFamily = HansFontFamily,
+        fontWeight = FontWeight.W400,
+        fontSize = 16.sp,
+        lineHeight = 56.sp,
+    ),
+    label = TextStyle(
+        fontFamily = HansFontFamily,
+        fontWeight = FontWeight.W400,
+        fontSize = 16.sp,
+        lineHeight = 56.sp,
+    ),
+    banner = TextStyle(
+        fontFamily = HansFontFamily,
+        fontWeight = FontWeight.W400,
+        fontSize = 20.sp,
+        lineHeight = 24.sp,
+    ),
 )
