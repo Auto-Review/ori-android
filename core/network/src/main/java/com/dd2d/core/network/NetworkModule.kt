@@ -56,7 +56,7 @@ object NetworkModule {
                             }
                         }
 
-                        val newAccessToken = response.headers["accesstoken"]
+                        val newAccessToken = response.headers["accesstoken"]?.substringAfter(" ")
                         val newRefreshToken = response.headers["refreshtoken"]
 
                         newAccessToken?.let {

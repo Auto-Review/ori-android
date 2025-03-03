@@ -7,6 +7,6 @@ import io.ktor.http.HttpHeaders
 
 internal fun HttpRequestBuilder.authorizationHeader(token: String) {
     headers {
-        append(HttpHeaders.Authorization, token)
+        append(HttpHeaders.Authorization, "Bearer $token")
     }
 }
