@@ -19,14 +19,14 @@ import com.dd2d.core.core.exception.ManagedException
 import com.dd2d.core.presentation.app_bar.CenterTitleTopBar
 import com.dd2d.core.presentation.dialog.ErrorDialog
 import com.dd2d.core.presentation.list.RefreshLazyListState
+import com.dd2d.presentation.code_post._navigation.CodePostListNavigator
 import com.dd2d.presentation.code_post.content.list.CodePostListScreenContent
 import com.dd2d.presentation.code_post.content.list.CodePostListViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CodePostListScreen(
-    onCodePostClick: (id: Int) -> Unit,
-    onCreateClick: () -> Unit,
+    navigationEvent: (CodePostListNavigator) -> Unit,
     modifier: Modifier = Modifier.fillMaxSize(),
 ) {
     val viewModel = hiltViewModel<CodePostListViewModel>()
@@ -54,8 +54,7 @@ fun CodePostListScreen(
             list = viewModel.codePostListManager.list,
             onNext = viewModel::onNextPage,
             onRefresh = viewModel::onRefresh,
-            onClick = onCodePostClick,
-            onCreate = onCreateClick,
+            navigationEvent = navigationEvent,
             onSearch = viewModel::search,
             modifier = Modifier
                 .consumeWindowInsets(innerPadding)
