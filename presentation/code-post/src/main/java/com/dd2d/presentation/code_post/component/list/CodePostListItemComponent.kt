@@ -73,7 +73,7 @@ private fun CodePostListItemComponentPrev() {
                 .fillMaxSize()
         ) {
             CodePostListItemComponent(
-                codePost = CodePostListItem.dummy,
+                codePost = CodePostListItem.dummy(),
                 onClick = {},
             )
         }

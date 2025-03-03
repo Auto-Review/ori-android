@@ -17,6 +17,9 @@ class AuthApi @Inject constructor(
             setBody(body)
         }
         .headerHandling { headers ->
-            AuthResponseDto(accessToken = headers["accesstoken"]?.substringAfter(" ")?: "")
+            AuthResponseDto(
+                accessToken = headers["accesstoken"],
+                refreshToken = headers["refreshtoken"]
+            )
         }
 }

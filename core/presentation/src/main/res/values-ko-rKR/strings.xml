@@ -11,4 +11,8 @@
     <string name="prev">이전</string>
     <string name="next">다음</string>
     <string name="tab_main">MAIN</string>
+    <string name="tab_my">MY</string>
+    <string name="tab_code">CODE</string>
+    <string name="tab_til">TIL</string>
+    <string name="tab_setting">SETTING</string>
 </resources>

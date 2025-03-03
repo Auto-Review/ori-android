@@ -69,6 +69,7 @@ dependencies {
     implementation(project(":core:core"))
     implementation(project(":core:network"))
     implementation(project(":core:data-store-manager"))
+    implementation(project(":core:token-manager"))
     implementation(project(":core:presentation"))
     implementation(project(":core:presentation-oauth"))
 
@@ -83,11 +84,18 @@ dependencies {
     implementation(project(":data:auth"))
     implementation(project(":presentation:auth"))
 
-    implementation(project(":domain:code-post"))
-    implementation(project(":data:code-post"))
-    implementation(project(":presentation:code-post"))
+    implementation(project(":domain:user"))
+    implementation(project(":data:user"))
+    implementation(project(":presentation:my"))
 
     implementation(project(":domain:schedule"))
     implementation(project(":data:schedule"))
     implementation(project(":presentation:schedule"))
+
+    implementation(project(":domain:code-post"))
+    implementation(project(":data:code-post"))
+    implementation(project(":presentation:code-post"))
+
+    implementation(project(":domain:til"))
+    implementation(project(":data:til"))
 }

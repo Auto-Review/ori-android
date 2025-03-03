@@ -47,4 +47,5 @@ dependencies {
 
     implementation(project(":core:core"))
     implementation(project(":core:data-store-manager"))
+    implementation(project(":core:token-manager"))
 }

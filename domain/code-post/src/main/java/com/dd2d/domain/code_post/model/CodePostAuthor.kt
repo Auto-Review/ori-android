@@ -6,8 +6,8 @@ data class CodePostAuthor(
     val email: String?,
 ) {
     companion object {
-        val dummy = CodePostAuthor(
-            id = 1,
+        fun dummy(id: Int = 1) = CodePostAuthor(
+            id = id,
             nickname = "JiY",
             email = null,
         )

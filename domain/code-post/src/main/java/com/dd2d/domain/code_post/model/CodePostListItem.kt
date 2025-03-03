@@ -10,9 +10,9 @@ data class CodePostListItem(
     val createdAt: String,
 ) {
     companion object {
-        val dummy = CodePostListItem(
-            id = 1,
-            author = CodePostAuthor.dummy,
+        fun dummy(id: Int = 1) = CodePostListItem(
+            id = id,
+            author = CodePostAuthor.dummy(),
             title = "title1",
             description = "asdasdasd",
             level = 5,

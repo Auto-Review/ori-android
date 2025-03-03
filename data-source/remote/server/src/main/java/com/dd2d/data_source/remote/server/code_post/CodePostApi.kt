@@ -1,6 +1,8 @@
 package com.dd2d.data_source.remote.server.code_post
 
+import com.dd2d.core.token_manager.TokenManager
 import com.dd2d.data_source.remote.server._common.PagingResponseDto
+import com.dd2d.data_source.remote.server._common.authorizationHeader
 import com.dd2d.data_source.remote.server._common.bodyHandling
 import com.dd2d.data_source.remote.server.code_post.dto.request.CodePostCreateRequestDto
 import com.dd2d.data_source.remote.server.code_post.dto.request.CodePostUpdateRequestDto
@@ -18,6 +20,7 @@ import javax.inject.Named
 
 class CodePostApi @Inject constructor(
     @Named("server_client") private val client: HttpClient,
+    private val tokenManager: TokenManager
 ) {
     suspend fun getCodePostList(
         page: Int,
@@ -25,6 +28,7 @@ class CodePostApi @Inject constructor(
         sort: String? = null
     ): PagingResponseDto<CodePostListItemResponseDto> = client
         .get("/v1/api/post/code/list") {
+            authorizationHeader(tokenManager.getAccessToken())
             parameters {
                 append("page", "$page")
                 append("size", "$size")
@@ -40,6 +44,7 @@ class CodePostApi @Inject constructor(
         sort: String? = null
     ): PagingResponseDto<CodePostListItemResponseDto> = client
         .get("/v1/api/post/code/search") {
+            authorizationHeader(tokenManager.getAccessToken())
             parameters {
                 append("search", search)
                 append("page", "$page")
@@ -55,6 +60,7 @@ class CodePostApi @Inject constructor(
         sort: String? = null
     ): PagingResponseDto<CodePostListItemResponseDto> = client
         .get("/v1/api/post/code/own") {
+            authorizationHeader(tokenManager.getAccessToken())
             parameters {
                 append("page", "$page")
                 append("size", "$size")
@@ -70,6 +76,7 @@ class CodePostApi @Inject constructor(
         sort: String? = null
     ): PagingResponseDto<CodePostListItemResponseDto> = client
         .get("/v1/api/post/code/own/search") {
+            authorizationHeader(tokenManager.getAccessToken())
             parameters {
                 append("search", search)
                 append("page", "$page")
@@ -80,22 +87,28 @@ class CodePostApi @Inject constructor(
         .bodyHandling()
 
     suspend fun getCodePost(id: Int): CodePostResponseDto = client
-        .get("/v1/api/post/code/detail/$id")
+        .get("/v1/api/post/code/detail/$id") {
+            authorizationHeader(tokenManager.getAccessToken())
+        }
         .bodyHandling()
 
     suspend fun createCodePost(body: CodePostCreateRequestDto): Int = client
         .post("/v1/api/post/code") {
+            authorizationHeader(tokenManager.getAccessToken())
             setBody(body)
         }
         .bodyHandling<Int>()
 
     suspend fun updateCodePost(body: CodePostUpdateRequestDto): Int = client
         .put("/v1/api/post/code") {
+            authorizationHeader(tokenManager.getAccessToken())
             setBody(body)
         }
         .bodyHandling()
 
     suspend fun deleteCodePost(id: Int): Int = client
-        .delete("/v1/api/post/code/$id")
+        .delete("/v1/api/post/code/$id") {
+            authorizationHeader(tokenManager.getAccessToken())
+        }
         .bodyHandling()
 }

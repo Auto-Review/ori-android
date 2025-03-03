@@ -13,32 +13,36 @@ import com.dd2d.presentation.code_post.screen.CodePostListScreen
 import kotlinx.serialization.Serializable
 
 @Serializable
-object CodePostList
+object CodePostListScreen
+
+sealed interface CodePostListNavigator {
+    class CodePost(val id: Int): CodePostListNavigator
+    data object CodePostCreate: CodePostListNavigator
+}
 
 fun NavGraphBuilder.codePostListScreen(
-    navController: NavController,
+    navigationEvent: (CodePostListNavigator) -> Unit,
     modifier: Modifier = Modifier.fillMaxSize(),
     enter: EnterTransition = fadeIn(),
     exit: ExitTransition = fadeOut(),
     popEnter: EnterTransition = enter,
     popExit: ExitTransition = exit,
 ) {
-    composable<CodePostList>(
+    composable<CodePostListScreen>(
         enterTransition = { enter },
         exitTransition = { exit },
         popEnterTransition = { popEnter },
         popExitTransition = { popExit }
     ) {
         CodePostListScreen(
-            onCodePostClick = navController::toCodePost,
-            onCreateClick = navController::toCodePostCreate,
+            navigationEvent = navigationEvent,
             modifier = modifier
         )
     }
 }
 
 fun NavController.toCodePostList() {
-    navigate(CodePostList) {
+    navigate(CodePostListScreen) {
         launchSingleTop = true
     }
 }

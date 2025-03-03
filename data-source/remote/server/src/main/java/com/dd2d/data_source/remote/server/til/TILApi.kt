@@ -1,6 +1,8 @@
 package com.dd2d.data_source.remote.server.til
 
+import com.dd2d.core.token_manager.TokenManager
 import com.dd2d.data_source.remote.server._common.PagingResponseDto
+import com.dd2d.data_source.remote.server._common.authorizationHeader
 import com.dd2d.data_source.remote.server._common.bodyHandling
 import com.dd2d.data_source.remote.server.til.dto.request.TILCreateRequestDto
 import com.dd2d.data_source.remote.server.til.dto.request.TILUpdateRequestDto
@@ -18,12 +20,14 @@ import javax.inject.Named
 
 class TILApi @Inject constructor(
     @Named("server_client") private val client: HttpClient,
+    private val tokenManager: TokenManager,
 ) {
     suspend fun getTILList(
         page: Int,
         size: Int,
     ): PagingResponseDto<TILListItemResponseDto> = client
         .get(urlString = "/v1/api/post/til/list") {
+            authorizationHeader(token = tokenManager.getAccessToken())
             parameters {
                 append("page", page.toString())
                 append("size", size.toString())
@@ -37,6 +41,7 @@ class TILApi @Inject constructor(
         size: Int,
     ): PagingResponseDto<TILListItemResponseDto> = client
         .get(urlString = "/v1/api/post/til/search") {
+            authorizationHeader(token = tokenManager.getAccessToken())
             parameters {
                 append("page", page.toString())
                 append("size", size.toString())
@@ -48,7 +53,8 @@ class TILApi @Inject constructor(
         page: Int,
         size: Int,
     ): PagingResponseDto<TILListItemResponseDto> = client
-        .get(urlString = "/v1/api/post/til/list/own") {
+        .get(urlString = "/v1/api/post/til/own") {
+            authorizationHeader(token = tokenManager.getAccessToken())
             parameters {
                 append("page", page.toString())
                 append("size", size.toString())
@@ -62,6 +68,7 @@ class TILApi @Inject constructor(
         size: Int,
     ): PagingResponseDto<TILListItemResponseDto> = client
         .get(urlString = "/v1/api/post/til/own/search") {
+            authorizationHeader(token = tokenManager.getAccessToken())
             parameters {
                 append("page", page.toString())
                 append("size", size.toString())
@@ -70,22 +77,28 @@ class TILApi @Inject constructor(
         }.bodyHandling()
 
     suspend fun getTIL(id: Int): TILResponseDto = client
-        .get(urlString = "/v1/api/post/til/detail/$id")
+        .get(urlString = "/v1/api/post/til/detail/$id") {
+            authorizationHeader(token = tokenManager.getAccessToken())
+        }
         .bodyHandling()
 
     suspend fun createTIL(body: TILCreateRequestDto): Int = client
         .post(urlString = "/v1/api/post/til") {
+            authorizationHeader(token = tokenManager.getAccessToken())
             setBody(body)
         }
         .bodyHandling()
 
     suspend fun updateTIL(body: TILUpdateRequestDto): Int = client
         .put(urlString = "/v1/api/post/til") {
+            authorizationHeader(token = tokenManager.getAccessToken())
             setBody(body)
         }
         .bodyHandling()
 
     suspend fun deleteTIL(id: Int): Int = client
-        .delete(urlString = "/v1/api/post/til/$id")
+        .delete(urlString = "/v1/api/post/til/$id") {
+            authorizationHeader(token = tokenManager.getAccessToken())
+        }
         .bodyHandling()
 }

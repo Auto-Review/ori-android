@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
+import com.dd2d.core.presentation.navigation.safePopBackStack
 import com.dd2d.ori_android.navigation.main.mainScreen
 import com.dd2d.ori_android.navigation.main.toMain
 import com.dd2d.presentation.auth._navigation.authScreen
@@ -25,7 +26,7 @@ internal fun AppNavHost(
 
         mainScreen(appNavController = navController)
 
-        codePostScreen(navController = navController)
-        codePostCreateScreen(navController)
+        codePostScreen(onBack = navController::safePopBackStack)
+        codePostCreateScreen(onBack = navController::safePopBackStack)
     }
 }

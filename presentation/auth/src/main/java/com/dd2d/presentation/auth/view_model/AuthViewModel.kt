@@ -8,6 +8,7 @@ import com.dd2d.core.presentation.state.UIStateManager
 import com.dd2d.core.presentation_oauth.google.model.OAuthResult
 import com.dd2d.domain.auth.model.AuthRequester
 import com.dd2d.domain.auth.repository.AuthRepository
+import com.dd2d.domain.local_setting.model.SignInState
 import com.dd2d.domain.local_setting.repository.LocalSettingRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -29,7 +30,12 @@ internal class AuthViewModel @Inject constructor(
                     is DataState.Loading -> stateToLoading()
                     is DataState.Error -> stateToError(state.exception)
                     is DataState.Success -> {
-                        localSettingRepository.saveAccessToken(accessToken = state.data.accessToken)
+                        localSettingRepository.saveAuthToken(
+                            accessToken = state.data.accessToken,
+                            refreshToken = state.data.refreshToken,
+                        )
+                        localSettingRepository.setSignInState(state = SignInState.SignIn)
+
                         stateToSuccess()
                     }
                 }

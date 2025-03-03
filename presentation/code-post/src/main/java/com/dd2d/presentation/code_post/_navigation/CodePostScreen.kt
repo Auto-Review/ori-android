@@ -9,7 +9,6 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import com.dd2d.core.presentation.navigation.safePopBackStack
 import com.dd2d.presentation.code_post.screen.CodePostScreen
 import kotlinx.serialization.Serializable
 
@@ -17,7 +16,7 @@ import kotlinx.serialization.Serializable
 class CodePost(val id: Int)
 
 fun NavGraphBuilder.codePostScreen(
-    navController: NavController,
+    onBack: () -> Unit,
     modifier: Modifier = Modifier.fillMaxSize(),
     enter: EnterTransition = slideInHorizontally { it },
     exit: ExitTransition = slideOutHorizontally { it },
@@ -31,7 +30,7 @@ fun NavGraphBuilder.codePostScreen(
         popExitTransition = { popExit }
     ) {
         CodePostScreen(
-            onBack = navController::safePopBackStack,
+            onBack = onBack,
             modifier = modifier
         )
     }
