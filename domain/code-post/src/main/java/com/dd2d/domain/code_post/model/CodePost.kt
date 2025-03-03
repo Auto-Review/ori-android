@@ -16,7 +16,7 @@ data class CodePost(
     companion object {
         val dummy = CodePost(
             id = 1,
-            author = CodePostAuthor.dummy,
+            author = CodePostAuthor.dummy(),
             title = "코틀린",
             code = Code.dummy,
             description = "코틀린 좋아요 코틀린 지원 해줘",

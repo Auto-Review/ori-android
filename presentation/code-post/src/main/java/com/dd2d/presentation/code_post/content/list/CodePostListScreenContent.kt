@@ -179,9 +179,7 @@ private fun CodePostListScreenContentPrev() {
                 .fillMaxSize()
         ) {
             CodePostListScreenContent(
-                list = List(30) { CodePostListItem.dummy.copy(id = it) }.toMutableStateList(),
-                onClick = {},
-                onCreate = {},
+                list = List(30) { CodePostListItem.dummy(id = it) }.toMutableStateList(),
                 state = RefreshLazyListState.Success,
                 onNext = {},
                 onRefresh = {},

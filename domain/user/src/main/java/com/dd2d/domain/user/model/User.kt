@@ -6,7 +6,7 @@ data class User(
     val email: String,
 ) {
     companion object {
-        fun dummy(id: Int) = User(
+        fun dummy(id: Int = 1) = User(
             id = id,
             nickname = "JiY",
             email = "jiyong3954@gmail.com",
