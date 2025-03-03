@@ -6,13 +6,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.NavigationBarItemColors
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.NavHost
@@ -22,7 +20,14 @@ import com.dd2d.core.presentation.icon.VectorIconButton
 import com.dd2d.core.presentation.image.PainterImage
 import com.dd2d.core.presentation.navigation.navigateWithClearBackStack
 import com.dd2d.ori_android.R
+import com.dd2d.presentation.code_post._navigation.CodePostListNavigator
+import com.dd2d.presentation.code_post._navigation.CodePostListScreen
+import com.dd2d.presentation.code_post._navigation.codePostListScreen
+import com.dd2d.presentation.code_post._navigation.toCodePost
 import com.dd2d.presentation.code_post._navigation.toCodePostCreate
+import com.dd2d.presentation.my._navigation.MyPageNavigator
+import com.dd2d.presentation.my._navigation.MyPageScreen
+import com.dd2d.presentation.my._navigation.myPageScreen
 import com.dd2d.presentation.schedule._navigation.ScheduleScreen
 import com.dd2d.presentation.schedule._navigation.scheduleScreen
 import kotlinx.serialization.Serializable
@@ -42,8 +47,28 @@ fun NavGraphBuilder.mainScreen(
         val items = remember {
             listOf(
                 BottomBarItem(
+                    iconRes = R.drawable.tab_code,
+                    labelRes = com.dd2d.core.presentation.R.string.tab_code,
+                    destination = CodePostListScreen
+                ),
+                BottomBarItem(
+                    iconRes = R.drawable.tab_til,
+                    labelRes = com.dd2d.core.presentation.R.string.tab_til,
+                    destination = ScheduleScreen
+                ),
+                BottomBarItem(
                     iconRes = R.drawable.tab_main,
                     labelRes = com.dd2d.core.presentation.R.string.tab_main,
+                    destination = ScheduleScreen
+                ),
+                BottomBarItem(
+                    iconRes = R.drawable.tab_my,
+                    labelRes = com.dd2d.core.presentation.R.string.tab_my,
+                    destination = MyPageScreen
+                ),
+                BottomBarItem(
+                    iconRes = R.drawable.tab_setting,
+                    labelRes = com.dd2d.core.presentation.R.string.tab_setting,
                     destination = ScheduleScreen
                 )
             )
@@ -78,6 +103,7 @@ fun NavGraphBuilder.mainScreen(
                     onClick = { destination->
                         navController.navigateWithClearBackStack(route = destination, launchSingleTop = true)
                     },
+                    initialIndex = 2,
                     modifier = Modifier.fillMaxWidth(),
                 )
             },
@@ -91,6 +117,14 @@ fun NavGraphBuilder.mainScreen(
                     .fillMaxSize()
                     .padding(inner)
             ) {
+                codePostListScreen(
+                    navigationEvent = { destination ->
+                        when(destination) {
+                            is CodePostListNavigator.CodePost -> appNavController.toCodePost(id =  destination.id)
+                            is CodePostListNavigator.CodePostCreate -> appNavController.toCodePostCreate()
+                        }
+                    }
+                )
                 scheduleScreen(
                     navController = navController,
                     onCodePostCreateClick = appNavController::toCodePostCreate,
@@ -98,6 +132,14 @@ fun NavGraphBuilder.mainScreen(
 
                     }
                 )
+                myPageScreen { destination ->
+                    when(destination) {
+                        is MyPageNavigator.CodePost -> appNavController.toCodePost(destination.id)
+                        is MyPageNavigator.CodePostCreate -> appNavController.toCodePostCreate()
+                        is MyPageNavigator.TIL -> {}
+                        is MyPageNavigator.TILPostCreate -> {}
+                    }
+                }
             }
         }
     }
