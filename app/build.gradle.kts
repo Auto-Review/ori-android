@@ -69,6 +69,7 @@ dependencies {
     implementation(project(":core:core"))
     implementation(project(":core:network"))
     implementation(project(":core:data-store-manager"))
+    implementation(project(":core:token-manager"))
     implementation(project(":core:presentation"))
     implementation(project(":core:presentation-oauth"))
 

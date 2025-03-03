@@ -25,6 +25,7 @@ include(":app")
 include(":core:core")
 include(":core:network")
 include(":core:data-store-manager")
+include(":core:token-manager")
 include(":core:presentation")
 include(":core:presentation-oauth")
 
@@ -49,5 +50,6 @@ include(":presentation:schedule")
 
 include(":domain:til")
 include(":data:til")
+
 include(":domain:user")
 include(":data:user")

@@ -11,6 +11,3 @@ kotlin {
         jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11
     }
 }
-dependencies {
-    api(libs.androidx.datastore.preferences.core)
-}

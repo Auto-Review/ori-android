@@ -17,6 +17,7 @@
             <option value="$PROJECT_DIR$/core/network" />
             <option value="$PROJECT_DIR$/core/presentation" />
             <option value="$PROJECT_DIR$/core/presentation-oauth" />
+            <option value="$PROJECT_DIR$/core/token-manager" />
             <option value="$PROJECT_DIR$/data" />
             <option value="$PROJECT_DIR$/data-source" />
             <option value="$PROJECT_DIR$/data-source/local" />

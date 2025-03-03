@@ -19,7 +19,8 @@ class AuthRepositoryImpl @Inject constructor(
 
         emit(
             AuthResult(
-                accessToken = response.accessToken
+                accessToken = response.accessToken?.substringAfter(" ")?: "",
+                refreshToken = response.refreshToken?: ""
             )
         )
     }.asDataState()

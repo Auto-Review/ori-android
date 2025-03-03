@@ -1,6 +1,6 @@
 package com.dd2d.core.network
 
-import com.dd2d.core.data_store_manager.DataStoreManager
+import com.dd2d.core.token_manager.TokenManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -12,7 +12,10 @@ import io.ktor.client.plugins.auth.providers.BearerTokens
 import io.ktor.client.plugins.auth.providers.bearer
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.defaultRequest
+import io.ktor.client.request.get
+import io.ktor.client.request.headers
 import io.ktor.http.ContentType
+import io.ktor.http.HttpHeaders
 import io.ktor.http.contentType
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
@@ -25,7 +28,7 @@ object NetworkModule {
     @Provides
     @Singleton
     @Named("server_client")
-    fun provideHttpClient(dataStoreManager: DataStoreManager): HttpClient {
+    fun provideHttpClient(tokenManager: TokenManager): HttpClient {
         return HttpClient(OkHttp) {
             defaultRequest {
                 contentType(ContentType.Application.Json)
@@ -42,8 +45,24 @@ object NetworkModule {
             }
             install(Auth) {
                 bearer {
-                    loadTokens {
-                        BearerTokens(accessToken = dataStoreManager.getAccessToken(), refreshToken = null)
+                    refreshTokens {
+                        val accessToken = tokenManager.getAccessToken()
+                        val refreshToken = tokenManager.getRefreshToken()
+
+                        val response = client.get(urlString = "/v1/api/auth/reissued") {
+                            headers {
+                                append(HttpHeaders.Authorization, "Bearer $accessToken")
+                                append("refreshToken", refreshToken)
+                            }
+                        }
+
+                        val newAccessToken = response.headers["accesstoken"]
+                        val newRefreshToken = response.headers["refreshtoken"]
+
+                        newAccessToken?.let {
+                            tokenManager.saveAuthToken(accessToken = newAccessToken, refreshToken = newRefreshToken)
+                            BearerTokens(newAccessToken, newRefreshToken)
+                        }
                     }
                 }
             }
