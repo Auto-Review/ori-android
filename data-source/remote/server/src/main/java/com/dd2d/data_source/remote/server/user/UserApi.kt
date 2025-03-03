@@ -1,5 +1,7 @@
 package com.dd2d.data_source.remote.server.user
 
+import com.dd2d.core.token_manager.TokenManager
+import com.dd2d.data_source.remote.server._common.authorizationHeader
 import com.dd2d.data_source.remote.server._common.bodyHandling
 import com.dd2d.data_source.remote.server._common.isSuccessOrThrow
 import com.dd2d.data_source.remote.server.user.dto.request.UserUpdateRequestDto
@@ -12,14 +14,18 @@ import javax.inject.Inject
 import javax.inject.Named
 
 class UserApi @Inject constructor(
-    @Named("server_client")private val  client: HttpClient
+    @Named("server_client")private val  client: HttpClient,
+    private val tokenManager: TokenManager
 ) {
     suspend fun me(): UserResponseDto = client
-        .get(urlString = "/v1/api/profile/info")
+        .get(urlString = "/v1/api/profile/info") {
+            authorizationHeader(tokenManager.getAccessToken())
+        }
         .bodyHandling()
 
     suspend fun updateMe(body: UserUpdateRequestDto): Boolean = client
         .put(urlString = "/v1/api/profile") {
+            authorizationHeader(tokenManager.getAccessToken())
             setBody(body)
         }
         .isSuccessOrThrow()
