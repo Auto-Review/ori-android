@@ -23,6 +23,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.material3.pulltorefresh.PullToRefreshState
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
@@ -38,7 +39,7 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.dd2d.core.presentation.R
@@ -121,14 +122,16 @@ fun RefreshLazyColumn(
                 .offset(y = (-20).dp)
                 .align(Alignment.BottomCenter)
                 .size(30.dp)
+                .shadow(elevation = 3.dp, shape = CircleShape)
         ) {
             Icon(
                 imageVector = Icons.Default.KeyboardArrowUp,
                 contentDescription = stringResource(R.string.scroll_to_top),
+                tint = MaterialTheme.colorScheme.primary,
                 modifier = Modifier
                     .fillMaxSize()
                     .clip(CircleShape)
-                    .background(color = Color.LightGray)
+                    .background(color = MaterialTheme.colorScheme.background)
                     .clickable { scope.launch { lazyState.animateScrollToItem(0) } }
             )
         }
