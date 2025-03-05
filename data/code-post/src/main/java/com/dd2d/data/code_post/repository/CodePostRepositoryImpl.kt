@@ -7,6 +7,7 @@ import com.dd2d.data.code_post.mapper.toCodePost
 import com.dd2d.data.code_post.mapper.toCodePostListItem
 import com.dd2d.data.code_post.mapper.toCodePostUpdateRequestDto
 import com.dd2d.data.code_post.mapper.toCorePostCreateRequestDto
+import com.dd2d.data_source.remote.server._common.toPagination
 import com.dd2d.data_source.remote.server.code_post.CodePostApi
 import com.dd2d.data_source.remote.server.code_post.dto.response.CodePostListItemResponseDto
 import com.dd2d.domain.code_post.model.CodePost
@@ -28,11 +29,9 @@ class CodePostRepositoryImpl @Inject constructor(
             else codePostApi.getCodePostListBySearchKeyword(search = search, page = page, size = take, sort = sort)
         }
         emit(
-            Pagination(
-                list = response.dtoList.map(CodePostListItemResponseDto::toCodePostListItem),
-                currentPage = options.page,
-                totalPage = response.totalPage,
-                totalItemCount = -1,
+            response.toPagination(
+                requestPage = options.page,
+                mapper = CodePostListItemResponseDto::toCodePostListItem
             )
         )
     }.asDataState()
@@ -44,11 +43,9 @@ class CodePostRepositoryImpl @Inject constructor(
         }
 
         emit(
-            Pagination(
-                list = response.dtoList.map(CodePostListItemResponseDto::toCodePostListItem),
-                currentPage = options.page,
-                totalPage = response.totalPage,
-                totalItemCount = -1,
+            response.toPagination(
+                requestPage = options.page,
+                mapper = CodePostListItemResponseDto::toCodePostListItem
             )
         )
     }.asDataState()

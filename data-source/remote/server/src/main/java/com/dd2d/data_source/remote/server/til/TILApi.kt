@@ -28,9 +28,9 @@ class TILApi @Inject constructor(
     ): PagingResponseDto<TILListItemResponseDto> = client
         .get(urlString = "/v1/api/post/til/list") {
             authorizationHeader(token = tokenManager.getAccessToken())
-            parameters {
-                append("page", page.toString())
-                append("size", size.toString())
+            url {
+                parameters.append("page", page.toString())
+                parameters.append("size", size.toString())
             }
         }
         .bodyHandling()
@@ -42,10 +42,10 @@ class TILApi @Inject constructor(
     ): PagingResponseDto<TILListItemResponseDto> = client
         .get(urlString = "/v1/api/post/til/search") {
             authorizationHeader(token = tokenManager.getAccessToken())
-            parameters {
-                append("page", page.toString())
-                append("size", size.toString())
-                append("search", search)
+            url {
+                parameters.append("page", page.toString())
+                parameters.append("size", size.toString())
+                parameters.append("search", search)
             }
         }.bodyHandling()
 
@@ -55,9 +55,9 @@ class TILApi @Inject constructor(
     ): PagingResponseDto<TILListItemResponseDto> = client
         .get(urlString = "/v1/api/post/til/own") {
             authorizationHeader(token = tokenManager.getAccessToken())
-            parameters {
-                append("page", page.toString())
-                append("size", size.toString())
+            url {
+                parameters.append("page", page.toString())
+                parameters.append("size", size.toString())
             }
         }
         .bodyHandling()
@@ -69,10 +69,10 @@ class TILApi @Inject constructor(
     ): PagingResponseDto<TILListItemResponseDto> = client
         .get(urlString = "/v1/api/post/til/own/search") {
             authorizationHeader(token = tokenManager.getAccessToken())
-            parameters {
-                append("page", page.toString())
-                append("size", size.toString())
-                append("search", search)
+            url {
+                parameters.append("page", page.toString())
+                parameters.append("size", size.toString())
+                parameters.append("search", search)
             }
         }.bodyHandling()
 

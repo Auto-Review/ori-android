@@ -8,6 +8,7 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -35,6 +36,11 @@ fun MyPageScreen(
 
     var openFABMenu by remember { mutableStateOf(false) }
 
+    LaunchedEffect(key1 = Unit) {
+        viewModel.refreshCodePostList()
+        viewModel.refreshTILList()
+    }
+
     Scaffold(
         containerColor = MaterialTheme.colorScheme.background,
         floatingActionButton = {
@@ -43,6 +49,7 @@ fun MyPageScreen(
                 close = { openFABMenu = !openFABMenu },
                 options = listOf("CODE", "TIL"),
                 onOptionSelected = { index ->
+                    openFABMenu = false
                     when(index) {
                         0 -> navigationEvent(MyPageNavigator.CodePostCreate)
                         1 -> navigationEvent(MyPageNavigator.TILPostCreate)

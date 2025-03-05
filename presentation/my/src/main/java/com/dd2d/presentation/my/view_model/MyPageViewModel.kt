@@ -31,15 +31,17 @@ internal class MyPageViewModel @Inject constructor(
         initialListOption = CodePostListOptions(),
         scope = viewModelScope,
         flow = codePostRepository::getMyCodePostList,
+        lazyInit = true
     )
     fun nextCodePostPage() = with(codePostListManager) { loadMore(options = options.copy(page = options.page + 1)) }
-    fun refreshCodePostList() = with(codePostListManager) { refresh(options = options.copy(page = 1)) }
+    fun refreshCodePostList() = with(codePostListManager) { refresh(options = CodePostListOptions()) }
 
     val tilListManager = RefreshLazyListManager(
         initialListOption = TILListOptions(),
         scope = viewModelScope,
         flow = tilRepository::getMyTILList,
+        lazyInit = true
     )
     fun nextTILPage() = with(tilListManager) { loadMore(options = options.copy(page = options.page + 1)) }
-    fun refreshTILList() = with(tilListManager) { refresh(options = options.copy(page = 1)) }
+    fun refreshTILList() = with(tilListManager) { refresh(options = TILListOptions()) }
 }
