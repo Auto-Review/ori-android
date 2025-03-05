@@ -56,7 +56,7 @@ class RefreshLazyListManager <ListOptions, ListItemModel>(
 
                         with(state.data) {
                             this@RefreshLazyListManager.list.addAll(this.list)
-                            this@RefreshLazyListManager.isLastPage = this.currentPage == this.totalPage
+                            this@RefreshLazyListManager.isLastPage = this.currentPage >= this.totalPage
                             this@RefreshLazyListManager.totalPage = this.totalPage
                             this@RefreshLazyListManager.totalItem = this.totalItemCount
                         }

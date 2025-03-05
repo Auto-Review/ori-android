@@ -8,5 +8,5 @@ data class TILListItemResponseDto(
     val title: String,
     val content: String,
     val member: TILAuthorResponseDto,
-    val createDate: String,
+    val createdDate: String,
 )

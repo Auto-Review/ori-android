@@ -21,6 +21,7 @@ import com.dd2d.core.presentation.option_selector.OptionSelector
 import com.dd2d.presentation.my._navigation.MyPageNavigator
 import com.dd2d.presentation.my.conent.MyCodePostListContent
 import com.dd2d.presentation.my.conent.MyPageScreenContent
+import com.dd2d.presentation.my.conent.MyTILListContent
 import com.dd2d.presentation.my.view_model.MyPageViewModel
 
 @Composable
@@ -81,7 +82,14 @@ fun MyPageScreen(
                 )
             },
             tilListContent = {
-
+                MyTILListContent(
+                    listState = tilListState,
+                    list = viewModel.tilListManager.list,
+                    requestNextPage = viewModel::nextTILPage,
+                    requestRefresh = viewModel::refreshTILList,
+                    onItemClick = { id -> navigationEvent(MyPageNavigator.TIL(id)) },
+                    modifier = Modifier.fillMaxSize(),
+                )
             },
             modifier = Modifier
                 .consumeWindowInsets(inner)

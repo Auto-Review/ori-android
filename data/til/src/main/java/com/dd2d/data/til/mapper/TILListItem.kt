@@ -1,5 +1,7 @@
 package com.dd2d.data.til.mapper
 
+import com.dd2d.core.core.util.format
+import com.dd2d.core.core.util.utcToLocalDateTime
 import com.dd2d.data_source.remote.server.til.dto.response.TILListItemResponseDto
 import com.dd2d.domain.til.model.TILListItem
 
@@ -9,6 +11,6 @@ internal fun TILListItemResponseDto.toTILListItem(): TILListItem {
         title = this.title,
         content = this.content,
         author = this.member.toTILAuthor(),
-        createdAt = this.createDate,
+        createdAt = this.createdDate.utcToLocalDateTime().format("yyyy-MM-dd"),
     )
 }
