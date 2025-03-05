@@ -49,7 +49,7 @@ internal fun MyCodePostListContent(
                 CodePostListItemComponent(
                     item = item,
                     onClick = { onItemClick(item.id) },
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth().animateItem()
                 )
                 HorizontalDivider()
             }

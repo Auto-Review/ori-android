@@ -7,6 +7,7 @@ import com.dd2d.data.til.mapper.toTIL
 import com.dd2d.data.til.mapper.toTILCreateRequestDto
 import com.dd2d.data.til.mapper.toTILListItem
 import com.dd2d.data.til.mapper.toTILUpdateRequestDto
+import com.dd2d.data_source.remote.server._common.toPagination
 import com.dd2d.data_source.remote.server.til.TILApi
 import com.dd2d.data_source.remote.server.til.dto.response.TILListItemResponseDto
 import com.dd2d.domain.til.model.TIL
@@ -28,11 +29,9 @@ class TILRepositoryImpl @Inject constructor(
             else tilApi.getTILListBySearchKeyword(search = search, page = page, size = take)
         }
         emit(
-            Pagination(
-                list = response.dtoList.map(TILListItemResponseDto::toTILListItem),
-                currentPage = options.page,
-                totalPage = response.totalPage,
-                totalItemCount = -1,
+            response.toPagination(
+                requestPage = options.page,
+                mapper = TILListItemResponseDto::toTILListItem
             )
         )
     }.asDataState()
@@ -43,11 +42,9 @@ class TILRepositoryImpl @Inject constructor(
             else tilApi.getMyTILListBySearchKeyword(search = search, page = page, size = take)
         }
         emit(
-            Pagination(
-                list = response.dtoList.map(TILListItemResponseDto::toTILListItem),
-                currentPage = options.page,
-                totalPage = response.totalPage,
-                totalItemCount = -1,
+            response.toPagination(
+                requestPage = options.page,
+                mapper = TILListItemResponseDto::toTILListItem
             )
         )
     }.asDataState()

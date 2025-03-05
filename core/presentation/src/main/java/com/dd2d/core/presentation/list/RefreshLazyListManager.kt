@@ -1,6 +1,10 @@
 package com.dd2d.core.presentation.list
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import com.dd2d.core.core.model.Pagination
 import com.dd2d.core.core.state.DataState
 import kotlinx.coroutines.CoroutineScope
@@ -11,6 +15,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 
+@Suppress("MemberVisibilityCanBePrivate")
 class RefreshLazyListManager <ListOptions, ListItemModel>(
     initialState: RefreshLazyListState = RefreshLazyListState.Success,
     initialListOption: ListOptions,
@@ -25,9 +30,12 @@ class RefreshLazyListManager <ListOptions, ListItemModel>(
         private set
 
     val list = mutableStateListOf<ListItemModel>()
-    val isLastPage = MutableStateFlow(false)
-    val totalItem = MutableStateFlow(0)
-    val totalPage = MutableStateFlow(0)
+    var isLastPage by mutableStateOf(false)
+        private set
+    var totalItem by mutableIntStateOf(0)
+        private set
+    var totalPage by mutableIntStateOf(0)
+        private set
 
     private fun getList(
         options: ListOptions,
@@ -48,9 +56,9 @@ class RefreshLazyListManager <ListOptions, ListItemModel>(
 
                         with(state.data) {
                             this@RefreshLazyListManager.list.addAll(this.list)
-                            this@RefreshLazyListManager.isLastPage.value = this.currentPage == this.totalPage
-                            this@RefreshLazyListManager.totalPage.value = this.totalPage
-                            this@RefreshLazyListManager.totalItem.value = this.totalItemCount
+                            this@RefreshLazyListManager.isLastPage = this.currentPage == this.totalPage
+                            this@RefreshLazyListManager.totalPage = this.totalPage
+                            this@RefreshLazyListManager.totalItem = this.totalItemCount
                         }
 
                         this@RefreshLazyListManager.options = options
@@ -66,7 +74,7 @@ class RefreshLazyListManager <ListOptions, ListItemModel>(
     }
 
     fun loadMore(options: ListOptions) {
-        if(isLastPage.value) return
+        if(isLastPage) return
         getList(options = options, isRefresh = false)
     }
 
