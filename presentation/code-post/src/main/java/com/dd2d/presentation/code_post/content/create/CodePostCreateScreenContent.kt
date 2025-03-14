@@ -30,8 +30,8 @@ import com.dd2d.core.presentation.main_button.MainButton
 import com.dd2d.core.presentation.main_text.Main400Text
 import com.dd2d.core.presentation.main_text_field.MainTextFieldDefaults
 import com.dd2d.core.presentation.theme.AppTheme
-import com.dd2d.domain.code_post.model.Code
-import com.dd2d.domain.code_post.model.CodePostCreator
+import com.dd2d.domain.code_post.model.post.Code
+import com.dd2d.domain.code_post.model.post.CodePostCreator
 import com.dd2d.presentation.code_post.component.CodeLevelSlider
 import com.dd2d.presentation.code_post.component.detail.CodeComponent
 import kotlinx.coroutines.delay

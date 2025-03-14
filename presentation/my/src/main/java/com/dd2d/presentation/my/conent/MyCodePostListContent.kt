@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
 import com.dd2d.core.presentation.list.RefreshLazyColumn
 import com.dd2d.core.presentation.list.RefreshLazyListState
 import com.dd2d.core.presentation.theme.AppTheme
-import com.dd2d.domain.code_post.model.CodePostListItem
+import com.dd2d.domain.code_post.model.post.CodePostListItem
 import com.dd2d.presentation.my.component.CodePostListItemComponent
 
 @OptIn(ExperimentalMaterial3Api::class)

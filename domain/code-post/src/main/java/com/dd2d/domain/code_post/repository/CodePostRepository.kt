@@ -2,11 +2,11 @@ package com.dd2d.domain.code_post.repository
 
 import com.dd2d.core.core.model.Pagination
 import com.dd2d.core.core.state.DataState
-import com.dd2d.domain.code_post.model.CodePost
-import com.dd2d.domain.code_post.model.CodePostCreator
-import com.dd2d.domain.code_post.model.CodePostListItem
-import com.dd2d.domain.code_post.model.CodePostListOptions
-import com.dd2d.domain.code_post.model.CodePostUpdater
+import com.dd2d.domain.code_post.model.post.CodePost
+import com.dd2d.domain.code_post.model.post.CodePostCreator
+import com.dd2d.domain.code_post.model.post.CodePostListItem
+import com.dd2d.domain.code_post.model.post.CodePostListOptions
+import com.dd2d.domain.code_post.model.post.CodePostUpdater
 import kotlinx.coroutines.flow.Flow
 
 interface CodePostRepository {

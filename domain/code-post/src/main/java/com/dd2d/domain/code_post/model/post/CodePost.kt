@@ -1,4 +1,4 @@
-package com.dd2d.domain.code_post.model
+package com.dd2d.domain.code_post.model.post
 
 import com.dd2d.core.core.util.format
 import java.time.LocalDateTime

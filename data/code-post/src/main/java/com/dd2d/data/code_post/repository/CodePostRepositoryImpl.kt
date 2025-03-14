@@ -10,11 +10,11 @@ import com.dd2d.data.code_post.mapper.toCorePostCreateRequestDto
 import com.dd2d.data_source.remote.server._common.toPagination
 import com.dd2d.data_source.remote.server.code_post.CodePostApi
 import com.dd2d.data_source.remote.server.code_post.dto.response.CodePostListItemResponseDto
-import com.dd2d.domain.code_post.model.CodePost
-import com.dd2d.domain.code_post.model.CodePostCreator
-import com.dd2d.domain.code_post.model.CodePostListItem
-import com.dd2d.domain.code_post.model.CodePostListOptions
-import com.dd2d.domain.code_post.model.CodePostUpdater
+import com.dd2d.domain.code_post.model.post.CodePost
+import com.dd2d.domain.code_post.model.post.CodePostCreator
+import com.dd2d.domain.code_post.model.post.CodePostListItem
+import com.dd2d.domain.code_post.model.post.CodePostListOptions
+import com.dd2d.domain.code_post.model.post.CodePostUpdater
 import com.dd2d.domain.code_post.repository.CodePostRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

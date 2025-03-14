@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.dd2d.core.presentation.main_text.Main400Text
 import com.dd2d.core.presentation.main_text.Main700Text
-import com.dd2d.domain.code_post.model.CodePost
+import com.dd2d.domain.code_post.model.post.CodePost
 import com.dd2d.presentation.code_post.component.detail.CodeComponent
 
 @Composable

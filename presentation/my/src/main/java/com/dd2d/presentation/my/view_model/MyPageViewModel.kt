@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dd2d.core.core.state.DataState
 import com.dd2d.core.presentation.list.RefreshLazyListManager
-import com.dd2d.domain.code_post.model.CodePostListOptions
+import com.dd2d.domain.code_post.model.post.CodePostListOptions
 import com.dd2d.domain.code_post.repository.CodePostRepository
 import com.dd2d.domain.til.model.TILListOptions
 import com.dd2d.domain.til.repository.TILRepository

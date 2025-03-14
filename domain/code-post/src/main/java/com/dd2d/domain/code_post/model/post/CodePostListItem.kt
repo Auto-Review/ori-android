@@ -1,5 +1,5 @@
 
-package com.dd2d.domain.code_post.model
+package com.dd2d.domain.code_post.model.post
 
 data class CodePostListItem(
     val id: Int,

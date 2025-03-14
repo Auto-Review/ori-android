@@ -13,7 +13,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.dd2d.core.presentation.main_text.Main500Text
-import com.dd2d.domain.code_post.model.CodePostListItem
+import com.dd2d.domain.code_post.model.post.CodePostListItem
 
 @Composable
 internal fun CodePostListItemComponent(
