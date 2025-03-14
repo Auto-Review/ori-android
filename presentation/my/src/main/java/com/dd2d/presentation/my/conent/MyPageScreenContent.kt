@@ -1,6 +1,5 @@
 package com.dd2d.presentation.my.conent
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -12,7 +11,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.toMutableStateList
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -21,7 +19,7 @@ import com.dd2d.core.presentation.list.RefreshLazyListState
 import com.dd2d.core.presentation.main_tab.MainPagerTab
 import com.dd2d.core.presentation.theme.AppTheme
 import com.dd2d.core.presentation.theme.hansType
-import com.dd2d.domain.code_post.model.CodePostListItem
+import com.dd2d.domain.code_post.model.post.CodePostListItem
 import com.dd2d.domain.user.model.User
 import com.dd2d.presentation.my.component.UserComponent
 

@@ -1,4 +1,4 @@
-package com.dd2d.domain.code_post.model
+package com.dd2d.domain.code_post.model.post
 
 data class CodePostListOptions(
     val page: Int = 0,

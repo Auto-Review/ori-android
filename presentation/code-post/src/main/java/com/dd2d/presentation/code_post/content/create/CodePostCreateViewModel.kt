@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.dd2d.core.core.state.DataState
 import com.dd2d.core.presentation.state.UIState
 import com.dd2d.core.presentation.state.UIStateManager
-import com.dd2d.domain.code_post.model.CodePostCreator
+import com.dd2d.domain.code_post.model.post.CodePostCreator
 import com.dd2d.domain.code_post.repository.CodePostRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

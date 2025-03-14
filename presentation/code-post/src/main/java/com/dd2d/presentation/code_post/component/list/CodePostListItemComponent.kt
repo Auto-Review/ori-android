@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.sp
 import com.dd2d.core.presentation.main_text.Main400Text
 import com.dd2d.core.presentation.main_text.Main700Text
 import com.dd2d.core.presentation.theme.AppTheme
-import com.dd2d.domain.code_post.model.CodePostListItem
+import com.dd2d.domain.code_post.model.post.CodePostListItem
 
 @Composable
 internal fun CodePostListItemComponent(

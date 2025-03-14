@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.sp
 import com.dd2d.core.presentation.icon.VectorIconButton
 import com.dd2d.core.presentation.main_text.Main400Text
 import com.dd2d.core.presentation.main_text_field.MainTextFieldDefaults
-import com.dd2d.domain.code_post.model.Code
+import com.dd2d.domain.code_post.model.post.Code
 import com.dd2d.presentation.code_post.R
 
 @Composable
