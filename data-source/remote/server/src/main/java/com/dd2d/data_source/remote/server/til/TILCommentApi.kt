@@ -1,13 +1,13 @@
-package com.dd2d.data_source.remote.server.code_post
+package com.dd2d.data_source.remote.server.til
 
 import com.dd2d.core.token_manager.TokenManager
 import com.dd2d.data_source.remote.server._common.PagingResponseDto
 import com.dd2d.data_source.remote.server._common.authorizationHeader
 import com.dd2d.data_source.remote.server._common.bodyHandling
-import com.dd2d.data_source.remote.server.code_post.dto.request.CodePostCommentCreateRequestDto
-import com.dd2d.data_source.remote.server.code_post.dto.request.CodePostCommentDeleteRequestDto
-import com.dd2d.data_source.remote.server.code_post.dto.request.CodePostCommentUpdateRequestDto
-import com.dd2d.data_source.remote.server.code_post.dto.response.CodePostCommentListItemResponseDto
+import com.dd2d.data_source.remote.server.til.dto.request.TILCommentCreateRequestDto
+import com.dd2d.data_source.remote.server.til.dto.request.TILCommentDeleteRequestDto
+import com.dd2d.data_source.remote.server.til.dto.request.TILCommentUpdateRequestDto
+import com.dd2d.data_source.remote.server.til.dto.response.TILCommentListItemResponseDto
 import io.ktor.client.HttpClient
 import io.ktor.client.request.delete
 import io.ktor.client.request.get
@@ -17,16 +17,16 @@ import io.ktor.client.request.setBody
 import javax.inject.Inject
 import javax.inject.Named
 
-class CodePostCommentApi @Inject constructor(
+class TILCommentApi @Inject constructor(
     @Named("server_client") private val client: HttpClient,
     private val tokenManager: TokenManager,
 ) {
-    suspend fun getCodePostCommentList(
-        codePostId: Int,
+    suspend fun getTILCommentList(
+        tilId: Int,
         page: Int,
-        size: Int,
-    ): PagingResponseDto<CodePostCommentListItemResponseDto> = client
-        .get(urlString = "/v1/api/code-post/${codePostId}/USER/comments") {
+        size: Int
+    ): PagingResponseDto<TILCommentListItemResponseDto> = client
+        .get(urlString = "/v1/api/til-post/${tilId}/USER/comments") {
             authorizationHeader(tokenManager.getAccessToken())
             url {
                 parameters.append("page", "$page")
@@ -35,12 +35,12 @@ class CodePostCommentApi @Inject constructor(
         }
         .bodyHandling()
 
-    suspend fun getCodePostCommentReplyList(
-        codePostId: Int,
+    suspend fun getTILCommentReplyList(
+        tilId: Int,
         page: Int,
         size: Int,
-    ): PagingResponseDto<CodePostCommentListItemResponseDto> = client
-        .get(urlString = "/v1/api/code-post/${codePostId}/USER/replies") {
+    ): PagingResponseDto<TILCommentListItemResponseDto> = client
+        .get(urlString = "/v1/api/til-post/${tilId}/USER/replies") {
             authorizationHeader(tokenManager.getAccessToken())
             url {
                 parameters.append("page", "$page")
@@ -49,22 +49,22 @@ class CodePostCommentApi @Inject constructor(
         }
         .bodyHandling()
 
-    suspend fun createCodePostComment(creator: CodePostCommentCreateRequestDto): Int = client
-        .post(urlString = "/v1/api/code-post/comment") {
+    suspend fun createTILComment(creator: TILCommentCreateRequestDto): Int = client
+        .post(urlString = "/v1/api/til-post/comment") {
             authorizationHeader(tokenManager.getAccessToken())
             setBody(creator)
         }
         .bodyHandling()
 
-    suspend fun updateCodePostComment(updater: CodePostCommentUpdateRequestDto): Int = client
-        .put(urlString = "/v1/api/code-post/comment") {
+    suspend fun updateTILComment(updater: TILCommentUpdateRequestDto): Int = client
+        .put(urlString = "/v1/api/til-post/comment") {
             authorizationHeader(tokenManager.getAccessToken())
             setBody(updater)
         }
         .bodyHandling()
 
-    suspend fun deleteCodePostComment(deleter: CodePostCommentDeleteRequestDto): Int = client
-        .delete(urlString = "/v1/api/code-post/comment") {
+    suspend fun deleteTILComment(deleter: TILCommentDeleteRequestDto): Int = client
+        .delete(urlString = "/v1/api/til-post/comment") {
             authorizationHeader(tokenManager.getAccessToken())
             setBody(deleter)
         }

@@ -1,11 +1,11 @@
-package com.dd2d.data_source.remote.server.code_post.dto.response
+package com.dd2d.data_source.remote.server.til.dto.response
 
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class CodePostCommentReplyListItemResponseDto(
+data class TILCommentListItemResponseDto(
     val id: Int,
     val parentId: Int,
     val writerId: Int,
