@@ -4,7 +4,7 @@ import com.dd2d.core.token_manager.TokenManager
 import com.dd2d.data_source.remote.server._common.authorizationHeader
 import com.dd2d.data_source.remote.server._common.bodyHandling
 import com.dd2d.data_source.remote.server.notification.dto.request.NotificationCreateRequestDto
-import com.dd2d.data_source.remote.server.notification.dto.response.NotificationListItemResponseDto
+import com.dd2d.data_source.remote.server.notification.dto.response.NotificationResponseDto
 import io.ktor.client.HttpClient
 import io.ktor.client.request.delete
 import io.ktor.client.request.get
@@ -18,13 +18,13 @@ class NotificationApi @Inject constructor(
     @Named("server_client") private val client: HttpClient,
     private val tokenManager: TokenManager,
 ) {
-    suspend fun getMyNotificationList(): List<NotificationListItemResponseDto> = client
+    suspend fun getMyNotificationList(): List<NotificationResponseDto> = client
         .get(urlString = "/v1/api/notification/own") {
             authorizationHeader(tokenManager.getAccessToken())
         }
         .bodyHandling()
 
-    suspend fun getMyUncheckedNotificationList(): List<NotificationListItemResponseDto> = client
+    suspend fun getMyUncheckedNotificationList(): List<NotificationResponseDto> = client
         .get(urlString = "/v1/api/notification/own/unchecked") {
             authorizationHeader(tokenManager.getAccessToken())
         }
