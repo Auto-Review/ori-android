@@ -37,12 +37,14 @@ class CodePostCommentApi @Inject constructor(
 
     suspend fun getCodePostCommentReplyList(
         codePostId: Int,
+        parentCommentId: Int,
         page: Int,
         size: Int,
     ): PagingResponseDto<CodePostCommentListItemResponseDto> = client
         .get(urlString = "/v1/api/code-post/${codePostId}/USER/replies") {
             authorizationHeader(tokenManager.getAccessToken())
             url {
+                parameters.append("parentId", "$parentCommentId")
                 parameters.append("page", "$page")
                 parameters.append("size", "$size")
             }

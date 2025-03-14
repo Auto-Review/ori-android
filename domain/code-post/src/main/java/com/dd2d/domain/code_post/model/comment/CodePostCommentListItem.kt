@@ -1,6 +1,6 @@
 package com.dd2d.domain.code_post.model.comment
 
-data class CodePostComment(
+data class CodePostCommentListItem(
     val id: Int,
     val parentCommentId: Int?,
     val author: CodePostCommentAuthor,
