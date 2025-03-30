@@ -12,19 +12,19 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import com.dd2d.core.presentation.navigation.ScreenRoute
 import com.dd2d.core.presentation.theme.AppTheme
 import com.dd2d.domain.local_setting.model.SignInState
 import com.dd2d.domain.local_setting.repository.LocalSettingRepository
-import com.dd2d.ori_android.navigation.AppNavHost
-import com.dd2d.ori_android.navigation.main.MainScreen
-import com.dd2d.presentation.auth._navigation.AuthScreen
+import com.dd2d.ori_android.presentation_main._navigation.MainScreenRoute
+import com.dd2d.presentation.auth._navigation.AuthScreenRoute
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     @Inject lateinit var localSettingRepository: LocalSettingRepository
-    private var startDestination by mutableStateOf<Any?>(null)
+    private var startDestination by mutableStateOf<ScreenRoute?>(null)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
@@ -35,8 +35,8 @@ class MainActivity : ComponentActivity() {
             AppTheme {
                 LaunchedEffect(Unit) {
                     startDestination = when(localSettingRepository.getSignInState()) {
-                        SignInState.SignOut -> AuthScreen
-                        SignInState.SignIn -> MainScreen
+                        SignInState.SignOut -> AuthScreenRoute
+                        SignInState.SignIn -> MainScreenRoute(selectedTabIndex = 2)
                     }
                 }
                 Surface(
