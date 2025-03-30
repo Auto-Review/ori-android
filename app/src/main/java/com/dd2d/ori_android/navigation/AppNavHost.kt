@@ -8,8 +8,8 @@ import com.dd2d.core.presentation.navigation.safePopBackStack
 import com.dd2d.ori_android.navigation.main.mainScreen
 import com.dd2d.ori_android.navigation.main.toMain
 import com.dd2d.presentation.auth._navigation.authScreen
-import com.dd2d.presentation.code_post._navigation.codePostCreateScreen
-import com.dd2d.presentation.code_post._navigation.codePostScreen
+import com.dd2d.presentation.code_post.create._navigation.codePostCreateScreen
+import com.dd2d.presentation.code_post.detail._navigation.codePostScreen
 
 @Composable
 internal fun AppNavHost(

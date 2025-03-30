@@ -20,11 +20,11 @@ import com.dd2d.core.presentation.icon.VectorIconButton
 import com.dd2d.core.presentation.image.PainterImage
 import com.dd2d.core.presentation.navigation.navigateWithClearBackStack
 import com.dd2d.ori_android.R
-import com.dd2d.presentation.code_post._navigation.CodePostListNavigator
-import com.dd2d.presentation.code_post._navigation.CodePostListScreen
-import com.dd2d.presentation.code_post._navigation.codePostListScreen
-import com.dd2d.presentation.code_post._navigation.toCodePost
-import com.dd2d.presentation.code_post._navigation.toCodePostCreate
+import com.dd2d.presentation.code_post.create._navigation.toCodePostCreate
+import com.dd2d.presentation.code_post.detail._navigation.toCodePost
+import com.dd2d.presentation.code_post.list._navigation.CodePostListNavigator
+import com.dd2d.presentation.code_post.list._navigation.CodePostListScreen
+import com.dd2d.presentation.code_post.list._navigation.codePostListScreen
 import com.dd2d.presentation.my._navigation.MyPageNavigator
 import com.dd2d.presentation.my._navigation.MyPageScreen
 import com.dd2d.presentation.my._navigation.myPageScreen
