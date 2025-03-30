@@ -46,7 +46,6 @@ import com.dd2d.core.presentation.list.RefreshLazyListState
 import com.dd2d.core.presentation.main_text.Main400Text
 import com.dd2d.core.presentation.theme.AppTheme
 import com.dd2d.domain.code_post.model.post.CodePostListItem
-import com.dd2d.presentation.code_post.list._navigation.CodePostListNavigator
 import com.dd2d.presentation.code_post.list.component.CodePostListItemComponent
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -57,7 +56,8 @@ internal fun CodePostListScreenContent(
     onNext: () -> Unit,
     onRefresh: () -> Unit,
     onSearch: (searchText: String) -> Unit,
-    navigationEvent: (CodePostListNavigator) -> Unit,
+    onDetailClick: (id: Int) ->Unit,
+    onCreateClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val lazyState = rememberLazyListState()
@@ -73,7 +73,7 @@ internal fun CodePostListScreenContent(
         floatingActionButton = {
             ExtendedFloatingActionButton(
                 expanded = isFABExtend,
-                onClick = { navigationEvent(CodePostListNavigator.CodePostCreate) },
+                onClick = onCreateClick,
                 icon = { AddIcon() },
                 text = { Main400Text(text = "글쓰기") },
                 shape = CircleShape,
@@ -108,7 +108,7 @@ internal fun CodePostListScreenContent(
             ) { item ->
                 CodePostListItemComponent(
                     codePost = item,
-                    onClick = { navigationEvent(CodePostListNavigator.CodePost(item.id)) },
+                    onClick = { onDetailClick(item.id) },
                     modifier = Modifier.fillMaxWidth().animateItem(),
                 )
             }
@@ -184,7 +184,8 @@ private fun CodePostListScreenContentPrev() {
                 onNext = {},
                 onRefresh = {},
                 onSearch = {},
-                navigationEvent = {},
+                onDetailClick = {},
+                onCreateClick = {},
                 modifier = Modifier
             )
         }

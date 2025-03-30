@@ -16,7 +16,6 @@ import androidx.compose.material3.DatePickerDefaults
 import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.SelectableDates
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberDatePickerState
@@ -24,7 +23,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -35,12 +33,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.dd2d.core.core.util.format
 import com.dd2d.core.presentation.main_text.Main700Text
+import com.dd2d.presentation.code_post.create.model.SelectableDates
 import java.time.Instant
-import java.time.LocalDate
 import java.time.LocalDateTime
-import java.time.Year
 import java.time.ZoneId
-import java.time.ZoneOffset
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -49,17 +46,7 @@ internal fun ReviewDateInput(
     onReviewDateChange: (value: LocalDateTime?) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val selectableDate = rememberSaveable {
-        object: SelectableDates {
-            override fun isSelectableDate(utcTimeMillis: Long): Boolean {
-                return LocalDate.now().atStartOfDay().toInstant(ZoneOffset.UTC).epochSecond <= utcTimeMillis
-            }
-
-            override fun isSelectableYear(year: Int): Boolean {
-                return Year.now().value <= year
-            }
-        }
-    }
+    val selectableDate = remember { SelectableDates() }
 
     var setReviewDate by remember { mutableStateOf(false) }
     var openDatePicker by remember { mutableStateOf(false) }

@@ -18,15 +18,15 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.dd2d.core.presentation.icon.AddIcon
 import com.dd2d.core.presentation.option_selector.OptionSelector
-import com.dd2d.presentation.my._navigation.MyPageNavigator
 import com.dd2d.presentation.my.conent.MyCodePostListContent
 import com.dd2d.presentation.my.conent.MyPageScreenContent
 import com.dd2d.presentation.my.conent.MyTILListContent
+import com.dd2d.presentation.my.model.MyPageNavigateEvent
 import com.dd2d.presentation.my.view_model.MyPageViewModel
 
 @Composable
 fun MyPageScreen(
-    navigationEvent: (MyPageNavigator) -> Unit,
+    navigationEvent: (MyPageNavigateEvent) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val viewModel = hiltViewModel<MyPageViewModel>()
@@ -52,8 +52,8 @@ fun MyPageScreen(
                 onOptionSelected = { index ->
                     openFABMenu = false
                     when(index) {
-                        0 -> navigationEvent(MyPageNavigator.CodePostCreate)
-                        1 -> navigationEvent(MyPageNavigator.TILPostCreate)
+                        0 -> navigationEvent(MyPageNavigateEvent.CodePostCreate)
+                        1 -> navigationEvent(MyPageNavigateEvent.TILPostCreate)
                     }
                 },
             ) {
@@ -77,7 +77,7 @@ fun MyPageScreen(
                     list = viewModel.codePostListManager.list,
                     requestNextPage = viewModel::nextCodePostPage,
                     requestRefresh = viewModel::refreshCodePostList,
-                    onItemClick = { id -> navigationEvent(MyPageNavigator.CodePost(id)) },
+                    onItemClick = { id -> navigationEvent(MyPageNavigateEvent.CodePost(id)) },
                     modifier = Modifier.fillMaxSize(),
                 )
             },
@@ -87,7 +87,7 @@ fun MyPageScreen(
                     list = viewModel.tilListManager.list,
                     requestNextPage = viewModel::nextTILPage,
                     requestRefresh = viewModel::refreshTILList,
-                    onItemClick = { id -> navigationEvent(MyPageNavigator.TIL(id)) },
+                    onItemClick = { id -> navigationEvent(MyPageNavigateEvent.TIL(id)) },
                     modifier = Modifier.fillMaxSize(),
                 )
             },

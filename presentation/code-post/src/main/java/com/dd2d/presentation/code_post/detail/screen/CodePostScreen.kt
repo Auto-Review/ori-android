@@ -31,7 +31,7 @@ import com.dd2d.presentation.code_post.detail.view_model.CodePostViewModel
 @Composable
 fun CodePostScreen(
     onBack: () -> Unit,
-    modifier: Modifier = Modifier.fillMaxSize()
+    modifier: Modifier = Modifier
 ) {
     val viewModel = hiltViewModel<CodePostViewModel>()
     val codePostState by viewModel.codePostState.collectAsStateWithLifecycle()
