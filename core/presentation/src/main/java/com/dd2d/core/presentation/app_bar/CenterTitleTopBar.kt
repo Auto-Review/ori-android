@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.TopAppBarColors
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
@@ -18,11 +19,13 @@ import com.dd2d.core.presentation.main_text.Main500Text
 @Composable
 fun CenterTitleTopBar(
     title: String,
-    onBack: (() -> Unit)? = null,
     modifier: Modifier = Modifier,
+    onBack: (() -> Unit)? = null,
     useCloseIcon: Boolean = false,
     actions: @Composable RowScope.() -> Unit = {},
-    colors: TopAppBarColors =  TopAppBarDefaults.centerAlignedTopAppBarColors(),
+    colors: TopAppBarColors =  TopAppBarDefaults.centerAlignedTopAppBarColors(
+        containerColor = MaterialTheme.colorScheme.background,
+    ),
     scrollBehavior: TopAppBarScrollBehavior? = null
 ) {
     CenterAlignedTopAppBar(

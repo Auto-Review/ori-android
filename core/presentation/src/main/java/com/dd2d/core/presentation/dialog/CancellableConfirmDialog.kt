@@ -11,16 +11,27 @@ import com.dd2d.core.presentation.R
 import com.dd2d.core.presentation.main_text.Main500Text
 
 @Composable
-fun ConfirmDialog(
+fun CancellableConfirmDialog(
     title: String,
     message: String?,
+    cancelText: String = stringResource(R.string.cancel),
     confirmText: String = stringResource(R.string.confirm),
+    onCancel: () -> Unit,
     onConfirm: () -> Unit,
 ) {
     MainDialog(
         title = title,
         message = message,
-        onDismiss = onConfirm,
+        onDismiss = onCancel,
+        dismissButton = {
+            Main500Text(
+                text = cancelText,
+                fontSize = 16.sp,
+                modifier = Modifier
+                    .clickable(onClick = onCancel)
+                    .padding(horizontal = 12.dp, vertical = 6.dp)
+            )
+        },
         confirmButton = {
             Main500Text(
                 text = confirmText,

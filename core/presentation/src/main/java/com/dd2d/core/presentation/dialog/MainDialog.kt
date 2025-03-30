@@ -28,7 +28,7 @@ fun MainDialog(
     message: String?,
     onDismiss: () -> Unit,
     modifier: Modifier = Modifier,
-    containerColor: Color = MaterialTheme.colorScheme.surfaceContainer,
+    containerColor: Color = MaterialTheme.colorScheme.background,
     textAlign: TextAlign = TextAlign.Start,
     shape: Shape = RoundedCornerShape(15.dp),
     dismissButton: @Composable (() -> Unit)? = null,

@@ -13,13 +13,13 @@
         </DropdownSelection>
         <DialogSelection />
       </SelectionState>
-      <SelectionState runConfigName="ScheduleScreenContentPrev">
+      <SelectionState runConfigName="CodePostLevelInputPrev">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="ScheduleCalendarComponentPrev">
+      <SelectionState runConfigName="CodePostInfoInputContentPrev">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="MyPageScreenContentPrev">
+      <SelectionState runConfigName="CodePostCreateScreenContentPrev">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
     </selectionStates>

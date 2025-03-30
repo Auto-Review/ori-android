@@ -31,6 +31,7 @@ fun ScheduleScreen(
     modifier: Modifier = Modifier
 ) {
     val viewModel = hiltViewModel<ScheduleViewModel>()
+
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     var exception by remember { mutableStateOf<ManagedException?>(null) }
 

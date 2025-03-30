@@ -18,7 +18,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.dd2d.core.core.exception.ManagedException
 import com.dd2d.core.core.state.DataState
 import com.dd2d.core.presentation.app_bar.CenterTitleTopBar
-import com.dd2d.core.presentation.dialog.ConfirmDialog
+import com.dd2d.core.presentation.dialog.CancellableConfirmDialog
 import com.dd2d.core.presentation.dialog.ErrorDialog
 import com.dd2d.core.presentation.dialog.LoadingDialog
 import com.dd2d.core.presentation.icon.VectorIcon
@@ -86,7 +86,7 @@ fun CodePostScreen(
     }
 
     if(openDeleteConfirmDialog) {
-        ConfirmDialog(
+        CancellableConfirmDialog(
             title = "삭제하시겠습니까?",
             message = null,
             onCancel = { openDeleteConfirmDialog = false },

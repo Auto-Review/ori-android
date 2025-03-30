@@ -9,7 +9,6 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import com.dd2d.core.presentation.navigation.safePopBackStack
 import com.dd2d.presentation.my.screen.MyPageScreen
 import kotlinx.serialization.Serializable
 
