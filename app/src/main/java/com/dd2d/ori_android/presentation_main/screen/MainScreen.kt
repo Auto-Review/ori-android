@@ -27,6 +27,7 @@ import com.dd2d.presentation.my._navigation.routeMyPageScreen
 import com.dd2d.presentation.my.model.MyPageNavigateEvent
 import com.dd2d.presentation.schedule._navigation.ScheduleScreenRoute
 import com.dd2d.presentation.schedule._navigation.routeScheduleScreen
+import com.example.presentation.til.create._navigation.toTILCreateScreen
 
 @Composable
 private fun bottomBarColors(): NavigationBarItemColors {
@@ -85,9 +86,7 @@ fun MainScreen(
             )
             routeScheduleScreen(
                 onCodePostCreateClick = appNavController::toCodePostCreateScreen,
-                onTILPostCreateClick = {
-
-                }
+                onTILPostCreateClick = appNavController::toTILCreateScreen
             )
             routeMyPageScreen(
                 navigationEvent = { event ->
@@ -95,7 +94,7 @@ fun MainScreen(
                         is MyPageNavigateEvent.CodePost -> appNavController.toCodePostScreen(codePostId = event.id)
                         is MyPageNavigateEvent.CodePostCreate -> appNavController.toCodePostCreateScreen()
                         is MyPageNavigateEvent.TIL -> {}
-                        is MyPageNavigateEvent.TILPostCreate -> {}
+                        is MyPageNavigateEvent.TILPostCreate -> appNavController.toTILCreateScreen()
                     }
                 }
             )

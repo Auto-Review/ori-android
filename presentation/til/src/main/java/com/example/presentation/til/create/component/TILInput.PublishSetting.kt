@@ -1,4 +1,4 @@
-package com.dd2d.presentation.code_post.create.component
+package com.example.presentation.til.create.component
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
