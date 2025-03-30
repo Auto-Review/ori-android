@@ -96,7 +96,7 @@ fun MainScreen(
                 .fillMaxSize()
                 .padding(inner)
         ) {
-            routeCodePostListScreen(onDetailClick = appNavController::toCodePostScreen,)
+            routeCodePostListScreen(onDetailClick = appNavController::toCodePostScreen)
             routeTILListScreen(onTILClick = appNavController::toTILScreen)
             routeScheduleScreen()
             routeMyPageScreen(
