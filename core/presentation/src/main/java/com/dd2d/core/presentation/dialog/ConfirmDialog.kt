@@ -14,24 +14,13 @@ import com.dd2d.core.presentation.main_text.Main500Text
 fun ConfirmDialog(
     title: String,
     message: String?,
-    cancelText: String = stringResource(R.string.cancel),
     confirmText: String = stringResource(R.string.confirm),
-    onCancel: () -> Unit,
     onConfirm: () -> Unit,
 ) {
     MainDialog(
         title = title,
         message = message,
-        onDismiss = onCancel,
-        dismissButton = {
-            Main500Text(
-                text = cancelText,
-                fontSize = 16.sp,
-                modifier = Modifier
-                    .clickable(onClick = onConfirm)
-                    .padding(horizontal = 12.dp, vertical = 6.dp)
-            )
-        },
+        onDismiss = onConfirm,
         confirmButton = {
             Main500Text(
                 text = confirmText,

@@ -7,5 +7,5 @@ data class CodePostCreator(
     val level: Int,
     val code: Code,
     val description: String,
-    val reviewDate: LocalDateTime
+    val reviewDate: LocalDateTime?
 )

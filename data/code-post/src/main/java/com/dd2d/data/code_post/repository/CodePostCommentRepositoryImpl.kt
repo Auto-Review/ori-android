@@ -10,9 +10,9 @@ import com.dd2d.data.code_post.mapper.comment.toCodePostCommentUpdateRequestDto
 import com.dd2d.data_source.remote.server._common.toPagination
 import com.dd2d.data_source.remote.server.code_post.CodePostCommentApi
 import com.dd2d.data_source.remote.server.code_post.dto.response.CodePostCommentListItemResponseDto
-import com.dd2d.domain.code_post.model.comment.CodePostCommentListItem
 import com.dd2d.domain.code_post.model.comment.CodePostCommentCreator
 import com.dd2d.domain.code_post.model.comment.CodePostCommentDeleter
+import com.dd2d.domain.code_post.model.comment.CodePostCommentListItem
 import com.dd2d.domain.code_post.model.comment.CodePostCommentListOption
 import com.dd2d.domain.code_post.model.comment.CodePostCommentReplyListOption
 import com.dd2d.domain.code_post.model.comment.CodePostCommentUpdater
