@@ -117,7 +117,6 @@ fun ListFilter(
         },
         modifier = modifier,
         containerColor = MaterialTheme.colorScheme.background,
-        elevation = 0.dp,
     ) {
         SlotMain500Text(
             text = currentValue,

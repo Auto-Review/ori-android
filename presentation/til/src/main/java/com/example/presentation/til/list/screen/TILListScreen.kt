@@ -15,6 +15,7 @@ import com.example.presentation.til.list.view_model.TILListViewModel
 
 @Composable
 fun TILListScreen(
+    onTILClick: (id: Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val viewModel = hiltViewModel<TILListViewModel>()
@@ -30,7 +31,7 @@ fun TILListScreen(
             list = viewModel.listManager.list,
             requestRefresh = viewModel::refresh,
             requestNextPage = viewModel::nextPage,
-            onItemClick = {},
+            onItemClick = onTILClick,
             modifier = modifier
                 .consumeWindowInsets(inner)
                 .fillMaxSize()

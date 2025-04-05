@@ -21,5 +21,5 @@ internal class TILListViewModel @Inject constructor(
     )
 
     fun nextPage() = with(listManager) { loadMore(options = options.copy(page = options.page +1)) }
-    fun refresh() = with(listManager) { refresh(options = options.copy(page = 1)) }
+    fun refresh() = with(listManager) { refresh(options = TILListOptions()) }
 }

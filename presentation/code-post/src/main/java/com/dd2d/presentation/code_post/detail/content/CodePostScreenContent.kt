@@ -70,7 +70,7 @@ private fun CodePostScreenContentPrev() {
             .fillMaxSize()
     ) {
         CodePostScreenContent(
-            codePost = CodePost.dummy,
+            codePost = CodePost.dummy(),
             modifier = Modifier
         )
     }

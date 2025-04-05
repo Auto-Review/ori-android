@@ -100,7 +100,7 @@ fun MainScreen(
                 onDetailClick = appNavController::toCodePostScreen,
                 onCreateClick = appNavController::toCodePostCreateScreen,
             )
-            routeTILListScreen()
+            routeTILListScreen(onTILClick = appNavController::toTILScreen)
             routeScheduleScreen()
             routeMyPageScreen(
                 navigationEvent = { event ->

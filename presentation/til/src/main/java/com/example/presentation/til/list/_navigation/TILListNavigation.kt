@@ -22,10 +22,12 @@ data object TILListScreenRoute : ScreenRoute, BottomBarItem {
 }
 
 fun NavGraphBuilder.routeTILListScreen(
+    onTILClick: (tilId: Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     fadeScreen<TILListScreenRoute> {
         TILListScreen(
+            onTILClick = onTILClick,
             modifier = modifier,
         )
     }
