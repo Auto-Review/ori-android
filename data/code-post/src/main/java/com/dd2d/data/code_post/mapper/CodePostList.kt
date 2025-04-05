@@ -10,9 +10,9 @@ internal fun CodePostListItemResponseDto.toCodePostListItem(): CodePostListItem 
     return CodePostListItem(
         id = this.id,
         author = CodePostAuthor(
-            id = this.member.id,
-            nickname = this.member.nickname,
-            email = this.member.email,
+            id = this.writerId,
+            nickname = this.writerNickName,
+            email = this.writerEmail,
         ),
         title = this.title,
         description = this.description,

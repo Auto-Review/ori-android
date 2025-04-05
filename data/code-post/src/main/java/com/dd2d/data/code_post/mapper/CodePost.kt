@@ -10,9 +10,9 @@ internal fun CodePostResponseDto.toCodePost(): CodePost {
     return CodePost(
         id = this.id,
         author = CodePostAuthor(
-            id = this.memberDto.id,
-            nickname = this.memberDto.nickname,
-            email = this.memberDto.email,
+            id = this.writerId,
+            nickname = this.writerNickName,
+            email = this.writerEmail,
         ),
         title = this.title,
         code = Code(

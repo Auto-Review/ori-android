@@ -1,5 +1,6 @@
 package com.dd2d.domain.code_post.model.post
 
+import com.dd2d.core.core.model.DateTimeString
 import com.dd2d.core.core.util.format
 import java.time.LocalDateTime
 
@@ -11,11 +12,11 @@ data class CodePost(
     val description: String,
     val reviewDate: LocalDateTime?,
     val level: Int,
-    val createdAt: String,
+    val createdAt: DateTimeString,
 ) {
     companion object {
-        val dummy = CodePost(
-            id = 1,
+        fun dummy(id: Int = 1) = CodePost(
+            id = id,
             author = CodePostAuthor.dummy(),
             title = "코틀린",
             code = Code.dummy,
