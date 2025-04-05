@@ -12,6 +12,7 @@ import com.dd2d.presentation.auth._navigation.routeAuthScreen
 import com.dd2d.presentation.code_post.create._navigation.routeCodePostCreateScreen
 import com.dd2d.presentation.code_post.detail._navigation.routeCodePostScreen
 import com.example.presentation.til.create._navigation.routeTILCreateScreen
+import com.example.presentation.til.detail._navigation.routeTILScreen
 
 @Composable
 internal fun AppNavHost(
@@ -32,5 +33,6 @@ internal fun AppNavHost(
         routeCodePostCreateScreen(onBack = navController::safePopBackStack)
 
         routeTILCreateScreen(onBack = navController::safePopBackStack)
+        routeTILScreen(onBack = navController::safePopBackStack)
     }
 }

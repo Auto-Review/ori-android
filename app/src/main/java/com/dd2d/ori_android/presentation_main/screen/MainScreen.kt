@@ -28,6 +28,7 @@ import com.dd2d.presentation.my.model.MyPageNavigateEvent
 import com.dd2d.presentation.schedule._navigation.ScheduleScreenRoute
 import com.dd2d.presentation.schedule._navigation.routeScheduleScreen
 import com.example.presentation.til.create._navigation.toTILCreateScreen
+import com.example.presentation.til.detail._navigation.toTILScreen
 import com.example.presentation.til.list._navigation.TILListScreenRoute
 import com.example.presentation.til.list._navigation.routeTILListScreen
 
@@ -97,7 +98,7 @@ fun MainScreen(
                     when(event) {
                         is MyPageNavigateEvent.CodePost -> appNavController.toCodePostScreen(codePostId = event.id)
                         is MyPageNavigateEvent.CodePostCreate -> appNavController.toCodePostCreateScreen()
-                        is MyPageNavigateEvent.TIL -> {}
+                        is MyPageNavigateEvent.TIL -> appNavController.toTILScreen(tilId = event.id)
                         is MyPageNavigateEvent.TILPostCreate -> appNavController.toTILCreateScreen()
                     }
                 }
