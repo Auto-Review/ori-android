@@ -16,6 +16,7 @@ import androidx.navigation.compose.rememberNavController
 import com.dd2d.core.presentation.navigation.BottomBarItem
 import com.dd2d.core.presentation.navigation.BottomNavBar
 import com.dd2d.core.presentation.navigation.DefaultNavHost
+import com.dd2d.ori_android.presentation_main.compontnt.MainScreenFAB
 import com.dd2d.ori_android.presentation_main.compontnt.MainScreenTopBar
 import com.dd2d.ori_android.presentation_main.view_model.MainViewModel
 import com.dd2d.presentation.code_post.create._navigation.toCodePostCreateScreen
@@ -66,6 +67,17 @@ fun MainScreen(
     Scaffold(
         contentColor = MaterialTheme.colorScheme.background,
         topBar = { MainScreenTopBar(appNavController = appNavController) },
+        floatingActionButton = {
+            MainScreenFAB(
+                options = listOf("CODE", "TIL"),
+                onOptionClick = { index ->
+                    when(index) {
+                        0 -> appNavController.toCodePostCreateScreen()
+                        1 -> appNavController.toTILCreateScreen()
+                    }
+                },
+            )
+        },
         bottomBar = {
             BottomNavBar(
                 navController = navController,
@@ -89,17 +101,12 @@ fun MainScreen(
                 onCreateClick = appNavController::toCodePostCreateScreen,
             )
             routeTILListScreen()
-            routeScheduleScreen(
-                onCodePostCreateClick = appNavController::toCodePostCreateScreen,
-                onTILPostCreateClick = appNavController::toTILCreateScreen
-            )
+            routeScheduleScreen()
             routeMyPageScreen(
                 navigationEvent = { event ->
                     when(event) {
                         is MyPageNavigateEvent.CodePost -> appNavController.toCodePostScreen(codePostId = event.id)
-                        is MyPageNavigateEvent.CodePostCreate -> appNavController.toCodePostCreateScreen()
                         is MyPageNavigateEvent.TIL -> appNavController.toTILScreen(tilId = event.id)
-                        is MyPageNavigateEvent.TILPostCreate -> appNavController.toTILCreateScreen()
                     }
                 }
             )

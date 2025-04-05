@@ -6,7 +6,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import com.dd2d.core.presentation.navigation.BottomBarItem
 import com.dd2d.core.presentation.navigation.ScreenRoute
-import com.dd2d.core.presentation.navigation.horizontalScreen
+import com.dd2d.core.presentation.navigation.fadeScreen
 import com.dd2d.presentation.schedule.screen.ScheduleScreen
 import kotlinx.serialization.Serializable
 
@@ -22,14 +22,10 @@ data object ScheduleScreenRoute : ScreenRoute, BottomBarItem {
 }
 
 fun NavGraphBuilder.routeScheduleScreen(
-    onCodePostCreateClick: () -> Unit,
-    onTILPostCreateClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    horizontalScreen<ScheduleScreenRoute> {
+    fadeScreen<ScheduleScreenRoute> {
         ScheduleScreen(
-            onCodePostCreateClick = onCodePostCreateClick,
-            onTILPostCreateClick = onTILPostCreateClick,
             modifier = modifier,
         )
     }
