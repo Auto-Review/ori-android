@@ -3,8 +3,6 @@ package com.dd2d.presentation.code_post.list.screen
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -16,17 +14,14 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.dd2d.core.core.exception.ManagedException
-import com.dd2d.core.presentation.app_bar.CenterTitleTopBar
 import com.dd2d.core.presentation.dialog.ErrorDialog
 import com.dd2d.core.presentation.list.RefreshLazyListState
 import com.dd2d.presentation.code_post.list.content.CodePostListScreenContent
 import com.dd2d.presentation.code_post.list.view_model.CodePostListViewModel
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CodePostListScreen(
-    onDetailClick: (id: Int) ->Unit,
-    onCreateClick: () -> Unit,
+    onCodePostClick: (id: Int) ->Unit,
     modifier: Modifier = Modifier,
 ) {
     val viewModel = hiltViewModel<CodePostListViewModel>()
@@ -42,28 +37,17 @@ fun CodePostListScreen(
         exception = (listState as? RefreshLazyListState.Error)?.exception
     }
 
-    Scaffold(
-        topBar = {
-            CenterTitleTopBar(title = "smaple title", onBack = null)
-        },
-        containerColor = MaterialTheme.colorScheme.background,
-        modifier = modifier
-    ) { innerPadding ->
+    Scaffold(modifier = modifier) { inner ->
         CodePostListScreenContent(
             state = listState,
             list = viewModel.codePostListManager.list,
-            onNext = viewModel::onNextPage,
-            onRefresh = viewModel::onRefresh,
-            onSearch = viewModel::search,
-            onDetailClick = onDetailClick,
-            onCreateClick = onCreateClick,
+            requestNextPage = viewModel::onNextPage,
+            requestRefresh = viewModel::onRefresh,
+            onDetailClick = onCodePostClick,
             modifier = Modifier
-                .consumeWindowInsets(innerPadding)
+                .consumeWindowInsets(inner)
                 .fillMaxSize()
-                .padding(
-                    top = innerPadding.calculateTopPadding(),
-                    bottom = innerPadding.calculateBottomPadding()
-                )
+                .padding(inner)
         )
     }
 

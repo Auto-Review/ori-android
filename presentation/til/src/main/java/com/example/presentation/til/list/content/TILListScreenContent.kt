@@ -2,15 +2,11 @@ package com.example.presentation.til.list.content
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
@@ -22,15 +18,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import com.dd2d.core.presentation.icon.VectorIcon
 import com.dd2d.core.presentation.list.RefreshLazyColumn
 import com.dd2d.core.presentation.list.RefreshLazyListState
-import com.dd2d.core.presentation.option_selector.OptionSelector
-import com.dd2d.core.presentation.slot_main_text.SlotMain500Text
+import com.dd2d.core.presentation.ori.ListFilter
 import com.dd2d.core.presentation.theme.AppTheme
 import com.dd2d.domain.til.model.TILListItem
 import com.example.presentation.til.list.component.TILListItemComponent
@@ -54,7 +46,7 @@ internal fun TILListScreenContent(
         isRefreshing = listState is RefreshLazyListState.Refreshing,
         modifier = modifier
             .fillMaxSize()
-            .padding(horizontal = 24.dp)
+            .padding(horizontal = 24.dp, vertical = 16.dp)
     ) {
         stickyHeader(key = "filter") {
             Row(
@@ -77,7 +69,8 @@ internal fun TILListScreenContent(
         ) { item ->
             TILListItemComponent(
                 item = item,
-                onClick = { onItemClick(item.id) }
+                onClick = { onItemClick(item.id) },
+                modifier = Modifier.fillMaxWidth().animateItem()
             )
             HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
         }
@@ -95,50 +88,6 @@ private fun TILListScreenContentPrev() {
             requestNextPage = {},
             onItemClick = {},
             modifier = Modifier
-        )
-    }
-}
-
-@Composable
-fun ListFilter(
-    currentValue: String,
-    values: List<String>,
-    onValueClick: (index: Int) -> Unit,
-    modifier: Modifier = Modifier
-) {
-    var open by remember { mutableStateOf(false) }
-    OptionSelector(
-        open = open,
-        close = { open = !open },
-        options = values,
-        onOptionSelected = {
-            open = false
-            onValueClick(it)
-        },
-        modifier = modifier,
-        containerColor = MaterialTheme.colorScheme.background,
-    ) {
-        SlotMain500Text(
-            text = currentValue,
-            color = Color.White,
-            fontSize = 12.sp,
-            lineHeight = 24.sp,
-            letterSpacing = 2.sp,
-            suffixStartPadding = 4.dp,
-            suffix = {
-                VectorIcon(
-                    icon = Icons.Default.KeyboardArrowDown,
-                    tint = Color.White,
-                    modifier = Modifier.size(16.dp)
-                )
-            },
-            modifier = Modifier
-                .background(
-                    color = MaterialTheme.colorScheme.onSurface,
-                    shape = MaterialTheme.shapes.extraSmall
-                )
-                .clickable { open = !open }
-                .padding(horizontal = 10.dp, vertical = 8.dp)
         )
     }
 }

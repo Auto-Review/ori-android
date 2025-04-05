@@ -23,13 +23,11 @@ data object CodePostListScreenRoute : ScreenRoute, BottomBarItem {
 
 fun NavGraphBuilder.routeCodePostListScreen(
     onDetailClick: (id: Int) -> Unit,
-    onCreateClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     fadeScreen<CodePostListScreenRoute> {
         CodePostListScreen(
-            onDetailClick = onDetailClick,
-            onCreateClick = onCreateClick,
+            onCodePostClick = onDetailClick,
             modifier = modifier,
         )
     }
