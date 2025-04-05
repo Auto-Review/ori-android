@@ -28,6 +28,8 @@ import com.dd2d.presentation.my.model.MyPageNavigateEvent
 import com.dd2d.presentation.schedule._navigation.ScheduleScreenRoute
 import com.dd2d.presentation.schedule._navigation.routeScheduleScreen
 import com.example.presentation.til.create._navigation.toTILCreateScreen
+import com.example.presentation.til.list._navigation.TILListScreenRoute
+import com.example.presentation.til.list._navigation.routeTILListScreen
 
 @Composable
 private fun bottomBarColors(): NavigationBarItemColors {
@@ -54,6 +56,7 @@ fun MainScreen(
     val bottomBarItems = remember {
         listOf<BottomBarItem>(
             CodePostListScreenRoute,
+            TILListScreenRoute,
             ScheduleScreenRoute,
             MyPageScreenRoute,
         )
@@ -84,6 +87,7 @@ fun MainScreen(
                 onDetailClick = appNavController::toCodePostScreen,
                 onCreateClick = appNavController::toCodePostCreateScreen,
             )
+            routeTILListScreen()
             routeScheduleScreen(
                 onCodePostCreateClick = appNavController::toCodePostCreateScreen,
                 onTILPostCreateClick = appNavController::toTILCreateScreen
