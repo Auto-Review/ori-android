@@ -66,3 +66,17 @@ fun DetailIcon(
         modifier = modifier
     )
 }
+
+@Composable
+fun BookmarkIcon(
+    onBookMark: Boolean,
+    modifier: Modifier = Modifier,
+    tint: Color = LocalContentColor.current
+) {
+    VectorIcon(
+        res = if(onBookMark) R.drawable.bookmark_fill else R.drawable.bookmark,
+        description = null,
+        tint = tint,
+        modifier = modifier
+    )
+}

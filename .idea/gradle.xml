@@ -42,9 +42,9 @@
             <option value="$PROJECT_DIR$/presentation/code-post" />
             <option value="$PROJECT_DIR$/presentation/my" />
             <option value="$PROJECT_DIR$/presentation/schedule" />
+            <option value="$PROJECT_DIR$/presentation/til" />
           </set>
         </option>
-        <option name="resolveExternalAnnotations" value="false" />
       </GradleProjectSettings>
     </option>
   </component>
