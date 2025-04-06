@@ -20,7 +20,7 @@ internal fun CodePostResponseDto.toCodePost(): CodePost {
             content = this.code,
         ),
         description = this.description,
-        reviewDate = this.reviewDay.dateStringToLocalDate("yyyy-MM-dd").atStartOfDay(),
+        reviewDate = this.reviewDay?.dateStringToLocalDate("yyyy-MM-dd")?.atStartOfDay(),
         level = this.level,
         createdAt = this.createDate,
     )

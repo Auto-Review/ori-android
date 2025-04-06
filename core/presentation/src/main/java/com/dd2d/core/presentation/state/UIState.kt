@@ -19,3 +19,8 @@ interface UIStateManager {
     fun stateToError(exception: ManagedException) = uiState.update { UIState.Error(exception) }
     fun stateToSuccess() = uiState.update { UIState.Success }
 }
+
+fun MutableStateFlow<UIState>.stateToIdle() = update { UIState.Idle }
+fun MutableStateFlow<UIState>.stateToLoading() = update { UIState.Loading }
+fun MutableStateFlow<UIState>.stateToError(exception: ManagedException) = update { UIState.Error(exception) }
+fun MutableStateFlow<UIState>.stateToSuccess() = update { UIState.Success }

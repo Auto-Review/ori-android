@@ -12,5 +12,6 @@ internal fun CodePostCommentListItemResponseDto.toCodePostCommentListItem(): Cod
         mentionNickname = this.mentionEmail,
         mentionEmail = this.writerEmail,
         content = this.body,
+        createdAt = "TODO: 날짜 데이터 필요"
     )
 }

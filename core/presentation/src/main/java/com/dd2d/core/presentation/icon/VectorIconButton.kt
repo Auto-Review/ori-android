@@ -22,6 +22,7 @@ fun VectorIconButton(
     interactionSource: MutableInteractionSource? = null,
     colors: IconButtonColors = IconButtonDefaults.iconButtonColors(),
     description: String? = null,
+    iconSize: Dp = 24.dp,
     onClick: () -> Unit,
 ) {
     IconButton(
@@ -34,6 +35,7 @@ fun VectorIconButton(
         Icon(
             imageVector = icon,
             contentDescription = description,
+            modifier = Modifier.size(iconSize)
         )
     }
 }

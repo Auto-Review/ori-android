@@ -12,7 +12,7 @@ data class CodePostResponseDto(
     val writerNickName: String,
     val title: String,
     val level: Int,
-    val reviewDay: DateString,
+    val reviewDay: DateString?,
     val description: String,
     val language: String,
     val code: String,
