@@ -1,77 +1,129 @@
 package com.dd2d.presentation.code_post.detail.content
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import com.dd2d.core.presentation.main_text.Main400Text
-import com.dd2d.core.presentation.main_text.Main700Text
+import com.dd2d.core.presentation.theme.AppTheme
 import com.dd2d.domain.code_post.model.post.CodePost
+import com.dd2d.domain.user.model.User
 import com.dd2d.presentation.code_post.detail.component.CodeComponent
+import com.dd2d.presentation.code_post.detail.component.CodePostHeaderComponent
+import com.dd2d.presentation.code_post.detail.component.CodePostLevelComponent
+import com.dd2d.presentation.code_post.detail.component.CommentComposition
+import com.dd2d.presentation.code_post.detail.component.ReviewListComponent
+import com.dd2d.presentation.code_post.detail.model.CodePostStateHolder
+import com.dd2d.presentation.code_post.detail.model.CommentStateHolder
+import com.dd2d.presentation.code_post.detail.model.FakeCodePostRepository
+import com.dd2d.presentation.code_post.detail.model.FakeCommentRepository
+import com.dd2d.presentation.code_post.detail.model.FakeReviewRepository
+import com.dd2d.presentation.code_post.detail.model.ReviewStateHolder
+import kotlinx.coroutines.launch
 
 @Composable
 internal fun CodePostScreenContent(
+    user: User?,
     codePost: CodePost,
+    codePostStateHolder: CodePostStateHolder,
+    reviewStateHolder: ReviewStateHolder,
+    commentStateHolder: CommentStateHolder,
     modifier: Modifier = Modifier
 ) {
-    Surface(
-        color = MaterialTheme.colorScheme.surface,
+    val pagerState = rememberPagerState { reviewStateHolder.reviewList.size + 1 }
+    val scope = rememberCoroutineScope()
+
+    Column(
         modifier = modifier
+            .imePadding()
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState())
+            .padding(horizontal = 24.dp, vertical = 8.dp)
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .verticalScroll(state = rememberScrollState())
-                .padding(24.dp)
-        ){
-            Main700Text(
-                text = codePost.title,
-                fontSize = 18.sp,
-            )
-            Main400Text(
-                text = codePost.createdAt + " · " + codePost.author.nickname,
-                fontSize = 12.sp
-            )
-            CodeComponent(
-                code = codePost.code,
-                onCodeChange = null,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 12.dp)
-            )
-            Main400Text(
-                text = codePost.description,
-                maxLine = 5,
-                fontSize = 16.sp
-            )
+        CodePostLevelComponent(level = codePost.level)
+        ReviewListComponent(
+            controllable = codePost.author.id == user?.id,
+            reviewList = reviewStateHolder.reviewList,
+            focusedReviewIndex = if(pagerState.currentPage == 0) null else pagerState.currentPage - 1,
+            onReviewClick = { index ->
+                scope.launch {
+                    if(index == null) pagerState.scrollToPage(0)
+                    else pagerState.scrollToPage(index + 1)
+                }
+            },
+            onCreateClick = { },
+            onEditClick = {},
+            onDeleteClick = {
+                if(user == null) return@ReviewListComponent
+
+                reviewStateHolder.reviewList
+                    .getOrNull(pagerState.currentPage - 1)
+                    ?.let { target ->
+                        reviewStateHolder.deleteReview(reviewId = target.id, authorEmail = user.email)
+                    }
+            },
+        )
+        HorizontalPager(
+            state = pagerState,
+            verticalAlignment = Alignment.Top,
+            pageSpacing = 16.dp,
+        ) { page ->
+            if(page == 0) {
+                Column {
+                    CodePostHeaderComponent(codePost = codePost)
+                    CodeComponent(code = codePost.code)
+                }
+            }
+            else {
+                val review = reviewStateHolder.reviewList[page - 1]
+                Column {
+                    CodePostHeaderComponent(codePost = codePost.copy(description = review.review))
+                    CodeComponent(code = codePost.code.copy(content = review.code))
+                }
+            }
         }
+        CommentComposition(
+            user = user,
+            commentStateHolder = commentStateHolder,
+        )
     }
 }
 
-@Preview
-@Preview(locale = "ko")
+
+
+@Preview(showBackground = true)
 @Composable
 private fun CodePostScreenContentPrev() {
-    Column(
-        verticalArrangement = Arrangement.Top,
-        horizontalAlignment = Alignment.Start,
-        modifier = Modifier
-            .fillMaxSize()
-    ) {
-        CodePostScreenContent(
-            codePost = CodePost.dummy(),
+    val id = 1
+    val scope = rememberCoroutineScope()
+    AppTheme {
+        Column(
+            verticalArrangement = Arrangement.Top,
+            horizontalAlignment = Alignment.Start,
             modifier = Modifier
-        )
+                .fillMaxSize()
+                .background(Color.White)
+        ) {
+            CodePostScreenContent(
+                user = User.dummy(),
+                codePost = CodePost.dummy(),
+                codePostStateHolder = CodePostStateHolder(id, scope, FakeCodePostRepository()),
+                reviewStateHolder = ReviewStateHolder(id, scope, FakeReviewRepository()),
+                commentStateHolder = CommentStateHolder(id, scope, FakeCommentRepository()),
+                modifier = Modifier
+            )
+        }
     }
 }

@@ -16,7 +16,7 @@ import javax.inject.Inject
 @HiltViewModel
 internal class TILViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    tilRepository: TILRepository
+    private val tilRepository: TILRepository
 ) : ViewModel() {
     private val route = savedStateHandle.toRoute<TILScreenRoute>()
 
@@ -29,6 +29,5 @@ internal class TILViewModel @Inject constructor(
         )
 
     fun scrap() {
-
     }
 }

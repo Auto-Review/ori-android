@@ -51,7 +51,7 @@ internal fun CodePostInfoInputContent(
             modifier = Modifier.fillMaxWidth().padding(horizontal = 24.dp)
         )
         CodePostLanguageInput(
-            languages = listOf("JAVA", "Kotlin"),
+            languages = listOf("java", "kotlin"),
             selectedLanguage = createState.language,
             onSelectedLanguageChange = { createState.language = it },
             modifier = Modifier.fillMaxWidth().padding(horizontal = 24.dp)

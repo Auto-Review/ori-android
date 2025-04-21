@@ -1,31 +1,18 @@
 package com.dd2d.presentation.code_post.list.content
 
 import android.content.res.Configuration
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.consumeWindowInsets
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.foundation.text.selection.TextSelectionColors
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ExtendedFloatingActionButton
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -34,137 +21,71 @@ import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.dd2d.core.presentation.icon.AddIcon
-import com.dd2d.core.presentation.icon.VectorIcon
 import com.dd2d.core.presentation.list.RefreshLazyColumn
 import com.dd2d.core.presentation.list.RefreshLazyListState
-import com.dd2d.core.presentation.main_text.Main400Text
+import com.dd2d.core.presentation.ori.ListFilter
 import com.dd2d.core.presentation.theme.AppTheme
 import com.dd2d.domain.code_post.model.post.CodePostListItem
 import com.dd2d.presentation.code_post.list.component.CodePostListItemComponent
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 internal fun CodePostListScreenContent(
     state: RefreshLazyListState,
     list: SnapshotStateList<CodePostListItem>,
-    onNext: () -> Unit,
-    onRefresh: () -> Unit,
-    onSearch: (searchText: String) -> Unit,
+    requestNextPage: () -> Unit,
+    requestRefresh: () -> Unit,
     onDetailClick: (id: Int) ->Unit,
-    onCreateClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val lazyState = rememberLazyListState()
+    val dummyFilter1 = remember { listOf("모든 언어", "kotlin", "java", "swift") }
+    val dummyFilter2 = remember { listOf("최신순", "오래된순") }
 
-    val isFABExtend by remember {
-        derivedStateOf {
-            !lazyState.canScrollBackward
-        }
-    }
+    var currentFilter1 by remember { mutableStateOf(dummyFilter1[0]) }
+    var currentFilter2 by remember { mutableStateOf(dummyFilter2[0]) }
 
-    Scaffold(
-        containerColor = MaterialTheme.colorScheme.surfaceContainer,
-        floatingActionButton = {
-            ExtendedFloatingActionButton(
-                expanded = isFABExtend,
-                onClick = onCreateClick,
-                icon = { AddIcon() },
-                text = { Main400Text(text = "글쓰기") },
-                shape = CircleShape,
-                containerColor = MaterialTheme.colorScheme.surface,
-                contentColor = MaterialTheme.colorScheme.primary
-            )
-        },
+    RefreshLazyColumn(
+        onNextPage = requestNextPage,
+        onRefresh = requestRefresh,
+        isLoading = state is RefreshLazyListState.Loading,
+        isRefreshing = state is RefreshLazyListState.Refreshing,
         modifier = modifier
-    ) { innerPadding ->
-        RefreshLazyColumn(
-            onNextPage = onNext,
-            onRefresh = onRefresh,
-            isLoading = state is RefreshLazyListState.Loading,
-            isRefreshing = state is RefreshLazyListState.Refreshing,
-            contentPadding = PaddingValues(horizontal = 24.dp, vertical = 24.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-            lazyState = lazyState,
-            modifier = Modifier
-                .consumeWindowInsets(innerPadding)
-                .fillMaxSize()
-                .padding(innerPadding)
-        ) {
-            item(key = "search") {
-                SearchComponent(
-                    onSearch = onSearch,
-                    modifier = Modifier.fillMaxWidth()
-                )
-            }
-            items(
-                items = list,
-                key = CodePostListItem::id
-            ) { item ->
-                CodePostListItemComponent(
-                    codePost = item,
-                    onClick = { onDetailClick(item.id) },
-                    modifier = Modifier.fillMaxWidth().animateItem(),
-                )
-            }
-        }
-    }
-}
-
-@Composable
-private fun SearchComponent(
-    onSearch: (searchText: String) -> Unit,
-    modifier: Modifier = Modifier
-) {
-    val keyboard = LocalSoftwareKeyboardController.current
-    var text by remember { mutableStateOf("") }
-
-    val handleSearch: () -> Unit = {
-        keyboard?.hide()
-        onSearch(text)
-    }
-
-    TextField(
-        value = text,
-        onValueChange = { text = it },
-        shape = RoundedCornerShape(20.dp),
-        trailingIcon = {
-            IconButton(
-                onClick = handleSearch
+            .fillMaxSize()
+            .padding(horizontal = 24.dp, vertical = 16.dp)
+    ) {
+        stickyHeader(key = "filter") {
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(4.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(MaterialTheme.colorScheme.background)
+                    .padding(vertical = 12.dp)
             ) {
-                VectorIcon(icon = Icons.Default.Search)
+                ListFilter(
+                    currentValue = currentFilter1,
+                    values = dummyFilter1,
+                    onValueClick = { index -> currentFilter1 = dummyFilter1[index] },
+                )
+                ListFilter(
+                    currentValue = currentFilter2,
+                    values = dummyFilter2,
+                    onValueClick = { index -> currentFilter2 = dummyFilter2[index] },
+                )
             }
-        },
-        keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Search),
-        keyboardActions = KeyboardActions { handleSearch() },
-        colors = TextFieldDefaults.colors(
-            unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
-            focusedTextColor = MaterialTheme.colorScheme.onSurface,
-            errorTextColor = MaterialTheme.colorScheme.onSurface,
-
-            unfocusedContainerColor = MaterialTheme.colorScheme.surface,
-            focusedContainerColor = MaterialTheme.colorScheme.surface,
-            errorContainerColor = MaterialTheme.colorScheme.surface,
-
-            unfocusedIndicatorColor = Color.Transparent,
-            focusedIndicatorColor = Color.Transparent,
-            errorIndicatorColor = Color.Transparent,
-
-            cursorColor = MaterialTheme.colorScheme.primary,
-            errorCursorColor = MaterialTheme.colorScheme.error,
-
-            selectionColors = TextSelectionColors(
-                handleColor = MaterialTheme.colorScheme.primary,
-                backgroundColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.5F),
+        }
+        items(
+            items = list,
+            key = CodePostListItem::id
+        ) { item ->
+            CodePostListItemComponent(
+                codePost = item,
+                onClick = { onDetailClick(item.id) },
+                modifier = Modifier.fillMaxWidth().animateItem(),
             )
-        ),
-        modifier = modifier
-    )
+        }
+    }
 }
 
 @Preview
@@ -181,11 +102,9 @@ private fun CodePostListScreenContentPrev() {
             CodePostListScreenContent(
                 list = List(30) { CodePostListItem.dummy(id = it) }.toMutableStateList(),
                 state = RefreshLazyListState.Success,
-                onNext = {},
-                onRefresh = {},
-                onSearch = {},
+                requestNextPage = {},
+                requestRefresh = {},
                 onDetailClick = {},
-                onCreateClick = {},
                 modifier = Modifier
             )
         }
