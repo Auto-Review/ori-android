@@ -14,7 +14,7 @@ internal inline fun <R> HttpResponse.headerHandling(
 }
 
 internal suspend inline fun <reified R> HttpResponse.bodyHandling(): R = with(status) {
-    if(isSuccess()) this@bodyHandling.body<ResponseDTO<R>>().data
+    if(isSuccess()) this@bodyHandling.body<R>()
     else throw toServerException()
 }
 
