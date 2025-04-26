@@ -9,6 +9,7 @@ import com.dd2d.core.presentation.navigation.safePopBackStack
 import com.dd2d.ori_android.presentation_main._navigation.routeMainScreen
 import com.dd2d.ori_android.presentation_main._navigation.toMainScreen
 import com.dd2d.presentation.auth._navigation.routeAuthScreen
+import com.dd2d.presentation.auth._navigation.toAuthScreen
 import com.dd2d.presentation.code_post.create._navigation.routeCodePostCreateScreen
 import com.dd2d.presentation.code_post.detail._navigation.routeCodePostScreen
 import com.example.presentation.til.create._navigation.routeTILCreateScreen
@@ -20,6 +21,9 @@ internal fun AppNavHost(
     modifier: Modifier = Modifier
 ) {
     val navController = rememberNavController()
+
+    AuthExpireHandler(onConfirm = navController::toAuthScreen)
+
     DefaultNavHost(
         navController = navController,
         startDestination = startDestination,
