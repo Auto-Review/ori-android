@@ -15,13 +15,20 @@ import javax.inject.Inject
 class UserRepositoryImpl @Inject constructor(
     private val userApi: UserApi
 ): UserRepository {
+    private var cached: User? = null
     override fun me(): Flow<DataState<User>> = flow {
-        val response = userApi.me()
-        emit(response.toUser())
+        val me = cached?: userApi.me().toUser().also { cached = it }
+
+        emit(me)
     }.asDataState()
 
     override fun updateMe(update: UserUpdater): Flow<DataState<Boolean>> = flow {
         val response = userApi.updateMe(update.toUserUpdateRequestDto())
+        cached = null
         emit(response)
     }.asDataState()
+
+    override suspend fun removeLocalData() {
+        cached = null
+    }
 }
