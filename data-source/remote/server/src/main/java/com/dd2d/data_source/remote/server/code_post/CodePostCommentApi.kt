@@ -1,7 +1,7 @@
 package com.dd2d.data_source.remote.server.code_post
 
 import com.dd2d.core.token_manager.TokenManager
-import com.dd2d.data_source.remote.server._common.PagingResponseDto
+import com.dd2d.data_source.remote.server._common.CommentPagingResponseDto
 import com.dd2d.data_source.remote.server._common.authorizationHeader
 import com.dd2d.data_source.remote.server._common.bodyHandling
 import com.dd2d.data_source.remote.server.code_post.dto.request.CodePostCommentCreateRequestDto
@@ -25,7 +25,7 @@ class CodePostCommentApi @Inject constructor(
         codePostId: Int,
         page: Int,
         size: Int,
-    ): PagingResponseDto<CodePostCommentListItemResponseDto> = client
+    ): CommentPagingResponseDto<CodePostCommentListItemResponseDto> = client
         .get(urlString = "/v1/api/code-post/${codePostId}/USER/comments") {
             authorizationHeader(tokenManager.getAccessToken())
             url {
@@ -40,7 +40,7 @@ class CodePostCommentApi @Inject constructor(
         parentCommentId: Int,
         page: Int,
         size: Int,
-    ): PagingResponseDto<CodePostCommentListItemResponseDto> = client
+    ): CommentPagingResponseDto<CodePostCommentListItemResponseDto> = client
         .get(urlString = "/v1/api/code-post/${codePostId}/USER/replies") {
             authorizationHeader(tokenManager.getAccessToken())
             url {

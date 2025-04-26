@@ -27,10 +27,8 @@ import com.dd2d.presentation.code_post.detail.component.CommentComposition
 import com.dd2d.presentation.code_post.detail.component.ReviewListComponent
 import com.dd2d.presentation.code_post.detail.model.CodePostStateHolder
 import com.dd2d.presentation.code_post.detail.model.CommentStateHolder
-import com.dd2d.presentation.code_post.detail.model.FakeCodePostRepository
-import com.dd2d.presentation.code_post.detail.model.FakeCommentRepository
-import com.dd2d.presentation.code_post.detail.model.FakeReviewRepository
 import com.dd2d.presentation.code_post.detail.model.ReviewStateHolder
+import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.launch
 
 @Composable
@@ -108,6 +106,11 @@ internal fun CodePostScreenContent(
 private fun CodePostScreenContentPrev() {
     val id = 1
     val scope = rememberCoroutineScope()
+
+    val codePostStateHolder = CodePostStateHolder(id, scope, { emptyFlow() }, { emptyFlow() })
+    val reviewStateHolder = ReviewStateHolder(id, scope, { emptyFlow() }, { emptyFlow() }, { emptyFlow() })
+    val commentStateHolder = CommentStateHolder(id, scope, { emptyFlow() }, { emptyFlow() }, { emptyFlow() })
+
     AppTheme {
         Column(
             verticalArrangement = Arrangement.Top,
@@ -119,9 +122,9 @@ private fun CodePostScreenContentPrev() {
             CodePostScreenContent(
                 user = User.dummy(),
                 codePost = CodePost.dummy(),
-                codePostStateHolder = CodePostStateHolder(id, scope, FakeCodePostRepository()),
-                reviewStateHolder = ReviewStateHolder(id, scope, FakeReviewRepository()),
-                commentStateHolder = CommentStateHolder(id, scope, FakeCommentRepository()),
+                codePostStateHolder = codePostStateHolder,
+                reviewStateHolder = reviewStateHolder,
+                commentStateHolder = commentStateHolder,
                 modifier = Modifier
             )
         }

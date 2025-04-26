@@ -6,8 +6,9 @@ import com.dd2d.core.presentation.state.UIState
 import com.dd2d.core.presentation.state.stateToError
 import com.dd2d.core.presentation.state.stateToLoading
 import com.dd2d.core.presentation.state.stateToSuccess
-import com.dd2d.domain.code_post.repository.CodePostRepository
+import com.dd2d.domain.code_post.model.post.CodePost
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
@@ -17,13 +18,13 @@ import kotlinx.coroutines.flow.stateIn
 internal class CodePostStateHolder(
     private val id: Int,
     private val scope: CoroutineScope,
-    private val repository: CodePostRepository,
+    getCodePostFlow: (id: Int) -> Flow<DataState<CodePost>>,
+    private val deleteCodePostFlow: (id: Int) -> Flow<DataState<Boolean>>,
 ) {
     private val _deleteState = MutableStateFlow<UIState>(UIState.Idle)
     val deleteState = _deleteState.asStateFlow()
 
-    val codePostState = repository
-        .getCodePost(id = id)
+    val codePostState = getCodePostFlow(id)
         .stateIn(
             scope = scope,
             started = SharingStarted.WhileSubscribed(5000),
@@ -31,7 +32,7 @@ internal class CodePostStateHolder(
         )
 
     fun deleteCodePost() {
-        repository.deleteCodePost(id = id)
+        deleteCodePostFlow(id)
             .onEachState(
                 onLoading = { _deleteState.stateToLoading() },
                 onError = { _deleteState.stateToError(it) },

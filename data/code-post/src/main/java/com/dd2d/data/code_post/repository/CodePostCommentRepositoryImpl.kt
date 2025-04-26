@@ -7,7 +7,7 @@ import com.dd2d.data.code_post.mapper.comment.toCodePostCommentCreateRequestDto
 import com.dd2d.data.code_post.mapper.comment.toCodePostCommentDeleteRequestDto
 import com.dd2d.data.code_post.mapper.comment.toCodePostCommentListItem
 import com.dd2d.data.code_post.mapper.comment.toCodePostCommentUpdateRequestDto
-import com.dd2d.data_source.remote.server._common.toPagination
+import com.dd2d.data_source.remote.server._common.toCommentPagination
 import com.dd2d.data_source.remote.server.code_post.CodePostCommentApi
 import com.dd2d.data_source.remote.server.code_post.dto.response.CodePostCommentListItemResponseDto
 import com.dd2d.domain.code_post.model.comment.CodePostCommentCreator
@@ -31,7 +31,7 @@ class CodePostCommentRepositoryImpl @Inject constructor(
             size = option.size
         )
         emit(
-            response.toPagination(
+            response.toCommentPagination(
                 requestPage = option.page,
                 mapper = CodePostCommentListItemResponseDto::toCodePostCommentListItem
             )
@@ -46,7 +46,7 @@ class CodePostCommentRepositoryImpl @Inject constructor(
             size = option.size
         )
         emit(
-            response.toPagination(
+            response.toCommentPagination(
                 requestPage = option.page,
                 mapper = CodePostCommentListItemResponseDto::toCodePostCommentListItem
             )

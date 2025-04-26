@@ -34,21 +34,27 @@ internal class CodePostViewModel @Inject constructor(
             started = SharingStarted.WhileSubscribed(5000),
             initialValue = DataState.Loading
         )
+
     val codePostStateHolder = CodePostStateHolder(
         id = route.id,
         scope = viewModelScope,
-        repository = codePostRepository
+        getCodePostFlow = codePostRepository::getCodePost,
+        deleteCodePostFlow = codePostRepository::deleteCodePost,
     )
 
     val commentStateHolder = CommentStateHolder(
         id = route.id,
         scope = viewModelScope,
-        repository = commentRepository
+        getCommentListFlow = commentRepository::getCodePostCommentList,
+        createCommentFlow = commentRepository::createCodePostComment,
+        deleteCommentFlow = commentRepository::deleteCodePostComment,
     )
 
     val reviewStateHolder = ReviewStateHolder(
         id = route.id,
         scope = viewModelScope,
-        repository = reviewRepository
+        getReviewListFlow = reviewRepository::getCodePostReviewList,
+        createReviewFlow = reviewRepository::createCodePostReview,
+        deleteReviewFlow = reviewRepository::deleteCodePostReview,
     )
 }
