@@ -27,9 +27,11 @@ fun TILScreen(
     Scaffold(
         topBar = {
             PostTapBar(
-                title = (tilState as? DataState.Success)?.data?.title?: "",
+                title = (tilState as? DataState.Success)?.data?.title ?: "",
                 onBack = onBack,
                 onScrap = viewModel::scrap,
+                onDelete = {},
+                isDeleting = false,
             )
         },
         modifier = modifier

@@ -9,8 +9,8 @@ internal fun CodePostCommentListItemResponseDto.toCodePostCommentListItem(): Cod
         id = this.id,
         parentCommentId = this.id,
         author = CodePostCommentAuthor(id = this.writerId, nickname = this.writerNickName, email = this.writerEmail),
-        mentionNickname = this.mentionEmail,
-        mentionEmail = this.writerEmail,
+        mentionNickname = this.mentionNickName,
+        mentionEmail = this.mentionEmail,
         content = this.body,
         createdAt = "TODO: 날짜 데이터 필요"
     )

@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
@@ -25,7 +26,6 @@ import com.dd2d.presentation.code_post.detail.component.CodePostHeaderComponent
 import com.dd2d.presentation.code_post.detail.component.CodePostLevelComponent
 import com.dd2d.presentation.code_post.detail.component.CommentComposition
 import com.dd2d.presentation.code_post.detail.component.ReviewListComponent
-import com.dd2d.presentation.code_post.detail.model.CodePostStateHolder
 import com.dd2d.presentation.code_post.detail.model.CommentStateHolder
 import com.dd2d.presentation.code_post.detail.model.ReviewStateHolder
 import kotlinx.coroutines.flow.emptyFlow
@@ -35,7 +35,6 @@ import kotlinx.coroutines.launch
 internal fun CodePostScreenContent(
     user: User?,
     codePost: CodePost,
-    codePostStateHolder: CodePostStateHolder,
     reviewStateHolder: ReviewStateHolder,
     commentStateHolder: CommentStateHolder,
     modifier: Modifier = Modifier
@@ -95,6 +94,9 @@ internal fun CodePostScreenContent(
         CommentComposition(
             user = user,
             commentStateHolder = commentStateHolder,
+            modifier = Modifier
+                .padding(top = 30.dp)
+                .fillMaxWidth()
         )
     }
 }
@@ -107,9 +109,8 @@ private fun CodePostScreenContentPrev() {
     val id = 1
     val scope = rememberCoroutineScope()
 
-    val codePostStateHolder = CodePostStateHolder(id, scope, { emptyFlow() }, { emptyFlow() })
     val reviewStateHolder = ReviewStateHolder(id, scope, { emptyFlow() }, { emptyFlow() }, { emptyFlow() })
-    val commentStateHolder = CommentStateHolder(id, scope, { emptyFlow() }, { emptyFlow() }, { emptyFlow() })
+    val commentStateHolder = CommentStateHolder(id, scope, { emptyFlow() }, { emptyFlow() }, { emptyFlow() }, { emptyFlow() })
 
     AppTheme {
         Column(
@@ -122,7 +123,6 @@ private fun CodePostScreenContentPrev() {
             CodePostScreenContent(
                 user = User.dummy(),
                 codePost = CodePost.dummy(),
-                codePostStateHolder = codePostStateHolder,
                 reviewStateHolder = reviewStateHolder,
                 commentStateHolder = commentStateHolder,
                 modifier = Modifier
