@@ -2,6 +2,7 @@ package com.example.presentation.til.list.content
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -44,16 +45,15 @@ internal fun TILListScreenContent(
         onNextPage = requestNextPage,
         isLoading = listState is RefreshLazyListState.Loading,
         isRefreshing = listState is RefreshLazyListState.Refreshing,
-        modifier = modifier
-            .fillMaxSize()
-            .padding(horizontal = 24.dp, vertical = 16.dp)
+        contentPadding = PaddingValues(vertical = 16.dp),
+        modifier = modifier.fillMaxSize()
     ) {
         stickyHeader(key = "filter") {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .background(MaterialTheme.colorScheme.background)
-                    .padding(vertical = 12.dp)
+                    .padding(horizontal = 24.dp, vertical = 12.dp)
             ) {
                 ListFilter(
                     currentValue = currentFilter,

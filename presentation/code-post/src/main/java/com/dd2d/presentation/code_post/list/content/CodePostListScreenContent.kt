@@ -5,12 +5,14 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -51,9 +53,8 @@ internal fun CodePostListScreenContent(
         onRefresh = requestRefresh,
         isLoading = state is RefreshLazyListState.Loading,
         isRefreshing = state is RefreshLazyListState.Refreshing,
-        modifier = modifier
-            .fillMaxSize()
-            .padding(horizontal = 24.dp, vertical = 16.dp)
+        contentPadding = PaddingValues(vertical = 16.dp),
+        modifier = modifier.fillMaxSize()
     ) {
         stickyHeader(key = "filter") {
             Row(
@@ -61,7 +62,7 @@ internal fun CodePostListScreenContent(
                 modifier = Modifier
                     .fillMaxWidth()
                     .background(MaterialTheme.colorScheme.background)
-                    .padding(vertical = 12.dp)
+                    .padding(horizontal = 24.dp, vertical = 12.dp)
             ) {
                 ListFilter(
                     currentValue = currentFilter1,
@@ -84,6 +85,7 @@ internal fun CodePostListScreenContent(
                 onClick = { onDetailClick(item.id) },
                 modifier = Modifier.fillMaxWidth().animateItem(),
             )
+            HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
         }
     }
 }

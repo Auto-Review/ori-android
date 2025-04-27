@@ -1,7 +1,6 @@
 package com.dd2d.presentation.code_post.list.component
 
 import android.content.res.Configuration
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.dd2d.core.presentation.extensions.delayedClickable
 import com.dd2d.core.presentation.main_text.Main500Text
 import com.dd2d.core.presentation.theme.AppTheme
 import com.dd2d.domain.code_post.model.post.CodePostListItem
@@ -27,8 +27,8 @@ internal fun CodePostListItemComponent(
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .clickable(onClick = onClick)
-            .padding(vertical = 16.dp)
+            .delayedClickable(onClick = onClick)
+            .padding(horizontal = 24.dp, vertical = 16.dp)
     ) {
         Main500Text(
             text = codePost.title,

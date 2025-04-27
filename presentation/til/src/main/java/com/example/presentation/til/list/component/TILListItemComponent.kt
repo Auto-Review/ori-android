@@ -1,6 +1,5 @@
 package com.example.presentation.til.list.component
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -9,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.dd2d.core.presentation.extensions.delayedClickable
 import com.dd2d.core.presentation.main_text.Main500Text
 import com.dd2d.domain.til.model.TILListItem
 
@@ -21,8 +21,8 @@ internal fun TILListItemComponent(
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .clickable(onClick = onClick)
-            .padding(vertical = 16.dp)
+            .delayedClickable(onClick = onClick)
+            .padding(horizontal = 24.dp, vertical = 16.dp)
     ) {
         Main500Text(
             text = item.title,

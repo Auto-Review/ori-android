@@ -1,5 +1,6 @@
 package com.dd2d.presentation.code_post.list.screen
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -11,6 +12,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.dd2d.core.core.exception.ManagedException
@@ -37,7 +39,7 @@ fun CodePostListScreen(
         exception = (listState as? RefreshLazyListState.Error)?.exception
     }
 
-    Scaffold(modifier = modifier) { inner ->
+    Scaffold(modifier = modifier.background(Color.Cyan)) { inner ->
         CodePostListScreenContent(
             state = listState,
             list = viewModel.codePostListManager.list,

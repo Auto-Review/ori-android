@@ -39,7 +39,7 @@ internal fun MyCodePostListContent(
             onNextPage = requestNextPage,
             isLoading = listState is RefreshLazyListState.Loading,
             isRefreshing = listState is RefreshLazyListState.Refreshing,
-            contentPadding = PaddingValues(horizontal = 27.dp, vertical = 16.dp),
+            contentPadding = PaddingValues(vertical = 16.dp),
             modifier = Modifier.fillMaxSize()
         ) {
             items(

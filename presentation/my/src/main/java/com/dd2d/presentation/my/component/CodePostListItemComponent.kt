@@ -1,7 +1,6 @@
 package com.dd2d.presentation.my.component
 
 import androidx.compose.foundation.basicMarquee
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
@@ -12,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.dd2d.core.presentation.extensions.delayedClickable
 import com.dd2d.core.presentation.main_text.Main500Text
 import com.dd2d.domain.code_post.model.post.CodePostListItem
 
@@ -25,8 +25,8 @@ internal fun CodePostListItemComponent(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
-            .clickable(onClick = onClick)
-            .padding(vertical = 7.dp)
+            .delayedClickable(onClick = onClick)
+            .padding(horizontal = 24.dp, vertical = 7.dp)
     ) {
         Main500Text(
             text = item.title,
