@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 interface CodePostReviewRepository {
     fun getCodePostReviewList(codePostId: Int): Flow<DataState<List<CodePostReview>>>
     fun getCodePostReview(id: Int): Flow<DataState<CodePostReview>>
-    fun createCodePostReview(creator: CodePostReviewCreator): Flow<DataState<Int>>
-    fun updateCodePostReview(updater: CodePostReviewUpdater): Flow<DataState<Int>>
+    fun createCodePostReview(creator: CodePostReviewCreator): Flow<DataState<Unit>>
+    fun updateCodePostReview(updater: CodePostReviewUpdater): Flow<DataState<Unit>>
     fun deleteCodePostReview(deleter: CodePostReviewDeleter): Flow<DataState<Unit>>
 }

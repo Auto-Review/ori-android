@@ -27,6 +27,8 @@ import com.dd2d.presentation.code_post.detail.view_model.CodePostViewModel
 @Composable
 fun CodePostScreen(
     onBack: () -> Unit,
+    onReviewCreateClick: (codePostId: Int) -> Unit,
+    onReviewUpdateClick: (codePostId: Int, reviewId: Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val viewModel = hiltViewModel<CodePostViewModel>()
@@ -74,6 +76,8 @@ fun CodePostScreen(
                     user = (userState as? DataState.Success)?.data,
                     codePost = (codePostState as DataState.Success).data,
                     reviewStateHolder = viewModel.reviewStateHolder,
+                    onReviewCreateClick = { onReviewCreateClick(viewModel.route.id) },
+                    onReviewUpdateClick = { reviewId -> onReviewUpdateClick(viewModel.route.id, reviewId) },
                     commentStateHolder = viewModel.commentStateHolder,
                     modifier = Modifier
                         .consumeWindowInsets(innerPadding)

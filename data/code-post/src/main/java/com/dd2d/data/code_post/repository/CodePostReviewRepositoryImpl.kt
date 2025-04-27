@@ -32,18 +32,18 @@ class CodePostReviewRepositoryImpl @Inject constructor(
         emit(response.toCodePostReview())
     }.asDataState()
 
-    override fun createCodePostReview(creator: CodePostReviewCreator): Flow<DataState<Int>> = flow {
+    override fun createCodePostReview(creator: CodePostReviewCreator): Flow<DataState<Unit>> = flow {
         val response = codePostReviewApi.createCodePostReview(
             creator = creator.toCodePostReviewCreateRequestDto()
         )
-        emit(response)
+        emit(Unit)
     }.asDataState()
 
-    override fun updateCodePostReview(updater: CodePostReviewUpdater): Flow<DataState<Int>> = flow {
+    override fun updateCodePostReview(updater: CodePostReviewUpdater): Flow<DataState<Unit>> = flow {
         val response = codePostReviewApi.updateCodePostReview(
             updater = updater.toCodePostReviewUpdateRequestDto()
         )
-        emit(response)
+        emit(Unit)
     }.asDataState()
 
     override fun deleteCodePostReview(deleter: CodePostReviewDeleter): Flow<DataState<Unit>> = flow {

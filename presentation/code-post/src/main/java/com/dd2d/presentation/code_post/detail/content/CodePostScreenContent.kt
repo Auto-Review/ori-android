@@ -36,6 +36,8 @@ internal fun CodePostScreenContent(
     user: User?,
     codePost: CodePost,
     reviewStateHolder: ReviewStateHolder,
+    onReviewCreateClick: () -> Unit,
+    onReviewUpdateClick: (reviewId: Int) -> Unit,
     commentStateHolder: CommentStateHolder,
     modifier: Modifier = Modifier
 ) {
@@ -49,7 +51,10 @@ internal fun CodePostScreenContent(
             .verticalScroll(rememberScrollState())
             .padding(horizontal = 24.dp, vertical = 8.dp)
     ) {
-        CodePostLevelComponent(level = codePost.level)
+        CodePostLevelComponent(
+            level = codePost.level,
+            onReviewCreateClick = if(user?.id == codePost.author.id) onReviewCreateClick else null
+        )
         ReviewListComponent(
             controllable = codePost.author.id == user?.id,
             reviewList = reviewStateHolder.reviewList,
@@ -60,16 +65,11 @@ internal fun CodePostScreenContent(
                     else pagerState.scrollToPage(index + 1)
                 }
             },
-            onCreateClick = { },
-            onEditClick = {},
-            onDeleteClick = {
-                if(user == null) return@ReviewListComponent
-
-                reviewStateHolder.reviewList
-                    .getOrNull(pagerState.currentPage - 1)
-                    ?.let { target ->
-                        reviewStateHolder.deleteReview(reviewId = target.id, authorEmail = user.email)
-                    }
+            onEditClick = onReviewUpdateClick,
+            onDeleteClick = { id ->
+                user?.let {
+                    reviewStateHolder.deleteReview(reviewId = id, authorEmail = user.email)
+                }
             },
         )
         HorizontalPager(
@@ -109,7 +109,7 @@ private fun CodePostScreenContentPrev() {
     val id = 1
     val scope = rememberCoroutineScope()
 
-    val reviewStateHolder = ReviewStateHolder(id, scope, { emptyFlow() }, { emptyFlow() }, { emptyFlow() })
+    val reviewStateHolder = ReviewStateHolder(id, scope, { emptyFlow() }, { emptyFlow() })
     val commentStateHolder = CommentStateHolder(id, scope, { emptyFlow() }, { emptyFlow() }, { emptyFlow() }, { emptyFlow() })
 
     AppTheme {
@@ -124,6 +124,8 @@ private fun CodePostScreenContentPrev() {
                 user = User.dummy(),
                 codePost = CodePost.dummy(),
                 reviewStateHolder = reviewStateHolder,
+                onReviewCreateClick = {},
+                onReviewUpdateClick = {},
                 commentStateHolder = commentStateHolder,
                 modifier = Modifier
             )

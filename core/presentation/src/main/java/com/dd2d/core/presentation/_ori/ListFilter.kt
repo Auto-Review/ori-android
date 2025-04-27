@@ -1,4 +1,4 @@
-package com.dd2d.core.presentation.ori
+package com.dd2d.core.presentation._ori
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable

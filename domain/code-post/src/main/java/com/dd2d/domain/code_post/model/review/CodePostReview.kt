@@ -1,19 +1,19 @@
 package com.dd2d.domain.code_post.model.review
 
-import com.dd2d.core.core.model.DateTimeString
+import java.time.LocalDateTime
 
 data class CodePostReview(
     val id: Int,
     val review: String,
     val code: String,
-    val createdAt: DateTimeString
+    val createdAt: LocalDateTime
 ) {
     companion object {
         fun dummy(id: Int = 1) = CodePostReview(
             id = id,
             review = "리뷰한 내용",
             code = "리뷰할 코드",
-            createdAt = "2025-04-06 01:03",
+            createdAt = LocalDateTime.now(),
         )
     }
 }

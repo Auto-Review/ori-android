@@ -20,9 +20,9 @@ import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.dd2d.core.presentation._ori.ListFilter
 import com.dd2d.core.presentation.list.RefreshLazyColumn
 import com.dd2d.core.presentation.list.RefreshLazyListState
-import com.dd2d.core.presentation.ori.ListFilter
 import com.dd2d.core.presentation.theme.AppTheme
 import com.dd2d.domain.til.model.TILListItem
 import com.example.presentation.til.list.component.TILListItemComponent

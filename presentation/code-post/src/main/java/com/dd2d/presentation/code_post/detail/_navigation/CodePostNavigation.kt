@@ -14,11 +14,15 @@ data class CodePostScreenRoute(val id: Int) : ScreenRoute
 
 fun NavGraphBuilder.routeCodePostScreen(
     onBack: () -> Unit,
+    onReviewCreateClick: (codePostId: Int) -> Unit,
+    onReviewUpdateClick: (codePostId: Int, reviewId: Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     horizontalScreen<CodePostScreenRoute> {
         CodePostScreen(
             onBack = onBack,
+            onReviewCreateClick = onReviewCreateClick,
+            onReviewUpdateClick = onReviewUpdateClick,
             modifier = modifier,
         )
     }

@@ -15,9 +15,9 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.dd2d.core.presentation._ori.PageController
 import com.dd2d.core.presentation.dialog.CancellableConfirmDialog
 import com.dd2d.core.presentation.main_text.Main600Text
-import com.dd2d.core.presentation.ori.PageController
 import com.dd2d.core.presentation.state.UIState
 import com.dd2d.domain.user.model.User
 import com.dd2d.presentation.code_post.detail.model.CommentStateHolder

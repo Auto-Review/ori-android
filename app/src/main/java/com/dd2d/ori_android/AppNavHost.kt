@@ -12,6 +12,8 @@ import com.dd2d.presentation.auth._navigation.routeAuthScreen
 import com.dd2d.presentation.auth._navigation.toAuthScreen
 import com.dd2d.presentation.code_post.create._navigation.routeCodePostCreateScreen
 import com.dd2d.presentation.code_post.detail._navigation.routeCodePostScreen
+import com.dd2d.presentation.code_post.review.routeCodePostReviewCreateScreen
+import com.dd2d.presentation.code_post.review.toCodePostReviewCreateScreen
 import com.example.presentation.til.create._navigation.routeTILCreateScreen
 import com.example.presentation.til.detail._navigation.routeTILScreen
 
@@ -33,8 +35,17 @@ internal fun AppNavHost(
 
         routeMainScreen(appNavController = navController)
 
-        routeCodePostScreen(onBack = navController::safePopBackStack)
+        routeCodePostScreen(
+            onBack = navController::safePopBackStack,
+            onReviewCreateClick = { id ->
+                navController.toCodePostReviewCreateScreen(codePostId = id, reviewId = null)
+            },
+            onReviewUpdateClick = { codePostId, reviewId ->
+                navController.toCodePostReviewCreateScreen(codePostId = codePostId, reviewId = reviewId)
+            },
+        )
         routeCodePostCreateScreen(onBack = navController::safePopBackStack)
+        routeCodePostReviewCreateScreen(onBack = navController::safePopBackStack)
 
         routeTILCreateScreen(onBack = navController::safePopBackStack)
         routeTILScreen(onBack = navController::safePopBackStack)

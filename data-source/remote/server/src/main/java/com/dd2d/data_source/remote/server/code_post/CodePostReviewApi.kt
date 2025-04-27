@@ -32,21 +32,21 @@ class CodePostReviewApi @Inject constructor(
         }
         .bodyHandling()
 
-    suspend fun createCodePostReview(creator: CodePostReviewCreateRequestDto): Int = client
+    suspend fun createCodePostReview(creator: CodePostReviewCreateRequestDto): String = client
         .post(urlString = "/v1/api/review") {
             authorizationHeader(tokenManager.getAccessToken())
             setBody(creator)
         }
         .bodyHandling()
 
-    suspend fun updateCodePostReview(updater: CodePostReviewUpdateRequestDto): Int = client
+    suspend fun updateCodePostReview(updater: CodePostReviewUpdateRequestDto): String = client
         .put(urlString = "/v1/api/review") {
             authorizationHeader(tokenManager.getAccessToken())
             setBody(updater)
         }
         .bodyHandling()
 
-    suspend fun deleteCodePostReview(deleter: CodePostReviewDeleteRequestDto): Int = client
+    suspend fun deleteCodePostReview(deleter: CodePostReviewDeleteRequestDto): String = client
         .delete(urlString = "/v1/api/review") {
             authorizationHeader(tokenManager.getAccessToken())
             setBody(deleter)

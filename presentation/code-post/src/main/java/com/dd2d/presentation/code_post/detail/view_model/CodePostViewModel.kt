@@ -33,7 +33,7 @@ internal class CodePostViewModel @Inject constructor(
     reviewRepository: CodePostReviewRepository,
     commentRepository: CodePostCommentRepository,
 ): ViewModel() {
-    private val route = savedStateHandle.toRoute<CodePostScreenRoute>()
+    val route = savedStateHandle.toRoute<CodePostScreenRoute>()
 
     val userState = userRepository.me()
         .stateIn(
@@ -73,10 +73,9 @@ internal class CodePostViewModel @Inject constructor(
     )
 
     val reviewStateHolder = ReviewStateHolder(
-        id = route.id,
+        codePostId = route.id,
         scope = viewModelScope,
         getReviewListFlow = reviewRepository::getCodePostReviewList,
-        createReviewFlow = reviewRepository::createCodePostReview,
         deleteReviewFlow = reviewRepository::deleteCodePostReview,
     )
 }

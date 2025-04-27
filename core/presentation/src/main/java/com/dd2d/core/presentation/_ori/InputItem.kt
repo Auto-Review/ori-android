@@ -1,4 +1,4 @@
-package com.dd2d.presentation.code_post.create.component
+package com.dd2d.core.presentation._ori
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
@@ -9,7 +9,7 @@ import androidx.compose.ui.unit.sp
 import com.dd2d.core.presentation.main_text.Main700Text
 
 @Composable
-internal inline fun InputItem(
+inline fun InputItem(
     label: String,
     modifier: Modifier = Modifier,
     content: @Composable ColumnScope.() -> Unit

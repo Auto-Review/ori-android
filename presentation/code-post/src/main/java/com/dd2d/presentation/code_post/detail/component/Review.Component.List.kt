@@ -1,5 +1,6 @@
 package com.dd2d.presentation.code_post.detail.component
 
+import android.util.Log
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -25,9 +26,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.dd2d.core.core.model.DateTimeString
+import com.dd2d.core.core.util.format
 import com.dd2d.core.presentation.dialog.CancellableConfirmDialog
 import com.dd2d.core.presentation.icon.VectorIconButton
-import com.dd2d.core.presentation.main_text.Main700Text
 import com.dd2d.core.presentation.option_selector.OptionSelector
 import com.dd2d.core.presentation.theme.AppTheme
 import com.dd2d.domain.code_post.model.review.CodePostReview
@@ -38,12 +39,12 @@ internal fun ReviewListComponent(
     reviewList: List<CodePostReview>,
     focusedReviewIndex: Int?,
     onReviewClick: (index: Int?) -> Unit,
-    onDeleteClick: () -> Unit,
-    onCreateClick: () -> Unit,
-    onEditClick: () -> Unit,
+    onDeleteClick: (id: Int) -> Unit,
+    onEditClick: (id: Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    var openDeleteConfirmDialog by remember { mutableStateOf(false) }
+    var deleteTargetId by remember { mutableStateOf<Int?>(null) }
+
     if(reviewList.isNotEmpty()) {
         Column(
             verticalArrangement = Arrangement.Center,
@@ -59,41 +60,30 @@ internal fun ReviewListComponent(
                 .padding(horizontal = 12.dp, vertical = 15.dp)
         ) {
             reviewList.forEachIndexed { index, item ->
+                Log.d("LOG_CHECK", "ReviewListComponent: $item")
                 ReviewItem(
                     controllable = controllable,
-                    reviewDate = item.createdAt,
+                    reviewDate = item.createdAt.format("yyyy.MM.dd HH:mm"),
                     isFocused = index == focusedReviewIndex,
                     onClick = {
                         if(index == focusedReviewIndex) onReviewClick(null)
                         else onReviewClick(index)
                     },
-                    onDelete = { openDeleteConfirmDialog = true },
-                    onEditClick = onEditClick,
-                )
-            }
-            if(controllable) {
-                Main700Text(
-                    text = "리뷰 추가",
-                    color = MaterialTheme.colorScheme.onSurface,
-                    fontSize = 12.sp,
-                    lineHeight = 16.8.sp,
-                    modifier = Modifier
-                        .align(Alignment.End)
-                        .clickable(onClick = onCreateClick)
-                        .padding(horizontal = 12.dp, vertical = 8.dp)
+                    onDelete = { deleteTargetId = item.id },
+                    onEditClick = { onEditClick(item.id) },
                 )
             }
         }
     }
 
-    if(openDeleteConfirmDialog) {
+    deleteTargetId?.let { id ->
         CancellableConfirmDialog(
             title = "리뷰를 삭제하시겠습니까?",
             message = "삭제된 리뷰는 복구할 수 없습니다.",
-            onCancel = { openDeleteConfirmDialog = false },
+            onCancel = { deleteTargetId = null },
             onConfirm = {
-                openDeleteConfirmDialog =  false
-                onDeleteClick()
+                onDeleteClick(id)
+                deleteTargetId = null
             }
         )
     }
@@ -165,7 +155,6 @@ private fun ReviewListComponentPrev() {
             focusedReviewIndex = focus,
             onReviewClick = { focus = it },
             onDeleteClick = {},
-            onCreateClick = {},
             onEditClick = {},
             modifier = Modifier
         )
