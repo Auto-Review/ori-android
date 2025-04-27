@@ -4,6 +4,7 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.FlingBehavior
 import androidx.compose.foundation.gestures.ScrollableDefaults
@@ -39,10 +40,7 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.dd2d.core.presentation.R
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.launch
 
@@ -122,16 +120,16 @@ fun RefreshLazyColumn(
                 .offset(y = (-20).dp)
                 .align(Alignment.BottomCenter)
                 .size(30.dp)
-                .shadow(elevation = 3.dp, shape = CircleShape)
         ) {
             Icon(
                 imageVector = Icons.Default.KeyboardArrowUp,
-                contentDescription = stringResource(R.string.scroll_to_top),
+                contentDescription = "맨 위로 이동",
                 tint = MaterialTheme.colorScheme.primary,
                 modifier = Modifier
                     .fillMaxSize()
                     .clip(CircleShape)
-                    .background(color = MaterialTheme.colorScheme.background)
+                    .background(color = MaterialTheme.colorScheme.surface)
+                    .border(width = 1.dp, color = MaterialTheme.colorScheme.outlineVariant)
                     .clickable { scope.launch { lazyState.animateScrollToItem(0) } }
             )
         }
