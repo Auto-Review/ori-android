@@ -9,4 +9,7 @@ plugins {
 //    alias(libs.plugins.google.hilt.android) apply false
     id("com.google.dagger.hilt.android") version libs.versions.hilt apply false
     id("com.google.devtools.ksp") version "2.0.20-1.0.25"
+
+    // google service
+    id("com.google.gms.google-services") version "4.4.2" apply false
 }
