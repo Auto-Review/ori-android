@@ -21,6 +21,10 @@ dependencies {
     implementation(libs.kotlinx.coroutines.core) // 코루틴 라이브러리
 
     implementation(project(":core:core"))
+
+    implementation(project(":core:data-store-manager"))
+    implementation(project(":core:token-manager"))
+
     implementation(project(":data-source:remote:server"))
     implementation(project(":domain:auth-user"))
 }
