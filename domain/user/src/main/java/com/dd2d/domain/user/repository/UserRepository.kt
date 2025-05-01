@@ -5,6 +5,7 @@ import com.dd2d.domain.user.model.User
 import com.dd2d.domain.user.model.UserUpdater
 import kotlinx.coroutines.flow.Flow
 
+@Deprecated("use auth_user.UserRepository")
 interface UserRepository {
     fun me(): Flow<DataState<User>>
     fun updateMe(update: UserUpdater): Flow<DataState<Boolean>>
