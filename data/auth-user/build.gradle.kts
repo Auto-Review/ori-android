@@ -22,5 +22,5 @@ dependencies {
 
     implementation(project(":core:core"))
     implementation(project(":data-source:remote:server"))
-    implementation(project(":domain:auth"))
+    implementation(project(":domain:auth-user"))
 }

@@ -6,8 +6,8 @@ import com.dd2d.core.core.state.DataState
 import com.dd2d.core.presentation.state.UIState
 import com.dd2d.core.presentation.state.UIStateManager
 import com.dd2d.core.presentation_oauth.google.model.OAuthResult
-import com.dd2d.domain.auth.model.AuthRequester
-import com.dd2d.domain.auth.repository.AuthRepository
+import com.dd2d.domain.auth_user.auth.model.AuthRequester
+import com.dd2d.domain.auth_user.auth.repository.AuthRepository
 import com.dd2d.domain.local_setting.model.SignInState
 import com.dd2d.domain.local_setting.repository.LocalSettingRepository
 import dagger.hilt.android.lifecycle.HiltViewModel

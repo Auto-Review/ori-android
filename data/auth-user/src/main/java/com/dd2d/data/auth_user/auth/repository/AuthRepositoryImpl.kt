@@ -1,12 +1,12 @@
-package com.dd2d.data.auth.repository
+package com.dd2d.data.auth_user.auth.repository
 
 import com.dd2d.core.core.state.DataState
 import com.dd2d.core.core.state.asDataState
-import com.dd2d.data.auth.mapper.toAuthRequestDto
+import com.dd2d.data.auth_user.auth.mapper.toAuthRequestDto
 import com.dd2d.data_source.remote.server.auth.AuthApi
-import com.dd2d.domain.auth.model.AuthRequester
-import com.dd2d.domain.auth.model.AuthResult
-import com.dd2d.domain.auth.repository.AuthRepository
+import com.dd2d.domain.auth_user.auth.model.AuthRequester
+import com.dd2d.domain.auth_user.auth.model.AuthResult
+import com.dd2d.domain.auth_user.auth.repository.AuthRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject

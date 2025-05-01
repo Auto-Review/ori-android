@@ -36,8 +36,8 @@ include(":data-source:local:data-store")
 include(":domain:local-setting")
 include(":data:local-setting")
 
-include(":domain:auth")
-include(":data:auth")
+include(":domain:auth-user")
+include(":data:auth-user")
 include(":presentation:auth")
 
 include(":domain:code-post")
