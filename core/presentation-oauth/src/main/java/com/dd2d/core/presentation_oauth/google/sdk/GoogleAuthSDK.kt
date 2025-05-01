@@ -1,6 +1,8 @@
 package com.dd2d.core.presentation_oauth.google.sdk
 
 import android.content.Context
+import android.os.Build
+import androidx.credentials.ClearCredentialStateRequest
 import androidx.credentials.CredentialManager
 import androidx.credentials.CustomCredential
 import androidx.credentials.GetCredentialRequest
@@ -10,113 +12,148 @@ import androidx.credentials.PublicKeyCredential
 import androidx.credentials.exceptions.GetCredentialCancellationException
 import androidx.credentials.exceptions.GetCredentialException
 import androidx.credentials.exceptions.GetCredentialInterruptedException
-import androidx.credentials.exceptions.GetCredentialProviderConfigurationException
+import androidx.credentials.exceptions.GetCredentialUnknownException
 import androidx.credentials.exceptions.NoCredentialException
 import com.dd2d.core.core.exception.ClientException
 import com.dd2d.core.presentation_oauth.BuildConfig
-import com.dd2d.core.presentation_oauth.R
 import com.dd2d.core.presentation_oauth.google.model.OAuthResult
 import com.dd2d.core.presentation_oauth.google.model.OAuthState
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption
+import com.google.android.libraries.identity.googleid.GetSignInWithGoogleOption
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
+import com.google.android.libraries.identity.googleid.GoogleIdTokenParsingException
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
-internal class GoogleAuthSDK(private val context: Context) {
-    private val _state = MutableStateFlow<OAuthState>(OAuthState.Idle)
-    val state = _state.asStateFlow()
-    fun consumeState() = _state.update { OAuthState.Idle }
-
+internal class GoogleAuthSDK(
+    private val context: Context,
+    private val scope: CoroutineScope,
+): OAuthSDK() {
     private val manager = CredentialManager.create(context)
-    private val googleIdOption: GetGoogleIdOption = GetGoogleIdOption.Builder()
-        .setFilterByAuthorizedAccounts(false)
-        .setServerClientId(BuildConfig.GOOGLE_WEB_CLIENT_ID)
-        .build()
 
-    private val request = GetCredentialRequest.Builder()
+    private val googleIdOption = GetGoogleIdOption.Builder()
+        .setServerClientId(BuildConfig.GOOGLE_WEB_CLIENT_ID)
+        .setFilterByAuthorizedAccounts(false)
+        .build()
+    private val requestWithIdOption = GetCredentialRequest.Builder()
         .addCredentialOption(googleIdOption)
         .build()
 
+    private val googleSignInOption = GetSignInWithGoogleOption
+        .Builder(BuildConfig.GOOGLE_WEB_CLIENT_ID)
+        .build()
+    private val requestWithSignInOption = GetCredentialRequest.Builder()
+        .addCredentialOption(googleSignInOption)
+        .build()
 
-    suspend fun oAuth() {
-        _state.update { OAuthState.Loading }
 
-        val result = try {
-            handleResponse(manager.getCredential(context, request))
+    init {
+        scope.launch {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+                manager.prepareGetCredential(requestWithIdOption)
+            }
         }
-        catch (e: GetCredentialException) {
-            handleException(e)
-        }
-
-        _state.update { result }
     }
 
-    private fun handleResponse(response: GetCredentialResponse): OAuthState {
-        return when(val credential = response.credential) {
-            is CustomCredential -> {
-                val idToken = GoogleIdTokenCredential.createFrom(credential.data)
-                val result = OAuthResult(
-                    token = idToken.idToken,
-                    name = idToken.givenName,
-                    email = idToken.id,
-                    profileImageUrl = idToken.profilePictureUri?.path,
-                )
-                OAuthState.Success(result)
+    override fun signIn() {
+        scope.launch {
+            stateToLoading()
+
+            val resultState = try {
+                val result = manager.getCredential(context, requestWithIdOption)
+                handleResult(result)
             }
-            is PublicKeyCredential -> {
-                val exception = ClientException.UnsupportedOperationException(
-                    message = context.getString(R.string.un_support_auth_type),
-                    code = 1
-                )
-                OAuthState.Error(exception)
+            catch(e: GetCredentialCancellationException) {
+                OAuthState.Idle
+            }
+            catch (e: NoCredentialException) {
+                val result = manager.getCredential(context, requestWithSignInOption)
+                handleResult(result)
+            }
+            catch (e: GetCredentialException) {
+                handleException(e)
             }
 
-            is PasswordCredential -> {
-                val exception = ClientException.UnsupportedOperationException(
-                    message = context.getString(R.string.un_support_auth_type),
-                    code = 2
-                )
-                OAuthState.Error(exception)
+            stateTo(resultState)
+        }
+    }
+
+    override fun signOut() {}
+
+    override fun withdraw() {
+        scope.launch {
+            manager.clearCredentialState(ClearCredentialStateRequest())
+        }
+    }
+
+    private fun handleResult(result: GetCredentialResponse): OAuthState {
+        return when(val credential = result.credential) {
+            is CustomCredential -> {
+                try {
+                    val data = GoogleIdTokenCredential.createFrom(credential.data)
+                    OAuthState.Success(
+                        result = OAuthResult(
+                            token = data.idToken,
+                            name = data.displayName,
+                            email = data.id,
+                            profileImageUrl = data.profilePictureUri?.path,
+                        )
+                    )
+                }
+                catch (e: GoogleIdTokenParsingException) {
+                    OAuthState.Error(
+                        exception = ClientException.OperationFailException(
+                            message = "로그인에 실패했습니다. 잠시후 다시 시도해 주세요.",
+                            code = 1,
+                            cause = e
+                        )
+                    )
+                }
             }
-            else -> {
-                val exception = ClientException.OperationFailException(
-                    message = context.getString(R.string.auth_fail),
-                    code = 3
-                )
-                OAuthState.Error(exception)
-            }
+            is PublicKeyCredential -> unsupportedOperation(code = 1)
+            is PasswordCredential -> unsupportedOperation(code = 2)
+            else -> unsupportedOperation(code = 3)
         }
     }
 
     private fun handleException(e: GetCredentialException): OAuthState {
         return when(e) {
-            is NoCredentialException -> {
-                val exception = ClientException.OperationFailException(
-                    message = context.getString(R.string.not_found_credential),
-                    code = null,
-                    cause = e
-                )
-                OAuthState.Error(exception)
-            }
-            is GetCredentialProviderConfigurationException -> {
-                val exception = ClientException.OperationFailException(
-                    message = context.getString(R.string.no_google_play),
-                    code = null,
-                    cause = e
-                )
-                OAuthState.Error(exception)
-            }
             is GetCredentialCancellationException -> OAuthState.Idle
             is GetCredentialInterruptedException -> OAuthState.Idle
-            else -> {
-                val exception = ClientException.UnknownException(
-                    message = context.getString(R.string.unknown_error_for_auth),
-                    code = null,
-                    cause = e
+            is GetCredentialUnknownException -> {
+                OAuthState.Error(
+                    exception = ClientException.UnknownException(
+                        message = "로그인에 실패했습니다. 잠시후 다시 시도해 주세요.",
+                        code = 2,
+                        cause = e,
+                    )
                 )
-                OAuthState.Error(exception)
+            }
+            is NoCredentialException -> {
+                OAuthState.Error(
+                    exception = ClientException.OperationFailException(
+                        message = "로그인 가능한 구글 계정을 찾을 수 없습니다."
+                    )
+                )
+            }
+            else -> {
+                OAuthState.Error(
+                    exception = ClientException.UnknownException(
+                        message = "로그인에 실패했습니다. 잠시후 다시 시도해 주세요.",
+                        code = 3,
+                        cause = e,
+                    )
+                )
             }
         }
+    }
+
+    private fun unsupportedOperation(code: Int): OAuthState.Error {
+        return OAuthState.Error(
+            exception = ClientException.UnsupportedOperationException(
+                message = "지원하지 않는 로그인 방식입니다.",
+                code = code,
+            )
+        )
     }
 }

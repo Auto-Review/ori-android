@@ -14,8 +14,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import com.dd2d.core.presentation.navigation.ScreenRoute
 import com.dd2d.core.presentation.theme.AppTheme
-import com.dd2d.domain.local_setting.model.SignInState
-import com.dd2d.domain.local_setting.repository.LocalSettingRepository
+import com.dd2d.domain.auth_user.auth.model.AuthState
+import com.dd2d.domain.auth_user.auth.repository.AuthRepository
 import com.dd2d.ori_android.presentation_main._navigation.MainScreenRoute
 import com.dd2d.presentation.auth._navigation.AuthScreenRoute
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,7 +23,7 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-    @Inject lateinit var localSettingRepository: LocalSettingRepository
+    @Inject lateinit var authRepository: AuthRepository
     private var startDestination by mutableStateOf<ScreenRoute?>(null)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,9 +34,10 @@ class MainActivity : ComponentActivity() {
         setContent {
             AppTheme {
                 LaunchedEffect(Unit) {
-                    startDestination = when(localSettingRepository.getSignInState()) {
-                        SignInState.SignOut -> AuthScreenRoute
-                        SignInState.SignIn -> MainScreenRoute(selectedTabIndex = 2)
+                    val authState = authRepository.getAuthState().getOrDefault(AuthState.SignOut)
+                    startDestination = when(authState) {
+                        AuthState.SignOut -> AuthScreenRoute
+                        AuthState.SignIn -> MainScreenRoute(selectedTabIndex = 2)
                     }
                 }
                 Surface(

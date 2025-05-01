@@ -1,11 +1,10 @@
-package com.dd2d.domain.user.repository
+package com.dd2d.domain.auth_user.user.repository
 
 import com.dd2d.core.core.state.DataState
-import com.dd2d.domain.user.model.User
-import com.dd2d.domain.user.model.UserUpdater
+import com.dd2d.domain.auth_user.user.model.User
+import com.dd2d.domain.auth_user.user.model.UserUpdater
 import kotlinx.coroutines.flow.Flow
 
-@Deprecated("use auth_user.UserRepository")
 interface UserRepository {
     fun me(): Flow<DataState<User>>
     fun updateMe(update: UserUpdater): Flow<DataState<Boolean>>

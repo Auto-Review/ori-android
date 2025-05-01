@@ -1,6 +1,5 @@
-package com.dd2d.domain.user.model
+package com.dd2d.domain.auth_user.user.model
 
-@Deprecated("use auth_user.User")
 data class User(
     val id: Int,
     val nickname: String,
