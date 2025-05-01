@@ -1,7 +1,9 @@
 package com.dd2d.data.auth_user
 
 import com.dd2d.data.auth_user.auth.repository.AuthRepositoryImpl
+import com.dd2d.data.auth_user.user.repository.UserRepositoryImpl
 import com.dd2d.domain.auth_user.auth.repository.AuthRepository
+import com.dd2d.domain.auth_user.user.repository.UserRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -13,5 +15,9 @@ import javax.inject.Singleton
 abstract class AuthUserModule {
     @Binds
     @Singleton
-    abstract fun bindAuthRepository(authRepositoryImpl: AuthRepositoryImpl): AuthRepository
+    abstract fun bindAuthRepository(impl: AuthRepositoryImpl): AuthRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindUserRepository(impl: UserRepositoryImpl): UserRepository
 }
