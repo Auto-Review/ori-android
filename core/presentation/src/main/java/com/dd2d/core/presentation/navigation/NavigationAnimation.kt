@@ -18,7 +18,7 @@ import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 
-private const val DEFAULT_FADE_ANIMATION_DURATION = 700
+private const val DEFAULT_FADE_ANIMATION_DURATION = 300
 private const val DEFAULT_SLIDE_ANIMATION_DURATION = 300
 private val DEFAULT_TRANSFORM_ORIGIN = TransformOrigin(0.5F, 0F)
 
