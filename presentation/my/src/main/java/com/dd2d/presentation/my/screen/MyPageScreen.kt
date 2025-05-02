@@ -11,6 +11,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.dd2d.core.presentation.dialog.LoadingDialog
 import com.dd2d.presentation.my.conent.MyCodePostListContent
 import com.dd2d.presentation.my.conent.MyPageScreenContent
 import com.dd2d.presentation.my.conent.MyTILListContent
@@ -24,7 +25,6 @@ fun MyPageScreen(
 ) {
     val viewModel = hiltViewModel<MyPageViewModel>()
 
-    val userState by viewModel.userState.collectAsStateWithLifecycle()
     val codePostListState by viewModel.codePostListManager.state.collectAsStateWithLifecycle()
     val tilListState by viewModel.tilListManager.state.collectAsStateWithLifecycle()
 
@@ -37,32 +37,39 @@ fun MyPageScreen(
         containerColor = MaterialTheme.colorScheme.background,
         modifier = modifier
     ){ inner ->
-        MyPageScreenContent(
-            userState = userState,
-            codePostListContent = {
-                MyCodePostListContent(
-                    listState = codePostListState,
-                    list = viewModel.codePostListManager.list,
-                    requestNextPage = viewModel::nextCodePostPage,
-                    requestRefresh = viewModel::refreshCodePostList,
-                    onItemClick = { id -> navigationEvent(MyPageNavigateEvent.CodePost(id)) },
-                    modifier = Modifier.fillMaxSize(),
-                )
-            },
-            tilListContent = {
-                MyTILListContent(
-                    listState = tilListState,
-                    list = viewModel.tilListManager.list,
-                    requestNextPage = viewModel::nextTILPage,
-                    requestRefresh = viewModel::refreshTILList,
-                    onItemClick = { id -> navigationEvent(MyPageNavigateEvent.TIL(id)) },
-                    modifier = Modifier.fillMaxSize(),
-                )
-            },
-            modifier = Modifier
-                .consumeWindowInsets(inner)
-                .fillMaxSize()
-                .padding(inner)
-        )
+        if(viewModel.me == null) {
+            LoadingDialog()
+        }
+        else {
+            MyPageScreenContent(
+                user = viewModel.me!!,
+                userUpdateState = viewModel.userUpdateState,
+                onUserUpdate = viewModel::updateUser,
+                codePostListContent = {
+                    MyCodePostListContent(
+                        listState = codePostListState,
+                        list = viewModel.codePostListManager.list,
+                        requestNextPage = viewModel::nextCodePostPage,
+                        requestRefresh = viewModel::refreshCodePostList,
+                        onItemClick = { id -> navigationEvent(MyPageNavigateEvent.CodePost(id)) },
+                        modifier = Modifier.fillMaxSize(),
+                    )
+                },
+                tilListContent = {
+                    MyTILListContent(
+                        listState = tilListState,
+                        list = viewModel.tilListManager.list,
+                        requestNextPage = viewModel::nextTILPage,
+                        requestRefresh = viewModel::refreshTILList,
+                        onItemClick = { id -> navigationEvent(MyPageNavigateEvent.TIL(id)) },
+                        modifier = Modifier.fillMaxSize(),
+                    )
+                },
+                modifier = Modifier
+                    .consumeWindowInsets(inner)
+                    .fillMaxSize()
+                    .padding(inner)
+            )
+        }
     }
 }

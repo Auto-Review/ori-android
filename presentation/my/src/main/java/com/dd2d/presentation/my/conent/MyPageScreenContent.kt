@@ -14,18 +14,20 @@ import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.dd2d.core.core.state.DataState
 import com.dd2d.core.presentation.list.RefreshLazyListState
 import com.dd2d.core.presentation.main_tab.MainPagerTab
 import com.dd2d.core.presentation.theme.AppTheme
 import com.dd2d.core.presentation.theme.hansType
+import com.dd2d.domain.auth_user.user.model.User
 import com.dd2d.domain.code_post.model.post.CodePostListItem
-import com.dd2d.domain.user.model.User
 import com.dd2d.presentation.my.component.UserComponent
+import com.dd2d.presentation.my.model.UserUpdateState
 
 @Composable
 internal fun MyPageScreenContent(
-    userState: DataState<User>,
+    user: User,
+    userUpdateState: UserUpdateState,
+    onUserUpdate: () -> Unit,
     codePostListContent: @Composable () -> Unit,
     tilListContent: @Composable () -> Unit,
     modifier: Modifier = Modifier
@@ -44,8 +46,9 @@ internal fun MyPageScreenContent(
                 modifier = Modifier.padding(top = 24.dp, start = 27.dp, end = 27.dp)
             )
             UserComponent(
-                userState = userState,
-                onEditClick = {},
+                user = user,
+                updateState = userUpdateState,
+                onUpdate = onUserUpdate,
                 modifier = Modifier.fillMaxWidth()
                     .padding(top = 16.dp, start = 27.dp, end = 27.dp)
             )
@@ -71,7 +74,9 @@ internal fun MyPageScreenContent(
 private fun MyPageScreenContentPrev() {
     AppTheme {
         MyPageScreenContent(
-            userState = DataState.Success(User.dummy()),
+            user = User.dummy(),
+            userUpdateState = UserUpdateState(),
+            onUserUpdate = {},
             codePostListContent = {
                 MyCodePostListContent(
                     listState = RefreshLazyListState.Success,
