@@ -3,6 +3,8 @@ package com.dd2d.presentation.my.model
 import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import com.dd2d.core.core.exception.ClientException
 import com.dd2d.core.core.state.DataState
 import com.dd2d.core.core.state.onEachState
@@ -21,8 +23,8 @@ import kotlinx.coroutines.flow.emptyFlow
 internal class UserUpdateState: UIStateManager {
     override val uiState = MutableStateFlow<UIState>(UIState.Idle)
 
-    private var user: User? = null
-    fun setUser(user: User) {
+    private var user by mutableStateOf<User?>(null)
+    fun initUser(user: User) {
         this.user = user
         nameState.edit {
             replace(start = 0, end = length, text = user.nickname)

@@ -29,7 +29,7 @@ internal class MyPageViewModel @Inject constructor(
         userRepository.me()
             .onStateSuccess { 
                 me = this
-                userUpdateState.setUser(this)
+                userUpdateState.initUser(this)
             }
             .launchIn(viewModelScope)
     }

@@ -5,7 +5,6 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.togetherWith
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -39,7 +38,6 @@ internal fun EditButton(
         if(edit) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
                 modifier = Modifier.padding(8.dp)
             ) {
                 Main400Text(
@@ -56,6 +54,7 @@ internal fun EditButton(
                         fontSize = 12.sp,
                         lineHeight = 24.sp,
                         modifier = Modifier
+                            .padding(start = 4.dp)
                             .delayedClickable(onClick = onSave)
                             .padding(horizontal = 4.dp, vertical = 2.dp)
                     )
