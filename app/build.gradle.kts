@@ -1,3 +1,6 @@
+import org.jetbrains.kotlin.konan.properties.Properties
+import java.io.FileInputStream
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -11,6 +14,17 @@ plugins {
 android {
     namespace = "com.dd2d.ori_android"
     compileSdk = 35
+
+    val localProperties = Properties().apply { load(FileInputStream(rootProject.file("local.properties"))) }
+
+    signingConfigs {
+        create("release") {
+            storeFile = file(localProperties["store-file"] as String)
+            storePassword = localProperties["store-password"] as String
+            keyAlias = localProperties["key-alias"] as String
+            keyPassword = localProperties["key-password"] as String
+        }
+    }
 
     defaultConfig {
         applicationId = "com.dd2d.ori_android"
@@ -29,6 +43,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            signingConfig = signingConfigs.getByName("release")
         }
     }
     compileOptions {
