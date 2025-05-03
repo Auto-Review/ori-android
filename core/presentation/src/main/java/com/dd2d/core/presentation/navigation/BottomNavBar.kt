@@ -14,9 +14,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.dd2d.core.presentation.icon.VectorIcon
+import com.dd2d.core.presentation.theme.tp
 
 @Composable
 fun BottomNavBar(
@@ -53,8 +53,8 @@ fun BottomNavBar(
 						Text(
 							text = stringResource(labelRes),
 							color = Color.Unspecified,
-							fontSize = 10.sp,
-							lineHeight = 12.sp,
+							fontSize = 10.tp,
+							lineHeight = 12.tp,
 							fontWeight = if(isSelected) FontWeight.W700 else FontWeight.W500
 						)
 					}

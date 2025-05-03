@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -25,10 +24,10 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.dd2d.core.presentation.icon.NextButton
 import com.dd2d.core.presentation.icon.PrevButton
 import com.dd2d.core.presentation.theme.AppTheme
+import com.dd2d.core.presentation.theme.tp
 import com.dd2d.domain.schedule.model.ScheduleOnDay
 import com.dd2d.domain.schedule.model.ScheduleOnMonth
 import com.kizitonwose.calendar.compose.HorizontalCalendar
@@ -88,16 +87,14 @@ internal fun ScheduleCalendarComponent(
         ) {
             HorizontalCalendar(
                 state = calendarState,
-                monthHeader = {month ->
+                monthHeader = { month ->
                     Text(
                         text = getYearMonthText(year = month.yearMonth.year, month = month.yearMonth.monthValue),
-                        lineHeight = 40.sp,
+                        fontSize = 14.tp,
                         modifier = Modifier
                             .align(Alignment.CenterHorizontally)
                     )
-                    WeekComponent(modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 20.dp))
+                    WeekComponent(modifier = Modifier.fillMaxWidth().padding(vertical = 20.dp))
                 },
                 dayContent = { day ->
                     DayComponent(
@@ -122,11 +119,7 @@ internal fun ScheduleCalendarComponent(
                     .fillMaxWidth()
             )
 
-            PrevButton(
-                modifier = Modifier
-                    .align(Alignment.TopStart)
-                    .size(40.dp)
-            ) {
+            PrevButton(modifier = Modifier.align(Alignment.TopStart)) {
                 scope.launch {
                     calendarState.animateScrollToMonth(
                         month = current.minusMonths(1)
@@ -134,11 +127,7 @@ internal fun ScheduleCalendarComponent(
                 }
             }
 
-            NextButton(
-                modifier = Modifier
-                    .align(Alignment.TopEnd)
-                    .size(40.dp)
-            ) {
+            NextButton(modifier = Modifier.align(Alignment.TopEnd)) {
                 scope.launch {
                     calendarState.animateScrollToMonth(
                         month = current.plusMonths(1)

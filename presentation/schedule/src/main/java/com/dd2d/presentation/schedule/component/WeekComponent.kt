@@ -7,8 +7,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.sp
 import com.dd2d.core.presentation.main_text.Main600Text
+import com.dd2d.core.presentation.theme.tp
 import com.kizitonwose.calendar.core.daysOfWeek
 import java.time.DayOfWeek
 
@@ -26,8 +26,8 @@ internal fun WeekComponent(
         weeks.forEach { week ->
             Main600Text(
                 text = getWeekText(dayOfWeek = week),
-                fontSize = 10.sp,
-                lineHeight = 12.sp,
+                fontSize = 10.tp,
+                lineHeight = 12.tp,
                 color = weekColor,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.weight(1F)
