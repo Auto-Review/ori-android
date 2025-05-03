@@ -11,7 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.dd2d.core.presentation.theme.hansType
+import com.dd2d.core.presentation.theme.LocalHansType
 
 @Composable
 fun MainTab(
@@ -44,7 +44,7 @@ fun MainTab(
             ) {
                 Text(
                     text = tab,
-                    style = hansType.tabTitle,
+                    style = LocalHansType.current.tabTitle,
                     modifier = Modifier.padding(vertical = 16.dp)
                 )
             }

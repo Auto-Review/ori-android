@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
 import com.dd2d.core.presentation.list.RefreshLazyListState
 import com.dd2d.core.presentation.main_tab.MainPagerTab
 import com.dd2d.core.presentation.theme.AppTheme
-import com.dd2d.core.presentation.theme.hansType
+import com.dd2d.core.presentation.theme.LocalHansType
 import com.dd2d.domain.auth_user.user.model.User
 import com.dd2d.domain.code_post.model.post.CodePostListItem
 import com.dd2d.presentation.my.component.UserComponent
@@ -42,7 +42,7 @@ internal fun MyPageScreenContent(
         Column(modifier = Modifier.fillMaxSize()){
             Text(
                 text = "// MY PAGE",
-                style = hansType.label,
+                style = LocalHansType.current.label,
                 modifier = Modifier.padding(top = 24.dp, start = 27.dp, end = 27.dp)
             )
             UserComponent(

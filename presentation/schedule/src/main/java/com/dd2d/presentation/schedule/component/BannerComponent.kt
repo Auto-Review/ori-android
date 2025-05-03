@@ -20,9 +20,9 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.dd2d.core.presentation.image.PainterImage
 import com.dd2d.core.presentation.theme.HansFontFamily
+import com.dd2d.core.presentation.theme.tp
 import com.dd2d.presentation.schedule.R
 
 @Composable
@@ -40,8 +40,8 @@ internal fun BannerComponent(
             PainterImage(res = R.drawable.banner, modifier = Modifier.align(Alignment.CenterStart))
             Text(
                 text = buildAnnotatedString {
-                    val style1 = SpanStyle(color = Color(0xFF424242), fontSize = 18.sp, fontWeight = FontWeight.W400, fontFamily = HansFontFamily)
-                    val style2 = SpanStyle(color = Color(0xFFF4F4F4), fontSize = 18.sp, fontWeight = FontWeight.W400, fontFamily = HansFontFamily)
+                    val style1 = SpanStyle(color = Color(0xFF424242), fontSize = 18.tp, fontWeight = FontWeight.W400, fontFamily = HansFontFamily)
+                    val style2 = SpanStyle(color = Color(0xFFF4F4F4), fontSize = 18.tp, fontWeight = FontWeight.W400, fontFamily = HansFontFamily)
                     withStyle(style1) { append("printf(\"") }
                     withStyle(style2) { append("Review,\nRetain, Repeat") }
                     withStyle(style1) { append("\");") }

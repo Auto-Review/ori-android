@@ -15,8 +15,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.dd2d.core.presentation.main_text.Main600Text
+import com.dd2d.core.presentation.theme.tp
 
 @Composable
 internal fun BoxScope.DayComponent(
@@ -49,8 +49,8 @@ internal fun BoxScope.DayComponent(
                 hasSchedule-> scheduleOnDayColor
                 else -> dayColor
             },
-            fontSize = 18.sp,
-            lineHeight = 18.sp,
+            fontSize = 18.tp,
+            lineHeight = 18.tp,
         )
     }
 }

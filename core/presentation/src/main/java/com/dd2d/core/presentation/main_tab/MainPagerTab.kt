@@ -21,7 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.dd2d.core.presentation.theme.hansType
+import com.dd2d.core.presentation.theme.LocalHansType
 import kotlinx.coroutines.launch
 
 @Composable
@@ -67,7 +67,7 @@ fun MainPagerTab(
                 ) {
                     Text(
                         text = tab,
-                        style = hansType.tabTitle,
+                        style = LocalHansType.current.tabTitle,
                         modifier = Modifier.padding(vertical = 16.dp)
                     )
                 }

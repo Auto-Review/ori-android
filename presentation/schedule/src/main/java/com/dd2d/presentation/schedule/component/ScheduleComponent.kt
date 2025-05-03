@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.sp
 import com.dd2d.core.core.util.format
 import com.dd2d.core.presentation.main_text.Main700Text
 import com.dd2d.core.presentation.theme.AppTheme
-import com.dd2d.core.presentation.theme.hansType
+import com.dd2d.core.presentation.theme.LocalHansType
 import com.dd2d.domain.schedule.model.ScheduleOnDay
 import com.dd2d.domain.schedule.model.ScheduleOnMonth
 
@@ -37,7 +37,7 @@ internal fun ScheduleComponent(
     Column(modifier = modifier) {
         Text(
             text = "// CHECK LIST",
-            style = hansType.label,
+            style = LocalHansType.current.label,
         )
         Spacer(Modifier.height(10.dp))
         Surface(
