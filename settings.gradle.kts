@@ -30,7 +30,6 @@ include(":core:presentation")
 include(":core:presentation-oauth")
 
 include(":data-source:remote:server")
-
 include(":data-source:local:data-store")
 
 include(":domain:local-setting")
@@ -50,9 +49,11 @@ include(":presentation:schedule")
 
 include(":domain:til")
 include(":data:til")
+include(":presentation:til")
 
 include(":domain:user")
 include(":data:user")
 include(":presentation:my")
-include(":presentation:til")
+
 include(":domain:notification")
+include(":data:notification")
