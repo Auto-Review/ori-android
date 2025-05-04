@@ -4,10 +4,12 @@ import com.dd2d.core.token_manager.TokenManager
 import com.dd2d.data_source.remote.server._common.authorizationHeader
 import com.dd2d.data_source.remote.server._common.bodyHandling
 import com.dd2d.data_source.remote.server._common.isSuccessOrThrow
+import com.dd2d.data_source.remote.server.user.dto.request.FCMUpdateRequestDto
 import com.dd2d.data_source.remote.server.user.dto.request.UserUpdateRequestDto
 import com.dd2d.data_source.remote.server.user.dto.response.UserResponseDto
 import io.ktor.client.HttpClient
 import io.ktor.client.request.get
+import io.ktor.client.request.post
 import io.ktor.client.request.put
 import io.ktor.client.request.setBody
 import javax.inject.Inject
@@ -25,6 +27,13 @@ class UserApi @Inject constructor(
 
     suspend fun updateMe(body: UserUpdateRequestDto): Boolean = client
         .put(urlString = "/v1/api/profile") {
+            authorizationHeader(tokenManager.getAccessToken())
+            setBody(body)
+        }
+        .isSuccessOrThrow()
+
+    suspend fun setFCMToken(body: FCMUpdateRequestDto): Boolean = client
+        .post("/v1/api/fcm") {
             authorizationHeader(tokenManager.getAccessToken())
             setBody(body)
         }

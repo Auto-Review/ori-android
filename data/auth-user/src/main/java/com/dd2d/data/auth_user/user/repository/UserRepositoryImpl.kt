@@ -5,6 +5,7 @@ import com.dd2d.core.core.state.asDataState
 import com.dd2d.data.auth_user.user.mapper.toUser
 import com.dd2d.data.auth_user.user.mapper.toUserUpdateRequestDto
 import com.dd2d.data_source.remote.server.user.UserApi
+import com.dd2d.data_source.remote.server.user.dto.request.FCMUpdateRequestDto
 import com.dd2d.domain.auth_user.user.model.User
 import com.dd2d.domain.auth_user.user.model.UserUpdater
 import com.dd2d.domain.auth_user.user.repository.UserRepository
@@ -27,6 +28,10 @@ class UserRepositoryImpl @Inject constructor(
         cached = null
         emit(response)
     }.asDataState()
+
+    override suspend fun updateFCMToken(fcmToken: String): Result<Unit> {
+        return userApi.runCatching { setFCMToken(FCMUpdateRequestDto(fcmToken)) }.map {  }
+    }
 
     override suspend fun removeLocalData() {
         cached = null
