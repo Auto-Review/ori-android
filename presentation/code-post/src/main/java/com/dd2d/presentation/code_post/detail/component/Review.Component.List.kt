@@ -1,6 +1,5 @@
 package com.dd2d.presentation.code_post.detail.component
 
-import android.util.Log
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -60,7 +59,6 @@ internal fun ReviewListComponent(
                 .padding(horizontal = 12.dp, vertical = 15.dp)
         ) {
             reviewList.forEachIndexed { index, item ->
-                Log.d("LOG_CHECK", "ReviewListComponent: $item")
                 ReviewItem(
                     controllable = controllable,
                     reviewDate = item.createdAt.format("yyyy.MM.dd HH:mm"),

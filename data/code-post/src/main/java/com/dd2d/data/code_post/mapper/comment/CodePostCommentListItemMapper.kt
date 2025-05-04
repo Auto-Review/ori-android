@@ -1,5 +1,7 @@
 package com.dd2d.data.code_post.mapper.comment
 
+import com.dd2d.core.core.util.format
+import com.dd2d.core.core.util.utcToLocalDateTime
 import com.dd2d.data_source.remote.server.code_post.dto.response.CodePostCommentListItemResponseDto
 import com.dd2d.domain.code_post.model.comment.CodePostCommentAuthor
 import com.dd2d.domain.code_post.model.comment.CodePostCommentListItem
@@ -12,6 +14,6 @@ internal fun CodePostCommentListItemResponseDto.toCodePostCommentListItem(): Cod
         mentionNickname = this.mentionNickName,
         mentionEmail = this.mentionEmail,
         content = this.body,
-        createdAt = "TODO: 날짜 데이터 필요"
+        createdAt = this.createdAt.utcToLocalDateTime().format("yyyy-MM-dd HH:mm")
     )
 }
