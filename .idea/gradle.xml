@@ -14,6 +14,7 @@
             <option value="$PROJECT_DIR$/core" />
             <option value="$PROJECT_DIR$/core/core" />
             <option value="$PROJECT_DIR$/core/data-store-manager" />
+            <option value="$PROJECT_DIR$/core/fcm" />
             <option value="$PROJECT_DIR$/core/network" />
             <option value="$PROJECT_DIR$/core/presentation" />
             <option value="$PROJECT_DIR$/core/presentation-oauth" />
