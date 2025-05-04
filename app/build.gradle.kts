@@ -103,8 +103,6 @@ dependencies {
     implementation(project(":data:user"))
     implementation(project(":presentation:my"))
 
-    implementation(project(":domain:schedule")) // deprecated
-    implementation(project(":domain:schedule")) // deprecated
     implementation(project(":data:notification"))
     implementation(project(":domain:notification"))
     implementation(project(":presentation:schedule"))

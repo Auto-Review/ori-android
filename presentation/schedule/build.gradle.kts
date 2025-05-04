@@ -69,6 +69,5 @@ dependencies {
     implementation(project(":core:core"))
     implementation(project(":core:presentation"))
 
-    implementation(project(":domain:schedule"))
     implementation(project(":domain:notification"))
 }
