@@ -22,10 +22,12 @@ data object ScheduleScreenRoute : ScreenRoute, BottomBarItem {
 }
 
 fun NavGraphBuilder.routeScheduleScreen(
+    onScheduleClick: (codePostId: Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     fadeScreen<ScheduleScreenRoute> {
         ScheduleScreen(
+            onScheduleClick = onScheduleClick,
             modifier = modifier,
         )
     }

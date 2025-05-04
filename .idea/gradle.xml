@@ -27,6 +27,7 @@
             <option value="$PROJECT_DIR$/data/auth-user" />
             <option value="$PROJECT_DIR$/data/code-post" />
             <option value="$PROJECT_DIR$/data/local-setting" />
+            <option value="$PROJECT_DIR$/data/notification" />
             <option value="$PROJECT_DIR$/data/schedule" />
             <option value="$PROJECT_DIR$/data/til" />
             <option value="$PROJECT_DIR$/data/user" />
@@ -34,6 +35,7 @@
             <option value="$PROJECT_DIR$/domain/auth-user" />
             <option value="$PROJECT_DIR$/domain/code-post" />
             <option value="$PROJECT_DIR$/domain/local-setting" />
+            <option value="$PROJECT_DIR$/domain/notification" />
             <option value="$PROJECT_DIR$/domain/schedule" />
             <option value="$PROJECT_DIR$/domain/til" />
             <option value="$PROJECT_DIR$/domain/user" />
