@@ -64,9 +64,10 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
 
     implementation(project(":core:core"))
+    implementation(project(":core:fcm"))
     implementation(project(":core:presentation"))
     implementation(project(":core:presentation-oauth"))
-    implementation(project(":domain:auth-user"))
 
     implementation(project(":domain:local-setting"))
+    implementation(project(":domain:auth-user"))
 }
