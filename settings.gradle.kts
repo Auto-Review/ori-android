@@ -51,6 +51,4 @@ include(":domain:til")
 include(":data:til")
 include(":presentation:til")
 
-include(":domain:user")
-include(":data:user")
 include(":presentation:my")

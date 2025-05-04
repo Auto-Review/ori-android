@@ -67,5 +67,5 @@ dependencies {
     implementation(project(":core:presentation"))
 
     implementation(project(":domain:code-post"))
-    implementation(project(":domain:user"))
+    implementation(project(":domain:auth-user"))
 }

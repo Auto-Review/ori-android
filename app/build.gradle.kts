@@ -94,13 +94,10 @@ dependencies {
 
     implementation(project(":domain:local-setting"))
     implementation(project(":data:local-setting"))
+
     implementation(project(":domain:auth-user"))
     implementation(project(":data:auth-user"))
-
     implementation(project(":presentation:auth"))
-
-    implementation(project(":domain:user"))
-    implementation(project(":data:user"))
     implementation(project(":presentation:my"))
 
     implementation(project(":data:notification"))

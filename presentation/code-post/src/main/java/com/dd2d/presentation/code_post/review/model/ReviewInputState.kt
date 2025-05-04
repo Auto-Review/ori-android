@@ -4,10 +4,10 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import com.dd2d.domain.auth_user.user.model.User
 import com.dd2d.domain.code_post.model.review.CodePostReview
 import com.dd2d.domain.code_post.model.review.CodePostReviewCreator
 import com.dd2d.domain.code_post.model.review.CodePostReviewUpdater
-import com.dd2d.domain.user.model.User
 
 internal class ReviewInputState {
     var origin by mutableStateOf<CodePostReview?>(null)

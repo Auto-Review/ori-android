@@ -19,8 +19,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.dd2d.core.presentation.theme.AppTheme
+import com.dd2d.domain.auth_user.user.model.User
 import com.dd2d.domain.code_post.model.post.CodePost
-import com.dd2d.domain.user.model.User
 import com.dd2d.presentation.code_post.detail.component.CodeComponent
 import com.dd2d.presentation.code_post.detail.component.CodePostHeaderComponent
 import com.dd2d.presentation.code_post.detail.component.CodePostLevelComponent

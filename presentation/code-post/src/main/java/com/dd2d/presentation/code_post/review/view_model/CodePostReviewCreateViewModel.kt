@@ -13,8 +13,8 @@ import com.dd2d.core.presentation.state.UIStateManager
 import com.dd2d.core.presentation.state.stateToError
 import com.dd2d.core.presentation.state.stateToLoading
 import com.dd2d.core.presentation.state.stateToSuccess
+import com.dd2d.domain.auth_user.user.repository.UserRepository
 import com.dd2d.domain.code_post.repository.CodePostReviewRepository
-import com.dd2d.domain.user.repository.UserRepository
 import com.dd2d.presentation.code_post.review.CodePostReviewCreateScreenRoute
 import com.dd2d.presentation.code_post.review.model.ReviewInputState
 import dagger.hilt.android.lifecycle.HiltViewModel

@@ -10,10 +10,10 @@ import com.dd2d.core.presentation.state.UIState
 import com.dd2d.core.presentation.state.stateToError
 import com.dd2d.core.presentation.state.stateToLoading
 import com.dd2d.core.presentation.state.stateToSuccess
+import com.dd2d.domain.auth_user.user.repository.UserRepository
 import com.dd2d.domain.code_post.repository.CodePostCommentRepository
 import com.dd2d.domain.code_post.repository.CodePostRepository
 import com.dd2d.domain.code_post.repository.CodePostReviewRepository
-import com.dd2d.domain.user.repository.UserRepository
 import com.dd2d.presentation.code_post.detail._navigation.CodePostScreenRoute
 import com.dd2d.presentation.code_post.detail.model.CommentStateHolder
 import com.dd2d.presentation.code_post.detail.model.ReviewStateHolder
