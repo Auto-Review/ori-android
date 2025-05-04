@@ -45,6 +45,8 @@ include(":presentation:code-post")
 
 include(":domain:schedule")
 include(":data:schedule")
+include(":domain:notification")
+include(":data:notification")
 include(":presentation:schedule")
 
 include(":domain:til")
@@ -54,6 +56,3 @@ include(":presentation:til")
 include(":domain:user")
 include(":data:user")
 include(":presentation:my")
-
-include(":domain:notification")
-include(":data:notification")

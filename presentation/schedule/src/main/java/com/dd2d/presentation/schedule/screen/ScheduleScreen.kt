@@ -3,7 +3,6 @@ package com.dd2d.presentation.schedule.screen
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -33,12 +32,12 @@ fun ScheduleScreen(
         exception = (uiState as? UIState.Error)?.exception
     }
 
-    Scaffold(
-        containerColor = MaterialTheme.colorScheme.background,
-        modifier = modifier
-    ) { inner ->
+    Scaffold(modifier = modifier) { inner ->
         ScheduleScreenContent(
-            scheduleOnMonth = viewModel.schedule,
+            schedules = viewModel.schedules,
+            onYearMonthChange = viewModel::updateYearMonth,
+            onRefresh = viewModel::refresh,
+            isRefreshing = viewModel.isRefreshing,
             modifier = Modifier
                 .consumeWindowInsets(inner)
                 .fillMaxSize()

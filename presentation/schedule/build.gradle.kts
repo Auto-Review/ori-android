@@ -70,4 +70,5 @@ dependencies {
     implementation(project(":core:presentation"))
 
     implementation(project(":domain:schedule"))
+    implementation(project(":domain:notification"))
 }

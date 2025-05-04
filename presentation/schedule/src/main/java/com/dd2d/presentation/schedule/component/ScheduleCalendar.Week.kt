@@ -13,7 +13,7 @@ import com.kizitonwose.calendar.core.daysOfWeek
 import java.time.DayOfWeek
 
 @Composable
-internal fun WeekComponent(
+internal fun Week(
     modifier: Modifier = Modifier,
     weeks: List<DayOfWeek> = daysOfWeek(),
     weekColor: Color = Color(0xFFB5BEC6)
