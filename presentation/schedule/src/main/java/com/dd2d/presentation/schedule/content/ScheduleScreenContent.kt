@@ -35,6 +35,7 @@ import java.time.YearMonth
 @Composable
 internal fun ScheduleScreenContent(
     schedules: SnapshotStateMap<YearMonth, ScheduleOnYearMonth>,
+    onScheduleClick: (codePostId: Int) -> Unit,
     onYearMonthChange: (YearMonth) -> Unit,
     onRefresh: () -> Unit,
     isRefreshing: Boolean,
@@ -78,6 +79,7 @@ internal fun ScheduleScreenContent(
             )
             ScheduleComponent(
                 schedules = selectedDateSchedules,
+                onClick = onScheduleClick,
                 modifier = Modifier.padding(top = 20.dp, start = 27.dp, end = 27.dp)
             )
         }
@@ -102,6 +104,7 @@ private fun ScheduleScreenContentPrev() {
             onYearMonthChange = {},
             onRefresh = {},
             isRefreshing = false,
+            onScheduleClick = {},
             modifier = Modifier
                 .fillMaxSize()
         )

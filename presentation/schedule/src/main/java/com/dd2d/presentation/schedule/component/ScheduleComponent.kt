@@ -1,8 +1,10 @@
 package com.dd2d.presentation.schedule.component
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -33,6 +35,7 @@ private val SCHEDULE_ITEM_HEIGHT = 40.dp
 @Composable
 internal fun ScheduleComponent(
     schedules: List<Notification>,
+    onClick: (codePostId: Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(modifier = modifier) {
@@ -46,15 +49,16 @@ internal fun ScheduleComponent(
                 .fillMaxWidth()
                 .heightIn(max = SCHEDULE_ITEM_HEIGHT * 4)
                 .background(color = MaterialTheme.colorScheme.surface, shape = RoundedCornerShape(10.dp))
-                .padding(horizontal = 17.dp, vertical = 10.dp)
+                .padding(vertical = 10.dp)
         ) {
             if(schedules.isEmpty()) {
                 item(key = "empty schedule") {
                     Column(
                         verticalArrangement = Arrangement.Center,
                         modifier = Modifier
-                        .animateItem()
-                        .height(SCHEDULE_ITEM_HEIGHT)
+                            .animateItem()
+                            .height(SCHEDULE_ITEM_HEIGHT)
+                            .padding(horizontal = 17.dp)
                     ) {
                         Main700Text(
                             text = "이날은 리뷰할 게시물이 없어요.",
@@ -73,6 +77,8 @@ internal fun ScheduleComponent(
                     ScheduleItemComponent(
                         content = item.content,
                         date = item.noticeAt,
+                        onClick = { onClick(item.id) },
+                        contentPadding = PaddingValues(horizontal = 17.dp),
                         modifier = Modifier
                             .animateItem()
                             .fillMaxWidth()
@@ -88,12 +94,16 @@ internal fun ScheduleComponent(
 private fun ScheduleItemComponent(
     content: String,
     date: DateString,
-    modifier: Modifier = Modifier
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    contentPadding: PaddingValues = PaddingValues()
 ) {
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
+            .clickable(onClick = onClick)
+            .padding(contentPadding)
     ) {
         Main700Text(
             text = content,
@@ -125,6 +135,7 @@ private fun ScheduleComponentPrev() {
         ) {
             ScheduleComponent(
                 schedules = List(4) { Notification.dummy(it) },
+                onClick = {},
                 modifier = Modifier
             )
         }

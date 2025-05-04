@@ -21,6 +21,7 @@ import com.dd2d.presentation.schedule.view_model.ScheduleViewModel
 
 @Composable
 fun ScheduleScreen(
+    onScheduleClick: (codePostId: Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val viewModel = hiltViewModel<ScheduleViewModel>()
@@ -38,6 +39,7 @@ fun ScheduleScreen(
             onYearMonthChange = viewModel::updateYearMonth,
             onRefresh = viewModel::refresh,
             isRefreshing = viewModel.isRefreshing,
+            onScheduleClick = onScheduleClick,
             modifier = Modifier
                 .consumeWindowInsets(inner)
                 .fillMaxSize()
