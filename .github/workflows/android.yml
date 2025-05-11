@@ -30,9 +30,7 @@ jobs:
           
       - name: Create google-services.json
         run: |
-          cat <<EOF > app/google-services.json
-          ${{ secrets.GOOGLE_SERVICES }}
-          EOF
+          echo ${{ secrets.GOOGLE_SERVICE }} > app/google-services.json
 
       - name: Create local.properties # (LOCAL_PROPERTIES_CONTENTS)를 기반으로 local.properties를 만들고 keystore.jks 위치를 추가해 준다.
         run: |
