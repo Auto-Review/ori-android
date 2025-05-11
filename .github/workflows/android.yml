@@ -38,12 +38,12 @@ jobs:
           echo "SIGNED_STORE_FILE=keystore.jks" >> local.properties # 생략가능
 
       - name: Build debug # APK를 빌드한다. (디버그용)
-        run: ./gradlew assembleDebug
+        run: ./gradlew assembleRelease
 
       - name: Upload to Firebase App Distribution # 파이어베이스에 앱 디스트리 뷰션에 배포한다.
         uses: wzieba/Firebase-Distribution-Github-Action@v1
         with:
-          appId: ${{secrets.FIREBASE_APP_ID}}
-          serviceCredentialsFileContent: ${{ secrets.CREDENTIAL_FILE_CONTENT }}
-          groups: winey-team
-          file: app/build/outputs/apk/debug/app-debug.apk
+          appId: ${{secrets.FIRE_BASE_APP_ID}}
+          serviceCredentialsFileContent: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
+          groups: 하나회
+          file: app/build/outputs/apk/debug/app.apk
