@@ -10,9 +10,9 @@
               <option name="connection">
                 <ConnectionSetting>
                   <option name="appId" value="com.dd2d.ori_android" />
-                  <option name="mobileSdkAppId" value="1:431214018617:android:432b6d1807237ec931cde8" />
-                  <option name="projectId" value="ori-autoreview" />
-                  <option name="projectNumber" value="431214018617" />
+                  <option name="mobileSdkAppId" value="1:129665526699:android:da3cb47db03b955e5ac0ee" />
+                  <option name="projectId" value="ori-push-notification" />
+                  <option name="projectNumber" value="129665526699" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

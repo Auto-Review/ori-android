@@ -5,6 +5,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.dd2d.core.fcm.FCMModule
+import com.dd2d.core.presentation.BuildConfig
 import com.dd2d.core.presentation.navigation.ScreenRoute
 import com.dd2d.domain.auth_user.auth.model.AuthState
 import com.dd2d.domain.auth_user.auth.repository.AuthRepository
@@ -21,12 +23,6 @@ class AppViewModel @Inject constructor(
     private val authRepository: AuthRepository,
 ): ViewModel() {
     var startDestination by mutableStateOf<ScreenRoute?>(null)
-
-    private suspend fun initStartDestination() {
-        val authState = authRepository.getAuthState().getOrDefault(AuthState.SignOut)
-        startDestination = when(authState) {
-            AuthState.SignOut -> AuthScreenRoute
-            AuthState.SignIn -> MainScreenRoute(selectedTabIndex = 2)
     
     private fun initAuthStateObserver() {
         authRepository.getAuthState()
@@ -39,13 +35,16 @@ class AppViewModel @Inject constructor(
             .launchIn(viewModelScope)
     }
     
+    private fun checkFCMToken() {
+        if(BuildConfig.DEBUG) {
+            viewModelScope.launch {
+                FCMModule.getFCMToken()
+            }
         }
     }
 
     init {
-        viewModelScope.launch {
-            initStartDestination()
-        }
         initAuthStateObserver()
+        checkFCMToken()
     }
 }

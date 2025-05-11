@@ -1,33 +1,41 @@
 {
   "project_info": {
-    "project_number": "431214018617",
-    "project_id": "ori-autoreview",
-    "storage_bucket": "ori-autoreview.firebasestorage.app"
+    "project_number": "129665526699",
+    "project_id": "ori-push-notification",
+    "storage_bucket": "ori-push-notification.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:431214018617:android:432b6d1807237ec931cde8",
+        "mobilesdk_app_id": "1:129665526699:android:da3cb47db03b955e5ac0ee",
         "android_client_info": {
           "package_name": "com.dd2d.ori_android"
         }
       },
       "oauth_client": [
         {
-          "client_id": "431214018617-5b4fnv71idci3n1vaj82oj4v8i8k980p.apps.googleusercontent.com",
+          "client_id": "129665526699-29mph76264n7gms8hcmou3mjjcfdtset.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dd2d.ori_android",
+            "certificate_hash": "2ec1ee4f195d11bdd2a8333f0b52b563bfe4700a"
+          }
+        },
+        {
+          "client_id": "129665526699-jp85k3uagpi5fu9k9bc2irlsrnfoql30.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyD-Cvq69yTb-Ox6AprlXjPxeCDg5x7j56U"
+          "current_key": "AIzaSyCFYkYQb8GWyKgSLUSS5dR2qqmRAC7oLO0"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "431214018617-5b4fnv71idci3n1vaj82oj4v8i8k980p.apps.googleusercontent.com",
+              "client_id": "129665526699-jp85k3uagpi5fu9k9bc2irlsrnfoql30.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
