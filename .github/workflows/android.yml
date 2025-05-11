@@ -39,7 +39,7 @@ jobs:
           echo "key-password=${{ secrets.KEY_PASSWORD }}" >> local.properties
           echo "key-alias=${{ secrets.KEY_ALIAS }}" >> local.properties
 
-      - name: Build release # APK를 빌드한다. (디버그용)
+      - name: Build release # APK를 빌드한다.
         run: ./gradlew assembleRelease --no-daemon --parallel --build-cache
 
 
@@ -49,4 +49,4 @@ jobs:
           appId: ${{secrets.FIRE_BASE_APP_ID}}
           serviceCredentialsFileContent: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
           groups: 하나회
-          file: app/release/app-release.apk
+          file: app/build/outputs/apk/release/app-release.apk
