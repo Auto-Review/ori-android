@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
@@ -46,8 +47,7 @@ internal fun CodePostReviewCreateScreenContent(
         InputItem(label = "Code", modifier = Modifier.fillMaxWidth().padding(horizontal = 24.dp)) {
             CodeTextField(
                 language = "[어떻게 할까]",
-                code = inputState.code,
-                onCodeChange = { inputState.code = it },
+                codeTextState = rememberTextFieldState(),
                 modifier = Modifier.fillMaxWidth()
             )
         }

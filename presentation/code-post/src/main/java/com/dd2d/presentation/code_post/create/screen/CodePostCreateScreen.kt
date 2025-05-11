@@ -1,7 +1,7 @@
 package com.dd2d.presentation.code_post.create.screen
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
@@ -63,6 +63,7 @@ fun CodePostCreateScreen(
                         currentStep = viewModel.createState.step,
                         onNextStep = viewModel.createState::nextStep,
                         onPrevStep = viewModel.createState::prevStep,
+                        canCreate = viewModel.createState.canCreate,
                         onCreate = viewModel::create,
                         isCreating = uiState is UIState.Loading
                     )
@@ -113,12 +114,12 @@ private fun CodePostCreateStepButton(
     onPrevStep: () -> Unit,
     onCreate:() -> Unit,
     isCreating: Boolean,
+    canCreate: Boolean,
     modifier: Modifier = Modifier
 ) {
     val keyboard = LocalSoftwareKeyboardController.current
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(5.dp),
         modifier = modifier
     ) {
         if(isCreating) {
@@ -138,7 +139,7 @@ private fun CodePostCreateStepButton(
                     lineHeight = 24.sp,
                     modifier = Modifier
                         .clickable(onClick = onPrevStep)
-                        .padding(5.dp)
+                        .padding(10.dp)
                 )
             }
             if(currentStep.ordinal in 0..<CodePostCreateStep.entries.lastIndex) {
@@ -149,22 +150,26 @@ private fun CodePostCreateStepButton(
                     lineHeight = 24.sp,
                     modifier = Modifier
                         .clickable(onClick = onNextStep)
-                        .padding(5.dp)
+                        .padding(10.dp)
                 )
             }
             if(currentStep.ordinal == CodePostCreateStep.entries.lastIndex) {
-                Main700Text(
-                    text = "완료",
-                    color = MaterialTheme.colorScheme.onSurface,
-                    fontSize = 12.sp,
-                    lineHeight = 24.sp,
-                    modifier = Modifier
-                        .clickable {
-                            keyboard?.hide()
-                            onCreate()
-                        }
-                        .padding(5.dp)
-                )
+                AnimatedVisibility(
+                    visible = canCreate
+                ) {
+                    Main700Text(
+                        text = "완료",
+                        color = MaterialTheme.colorScheme.onSurface,
+                        fontSize = 12.sp,
+                        lineHeight = 24.sp,
+                        modifier = Modifier
+                            .clickable(enabled = canCreate) {
+                                keyboard?.hide()
+                                onCreate()
+                            }
+                            .padding(10.dp)
+                    )
+                }
             }
         }
     }

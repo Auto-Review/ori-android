@@ -6,17 +6,19 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.input.TextFieldLineLimits
+import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.dd2d.core.presentation.main_text.Main400Text
-import com.dd2d.core.presentation.main_text_field.MainTextFieldDefaults
 
 object CodeTextFieldDefault {
     @Composable
@@ -37,43 +39,45 @@ object CodeTextFieldDefault {
 @Composable
 fun CodeTextField(
     language: String,
-    code: String,
-    onCodeChange: (String) -> Unit,
+    codeTextState: TextFieldState,
     modifier: Modifier = Modifier,
     placeholder: @Composable () -> Unit = { CodeTextFieldDefault.DefaultPlaceholder() }
 ) {
     Column(
+        verticalArrangement = Arrangement.spacedBy(8.dp),
         modifier = Modifier
             .fillMaxWidth()
             .background(
                 MaterialTheme.colorScheme.outlineVariant,
                 shape = MaterialTheme.shapes.small
             )
-            .padding(horizontal = 8.dp, vertical = 12.dp)
+            .padding(14.dp)
             .then(modifier)
     ){
-        Row(
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 12.dp)
-        ) {
-            Main400Text(text = language, fontSize = 12.sp)
+        if(language.isNotBlank()) {
+            Row(
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier
+                    .fillMaxWidth()
+            ) {
+                Main400Text(text = language, fontSize = 12.sp)
+            }
         }
-        TextField(
-            value = code,
-            onValueChange = onCodeChange,
+        BasicTextField(
+            state = codeTextState,
+            lineLimits = TextFieldLineLimits.MultiLine(minHeightInLines = 5),
             textStyle = TextStyle.Default.copy(
                 fontSize = 16.sp,
             ),
-            placeholder = placeholder,
-            colors = MainTextFieldDefaults.textFieldColors(
-                focusedContainerColor = MaterialTheme.colorScheme.outlineVariant,
-                unfocusedContainerColor = MaterialTheme.colorScheme.outlineVariant,
-                disabledContainerColor = MaterialTheme.colorScheme.outlineVariant,
-                errorContainerColor = MaterialTheme.colorScheme.outlineVariant,
-            )
+            decorator = { innerTextField ->
+                if(codeTextState.text.isEmpty()) {
+                    placeholder()
+                }
+                innerTextField()
+            },
+            cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
+            modifier = Modifier.fillMaxWidth()
         )
     }
 }

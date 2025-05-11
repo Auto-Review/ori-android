@@ -38,7 +38,7 @@ internal fun CodePostListItemComponent(
             modifier = Modifier.fillMaxWidth()
         )
         Main500Text(
-            text = "${codePost.author.nickname}  ${codePost.createdAt} RE : [댓글 개수]",
+            text = "${codePost.author.nickname}  ${codePost.createdAt} RE : ${codePost.commentCount}",
             color = MaterialTheme.colorScheme.surfaceBright,
             fontSize = 10.sp,
             lineHeight = 16.sp,

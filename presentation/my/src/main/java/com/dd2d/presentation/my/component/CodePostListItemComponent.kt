@@ -41,7 +41,7 @@ internal fun CodePostListItemComponent(
             modifier = Modifier
         ) {
             Main500Text(
-                text = "RE: 999",
+                text = "RE: ${item.commentCount}",
                 color = MaterialTheme.colorScheme.surfaceBright,
                 fontSize = 12.sp,
                 lineHeight = 24.sp,

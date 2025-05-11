@@ -1,5 +1,6 @@
 package com.dd2d.presentation.code_post.create.model
 
+import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -33,15 +34,15 @@ internal class CodePostCreateState {
     var language by mutableStateOf("")
     var isPrivate by mutableStateOf(false)
     var reviewDate by mutableStateOf<LocalDateTime?>(null)
-    var description by mutableStateOf("")
-    var code by mutableStateOf("")
+    var descriptionTextState = TextFieldState()
+    var codeTextState = TextFieldState()
 
     val canCreate by derivedStateOf {
         title.isNotBlank()
                 && level > 0
                 && language.isNotBlank()
-                && description.isNotBlank()
-                && code.isNotBlank()
+                && descriptionTextState.text.isNotBlank()
+                && codeTextState.text.isNotBlank()
     }
 
     fun toCodePostCreator(): CodePostCreator {
@@ -50,9 +51,9 @@ internal class CodePostCreateState {
             level = level,
             code = Code(
                 language = language,
-                content = code
+                content = codeTextState.text.toString()
             ),
-            description = description,
+            description = descriptionTextState.text.toString(),
             reviewDate = reviewDate,
         )
     }
