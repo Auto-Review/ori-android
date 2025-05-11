@@ -24,6 +24,7 @@ include(":app")
 
 include(":core:core")
 include(":core:network")
+include(":core:fcm")
 include(":core:data-store-manager")
 include(":core:token-manager")
 include(":core:presentation")

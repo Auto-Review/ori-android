@@ -8,5 +8,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface AuthRepository {
     fun auth(requester: AuthRequester): Flow<DataState<AuthResult>>
-    suspend fun getAuthState(): Result<AuthState>
+    fun getAuthState(): Flow<AuthState>
 }

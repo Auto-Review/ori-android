@@ -29,11 +29,9 @@ class AuthRepositoryImpl @Inject constructor(
         )
     }.asDataState()
 
-    override suspend fun getAuthState(): Result<AuthState> = dataStoreManager
-        .runCatching {
-            getValueByKey(key = Keys.getAuthStateKey(), default = AuthState.SignOut.ordinal)
-        }
-        .map { ordinal ->
-            AuthState.entries[ordinal]
-        }
+
+    override fun getAuthState(): Flow<AuthState> = flow {
+        val ordinal = dataStoreManager.getValueByKey(key = Keys.getAuthStateKey(), default = -1)
+        emit(AuthState.entries.getOrElse(ordinal) { AuthState.SignOut })
+    }
 }

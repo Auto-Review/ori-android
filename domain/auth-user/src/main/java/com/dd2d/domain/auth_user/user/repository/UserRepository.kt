@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.Flow
 interface UserRepository {
     fun me(): Flow<DataState<User>>
     fun updateMe(update: UserUpdater): Flow<DataState<Boolean>>
+    suspend fun updateFCMToken(fcmToken: String): Result<Unit>
 
     suspend fun removeLocalData()
 }

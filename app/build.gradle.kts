@@ -8,6 +8,7 @@ plugins {
 
     id("com.google.devtools.ksp")
     id("com.google.dagger.hilt.android")
+    id("com.google.gms.google-services")
     kotlin("plugin.serialization") version "2.0.20"
 }
 
@@ -81,15 +82,18 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
     implementation(libs.kotlinx.serialization.json)
 
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.messaging)
+
     implementation(project(":core:core"))
     implementation(project(":core:network"))
+    implementation(project(":core:fcm"))
     implementation(project(":core:data-store-manager"))
     implementation(project(":core:token-manager"))
     implementation(project(":core:presentation"))
     implementation(project(":core:presentation-oauth"))
 
     implementation(project(":data-source:local:data-store"))
-
     implementation(project(":data-source:remote:server"))
 
     implementation(project(":domain:local-setting"))
