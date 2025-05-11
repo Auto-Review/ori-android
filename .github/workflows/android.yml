@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest # 이후의 jobs들은 ubuntu의 최신버전에서 실행한다.
 
     env:
-      GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES }} # scerets에서 구글 제이슨 값 변수(GOOGLE_SERVICES_JSON)로 설정
+      GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICE }} # scerets에서 구글 제이슨 값 변수(GOOGLE_SERVICES_JSON)로 설정
 
     steps:
       - uses: actions/checkout@v1
