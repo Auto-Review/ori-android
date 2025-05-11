@@ -18,3 +18,4 @@ local.properties
 *.salive
 /.idea/AndroidProjectSystem.xml
 app/release/*
+*.log
