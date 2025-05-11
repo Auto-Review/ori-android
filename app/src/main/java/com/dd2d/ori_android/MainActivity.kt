@@ -1,6 +1,7 @@
 package com.dd2d.ori_android
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -25,6 +26,8 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
 
         super.onCreate(savedInstanceState)
+
+        Toast.makeText(this, "3", Toast.LENGTH_SHORT).show()
 
         setContent {
             AppTheme {
