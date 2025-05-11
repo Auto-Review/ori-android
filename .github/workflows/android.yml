@@ -42,6 +42,7 @@ jobs:
       - name: Build release # APK를 빌드한다. (디버그용)
         run: ./gradlew assembleRelease --no-daemon --parallel --build-cache
 
+
       - name: Upload to Firebase App Distribution # 파이어베이스에 앱 디스트리 뷰션에 배포한다.
         uses: wzieba/Firebase-Distribution-Github-Action@v1
         with:
