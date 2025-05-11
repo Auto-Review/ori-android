@@ -27,7 +27,7 @@ class MainActivity : ComponentActivity() {
 
         super.onCreate(savedInstanceState)
 
-        Toast.makeText(this, "3", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, "4", Toast.LENGTH_SHORT).show()
 
         setContent {
             AppTheme {
