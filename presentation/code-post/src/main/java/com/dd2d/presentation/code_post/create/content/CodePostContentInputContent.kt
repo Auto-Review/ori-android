@@ -34,18 +34,12 @@ internal fun CodePostContentInputContent(
     ) {
         HorizontalDivider()
         CodePostDescriptionInput(
-            description = createState.description,
-            onDescriptionChange = {
-                createState.description = it
-            },
+            descriptionTextState = createState.descriptionTextState,
             modifier = Modifier.fillMaxWidth().padding(horizontal = 24.dp)
         )
         CodePostCodeInput(
             language = createState.language,
-            code = createState.code,
-            onCodeChange = {
-                createState.code = it
-            },
+            codeTextState = createState.codeTextState,
             modifier = Modifier.fillMaxWidth().padding(horizontal = 24.dp)
         )
     }
