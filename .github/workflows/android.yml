@@ -2,7 +2,7 @@ name: Build & upload to Firebase App Distribution
 
 on:
   push:
-    branches: [ dev ] # dev 브런치에 push가 올 때 이벤트 트리거
+    branches: [ deploy ] # dev 브런치에 push가 올 때 이벤트 트리거
   workflow_dispatch: # 수동 실행 옵션 (생략가능)
 
 jobs:
