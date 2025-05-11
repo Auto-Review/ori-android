@@ -1,25 +1,52 @@
-name: Android CI
+name: Build & upload to Firebase App Distribution
 
 on:
   push:
-    branches: [ "deploy" ]
+    branches: [ deploy ] # dev 브런치에 push가 올 때 이벤트 트리거
+  workflow_dispatch: # 수동 실행 옵션 (생략가능)
+
 jobs:
   build:
-
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest # 이후의 jobs들은 ubuntu의 최신버전에서 실행한다.
 
     steps:
-    - uses: actions/checkout@v4
-    - name: set up JDK 11
-      uses: actions/setup-java@v4
-      with:
-        java-version: '11'
-        distribution: 'temurin'
-        cache: gradle
-    - name: log
-      run: echo "JDK 11 setup complete"
+      - uses: actions/checkout@v1
 
-    - name: Grant execute permission for gradlew
-      run: chmod +x gradlew
-    - name: Build with Gradle
-      run: ./gradlew build
+      - name: set up JDK 17 # 깃허브 runner에서 돌아가는 환경은 java 17버전으로 설정한다.
+        uses: actions/setup-java@v1
+        with:
+          java-version: 17
+
+      - name: Grant Permission for gradlew # gradlew 에 대한 퍼미션을 허용한다.
+        run: chmod +x ./gradlew
+        shell: bash
+
+      - name: Decode And Save Keystore Base64 # app.keystoer.jks 키 값을 디코드 해서 app/ksystore.jks로 저장한다. (생략 가능)
+        run: |
+          echo "${{ secrets.KEY_STORE_BASE64 }}" | base64 --decode > app/keystore.jks
+          
+      - name: Create google-services.json
+        run: |
+          cat <<EOF > app/google-services.json
+          ${{ secrets.GOOGLE_SERVICES }}
+          EOF
+
+      - name: Create local.properties # (LOCAL_PROPERTIES_CONTENTS)를 기반으로 local.properties를 만들고 keystore.jks 위치를 추가해 준다.
+        run: |
+          echo "google-web-client-id=${{ secrets.GOOGLE_WEB_CLIENT_ID }}" > local.properties
+          echo "store-file=keystore.jks" >> local.properties
+          echo "store-password=${{ secrets.STORE_PASSWORD }}" >> local.properties
+          echo "key-password=${{ secrets.KEY_PASSWORD }}" >> local.properties
+          echo "key-alias=${{ secrets.KEY_ALIAS }}" >> local.properties
+
+      - name: Build release # APK를 빌드한다.
+        run: ./gradlew assembleRelease --no-daemon --parallel --build-cache
+
+
+      - name: Upload to Firebase App Distribution # 파이어베이스에 앱 디스트리 뷰션에 배포한다.
+        uses: wzieba/Firebase-Distribution-Github-Action@v1
+        with:
+          appId: ${{secrets.FIRE_BASE_APP_ID}}
+          serviceCredentialsFileContent: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
+          groups: 하나회
+          file: app/build/outputs/apk/release/app-release.apk
