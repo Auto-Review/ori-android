@@ -1,13 +1,9 @@
 package com.dd2d.presentation.my.conent
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.toMutableStateList
@@ -35,34 +31,28 @@ internal fun MyPageScreenContent(
     val tabs = listOf("MY CODE", "MY TIL")
     val pagerState = rememberPagerState { tabs.size }
 
-    Surface(
-        color = MaterialTheme.colorScheme.background,
-        modifier = modifier
-    ) {
-        Column(modifier = Modifier.fillMaxSize()){
-            Text(
-                text = "// MY PAGE",
-                style = LocalHansType.current.label,
-                modifier = Modifier.padding(top = 24.dp, start = 27.dp, end = 27.dp)
-            )
-            UserComponent(
-                user = user,
-                updateState = userUpdateState,
-                onUpdate = onUserUpdate,
-                modifier = Modifier.fillMaxWidth()
-                    .padding(top = 16.dp, start = 27.dp, end = 27.dp)
-            )
-            MainPagerTab(
-                pagerState = pagerState,
-                tabs = tabs,
-                pageSpacing = 24.dp,
-                contentPadding = PaddingValues(vertical = 27.dp),
-                modifier = Modifier.fillMaxWidth().padding(top = 32.dp)
-            ) { page ->
-                when(page) {
-                    0 -> codePostListContent()
-                    1 -> tilListContent()
-                }
+    Column(modifier = modifier){
+        Text(
+            text = "// MY PAGE",
+            style = LocalHansType.current.label,
+            modifier = Modifier.padding(top = 24.dp, start = 27.dp, end = 27.dp)
+        )
+        UserComponent(
+            user = user,
+            updateState = userUpdateState,
+            onUpdate = onUserUpdate,
+            modifier = Modifier.fillMaxWidth()
+                .padding(top = 16.dp, start = 27.dp, end = 27.dp)
+        )
+        MainPagerTab(
+            pagerState = pagerState,
+            tabs = tabs,
+            pageSpacing = 24.dp,
+            modifier = Modifier.fillMaxWidth().padding(top = 32.dp)
+        ) { page ->
+            when(page) {
+                0 -> codePostListContent()
+                1 -> tilListContent()
             }
         }
     }
