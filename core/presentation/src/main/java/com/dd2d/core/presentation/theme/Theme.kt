@@ -11,8 +11,10 @@ import androidx.compose.ui.unit.dp
 
 private val DarkColorScheme = darkColorScheme()
 
+val MainColor = Color(0xFFFF8B00)
+
 private val LightColorScheme = lightColorScheme(
-    primary = Color(0xFFFF8B00),
+    primary = MainColor,
     onPrimary = Color(0xFFFFFFFF),
 
     background = Color(0xFFFFFFFF),
