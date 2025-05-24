@@ -70,6 +70,14 @@ fun <T> Flow<Stateful<T>>.onEachState(
     }
 }
 
+fun <T> Flow<Stateful<T>>.onLoadingStateChanged(
+    onChange: (isLoading: Boolean) -> Unit
+): Flow<Stateful<T>> {
+    return onEach { state ->
+        onChange(state is Stateful.Loading)
+    }
+}
+
 
 fun <T, R> Flow<Stateful<T>>.mapSuccess(onSuccess: (T) -> R): Flow<Stateful<R>> {
     return map { state ->
