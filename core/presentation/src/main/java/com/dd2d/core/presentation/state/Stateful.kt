@@ -18,21 +18,21 @@ sealed interface Stateful<out T> {
 
 
 fun <T> statefulResult(block: suspend () -> Result<T>): Flow<Stateful<T>> {
-    return flow { emit(Stateful.Success(block().getOrThrow())) }
-        .onStart { Stateful.Loading }
-        .catch { Stateful.Error(it) }
+    return flow<Stateful<T>> { emit(Stateful.Success(block().getOrThrow())) }
+        .onStart { emit(Stateful.Loading) }
+        .catch { emit(Stateful.Error(it)) }
 }
 
 fun <T, R> T.withStatefulResult(block: suspend T.() -> Result<R>): Flow<Stateful<R>> {
-    return flow { emit(Stateful.Success(this@withStatefulResult.block().getOrThrow())) }
-        .onStart { Stateful.Loading }
-        .catch { Stateful.Error(it) }
+    return flow<Stateful<R>> { emit(Stateful.Success(this@withStatefulResult.block().getOrThrow())) }
+        .onStart { emit(Stateful.Loading) }
+        .catch { emit(Stateful.Error(it)) }
 }
 
 fun <T> Result<T>.asStatefulResult(): Flow<Stateful<T>> {
-    return flow { emit(Stateful.Success(this@asStatefulResult.getOrThrow())) }
-        .onStart { Stateful.Loading }
-        .catch { Stateful.Error(it) }
+    return flow<Stateful<T>> { emit(Stateful.Success(this@asStatefulResult.getOrThrow())) }
+        .onStart { emit(Stateful.Loading) }
+        .catch { emit(Stateful.Error(it)) }
 }
 
 
