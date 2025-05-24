@@ -45,6 +45,8 @@ internal class CodePostCreateState {
                 && codeTextState.text.isNotBlank()
     }
 
+    var isCreating by mutableStateOf(false)
+
     fun toCodePostCreator(): CodePostCreator {
         return CodePostCreator(
             title = title,
