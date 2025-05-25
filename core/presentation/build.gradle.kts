@@ -49,5 +49,8 @@ dependencies {
 
     implementation(libs.androidx.navigation.compose)
 
+    api(libs.androidx.paging.runtime.ktx)
+    api(libs.androidx.paging.compose)
+
     implementation(project(":core:core"))
 }
