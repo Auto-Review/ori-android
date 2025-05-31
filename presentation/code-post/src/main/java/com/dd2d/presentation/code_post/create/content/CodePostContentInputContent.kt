@@ -38,7 +38,7 @@ internal fun CodePostContentInputContent(
             modifier = Modifier.fillMaxWidth().padding(horizontal = 24.dp)
         )
         CodePostCodeInput(
-            language = createState.language,
+            language = createState.language?.label?: "",
             codeTextState = createState.codeTextState,
             modifier = Modifier.fillMaxWidth().padding(horizontal = 24.dp)
         )

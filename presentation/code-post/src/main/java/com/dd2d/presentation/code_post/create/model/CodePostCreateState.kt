@@ -31,7 +31,7 @@ internal class CodePostCreateState {
     var title by mutableStateOf("")
     val maxLevel = 5
     var level by mutableIntStateOf(0)
-    var language by mutableStateOf("")
+    var language by mutableStateOf<Code.Language?>(null)
     var isPrivate by mutableStateOf(false)
     var reviewDate by mutableStateOf<LocalDateTime?>(null)
     var descriptionTextState = TextFieldState()
@@ -40,17 +40,19 @@ internal class CodePostCreateState {
     val canCreate by derivedStateOf {
         title.isNotBlank()
                 && level > 0
-                && language.isNotBlank()
+                && language != null
                 && descriptionTextState.text.isNotBlank()
                 && codeTextState.text.isNotBlank()
     }
+
+    var isCreating by mutableStateOf(false)
 
     fun toCodePostCreator(): CodePostCreator {
         return CodePostCreator(
             title = title,
             level = level,
             code = Code(
-                language = language,
+                language = language!!,
                 content = codeTextState.text.toString()
             ),
             description = descriptionTextState.text.toString(),

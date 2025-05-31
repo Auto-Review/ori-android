@@ -16,7 +16,7 @@ internal fun CodePostResponseDto.toCodePost(): CodePost {
         ),
         title = this.title,
         code = Code(
-            language = this.language,
+            language = Code.Language.entries.find { it.value == this.language },
             content = this.code,
         ),
         description = this.description,

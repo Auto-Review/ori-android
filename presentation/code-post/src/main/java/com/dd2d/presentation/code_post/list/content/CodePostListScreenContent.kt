@@ -5,7 +5,6 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -15,46 +14,31 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.runtime.snapshots.SnapshotStateList
-import androidx.compose.runtime.toMutableStateList
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.dd2d.core.core.model.Pagination
 import com.dd2d.core.presentation._ori.ListFilter
-import com.dd2d.core.presentation.list.RefreshLazyColumn
-import com.dd2d.core.presentation.list.RefreshLazyListState
+import com.dd2d.core.presentation.list.v2.LazyListController
+import com.dd2d.core.presentation.list.v2.RefreshLazyColumn
 import com.dd2d.core.presentation.theme.AppTheme
+import com.dd2d.domain.code_post.model.post.Code
 import com.dd2d.domain.code_post.model.post.CodePostListItem
+import com.dd2d.domain.code_post.model.post.CodePostListOptions
 import com.dd2d.presentation.code_post.list.component.CodePostListItemComponent
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 internal fun CodePostListScreenContent(
-    state: RefreshLazyListState,
-    list: SnapshotStateList<CodePostListItem>,
-    requestNextPage: () -> Unit,
-    requestRefresh: () -> Unit,
+    listController: LazyListController<CodePostListOptions, CodePostListItem>,
     onDetailClick: (id: Int) ->Unit,
     modifier: Modifier = Modifier
 ) {
-    val dummyFilter1 = remember { listOf("모든 언어", "kotlin", "java", "swift") }
-    val dummyFilter2 = remember { listOf("최신순", "오래된순") }
-
-    var currentFilter1 by remember { mutableStateOf(dummyFilter1[0]) }
-    var currentFilter2 by remember { mutableStateOf(dummyFilter2[0]) }
-
     RefreshLazyColumn(
-        onNextPage = requestNextPage,
-        onRefresh = requestRefresh,
-        isLoading = state is RefreshLazyListState.Loading,
-        isRefreshing = state is RefreshLazyListState.Refreshing,
-        contentPadding = PaddingValues(vertical = 16.dp),
-        modifier = modifier.fillMaxSize()
+        controller = listController,
+        modifier = modifier
     ) {
         stickyHeader(key = "filter") {
             Row(
@@ -65,19 +49,28 @@ internal fun CodePostListScreenContent(
                     .padding(horizontal = 24.dp, vertical = 12.dp)
             ) {
                 ListFilter(
-                    currentValue = currentFilter1,
-                    values = dummyFilter1,
-                    onValueClick = { index -> currentFilter1 = dummyFilter1[index] },
+                    currentValue = listController.option.language?.label?: "모든 언어",
+                    values = listOf("모든 언어") + Code.Language.entries.map(Code.Language::label),
+                    onValueClick = { index ->
+                        listController.updateOption { prev ->
+                            prev.copy(language = Code.Language.entries.getOrNull(index - 1))
+                        }
+                    },
                 )
                 ListFilter(
-                    currentValue = currentFilter2,
-                    values = dummyFilter2,
-                    onValueClick = { index -> currentFilter2 = dummyFilter2[index] },
+                    currentValue = listController.option.sort.label,
+                    values = CodePostListOptions.Sort.entries.map(CodePostListOptions.Sort::label),
+                    onValueClick = { index ->
+                        listController.updateOption { prev ->
+                            prev.copy(sort = CodePostListOptions.Sort.entries[index])
+                        }
+                    },
                 )
             }
         }
+
         items(
-            items = list,
+            items = listController.list,
             key = CodePostListItem::id
         ) { item ->
             CodePostListItemComponent(
@@ -90,10 +83,11 @@ internal fun CodePostListScreenContent(
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Preview(locale = "ko", uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun CodePostListScreenContentPrev() {
+
     AppTheme {
         Column(
             verticalArrangement = Arrangement.Top,
@@ -102,10 +96,13 @@ private fun CodePostListScreenContentPrev() {
                 .fillMaxSize()
         ) {
             CodePostListScreenContent(
-                list = List(30) { CodePostListItem.dummy(id = it) }.toMutableStateList(),
-                state = RefreshLazyListState.Success,
-                requestNextPage = {},
-                requestRefresh = {},
+                listController = LazyListController(
+                    option = CodePostListOptions(),
+                    scope = rememberCoroutineScope(),
+                    getList = {
+                        Result.success(Pagination(emptyList(), 1, 10, 100))
+                    },
+                ),
                 onDetailClick = {},
                 modifier = Modifier
             )

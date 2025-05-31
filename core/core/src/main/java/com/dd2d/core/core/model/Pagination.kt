@@ -6,3 +6,10 @@ data class Pagination<T>(
     val totalPage: Int,
     val totalItemCount: Int,
 )
+
+interface Pageable<T: Pageable<T>> {
+    val page: Int
+    val take: Int
+
+    fun pageAt(page: Int): T
+}

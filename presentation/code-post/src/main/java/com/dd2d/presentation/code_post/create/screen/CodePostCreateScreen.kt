@@ -1,5 +1,6 @@
 package com.dd2d.presentation.code_post.create.screen
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
@@ -13,51 +14,92 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.dd2d.core.core.exception.ManagedException
 import com.dd2d.core.presentation.app_bar.CenterTitleTopBar
-import com.dd2d.core.presentation.dialog.CancellableConfirmDialog
-import com.dd2d.core.presentation.dialog.ConfirmDialog
-import com.dd2d.core.presentation.dialog.ErrorDialog
 import com.dd2d.core.presentation.main_text.Main700Text
-import com.dd2d.core.presentation.state.UIState
+import com.dd2d.core.presentation.message.MessageHandler
+import com.dd2d.core.presentation.message.MessageHolder
+import com.dd2d.core.presentation.message.rememberMessageHolder
 import com.dd2d.presentation.code_post.create.content.CodePostCreateScreenContent
 import com.dd2d.presentation.code_post.create.model.CodePostCreateStep
+import com.dd2d.presentation.code_post.create.model.CreateResult
 import com.dd2d.presentation.code_post.create.view_model.CodePostCreateViewModel
+
+private fun MessageHolder.backConfirmDialog(onBack: () -> Unit) {
+    dialogOf {
+        title = "뒤로가기"
+        content = "작성한 내용은 저장되지 않습니다.\n뒤로 가시겠습니까?"
+        addAction { text = "취소" }
+        addAction {
+            text = "뒤로가기"
+            onClick = { dismissRequest ->
+                dismissRequest()
+                onBack()
+            }
+        }
+    }
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CodePostCreateScreen(
     onBack: () -> Unit,
+    moveToCodePost: (postId: Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val viewModel = hiltViewModel<CodePostCreateViewModel>()
-    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val messageHolder = rememberMessageHolder()
 
-    var exception by remember { mutableStateOf<ManagedException?>(null) }
-    var openOnBackConfirmDialog by remember { mutableStateOf(false) }
-    var openCreateSuccessDialog by remember { mutableStateOf(false) }
-
-    LaunchedEffect(uiState) {
-        exception = (uiState as? UIState.Error)?.exception
-        openCreateSuccessDialog = uiState is UIState.Success
+    fun backEvent() {
+        messageHolder.backConfirmDialog(onBack = onBack)
     }
+
+    LaunchedEffect(key1 = Unit) {
+        viewModel.createResult.collect { result ->
+            when(result) {
+                is CreateResult.Error -> {
+                    messageHolder.defaultDialogOf {
+                        title = "게시물 생성 실패"
+                        content = result.cause.message
+                    }
+                }
+                is CreateResult.Success -> {
+                    messageHolder.dialogOf {
+                        title = "게시물을 생성했습니다."
+                        content = "게시물로 이동할까요?"
+                        addAction {
+                            text = "아니오"
+                            onClick = { dismissRequest ->
+                                dismissRequest()
+                                onBack()
+                            }
+                        }
+                        addAction {
+                            text = "이동하기"
+                            onClick = { dismissRequest ->
+                                dismissRequest()
+                                moveToCodePost(result.codePostId)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    MessageHandler(messageHolder = messageHolder)
+    BackHandler(onBack = ::backEvent)
 
     Scaffold(
         topBar = {
             CenterTitleTopBar(
                 title = "",
-                onBack = { openOnBackConfirmDialog = true },
+                onBack = ::backEvent,
                 actions = {
                     CodePostCreateStepButton(
                         currentStep = viewModel.createState.step,
@@ -65,7 +107,7 @@ fun CodePostCreateScreen(
                         onPrevStep = viewModel.createState::prevStep,
                         canCreate = viewModel.createState.canCreate,
                         onCreate = viewModel::create,
-                        isCreating = uiState is UIState.Loading
+                        isCreating = viewModel.createState.isCreating
                     )
                 }
             )
@@ -78,31 +120,6 @@ fun CodePostCreateScreen(
                 .consumeWindowInsets(inner)
                 .fillMaxSize()
                 .padding(inner)
-        )
-    }
-    exception?.let { e ->
-        ErrorDialog(exception = e, onConfirm = viewModel::stateToIdle)
-    }
-    if(openOnBackConfirmDialog) {
-        CancellableConfirmDialog(
-            title = "뒤로가기",
-            message = "작성한 내용은 저장되지 않습니다.\n뒤로 가시겠습니까?",
-            confirmText = "뒤로 가기",
-            onCancel = { openOnBackConfirmDialog = false },
-            onConfirm = {
-                openOnBackConfirmDialog = false
-                onBack()
-            }
-        )
-    }
-    if(openCreateSuccessDialog) {
-        ConfirmDialog(
-            title = "게시물이 생성되었습니다.",
-            message = null,
-            onConfirm = {
-                openCreateSuccessDialog = false
-                onBack()
-            }
         )
     }
 }
