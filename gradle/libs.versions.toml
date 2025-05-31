@@ -22,12 +22,9 @@ kotlinxSerializationJson = "1.7.3"
 navigationCompose = "2.8.7"
 credentials = "1.5.0-rc01"
 googleid = "1.1.1"
-pagingRuntimeKtx = "3.3.6"
 
 [libraries]
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
-androidx-paging-compose = { module = "androidx.paging:paging-compose", version.ref = "pagingRuntimeKtx" }
-androidx-paging-runtime-ktx = { module = "androidx.paging:paging-runtime-ktx", version.ref = "pagingRuntimeKtx" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
 firebase-messaging = { module = "com.google.firebase:firebase-messaging" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
