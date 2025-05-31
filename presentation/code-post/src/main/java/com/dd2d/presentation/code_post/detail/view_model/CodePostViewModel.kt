@@ -62,7 +62,6 @@ internal class CodePostViewModel @Inject constructor(
     private val _deleteState = MutableStateFlow<UIState>(UIState.Idle)
     val deleteState = _deleteState.asStateFlow()
 
-
     private val _deleteResult = MutableSharedFlow<ActionResult<Unit>>()
     val deleteResult = _deleteResult.asSharedFlow()
     var isDeleting by mutableStateOf(false)

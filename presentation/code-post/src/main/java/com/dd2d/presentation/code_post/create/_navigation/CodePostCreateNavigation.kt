@@ -14,11 +14,13 @@ data object CodePostCreateScreenRoute : ScreenRoute
 
 fun NavGraphBuilder.routeCodePostCreateScreen(
     onBack: () -> Unit,
+    moveToCodePost: (codePostId: Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     horizontalScreen<CodePostCreateScreenRoute> {
         CodePostCreateScreen(
             onBack = onBack,
+            moveToCodePost = moveToCodePost,
             modifier = modifier,
         )
     }

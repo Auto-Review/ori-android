@@ -24,14 +24,18 @@ class CodePostApi @Inject constructor(
     suspend fun getCodePostList(
         page: Int,
         size: Int,
-        sort: String? = null
+        sortBy: String? = null,
+        direction: String? = null,
+        language: String? = null
     ): PagingResponseDto<CodePostListItemResponseDto> = client
         .get("/v1/api/post/code/list") {
             authorizationHeader(tokenManager.getAccessToken())
             url {
                 parameters.append("page", "$page")
                 parameters.append("size", "$size")
-                sort?.let { parameters.append("sort", sort) }
+                sortBy?.let { parameters.append("sortBy", sortBy) }
+                direction?.let { parameters.append("direction", direction) }
+                language?.let { parameters.append("language", language) }
             }
         }
         .bodyHandling()
@@ -56,14 +60,18 @@ class CodePostApi @Inject constructor(
     suspend fun getMyCodePostList(
         page: Int,
         size: Int,
-        sort: String? = null
+        sortBy: String? = null,
+        direction: String? = null,
+        language: String? = null
     ): PagingResponseDto<CodePostListItemResponseDto> = client
         .get("/v1/api/post/code/own") {
             authorizationHeader(tokenManager.getAccessToken())
             url {
-                    parameters.append("page", "$page")
-                    parameters.append("size", "$size")
-                    sort?.let { parameters.append("sort", sort) }
+                parameters.append("page", "$page")
+                parameters.append("size", "$size")
+                sortBy?.let { parameters.append("sortBy", sortBy) }
+                direction?.let { parameters.append("direction", direction) }
+                language?.let { parameters.append("language", language) }
             }
         }
         .bodyHandling()

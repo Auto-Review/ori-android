@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.dd2d.core.presentation.theme.AppTheme
+import com.dd2d.domain.code_post.model.post.Code
 import com.dd2d.presentation.code_post.create.component.CodePostLanguageInput
 import com.dd2d.presentation.code_post.create.component.CodePostLevelInput
 import com.dd2d.presentation.code_post.create.component.CodePostTitleInput
@@ -51,7 +52,7 @@ internal fun CodePostInfoInputContent(
             modifier = Modifier.fillMaxWidth().padding(horizontal = 24.dp)
         )
         CodePostLanguageInput(
-            languages = listOf("java", "kotlin"),
+            languages = Code.Language.entries,
             selectedLanguage = createState.language,
             onSelectedLanguageChange = { createState.language = it },
             modifier = Modifier.fillMaxWidth().padding(horizontal = 24.dp)

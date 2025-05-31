@@ -11,7 +11,7 @@ internal fun CodePostUpdater.toCodePostUpdateRequestDto(): CodePostUpdateRequest
         description = this.description,
         level = this.level,
         reviewDay = this.reviewDate?.toUTCString(),
-        language = this.code?.language,
+        language = this.code?.language?.value,
         code = this.code?.content,
     )
 }

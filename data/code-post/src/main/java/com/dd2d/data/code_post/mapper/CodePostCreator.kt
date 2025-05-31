@@ -10,7 +10,7 @@ internal fun CodePostCreator.toCorePostCreateRequestDto(): CodePostCreateRequest
         level = this.level,
         reviewDay = this.reviewDate?.format("yyyy-MM-dd")?: "",
         description = this.description,
-        language = this.code.language,
+        language = this.code.language!!.value,
         code = this.code.content,
     )
 }

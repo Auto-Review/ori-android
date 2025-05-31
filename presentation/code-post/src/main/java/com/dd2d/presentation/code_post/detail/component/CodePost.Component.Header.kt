@@ -51,7 +51,7 @@ internal fun CodePostHeaderComponent(
             modifier = Modifier.fillMaxWidth().padding(top = 8.dp)
         ) {
             Main400Text(
-                text = codePost.code.language,
+                text = codePost.code.language?.label?: "-",
                 color = MaterialTheme.colorScheme.surfaceBright,
                 fontSize = 12.sp,
                 lineHeight = 16.8.sp,

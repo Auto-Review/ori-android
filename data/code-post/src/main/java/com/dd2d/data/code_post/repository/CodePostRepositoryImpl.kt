@@ -24,7 +24,9 @@ class CodePostRepositoryImpl @Inject constructor(
             val response = getCodePostList(
                 page = options.page,
                 size = options.take,
-                sort = options.sort
+                sortBy = options.sort.sortByValue,
+                direction = options.sort.directionValue,
+                language = options.language?.value,
             )
             response.toPagination(
                 requestPage = options.page,
@@ -38,7 +40,10 @@ class CodePostRepositoryImpl @Inject constructor(
             val response = getMyCodePostList(
                 page = options.page,
                 size = options.take,
-                sort = options.sort
+                sortBy = options.sort.sortByValue,
+                direction = options.sort.directionValue,
+                language = options.language?.value,
+
             )
             response.toPagination(
                 requestPage = options.page,
