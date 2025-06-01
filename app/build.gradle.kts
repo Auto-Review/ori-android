@@ -115,4 +115,6 @@ dependencies {
     implementation(project(":domain:til"))
     implementation(project(":data:til"))
     implementation(project(":presentation:til"))
+
+    implementation(project(":presentation:scrap"))
 }

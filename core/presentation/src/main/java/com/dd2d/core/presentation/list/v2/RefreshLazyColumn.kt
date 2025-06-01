@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalMaterial3Api::class)
+
 package com.dd2d.core.presentation.list.v2
 
 import androidx.compose.foundation.gestures.FlingBehavior
@@ -31,7 +33,6 @@ import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.launchIn
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun <Option: Pageable<Option>, ListItem: Any> RefreshLazyColumn(
     controller: LazyListController<Option, ListItem>,

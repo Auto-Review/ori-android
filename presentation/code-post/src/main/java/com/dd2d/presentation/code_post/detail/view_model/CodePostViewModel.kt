@@ -21,6 +21,7 @@ import com.dd2d.domain.auth_user.user.repository.UserRepository
 import com.dd2d.domain.code_post.repository.CodePostCommentRepository
 import com.dd2d.domain.code_post.repository.CodePostRepository
 import com.dd2d.domain.code_post.repository.CodePostReviewRepository
+import com.dd2d.domain.code_post.repository.CodePostScrapRepository
 import com.dd2d.presentation.code_post.detail._navigation.CodePostScreenRoute
 import com.dd2d.presentation.code_post.detail.model.CommentStateHolder
 import com.dd2d.presentation.code_post.detail.model.ReviewStateHolder
@@ -39,6 +40,7 @@ internal class CodePostViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     userRepository: UserRepository,
     private val codePostRepository: CodePostRepository,
+    private val codePostScrapRepository: CodePostScrapRepository,
     reviewRepository: CodePostReviewRepository,
     commentRepository: CodePostCommentRepository,
 ): ViewModel() {
@@ -58,6 +60,14 @@ internal class CodePostViewModel @Inject constructor(
             started = SharingStarted.WhileSubscribed(5000),
             initialValue = Stateful.Loading
         )
+
+    var isScrapped by mutableStateOf(false)
+    fun toggleScrap() {
+        codePostScrapRepository
+            .withStatefulResult { toggleScrap(codePostId = route.id) }
+            .onSuccess { isScrapped = !isScrapped }
+            .launchIn(viewModelScope)
+    }
 
     private val _deleteState = MutableStateFlow<UIState>(UIState.Idle)
     val deleteState = _deleteState.asStateFlow()
