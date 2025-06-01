@@ -19,8 +19,7 @@ class LazyListController<ListOption: Pageable<ListOption>, ListItem>(
     var state by mutableStateOf<LazyListControllerState>(LazyListControllerState.Idle)
         private set
 
-    var option by mutableStateOf(option)
-        private set
+    var option by mutableStateOf(option); private set
     fun updateOption(block: (origin: ListOption) -> ListOption) {
         scope.launch {
             option = block(option).pageAt(0)
@@ -33,7 +32,8 @@ class LazyListController<ListOption: Pageable<ListOption>, ListItem>(
     val list = mutableStateListOf<ListItem>()
 
     var totalPage by mutableIntStateOf(0); private set
-    val canLoadNext by derivedStateOf { option.page + 1 < totalPage }
+    var canLoadNext by mutableStateOf(false); private set
+
     val loadNextPageTriggerIndex by derivedStateOf {
         if(canLoadNext) list.lastIndex - option.take * 2 else null
     }
@@ -60,6 +60,7 @@ class LazyListController<ListOption: Pageable<ListOption>, ListItem>(
             onFailure = { LazyListControllerState.Error(it) },
             onSuccess = { data ->
                 totalPage = data.totalPage
+                canLoadNext = option.page + 1 < totalPage
                 when(loadType) {
                     LoadType.Refresh -> {
                         list.clear()

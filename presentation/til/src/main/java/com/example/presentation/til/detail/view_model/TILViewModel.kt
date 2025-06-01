@@ -1,22 +1,29 @@
 package com.example.presentation.til.detail.view_model
 
-
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
 import com.dd2d.core.core.state.DataState
+import com.dd2d.core.presentation.state.onSuccess
+import com.dd2d.core.presentation.state.withStatefulResult
 import com.dd2d.domain.til.repository.TILRepository
+import com.dd2d.domain.til.repository.TILScrapRepository
 import com.example.presentation.til.detail._navigation.TILScreenRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
 @HiltViewModel
 internal class TILViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val tilRepository: TILRepository
+    tilRepository: TILRepository,
+    private val tilScrapRepository: TILScrapRepository,
 ) : ViewModel() {
     private val route = savedStateHandle.toRoute<TILScreenRoute>()
 
@@ -28,6 +35,12 @@ internal class TILViewModel @Inject constructor(
             initialValue = DataState.Loading
         )
 
+    var isScrapped by mutableStateOf(false)
+
     fun scrap() {
+        tilScrapRepository
+            .withStatefulResult { scrap(tilId = route.id) }
+            .onSuccess {  }
+            .launchIn(viewModelScope)
     }
 }

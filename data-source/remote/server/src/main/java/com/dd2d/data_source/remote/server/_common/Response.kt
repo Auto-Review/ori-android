@@ -9,6 +9,13 @@ data class PagingResponseDto<I>(
 )
 
 @Serializable
+data class PagingResponseDto2<I>(
+    val listDto: List<I>,
+    val totalPage: Int
+)
+
+
+@Serializable
 data class CommentPagingResponseDto<I>(
     val commentList: List<I>,
     val totalPage: Int

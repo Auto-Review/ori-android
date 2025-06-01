@@ -1,11 +1,11 @@
 package com.dd2d.data_source.remote.server.code_post
 
 import com.dd2d.core.token_manager.TokenManager
-import com.dd2d.data_source.remote.server._common.PagingResponseDto
+import com.dd2d.data_source.remote.server._common.PagingResponseDto2
 import com.dd2d.data_source.remote.server._common.authorizationHeader
 import com.dd2d.data_source.remote.server._common.bodyHandling
 import com.dd2d.data_source.remote.server.code_post.dto.request.CodePostToggleScrapRequestDto
-import com.dd2d.data_source.remote.server.code_post.dto.response.CodePostListItemResponseDto
+import com.dd2d.data_source.remote.server.code_post.dto.response.CodePostScrapListResponseDto
 import io.ktor.client.HttpClient
 import io.ktor.client.request.get
 import io.ktor.client.request.put
@@ -28,7 +28,7 @@ class CodePostScrapApi @Inject constructor(
     suspend fun getMyScrap(
         page: Int,
         size: Int,
-    ): PagingResponseDto<CodePostListItemResponseDto> = client
+    ): PagingResponseDto2<CodePostScrapListResponseDto> = client
         .get(urlString = "/v1/api/code-post/bookmark/list") {
             authorizationHeader(tokenManager.getAccessToken())
             url {

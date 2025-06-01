@@ -58,7 +58,8 @@ fun CodePostScreen(
             PostTapBar(
                 title = (codePostState as? Stateful.Success)?.data?.title ?: "",
                 onBack = onBack,
-                onScrap = null,
+                toggleScrap = viewModel::toggleScrap,
+                isScrapped = viewModel.isScrapped,
                 onDelete = if(viewModel.canDelete) viewModel::deleteCodePost else null,
                 isDeleting = viewModel.isDeleting,
             )

@@ -10,13 +10,13 @@ import androidx.compose.ui.Modifier
 import com.dd2d.core.presentation.list.item.PostListItemComponent
 import com.dd2d.core.presentation.list.v2.LazyListController
 import com.dd2d.core.presentation.list.v2.RefreshLazyColumn
-import com.dd2d.domain.code_post.model.post.CodePostListItem
+import com.dd2d.domain.code_post.model.scrap.CodePostScrapListItem
 import com.dd2d.domain.code_post.model.scrap.CodePostScrapListOption
 
 @ExperimentalMaterial3Api
 @Composable
 internal fun CodePostScrapListContent(
-    listController: LazyListController<CodePostScrapListOption, CodePostListItem>,
+    listController: LazyListController<CodePostScrapListOption, CodePostScrapListItem>,
     onDetailClick: (tilId: Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -26,15 +26,17 @@ internal fun CodePostScrapListContent(
     ) {
         items(
             items = listController.list,
-            key = CodePostListItem::id
+            key = CodePostScrapListItem::id
         ) { item ->
             PostListItemComponent(
-                title = item.title,
-                authorName = item.author.nickname,
+                title = item.codePostTitle,
+                authorName = item.writer,
                 createdAt = item.createdAt,
-                commentCount = null,
-                onClick = { onDetailClick(item.id) },
-                modifier = Modifier.animateItem().fillMaxWidth(),
+                commentCount = item.commentCount,
+                onClick = { onDetailClick(item.codePostId) },
+                modifier = Modifier
+                    .animateItem()
+                    .fillMaxWidth(),
             )
             HorizontalDivider()
         }

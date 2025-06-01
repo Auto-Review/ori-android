@@ -1,5 +1,6 @@
 package com.dd2d.presentation.scrap.list.content
 
+import android.util.Log
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -18,7 +19,7 @@ import com.dd2d.core.presentation.main_tab.MainPagerTab
 import com.dd2d.core.presentation.theme.AppTheme
 import com.dd2d.core.presentation.theme.LocalHansType
 import com.dd2d.core.presentation.theme.hansType
-import com.dd2d.domain.code_post.model.post.CodePostListItem
+import com.dd2d.domain.code_post.model.scrap.CodePostScrapListItem
 import com.dd2d.domain.code_post.model.scrap.CodePostScrapListOption
 import com.dd2d.domain.til.model.TILListItem
 import com.dd2d.domain.til.model.TILScrapListOption
@@ -33,16 +34,18 @@ private enum class Tabs(val label: String) {
 @Composable
 internal fun ScrapScreenContent(
     onClose: () -> Unit,
-    codePostScrapListController: LazyListController<CodePostScrapListOption, CodePostListItem>,
+    codePostScrapListController: LazyListController<CodePostScrapListOption, CodePostScrapListItem>,
     onCodePostClick: (codePostId: Int) -> Unit,
     tilScrapListController: LazyListController<TILScrapListOption, TILListItem>,
     onTILClick: (tilId: Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
+
+    Log.d("LOG_CHECK", "ScrapScreenContent: ${codePostScrapListController.state}")
     val pagerState = rememberPagerState { Tabs.entries.size }
 
     Scaffold(
-        topBar = { ScrapTopBar(onClose = onClose) },
+        topBar = { ScrapTopBar(onBack = onClose) },
         modifier = modifier.fillMaxSize()
     ) { inner ->
         MainPagerTab(
@@ -80,7 +83,7 @@ private fun ScrapScreenContentPrev() {
     val codePostList = remember {
         Pagination(
             list = List(40) {
-                CodePostListItem.dummy(it)
+                CodePostScrapListItem.dummy(it)
             },
             currentPage = 1,
             totalPage = 10,

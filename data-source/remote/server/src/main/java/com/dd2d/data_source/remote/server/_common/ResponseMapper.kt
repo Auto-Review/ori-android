@@ -11,6 +11,15 @@ fun <DTO, Model> PagingResponseDto<DTO>.toPagination(requestPage: Int, mapper: (
     )
 }
 
+fun <DTO, Model> PagingResponseDto2<DTO>.toPagination2(requestPage: Int, mapper: (DTO) -> Model): Pagination<Model> {
+    return Pagination(
+        list = this.listDto.map(mapper),
+        currentPage = requestPage + 1,
+        totalPage = this.totalPage,
+        totalItemCount = -1,
+    )
+}
+
 fun <DTO, Model> CommentPagingResponseDto<DTO>.toCommentPagination(requestPage: Int, mapper: (DTO) -> Model): Pagination<Model> {
     return Pagination(
         list = this.commentList.map(mapper),

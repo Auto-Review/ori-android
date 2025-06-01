@@ -29,7 +29,8 @@ fun TILScreen(
             PostTapBar(
                 title = (tilState as? DataState.Success)?.data?.title ?: "",
                 onBack = onBack,
-                onScrap = viewModel::scrap,
+                isScrapped = viewModel.isScrapped,
+                toggleScrap = viewModel::scrap,
                 onDelete = {},
                 isDeleting = false,
             )
