@@ -1,70 +1,39 @@
 package com.example.presentation.til.list.content
 
-import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.runtime.snapshots.SnapshotStateList
-import androidx.compose.runtime.toMutableStateList
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.dd2d.core.presentation._ori.ListFilter
-import com.dd2d.core.presentation.list.RefreshLazyColumn
-import com.dd2d.core.presentation.list.RefreshLazyListState
+import com.dd2d.core.core.model.Pagination
+import com.dd2d.core.presentation.list.v2.LazyListController
 import com.dd2d.core.presentation.theme.AppTheme
 import com.dd2d.domain.til.model.TILListItem
+import com.dd2d.domain.til.model.TILListOptions
 import com.example.presentation.til.list.component.TILListItemComponent
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun TILListScreenContent(
-    listState: RefreshLazyListState,
-    list: SnapshotStateList<TILListItem>,
-    requestRefresh: () -> Unit,
-    requestNextPage: () -> Unit,
+    listController: LazyListController<TILListOptions, TILListItem>,
     onItemClick: (id: Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val dummyFilter = remember { listOf("최신순", "오래된순") }
-    var currentFilter by remember { mutableStateOf(dummyFilter[0]) }
-    RefreshLazyColumn(
-        onRefresh = requestRefresh,
-        onNextPage = requestNextPage,
-        isLoading = listState is RefreshLazyListState.Loading,
-        isRefreshing = listState is RefreshLazyListState.Refreshing,
+    com.dd2d.core.presentation.list.v2.RefreshLazyColumn(
+        controller = listController,
         contentPadding = PaddingValues(vertical = 16.dp),
         modifier = modifier.fillMaxSize()
     ) {
-        stickyHeader(key = "filter") {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(MaterialTheme.colorScheme.background)
-                    .padding(horizontal = 24.dp, vertical = 12.dp)
-            ) {
-                ListFilter(
-                    currentValue = currentFilter,
-                    values = dummyFilter,
-                    onValueClick = { index -> currentFilter = dummyFilter[index] },
-                )
-            }
-        }
-
         items(
-            items = list,
+            items = listController.list,
             key = TILListItem::id
         ) { item ->
             TILListItemComponent(
@@ -80,12 +49,20 @@ internal fun TILListScreenContent(
 @Preview(showBackground = true)
 @Composable
 private fun TILListScreenContentPrev() {
+    val list = remember {
+        List(40) {
+            TILListItem.dummy(it)
+        }
+    }
     AppTheme {
         TILListScreenContent(
-            listState = RefreshLazyListState.Success,
-            list = List(30) { TILListItem.dummy(it) }.toMutableStateList(),
-            requestRefresh = {},
-            requestNextPage = {},
+            listController = LazyListController(
+                option = TILListOptions(),
+                scope = rememberCoroutineScope(),
+                getList = {
+                    Result.success(Pagination(list = list, 0, 0, 0))
+                },
+            ),
             onItemClick = {},
             modifier = Modifier
         )

@@ -66,5 +66,6 @@ dependencies {
     implementation(project(":core:core"))
     implementation(project(":core:presentation"))
 
+    implementation(project(":domain:auth-user"))
     implementation(project(":domain:til"))
 }

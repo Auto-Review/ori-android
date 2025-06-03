@@ -68,7 +68,7 @@ internal class CodePostViewModel @Inject constructor(
             initialValue = Stateful.Loading
         )
 
-    var isAuthor = combine(
+    val isAuthor = combine(
         flow = userState.filterIsInstance<DataState.Success<User>>(),
         flow2 = codePostState.filterIsInstance<Stateful.Success<CodePost>>(),
         transform = { user, codePost ->

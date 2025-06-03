@@ -1,72 +1,101 @@
 package com.example.presentation.til.create.screen
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.dd2d.core.core.exception.ManagedException
-import com.dd2d.core.presentation.dialog.ConfirmDialog
-import com.dd2d.core.presentation.dialog.ErrorDialog
-import com.dd2d.core.presentation.state.UIState
+import com.dd2d.core.presentation.action.CommonActionResult
+import com.dd2d.core.presentation.message.MessageHolder
+import com.dd2d.core.presentation.message.rememberMessageHolder
+import com.dd2d.core.presentation.scaffold.MessageHandlerScaffold
 import com.example.presentation.til.create.component.TILScreenTopBar
 import com.example.presentation.til.create.content.TILCreateScreenContent
+import com.example.presentation.til.create.view_model.TILCreateSuccessResult
 import com.example.presentation.til.create.view_model.TILCreateViewModel
+
+private fun MessageHolder.backConfirmDialog(onBack: () -> Unit) {
+    dialogOf {
+        title = "뒤로가기"
+        content = "작성한 내용은 저장되지 않습니다.\n뒤로 가시겠습니까?"
+        addAction { text = "취소" }
+        addAction {
+            text = "뒤로가기"
+            onClick = { dismissRequest ->
+                dismissRequest()
+                onBack()
+            }
+        }
+    }
+}
 
 @Composable
 fun TILCreateScreen(
     onBack: () ->Unit,
+    navigateToTILDetail: (id: Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val viewModel = hiltViewModel<TILCreateViewModel>()
-    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val messageHolder = rememberMessageHolder()
 
-    var exception by remember { mutableStateOf<ManagedException?>(null) }
-    var openCreateSuccessDialog by remember { mutableStateOf(false) }
-
-    LaunchedEffect(key1 = uiState) {
-        exception = (uiState as? UIState.Error)?.exception
-        openCreateSuccessDialog = uiState is UIState.Success
+    fun backEvent() {
+        messageHolder.backConfirmDialog(onBack = onBack)
     }
 
-    Scaffold(
+    LaunchedEffect(key1 = Unit) {
+        viewModel.actionBus.collectResult { result ->
+            when(result) {
+                is CommonActionResult.ActionFailure -> {
+                    messageHolder.defaultDialogOf {
+                        title = result.exception.message
+                    }
+                }
+                is TILCreateSuccessResult -> {
+                    messageHolder.dialogOf {
+                        title = "게시물이 생성되었습니다."
+                        content = "게시물로 이동할까요?"
+                        addAction {
+                            text = "아니오"
+                            onClick = { dismissRequest ->
+                                dismissRequest()
+                                onBack()
+                            }
+                        }
+                        addAction {
+                            text = "이동"
+                            onClick = { dismissRequest ->
+                                dismissRequest()
+                                onBack()
+                                navigateToTILDetail(result.id)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    BackHandler(onBack = ::backEvent)
+    MessageHandlerScaffold(
+        messageHolder = messageHolder,
         topBar = {
             TILScreenTopBar(
-                onBack = onBack,
+                onBack = ::backEvent,
                 onCreate = viewModel::create,
-                isCreating = uiState is UIState.Loading
+                isCreating = viewModel.createState.isCreating
             )
         },
-        modifier = modifier) { inner ->
+        modifier = modifier
+    ) { inner ->
         TILCreateScreenContent(
             createState = viewModel.createState,
             modifier = Modifier
                 .consumeWindowInsets(inner)
                 .fillMaxSize()
                 .padding(inner)
-        )
-    }
-
-    exception?.let { e ->
-        ErrorDialog(exception = e, onConfirm = viewModel::stateToIdle)
-    }
-
-    if(openCreateSuccessDialog) {
-        ConfirmDialog(
-            title = "게시물이 생성되었습니다.",
-            message = null,
-            onConfirm = {
-                openCreateSuccessDialog = false
-                onBack()
-            }
         )
     }
 }

@@ -6,7 +6,6 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dd2d.core.core.state.onStateSuccess
-import com.dd2d.core.presentation.list.RefreshLazyListManager
 import com.dd2d.core.presentation.list.v2.LazyListController
 import com.dd2d.domain.auth_user.user.model.User
 import com.dd2d.domain.auth_user.user.repository.UserRepository
@@ -48,14 +47,11 @@ internal class MyPageViewModel @Inject constructor(
         getList = codePostRepository::getMyCodePostList,
     )
 
-    val tilListManager = RefreshLazyListManager(
-        initialListOption = TILListOptions(),
+    val tilListController = LazyListController(
+        option = TILListOptions(),
         scope = viewModelScope,
-        flow = tilRepository::getMyTILList,
-        lazyInit = true
+        getList = tilRepository::getMyTILList,
     )
-    fun nextTILPage() = with(tilListManager) { loadMore(options = options.copy(page = options.page + 1)) }
-    fun refreshTILList() = with(tilListManager) { refresh(options = TILListOptions()) }
 
     init { refreshMe() }
 }

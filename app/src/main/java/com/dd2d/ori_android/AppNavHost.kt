@@ -55,7 +55,10 @@ internal fun AppNavHost(
         )
         routeCodePostReviewCreateScreen(onBack = navController::safePopBackStack)
 
-        routeTILCreateScreen(onBack = navController::safePopBackStack)
+        routeTILCreateScreen(
+            onBack = navController::safePopBackStack,
+            navigateToTILDetail = navController::toTILScreen
+        )
         routeTILScreen(onBack = navController::safePopBackStack)
 
         routeScrapScreen(

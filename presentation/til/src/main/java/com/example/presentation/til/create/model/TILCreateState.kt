@@ -17,6 +17,8 @@ internal class TILCreateState {
         title.isNotBlank() && content.isNotBlank()
     }
 
+    var isCreating by mutableStateOf(false)
+
     fun toTILCreator(): TILCreator {
         return TILCreator(
             title = title,
