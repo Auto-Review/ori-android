@@ -11,6 +11,7 @@ import com.dd2d.ori_android.presentation_main._navigation.toMainScreen
 import com.dd2d.presentation.auth._navigation.routeAuthScreen
 import com.dd2d.presentation.auth._navigation.toAuthScreen
 import com.dd2d.presentation.code_post.create._navigation.routeCodePostCreateScreen
+import com.dd2d.presentation.code_post.create._navigation.toCodePostCreateScreen
 import com.dd2d.presentation.code_post.detail._navigation.routeCodePostScreen
 import com.dd2d.presentation.code_post.detail._navigation.toCodePostScreen
 import com.dd2d.presentation.code_post.review.routeCodePostReviewCreateScreen
@@ -46,6 +47,7 @@ internal fun AppNavHost(
             onReviewUpdateClick = { codePostId, reviewId ->
                 navController.toCodePostReviewCreateScreen(codePostId = codePostId, reviewId = reviewId)
             },
+            onCodePostUpdateClick = navController::toCodePostCreateScreen
         )
         routeCodePostCreateScreen(
             onBack = navController::safePopBackStack,

@@ -22,6 +22,8 @@ internal fun CodePostResponseDto.toCodePost(): CodePost {
         description = this.description,
         reviewDate = this.reviewDay?.dateStringToLocalDate("yyyy-MM-dd")?.atStartOfDay(),
         level = this.level,
+        isPublic = this.public,
+        isScrapped = this.bookmarked,
         createdAt = this.createDate,
     )
 }

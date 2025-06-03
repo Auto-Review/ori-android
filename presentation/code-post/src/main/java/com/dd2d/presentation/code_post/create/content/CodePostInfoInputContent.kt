@@ -21,11 +21,11 @@ import com.dd2d.presentation.code_post.create.component.CodePostLevelInput
 import com.dd2d.presentation.code_post.create.component.CodePostTitleInput
 import com.dd2d.presentation.code_post.create.component.PublishSettingInput
 import com.dd2d.presentation.code_post.create.component.ReviewDateInput
-import com.dd2d.presentation.code_post.create.model.CodePostCreateState
+import com.dd2d.presentation.code_post.create.model.CodePostFormState
 
 @Composable
 internal fun CodePostInfoInputContent(
-    createState: CodePostCreateState,
+    createState: CodePostFormState,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -58,8 +58,8 @@ internal fun CodePostInfoInputContent(
             modifier = Modifier.fillMaxWidth().padding(horizontal = 24.dp)
         )
         PublishSettingInput(
-            isPrivate = createState.isPrivate,
-            onIsPrivateChange = { createState.isPrivate = it },
+            isPublic = createState.isPublic,
+            onIsPublicChange = { createState.isPublic = it },
             modifier = Modifier.fillMaxWidth().padding(horizontal = 24.dp)
         )
         ReviewDateInput(
@@ -75,7 +75,7 @@ internal fun CodePostInfoInputContent(
 private fun CodePostInfoInputContentPrev() {
     AppTheme {
         CodePostInfoInputContent(
-            createState = remember { CodePostCreateState() },
+            createState = remember { CodePostFormState() },
             modifier = Modifier.fillMaxSize()
         )
     }

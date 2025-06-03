@@ -50,4 +50,5 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
 
     implementation(project(":core:core"))
+    implementation("dev.snipme:kodeview:0.9.0")
 }

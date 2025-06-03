@@ -36,20 +36,23 @@ class CodePostRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getMyCodePostList(options: CodePostListOptions): Result<Pagination<CodePostListItem>> {
-        return codePostApi.runCatching {
-            val response = getMyCodePostList(
-                page = options.page,
-                size = options.take,
-                sortBy = options.sort.sortByValue,
-                direction = options.sort.directionValue,
-                language = options.language?.value,
+        return codePostApi
+            .runCatching {
+                getMyCodePostList(
+                    page = options.page,
+                    size = options.take,
+                    sortBy = options.sort.sortByValue,
+                    direction = options.sort.directionValue,
+                    language = options.language?.value,
 
-            )
-            response.toPagination(
-                requestPage = options.page,
-                mapper = CodePostListItemResponseDto::toCodePostListItem
-            )
-        }
+                )
+            }
+            .mapCatching { response ->
+                response.toPagination(
+                    requestPage = options.page,
+                    mapper = CodePostListItemResponseDto::toCodePostListItem
+                )
+            }
     }
 
     override suspend fun getCodePost(id: Int): Result<CodePost> {

@@ -11,9 +11,9 @@ data class CodePostListItemResponseDto(
     val writerNickName: String,
     val title: String,
     val level: Int,
-    val public: Boolean,
-    val description: String,
     val commentCount: Int,
     val reviewCount: Int,
+    val description: String,
     val createdDate: UTCString,
+    val public: Boolean,
 )

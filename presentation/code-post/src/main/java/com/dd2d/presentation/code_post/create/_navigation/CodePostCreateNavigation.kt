@@ -10,7 +10,7 @@ import com.dd2d.presentation.code_post.create.screen.CodePostCreateScreen
 import kotlinx.serialization.Serializable
 
 @Serializable
-data object CodePostCreateScreenRoute : ScreenRoute
+data class CodePostCreateScreenRoute(val updateCodePostId: Int?) : ScreenRoute
 
 fun NavGraphBuilder.routeCodePostCreateScreen(
     onBack: () -> Unit,
@@ -26,8 +26,8 @@ fun NavGraphBuilder.routeCodePostCreateScreen(
     }
 }
 
-fun NavController.toCodePostCreateScreen() {
-    navigate(CodePostCreateScreenRoute) {
+fun NavController.toCodePostCreateScreen(updateCodePostId: Int? = null) {
+    navigate(CodePostCreateScreenRoute(updateCodePostId)) {
         launchSingleTop = true
     }
 }

@@ -17,5 +17,7 @@ data class CodePostResponseDto(
     val language: String,
     val code: String,
     val dtoList: List<CodePostReviewResponseDto>,
+    val public: Boolean,
+    val bookmarked: Boolean,
     val createDate: UTCString,
 )

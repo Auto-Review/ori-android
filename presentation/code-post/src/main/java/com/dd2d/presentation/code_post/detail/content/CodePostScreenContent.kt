@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.dp
 import com.dd2d.core.presentation.theme.AppTheme
 import com.dd2d.domain.auth_user.user.model.User
 import com.dd2d.domain.code_post.model.post.CodePost
-import com.dd2d.presentation.code_post.detail.component.CodeComponent
+import com.dd2d.presentation.code_post._core.component.CodeEditor
 import com.dd2d.presentation.code_post.detail.component.CodePostHeaderComponent
 import com.dd2d.presentation.code_post.detail.component.CodePostLevelComponent
 import com.dd2d.presentation.code_post.detail.component.CommentComposition
@@ -80,14 +80,28 @@ internal fun CodePostScreenContent(
             if(page == 0) {
                 Column {
                     CodePostHeaderComponent(codePost = codePost)
-                    CodeComponent(code = codePost.code)
+                    CodeEditor(
+                        initialCode = codePost.code.content,
+                        onCodeChange = {},
+                        language = codePost.code.language,
+                        onLanguageChange = null,
+                        readOnly = true,
+                        modifier = Modifier.padding(top = 10.dp).fillMaxWidth(),
+                    )
                 }
             }
             else {
                 val review = reviewStateHolder.reviewList[page - 1]
                 Column {
                     CodePostHeaderComponent(codePost = codePost.copy(description = review.review))
-                    CodeComponent(code = codePost.code.copy(content = review.code))
+                    CodeEditor(
+                        initialCode = codePost.code.content,
+                        onCodeChange = {},
+                        language = codePost.code.language,
+                        onLanguageChange = null,
+                        readOnly = true,
+                        modifier = Modifier.padding(top = 10.dp).fillMaxWidth(),
+                    )
                 }
             }
         }

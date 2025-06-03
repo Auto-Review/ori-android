@@ -36,6 +36,7 @@ object CodeTextFieldDefault {
     }
 }
 
+@Deprecated("use [CodeEditor]")
 @Composable
 fun CodeTextField(
     language: String,

@@ -1,7 +1,7 @@
 package com.dd2d.presentation.code_post.create.component
 
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.input.TextFieldLineLimits
@@ -25,7 +25,7 @@ internal fun CodePostDescriptionInput(
             lineLimits = TextFieldLineLimits.MultiLine(minHeightInLines = 5),
             cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
             modifier = Modifier
-                .fillMaxWidth()
+                .fillMaxSize()
                 .clip(shape = MaterialTheme.shapes.small)
                 .border(
                     width = 1.dp,

@@ -3,8 +3,6 @@ package com.dd2d.core.presentation.message
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.graphics.Color
-import com.dd2d.core.presentation.theme.MainColor
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -39,6 +37,30 @@ class MessageHolder(private val coroutineScope: CoroutineScope) {
             addAction { text = "확인" }
         }
     }
+
+
+    fun snackbarOf(scope: SnackbarMessageScope.() -> Unit) {
+        val buildScope = SnackbarMessageScopeImpl().apply(scope)
+        check(buildScope.content.isNotEmpty()) {
+            "메시지의 내용은 [공백]일 수 없습니다."
+        }
+
+        check(
+            (buildScope.action == null && buildScope.actionLabel == null)
+                    || (buildScope.action != null && buildScope.actionLabel != null)
+        ) {
+            "메시지의 [Action]과 [ActionLabel]을 모두 입력해 주세요."
+        }
+
+        val message = Message.Snackbar(
+            content = buildScope.content,
+            actionLabel = buildScope.actionLabel,
+            action = buildScope.action,
+            onDismiss = buildScope.onDismiss,
+            duration = buildScope.duration
+        )
+        coroutineScope.launch { _messages.emit(message) }
+    }
 }
 
 @Composable
@@ -48,33 +70,3 @@ fun rememberMessageHolder(
     return remember { MessageHolder(coroutineScope) }
 }
 
-private class DialogMessageActionScopeImpl: DialogMessageActionScope {
-    override var text: String = ""
-    override var onClick: (dismissRequest: () -> Unit) -> Unit = { it() }
-    override var textColor: Color = MainColor
-    override var backgroundColor: Color = Color.Transparent
-    override var ratio: Float = 1F
-}
-
-private class DialogMessageScopeImpl: DialogMessageScope {
-    override var title: String? = null
-    override var content: String? = null
-    override var actions: MutableList<Message.Dialog.Action> = mutableListOf()
-
-    override fun addAction(action: Message.Dialog.Action) {
-        actions.add(action)
-    }
-
-    override fun addAction(scope: DialogMessageActionScope.() -> Unit) {
-        val buildScope = DialogMessageActionScopeImpl().apply(scope)
-        actions.add(
-            Message.Dialog.Action(
-                text = buildScope.text,
-                onClick = { dismissRequest -> buildScope.onClick(dismissRequest) },
-                textColor = buildScope.textColor,
-                backgroundColor = buildScope.backgroundColor,
-                ratio = buildScope.ratio,
-            )
-        )
-    }
-}

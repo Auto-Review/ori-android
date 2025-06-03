@@ -13,5 +13,6 @@ internal fun CodePostUpdater.toCodePostUpdateRequestDto(): CodePostUpdateRequest
         reviewDay = this.reviewDate?.toUTCString(),
         language = this.code?.language?.value,
         code = this.code?.content,
+        public = this.isPublic
     )
 }

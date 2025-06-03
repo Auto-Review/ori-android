@@ -31,8 +31,9 @@ fun TILScreen(
                 onBack = onBack,
                 isScrapped = viewModel.isScrapped,
                 toggleScrap = viewModel::scrap,
-                onDelete = {},
-                isDeleting = false,
+                isAuthor = false,
+                onUpdateClick = {},
+                onDeleteClick = {},
             )
         },
         modifier = modifier

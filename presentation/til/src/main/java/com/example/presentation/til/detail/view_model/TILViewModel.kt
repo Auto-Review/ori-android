@@ -8,7 +8,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
 import com.dd2d.core.core.state.DataState
-import com.dd2d.core.presentation.state.onSuccess
 import com.dd2d.core.presentation.state.withStatefulResult
 import com.dd2d.domain.til.repository.TILRepository
 import com.dd2d.domain.til.repository.TILScrapRepository
@@ -40,7 +39,6 @@ internal class TILViewModel @Inject constructor(
     fun scrap() {
         tilScrapRepository
             .withStatefulResult { scrap(tilId = route.id) }
-            .onSuccess {  }
             .launchIn(viewModelScope)
     }
 }

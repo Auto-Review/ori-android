@@ -20,14 +20,16 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.dd2d.core.presentation.action.CommonActionResult
 import com.dd2d.core.presentation.app_bar.CenterTitleTopBar
+import com.dd2d.core.presentation.dialog.LoadingDialog
 import com.dd2d.core.presentation.main_text.Main700Text
 import com.dd2d.core.presentation.message.MessageHandler
 import com.dd2d.core.presentation.message.MessageHolder
 import com.dd2d.core.presentation.message.rememberMessageHolder
 import com.dd2d.presentation.code_post.create.content.CodePostCreateScreenContent
 import com.dd2d.presentation.code_post.create.model.CodePostCreateStep
-import com.dd2d.presentation.code_post.create.model.CreateResult
+import com.dd2d.presentation.code_post.create.model.CodePostFormActionCompleteResult
 import com.dd2d.presentation.code_post.create.view_model.CodePostCreateViewModel
 
 private fun MessageHolder.backConfirmDialog(onBack: () -> Unit) {
@@ -60,30 +62,43 @@ fun CodePostCreateScreen(
     }
 
     LaunchedEffect(key1 = Unit) {
-        viewModel.createResult.collect { result ->
+        viewModel.actionBus.collectResult { result ->
+            val submitAction = if(viewModel.isCreateMode) "생성" else "수정"
             when(result) {
-                is CreateResult.Error -> {
+                is CommonActionResult.ActionFailure -> {
                     messageHolder.defaultDialogOf {
-                        title = "게시물 생성 실패"
-                        content = result.cause.message
+                        title = "게시물 $submitAction 실패"
+                        content = result.exception.message
                     }
                 }
-                is CreateResult.Success -> {
+                is CodePostFormActionCompleteResult -> {
                     messageHolder.dialogOf {
-                        title = "게시물을 생성했습니다."
-                        content = "게시물로 이동할까요?"
-                        addAction {
-                            text = "아니오"
-                            onClick = { dismissRequest ->
-                                dismissRequest()
-                                onBack()
+                        title = "게시물을 ${submitAction}했습니다."
+                        if(result.codePostId == null) {
+                            addAction {
+                                text = "확인"
+                                onClick = { dismissRequest ->
+                                    dismissRequest()
+                                    onBack()
+                                }
                             }
                         }
-                        addAction {
-                            text = "이동하기"
-                            onClick = { dismissRequest ->
-                                dismissRequest()
-                                moveToCodePost(result.codePostId)
+                        else {
+                            content = "게시물로 이동할까요?"
+                            addAction {
+                                text = "아니오"
+                                onClick = { dismissRequest ->
+                                    dismissRequest()
+                                    onBack()
+                                }
+                            }
+                            addAction {
+                                text = "이동하기"
+                                onClick = { dismissRequest ->
+                                    dismissRequest()
+                                    onBack()
+                                    moveToCodePost(result.codePostId)
+                                }
                             }
                         }
                     }
@@ -98,29 +113,34 @@ fun CodePostCreateScreen(
     Scaffold(
         topBar = {
             CenterTitleTopBar(
-                title = "",
+                title = if(viewModel.isCreateMode) "생성" else "수정",
                 onBack = ::backEvent,
                 actions = {
                     CodePostCreateStepButton(
-                        currentStep = viewModel.createState.step,
-                        onNextStep = viewModel.createState::nextStep,
-                        onPrevStep = viewModel.createState::prevStep,
-                        canCreate = viewModel.createState.canCreate,
-                        onCreate = viewModel::create,
-                        isCreating = viewModel.createState.isCreating
+                        currentStep = viewModel.formState.step,
+                        onNextStep = viewModel.formState::nextStep,
+                        onPrevStep = viewModel.formState::prevStep,
+                        canComplete = viewModel.formState.canSubmit,
+                        onComplete = viewModel::submit,
+                        isLoading = viewModel.formState.isSubmitting
                     )
                 }
             )
         },
         modifier = modifier
     ) { inner ->
-        CodePostCreateScreenContent(
-            createState = viewModel.createState,
-            modifier = Modifier
-                .consumeWindowInsets(inner)
-                .fillMaxSize()
-                .padding(inner)
-        )
+        if(viewModel.isLoading) {
+            LoadingDialog()
+        }
+        else {
+            CodePostCreateScreenContent(
+                createState = viewModel.formState,
+                modifier = Modifier
+                    .consumeWindowInsets(inner)
+                    .fillMaxSize()
+                    .padding(inner)
+            )
+        }
     }
 }
 
@@ -129,9 +149,9 @@ private fun CodePostCreateStepButton(
     currentStep: CodePostCreateStep,
     onNextStep: () -> Unit,
     onPrevStep: () -> Unit,
-    onCreate:() -> Unit,
-    isCreating: Boolean,
-    canCreate: Boolean,
+    onComplete:() -> Unit,
+    isLoading: Boolean,
+    canComplete: Boolean,
     modifier: Modifier = Modifier
 ) {
     val keyboard = LocalSoftwareKeyboardController.current
@@ -139,7 +159,7 @@ private fun CodePostCreateStepButton(
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
     ) {
-        if(isCreating) {
+        if(isLoading) {
             CircularProgressIndicator(
                 color = MaterialTheme.colorScheme.primary,
                 strokeWidth = 2.dp,
@@ -172,7 +192,7 @@ private fun CodePostCreateStepButton(
             }
             if(currentStep.ordinal == CodePostCreateStep.entries.lastIndex) {
                 AnimatedVisibility(
-                    visible = canCreate
+                    visible = canComplete
                 ) {
                     Main700Text(
                         text = "완료",
@@ -180,9 +200,9 @@ private fun CodePostCreateStepButton(
                         fontSize = 12.sp,
                         lineHeight = 24.sp,
                         modifier = Modifier
-                            .clickable(enabled = canCreate) {
+                            .clickable(enabled = canComplete) {
                                 keyboard?.hide()
-                                onCreate()
+                                onComplete()
                             }
                             .padding(10.dp)
                     )

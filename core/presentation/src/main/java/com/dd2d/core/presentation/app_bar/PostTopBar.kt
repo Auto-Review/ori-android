@@ -5,7 +5,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -22,15 +22,19 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.dd2d.core.presentation.dialog.CancellableConfirmDialog
 import com.dd2d.core.presentation.extensions.delayedClickable
 import com.dd2d.core.presentation.icon.BackIcon
 import com.dd2d.core.presentation.icon.BookmarkIcon
-import com.dd2d.core.presentation.icon.VectorIcon
+import com.dd2d.core.presentation.icon.VectorIconButton
 import com.dd2d.core.presentation.main_text.Main700Text
-import com.dd2d.core.presentation.state.LoadingIndicator
+import com.dd2d.core.presentation.option_selector.OptionSelector2
 import com.dd2d.core.presentation.theme.AppTheme
 import kotlin.time.Duration.Companion.seconds
+
+private enum class AuthorAction(val label: String) {
+    Delete(label = "삭제"),
+    Update(label = "수정"),
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -39,11 +43,12 @@ fun PostTapBar(
     onBack: () -> Unit,
     isScrapped: Boolean,
     toggleScrap: () -> Unit,
-    onDelete: (() -> Unit)?,
-    isDeleting: Boolean,
+    isAuthor: Boolean,
+    onUpdateClick: () -> Unit,
+    onDeleteClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    var openDeleteConfirmDialog by remember { mutableStateOf(false) }
+    var openMenu by remember { mutableStateOf(false) }
 
     TopAppBar(
         title = {
@@ -72,15 +77,19 @@ fun PostTapBar(
                     )
                     .padding(10.dp)
             )
-            onDelete?.let {
-                IconButton(onClick = { openDeleteConfirmDialog = true }, enabled = !isDeleting) {
-                    if(isDeleting) {
-                        LoadingIndicator(width = 3.dp, modifier = Modifier.size(24.dp))
-                    }
-                    else {
-                        VectorIcon(icon = Icons.Default.Delete)
-                    }
-                }
+            if(isAuthor) {
+                VectorIconButton(icon = Icons.Default.MoreVert, onClick = { openMenu = true })
+                OptionSelector2(
+                    open = openMenu,
+                    close = { openMenu = false },
+                    options = AuthorAction.entries.map(AuthorAction::label),
+                    onOptionSelected = { index ->
+                        when(AuthorAction.entries[index]) {
+                            AuthorAction.Delete -> onDeleteClick()
+                            AuthorAction.Update -> onUpdateClick()
+                        }
+                    },
+                )
             }
         },
         colors = TopAppBarDefaults.topAppBarColors(
@@ -90,18 +99,6 @@ fun PostTapBar(
         ),
         modifier = modifier.fillMaxWidth(),
     )
-
-    if(openDeleteConfirmDialog) {
-        CancellableConfirmDialog(
-            title = "게시물을 삭제하시겠습니까?",
-            message = null,
-            onCancel = { openDeleteConfirmDialog = false },
-            onConfirm = {
-                openDeleteConfirmDialog = false
-                onDelete?.invoke()
-            }
-        )
-    }
 }
 
 @Preview
@@ -113,8 +110,9 @@ private fun PostTapBarPrev() {
             onBack = {},
             isScrapped = false,
             toggleScrap = {},
-            onDelete = {},
-            isDeleting = true,
+            isAuthor = true,
+            onUpdateClick = {},
+            onDeleteClick = {},
             modifier = Modifier
         )
     }

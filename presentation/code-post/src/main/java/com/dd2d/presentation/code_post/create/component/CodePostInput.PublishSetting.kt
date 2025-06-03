@@ -11,8 +11,8 @@ import com.dd2d.core.presentation._ori.InputItem
 
 @Composable
 internal fun PublishSettingInput(
-    isPrivate: Boolean,
-    onIsPrivateChange: (value: Boolean) -> Unit,
+    isPublic: Boolean,
+    onIsPublicChange: (value: Boolean) -> Unit,
     modifier: Modifier = Modifier
 ) {
     InputItem(label = "공개 설정", modifier = modifier) {
@@ -23,14 +23,14 @@ internal fun PublishSettingInput(
         ) {
             SelectableLabel(
                 label = "공개",
-                isSelected = !isPrivate,
-                onClick = { onIsPrivateChange(false) },
+                isSelected = isPublic,
+                onClick = { onIsPublicChange(true) },
                 modifier = Modifier.weight(1F)
             )
             SelectableLabel(
                 label = "비공개",
-                isSelected = isPrivate,
-                onClick = { onIsPrivateChange(true) },
+                isSelected = !isPublic,
+                onClick = { onIsPublicChange(false) },
                 modifier = Modifier.weight(1F)
             )
         }

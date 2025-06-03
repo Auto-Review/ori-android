@@ -57,7 +57,7 @@ internal fun CodePostHeaderComponent(
                 lineHeight = 16.8.sp,
             )
             Main400Text(
-                text = "TODO : 공개 설정",
+                text = if(codePost.isPublic) "공개" else "비공개",
                 color = MaterialTheme.colorScheme.surfaceBright,
                 fontSize = 12.sp,
                 lineHeight = 16.8.sp,

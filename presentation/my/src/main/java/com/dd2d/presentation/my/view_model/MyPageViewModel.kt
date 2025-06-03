@@ -5,20 +5,17 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.dd2d.core.core.model.Pagination
-import com.dd2d.core.core.state.DataState
 import com.dd2d.core.core.state.onStateSuccess
 import com.dd2d.core.presentation.list.RefreshLazyListManager
+import com.dd2d.core.presentation.list.v2.LazyListController
 import com.dd2d.domain.auth_user.user.model.User
 import com.dd2d.domain.auth_user.user.repository.UserRepository
-import com.dd2d.domain.code_post.model.post.CodePostListItem
 import com.dd2d.domain.code_post.model.post.CodePostListOptions
 import com.dd2d.domain.code_post.repository.CodePostRepository
 import com.dd2d.domain.til.model.TILListOptions
 import com.dd2d.domain.til.repository.TILRepository
 import com.dd2d.presentation.my.model.UserUpdateState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.launchIn
 import javax.inject.Inject
 
@@ -45,15 +42,11 @@ internal class MyPageViewModel @Inject constructor(
             .launchIn(viewModelScope)
     }
 
-    val codePostListManager = RefreshLazyListManager(
-        initialListOption = CodePostListOptions(),
+    val codePostListController = LazyListController(
+        option = CodePostListOptions(),
         scope = viewModelScope,
-//        flow = codePostRepository::getMyCodePostList,
-        flow = { emptyFlow<DataState<Pagination<CodePostListItem>>>() },
-        lazyInit = true
+        getList = codePostRepository::getMyCodePostList,
     )
-    fun nextCodePostPage() = with(codePostListManager) { loadMore(options = options.copy(page = options.page + 1)) }
-    fun refreshCodePostList() = with(codePostListManager) { refresh(options = CodePostListOptions()) }
 
     val tilListManager = RefreshLazyListManager(
         initialListOption = TILListOptions(),

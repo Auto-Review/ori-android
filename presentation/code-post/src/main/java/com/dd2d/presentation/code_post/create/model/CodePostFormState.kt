@@ -8,9 +8,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import com.dd2d.domain.code_post.model.post.Code
 import com.dd2d.domain.code_post.model.post.CodePostCreator
+import com.dd2d.domain.code_post.model.post.CodePostUpdater
 import java.time.LocalDateTime
 
-internal class CodePostCreateState {
+internal class CodePostFormState {
     var step by mutableStateOf(CodePostCreateStep.First)
         private set
     fun prevStep() {
@@ -32,12 +33,12 @@ internal class CodePostCreateState {
     val maxLevel = 5
     var level by mutableIntStateOf(0)
     var language by mutableStateOf<Code.Language?>(null)
-    var isPrivate by mutableStateOf(false)
+    var isPublic by mutableStateOf(true)
     var reviewDate by mutableStateOf<LocalDateTime?>(null)
     var descriptionTextState = TextFieldState()
     var codeTextState = TextFieldState()
 
-    val canCreate by derivedStateOf {
+    val canSubmit by derivedStateOf {
         title.isNotBlank()
                 && level > 0
                 && language != null
@@ -45,7 +46,7 @@ internal class CodePostCreateState {
                 && codeTextState.text.isNotBlank()
     }
 
-    var isCreating by mutableStateOf(false)
+    var isSubmitting by mutableStateOf(false)
 
     fun toCodePostCreator(): CodePostCreator {
         return CodePostCreator(
@@ -56,6 +57,22 @@ internal class CodePostCreateState {
                 content = codeTextState.text.toString()
             ),
             description = descriptionTextState.text.toString(),
+            isPublic = isPublic,
+            reviewDate = reviewDate,
+        )
+    }
+
+    fun toCodePostUpdater(id: Int): CodePostUpdater {
+        return CodePostUpdater(
+            id = id,
+            title = title,
+            code = Code(
+                language = language,
+                content = codeTextState.text.toString(),
+            ),
+            description = descriptionTextState.text.toString(),
+            level = level,
+            isPublic = isPublic,
             reviewDate = reviewDate,
         )
     }

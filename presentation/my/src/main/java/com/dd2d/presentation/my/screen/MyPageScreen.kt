@@ -24,12 +24,9 @@ fun MyPageScreen(
     modifier: Modifier = Modifier
 ) {
     val viewModel = hiltViewModel<MyPageViewModel>()
-
-    val codePostListState by viewModel.codePostListManager.state.collectAsStateWithLifecycle()
     val tilListState by viewModel.tilListManager.state.collectAsStateWithLifecycle()
 
     LaunchedEffect(key1 = Unit) {
-        viewModel.refreshCodePostList()
         viewModel.refreshTILList()
     }
 
@@ -47,10 +44,7 @@ fun MyPageScreen(
                 onUserUpdate = viewModel::updateUser,
                 codePostListContent = {
                     MyCodePostListContent(
-                        listState = codePostListState,
-                        list = viewModel.codePostListManager.list,
-                        requestNextPage = viewModel::nextCodePostPage,
-                        requestRefresh = viewModel::refreshCodePostList,
+                        listController = viewModel.codePostListController,
                         onItemClick = { id -> navigationEvent(MyPageNavigateEvent.CodePost(id)) },
                         modifier = Modifier.fillMaxSize(),
                     )

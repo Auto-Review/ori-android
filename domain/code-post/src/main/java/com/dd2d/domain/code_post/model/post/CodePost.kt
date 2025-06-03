@@ -12,6 +12,8 @@ data class CodePost(
     val description: String,
     val reviewDate: LocalDateTime?,
     val level: Int,
+    val isPublic: Boolean,
+    val isScrapped: Boolean,
     val createdAt: DateTimeString,
 ) {
     companion object {
@@ -23,6 +25,8 @@ data class CodePost(
             description = "코틀린 좋아요 코틀린 지원 해줘",
             reviewDate = LocalDateTime.now(),
             level = 5,
+            isPublic = true,
+            isScrapped = false,
             createdAt = LocalDateTime.now().format("yyyy.MM.dd"),
         )
     }

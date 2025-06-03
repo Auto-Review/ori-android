@@ -1,7 +1,7 @@
 package com.dd2d.data_source.remote.server.code_post
 
 import com.dd2d.core.token_manager.TokenManager
-import com.dd2d.data_source.remote.server._common.PagingResponseDto2
+import com.dd2d.data_source.remote.server._common.PagingResponseDto
 import com.dd2d.data_source.remote.server._common.authorizationHeader
 import com.dd2d.data_source.remote.server._common.bodyHandling
 import com.dd2d.data_source.remote.server.code_post.dto.request.CodePostToggleScrapRequestDto
@@ -20,7 +20,7 @@ class CodePostScrapApi @Inject constructor(
     suspend fun toggleScrap(
         body: CodePostToggleScrapRequestDto
     ): Unit = client
-        .put(urlString = "/v1/api/code-post/bookmark") {
+        .put(urlString = "/v1/api/post/code/bookmark") {
             authorizationHeader(tokenManager.getAccessToken())
             setBody(body)
         }.bodyHandling()
@@ -28,8 +28,8 @@ class CodePostScrapApi @Inject constructor(
     suspend fun getMyScrap(
         page: Int,
         size: Int,
-    ): PagingResponseDto2<CodePostScrapListResponseDto> = client
-        .get(urlString = "/v1/api/code-post/bookmark/list") {
+    ): PagingResponseDto<CodePostScrapListResponseDto> = client
+        .get(urlString = "/v1/api/post/code/bookmark/list") {
             authorizationHeader(tokenManager.getAccessToken())
             url {
                 parameters.append("page", "$page")
