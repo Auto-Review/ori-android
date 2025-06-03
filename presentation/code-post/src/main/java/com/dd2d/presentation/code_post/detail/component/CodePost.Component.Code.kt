@@ -41,7 +41,7 @@ internal fun CodeComponent(
                 .padding(horizontal = 12.dp)
         ) {
             Main400Text(
-                text = code.language,
+                text = code.language?.label?: "-",
                 color = MaterialTheme.colorScheme.onSurface,
                 fontSize = 12.sp,
                 lineHeight = 16.8.sp

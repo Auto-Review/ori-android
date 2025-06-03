@@ -68,4 +68,6 @@ dependencies {
 
     implementation(project(":domain:code-post"))
     implementation(project(":domain:auth-user"))
+
+    implementation("dev.snipme:kodeview:0.9.0")
 }

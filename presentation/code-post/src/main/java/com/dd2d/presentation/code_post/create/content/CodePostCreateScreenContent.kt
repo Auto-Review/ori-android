@@ -20,11 +20,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.dd2d.core.presentation.theme.AppTheme
-import com.dd2d.presentation.code_post.create.model.CodePostCreateState
+import com.dd2d.presentation.code_post.create.model.CodePostFormState
 
 @Composable
 internal fun CodePostCreateScreenContent(
-    createState: CodePostCreateState,
+    createState: CodePostFormState,
     modifier: Modifier = Modifier
 ) {
     AnimatedContent(
@@ -65,7 +65,7 @@ private fun CodePostCreateScreenContentPrev() {
                 .fillMaxSize()
         ) {
             CodePostCreateScreenContent(
-                createState = remember { CodePostCreateState() },
+                createState = remember { CodePostFormState() },
                 modifier = Modifier
             )
         }

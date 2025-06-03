@@ -48,7 +48,7 @@ internal fun ReviewDateInput(
 ) {
     val selectableDate = remember { SelectableDates() }
 
-    var setReviewDate by remember { mutableStateOf(false) }
+    var setReviewDate by remember { mutableStateOf(reviewDate != null) }
     var openDatePicker by remember { mutableStateOf(false) }
     val datePickerState = rememberDatePickerState(
         initialSelectedDateMillis = System.currentTimeMillis(),

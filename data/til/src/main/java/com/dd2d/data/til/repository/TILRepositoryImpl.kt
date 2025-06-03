@@ -1,8 +1,6 @@
 package com.dd2d.data.til.repository
 
 import com.dd2d.core.core.model.Pagination
-import com.dd2d.core.core.state.DataState
-import com.dd2d.core.core.state.asDataState
 import com.dd2d.data.til.mapper.toTIL
 import com.dd2d.data.til.mapper.toTILCreateRequestDto
 import com.dd2d.data.til.mapper.toTILListItem
@@ -16,56 +14,67 @@ import com.dd2d.domain.til.model.TILListItem
 import com.dd2d.domain.til.model.TILListOptions
 import com.dd2d.domain.til.model.TILUpdater
 import com.dd2d.domain.til.repository.TILRepository
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class TILRepositoryImpl @Inject constructor(
     private val tilApi: TILApi
 ): TILRepository {
-    override fun getTILList(options: TILListOptions): Flow<DataState<Pagination<TILListItem>>> = flow {
-        val response = with(options) {
-            if(search.isBlank()) tilApi.getTILList(page = page, size = take)
-            else tilApi.getTILListBySearchKeyword(search = search, page = page, size = take)
-        }
-        emit(
-            response.toPagination(
-                requestPage = options.page,
-                mapper = TILListItemResponseDto::toTILListItem
-            )
-        )
-    }.asDataState()
+    override suspend fun getTILList(options: TILListOptions): Result<Pagination<TILListItem>> {
+        return tilApi
+            .runCatching {
+                if(options.search.isBlank()) tilApi.getTILList(page = options.page, size = options.take)
+                else tilApi.getTILListBySearchKeyword(search = options.search, page = options.page, size = options.take)
+            }
+            .mapCatching { response ->
+                response.toPagination(
+                    requestPage = options.page,
+                    mapper = TILListItemResponseDto::toTILListItem,
+                )
+            }
+    }
 
-    override fun getMyTILList(options: TILListOptions): Flow<DataState<Pagination<TILListItem>>> = flow {
-        val response = with(options) {
-            if(search.isBlank()) tilApi.getMyTILList(page = page, size = take)
-            else tilApi.getMyTILListBySearchKeyword(search = search, page = page, size = take)
-        }
-        emit(
-            response.toPagination(
-                requestPage = options.page,
-                mapper = TILListItemResponseDto::toTILListItem
-            )
-        )
-    }.asDataState()
+    override suspend fun getMyTILList(options: TILListOptions): Result<Pagination<TILListItem>> {
+        return tilApi
+            .runCatching {
+                if(options.search.isBlank()) tilApi.getMyTILList(page = options.page, size = options.take)
+                else tilApi.getMyTILListBySearchKeyword(search = options.search, page = options.page, size = options.take)
+            }
+            .mapCatching { response ->
+                response.toPagination(
+                    requestPage = options.page,
+                    mapper = TILListItemResponseDto::toTILListItem
+                )
+            }
+    }
 
-    override fun getTIL(id: Int): Flow<DataState<TIL>> = flow {
-        val response = tilApi.getTIL(id)
-        emit(response.toTIL())
-    }.asDataState()
+    override suspend fun getTIL(id: Int): Result<TIL> {
+        return tilApi
+            .runCatching {
+                getTIL(id)
+            }
+            .mapCatching { response ->
+                response.toTIL()
+            }
+    }
 
-    override fun createTIL(create: TILCreator): Flow<DataState<Int>> = flow {
-        val response = tilApi.createTIL(create.toTILCreateRequestDto())
-        emit(response)
-    }.asDataState()
+    override suspend fun createTIL(create: TILCreator): Result<Int> {
+        return tilApi
+            .runCatching {
+                createTIL(create.toTILCreateRequestDto())
+            }
+    }
 
-    override fun updateTIL(update: TILUpdater): Flow<DataState<Int>> = flow {
-        val response = tilApi.updateTIL(update.toTILUpdateRequestDto())
-        emit(response)
-    }.asDataState()
+    override suspend fun updateTIL(update: TILUpdater): Result<Int> {
+        return tilApi
+            .runCatching {
+                updateTIL(update.toTILUpdateRequestDto())
+            }
+    }
 
-    override fun deleteTIL(id: Int): Flow<DataState<Int>> = flow {
-        val response = tilApi.deleteTIL(id)
-        emit(response)
-    }.asDataState()
+    override suspend fun deleteTIL(id: Int): Result<Int> {
+        return tilApi
+            .runCatching {
+                deleteTIL(id)
+            }
+    }
 }

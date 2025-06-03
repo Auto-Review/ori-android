@@ -51,13 +51,13 @@ internal fun CodePostHeaderComponent(
             modifier = Modifier.fillMaxWidth().padding(top = 8.dp)
         ) {
             Main400Text(
-                text = codePost.code.language,
+                text = codePost.code.language?.label?: "-",
                 color = MaterialTheme.colorScheme.surfaceBright,
                 fontSize = 12.sp,
                 lineHeight = 16.8.sp,
             )
             Main400Text(
-                text = "TODO : 공개 설정",
+                text = if(codePost.isPublic) "공개" else "비공개",
                 color = MaterialTheme.colorScheme.surfaceBright,
                 fontSize = 12.sp,
                 lineHeight = 16.8.sp,

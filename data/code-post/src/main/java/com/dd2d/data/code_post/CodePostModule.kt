@@ -3,9 +3,11 @@ package com.dd2d.data.code_post
 import com.dd2d.data.code_post.repository.CodePostCommentRepositoryImpl
 import com.dd2d.data.code_post.repository.CodePostRepositoryImpl
 import com.dd2d.data.code_post.repository.CodePostReviewRepositoryImpl
+import com.dd2d.data.code_post.repository.CodePostScrapRepositoryImpl
 import com.dd2d.domain.code_post.repository.CodePostCommentRepository
 import com.dd2d.domain.code_post.repository.CodePostRepository
 import com.dd2d.domain.code_post.repository.CodePostReviewRepository
+import com.dd2d.domain.code_post.repository.CodePostScrapRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -26,4 +28,8 @@ abstract class CodePostModule {
     @Binds
     @Singleton
     abstract fun bindCodePostReviewRepository(impl: CodePostReviewRepositoryImpl): CodePostReviewRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindCodePostScrapRepository(impl: CodePostScrapRepositoryImpl): CodePostScrapRepository
 }

@@ -9,6 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import com.dd2d.core.presentation.icon.VectorIconButton
 import com.dd2d.core.presentation.image.PainterImage
+import com.dd2d.presentation.scrap.list._navigation.toScrapScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -22,9 +23,10 @@ internal fun MainScreenTopBar(
             VectorIconButton(res = com.dd2d.core.presentation.R.drawable.search) {
 
             }
-            VectorIconButton(res = com.dd2d.core.presentation.R.drawable.scrap) {
-
-            }
+            VectorIconButton(
+                res = com.dd2d.core.presentation.R.drawable.scrap,
+                onClick = appNavController::toScrapScreen
+            )
             VectorIconButton(res = com.dd2d.core.presentation.R.drawable.off_notification) {
 
             }

@@ -8,13 +8,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.dd2d.core.presentation._ori.InputItem
+import com.dd2d.domain.code_post.model.post.Code
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 internal fun CodePostLanguageInput(
-    languages: List<String>,
-    selectedLanguage: String,
-    onSelectedLanguageChange: (value: String) -> Unit,
+    languages: List<Code.Language>,
+    selectedLanguage: Code.Language?,
+    onSelectedLanguageChange: (value: Code.Language) -> Unit,
     modifier: Modifier = Modifier
 ) {
     InputItem(label = "사용 언어", modifier = modifier) {
@@ -25,7 +26,7 @@ internal fun CodePostLanguageInput(
         ) {
             languages.forEach { language ->
                 SelectableLabel(
-                    label = language,
+                    label = language.label,
                     isSelected = selectedLanguage == language,
                     onClick = { onSelectedLanguageChange(language) }
                 )

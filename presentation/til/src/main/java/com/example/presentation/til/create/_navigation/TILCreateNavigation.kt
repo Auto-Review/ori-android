@@ -14,11 +14,13 @@ data object TILCreateScreenRoute : ScreenRoute
 
 fun NavGraphBuilder.routeTILCreateScreen(
     onBack: () -> Unit,
+    navigateToTILDetail: (id: Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     horizontalScreen<TILCreateScreenRoute> {
         TILCreateScreen(
             onBack = onBack,
+            navigateToTILDetail = navigateToTILDetail,
             modifier = modifier,
         )
     }

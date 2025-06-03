@@ -16,12 +16,14 @@ internal fun CodePostResponseDto.toCodePost(): CodePost {
         ),
         title = this.title,
         code = Code(
-            language = this.language,
+            language = Code.Language.entries.find { it.value == this.language },
             content = this.code,
         ),
         description = this.description,
         reviewDate = this.reviewDay?.dateStringToLocalDate("yyyy-MM-dd")?.atStartOfDay(),
         level = this.level,
+        isPublic = this.public,
+        isScrapped = this.bookmarked,
         createdAt = this.createDate,
     )
 }

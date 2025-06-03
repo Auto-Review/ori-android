@@ -16,6 +16,7 @@
             <option value="$PROJECT_DIR$/core/data-store-manager" />
             <option value="$PROJECT_DIR$/core/fcm" />
             <option value="$PROJECT_DIR$/core/network" />
+            <option value="$PROJECT_DIR$/core/notifier" />
             <option value="$PROJECT_DIR$/core/presentation" />
             <option value="$PROJECT_DIR$/core/presentation-oauth" />
             <option value="$PROJECT_DIR$/core/token-manager" />
@@ -41,6 +42,7 @@
             <option value="$PROJECT_DIR$/presentation/code-post" />
             <option value="$PROJECT_DIR$/presentation/my" />
             <option value="$PROJECT_DIR$/presentation/schedule" />
+            <option value="$PROJECT_DIR$/presentation/scrap" />
             <option value="$PROJECT_DIR$/presentation/til" />
           </set>
         </option>

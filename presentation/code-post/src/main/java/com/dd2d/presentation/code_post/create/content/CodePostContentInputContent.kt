@@ -17,11 +17,11 @@ import androidx.compose.ui.unit.dp
 import com.dd2d.core.presentation.theme.AppTheme
 import com.dd2d.presentation.code_post.create.component.CodePostCodeInput
 import com.dd2d.presentation.code_post.create.component.CodePostDescriptionInput
-import com.dd2d.presentation.code_post.create.model.CodePostCreateState
+import com.dd2d.presentation.code_post.create.model.CodePostFormState
 
 @Composable
 internal fun CodePostContentInputContent(
-    createState: CodePostCreateState,
+    createState: CodePostFormState,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -34,18 +34,13 @@ internal fun CodePostContentInputContent(
     ) {
         HorizontalDivider()
         CodePostDescriptionInput(
-            description = createState.description,
-            onDescriptionChange = {
-                createState.description = it
-            },
+            descriptionTextState = createState.descriptionTextState,
             modifier = Modifier.fillMaxWidth().padding(horizontal = 24.dp)
         )
         CodePostCodeInput(
             language = createState.language,
-            code = createState.code,
-            onCodeChange = {
-                createState.code = it
-            },
+            onLanguageChange = { createState.language = it },
+            codeTextState = createState.codeTextState,
             modifier = Modifier.fillMaxWidth().padding(horizontal = 24.dp)
         )
     }
@@ -56,7 +51,7 @@ internal fun CodePostContentInputContent(
 private fun CodePostContentInputContentPrev() {
     AppTheme {
         CodePostContentInputContent(
-            createState = remember { CodePostCreateState() },
+            createState = remember { CodePostFormState() },
             modifier = Modifier
         )
     }

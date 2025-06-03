@@ -16,6 +16,7 @@ fun NavGraphBuilder.routeCodePostScreen(
     onBack: () -> Unit,
     onReviewCreateClick: (codePostId: Int) -> Unit,
     onReviewUpdateClick: (codePostId: Int, reviewId: Int) -> Unit,
+    onCodePostUpdateClick: (codePostId: Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     horizontalScreen<CodePostScreenRoute> {
@@ -23,6 +24,7 @@ fun NavGraphBuilder.routeCodePostScreen(
             onBack = onBack,
             onReviewCreateClick = onReviewCreateClick,
             onReviewUpdateClick = onReviewUpdateClick,
+            onCodePostUpdateClick = onCodePostUpdateClick,
             modifier = modifier,
         )
     }

@@ -8,9 +8,10 @@ internal fun CodePostCreator.toCorePostCreateRequestDto(): CodePostCreateRequest
     return CodePostCreateRequestDto(
         title = this.title,
         level = this.level,
-        reviewDay = this.reviewDate?.format("yyyy-MM-dd")?: "",
         description = this.description,
-        language = this.code.language,
+        language = this.code.language!!.value,
         code = this.code.content,
+        isPublic = this.isPublic,
+        reviewDay = this.reviewDate?.format("yyyy-MM-dd")?: "",
     )
 }

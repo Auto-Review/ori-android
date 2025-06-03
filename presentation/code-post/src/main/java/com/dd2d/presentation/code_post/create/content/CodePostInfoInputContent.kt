@@ -15,16 +15,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.dd2d.core.presentation.theme.AppTheme
+import com.dd2d.domain.code_post.model.post.Code
 import com.dd2d.presentation.code_post.create.component.CodePostLanguageInput
 import com.dd2d.presentation.code_post.create.component.CodePostLevelInput
 import com.dd2d.presentation.code_post.create.component.CodePostTitleInput
 import com.dd2d.presentation.code_post.create.component.PublishSettingInput
 import com.dd2d.presentation.code_post.create.component.ReviewDateInput
-import com.dd2d.presentation.code_post.create.model.CodePostCreateState
+import com.dd2d.presentation.code_post.create.model.CodePostFormState
 
 @Composable
 internal fun CodePostInfoInputContent(
-    createState: CodePostCreateState,
+    createState: CodePostFormState,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -51,14 +52,14 @@ internal fun CodePostInfoInputContent(
             modifier = Modifier.fillMaxWidth().padding(horizontal = 24.dp)
         )
         CodePostLanguageInput(
-            languages = listOf("java", "kotlin"),
+            languages = Code.Language.entries,
             selectedLanguage = createState.language,
             onSelectedLanguageChange = { createState.language = it },
             modifier = Modifier.fillMaxWidth().padding(horizontal = 24.dp)
         )
         PublishSettingInput(
-            isPrivate = createState.isPrivate,
-            onIsPrivateChange = { createState.isPrivate = it },
+            isPublic = createState.isPublic,
+            onIsPublicChange = { createState.isPublic = it },
             modifier = Modifier.fillMaxWidth().padding(horizontal = 24.dp)
         )
         ReviewDateInput(
@@ -74,7 +75,7 @@ internal fun CodePostInfoInputContent(
 private fun CodePostInfoInputContentPrev() {
     AppTheme {
         CodePostInfoInputContent(
-            createState = remember { CodePostCreateState() },
+            createState = remember { CodePostFormState() },
             modifier = Modifier.fillMaxSize()
         )
     }

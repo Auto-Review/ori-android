@@ -77,7 +77,7 @@ internal fun ScheduleComponent(
                     ScheduleItemComponent(
                         content = item.content,
                         date = item.noticeAt,
-                        onClick = { onClick(item.id) },
+                        onClick = { onClick(item.codePostId) },
                         contentPadding = PaddingValues(horizontal = 17.dp),
                         modifier = Modifier
                             .animateItem()

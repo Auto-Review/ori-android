@@ -14,9 +14,9 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.dd2d.core.presentation._ori.CodeTextField
 import com.dd2d.core.presentation._ori.InputItem
 import com.dd2d.core.presentation.main_text_field.MainTextFieldDefaults
+import com.dd2d.presentation.code_post._core.component.CodeEditor
 import com.dd2d.presentation.code_post.review.model.ReviewInputState
 
 @Composable
@@ -44,11 +44,13 @@ internal fun CodePostReviewCreateScreenContent(
             )
         }
         InputItem(label = "Code", modifier = Modifier.fillMaxWidth().padding(horizontal = 24.dp)) {
-            CodeTextField(
-                language = "[어떻게 할까]",
-                code = inputState.code,
+            CodeEditor(
+                initialCode = inputState.code,
                 onCodeChange = { inputState.code = it },
-                modifier = Modifier.fillMaxWidth()
+                language = null,
+                onLanguageChange = null,
+                modifier = Modifier.fillMaxWidth(),
+                readOnly = false,
             )
         }
     }

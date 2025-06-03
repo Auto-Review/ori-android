@@ -8,5 +8,6 @@ data class CodePostUpdater(
     val code: Code? = null,
     val description: String? = null,
     val level: Int? = null,
+    val isPublic: Boolean? = null,
     val reviewDate: LocalDateTime? = null
 )

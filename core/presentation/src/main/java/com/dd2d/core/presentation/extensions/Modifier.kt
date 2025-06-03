@@ -5,6 +5,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableLongStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -23,13 +24,15 @@ fun Modifier.delayedClickable(
 ): Modifier = then(
     Modifier.composed {
         var lastClickTime by remember(key1 = delay) { mutableLongStateOf(0L) }
+        var inDelay by remember { mutableStateOf(false) }
         clickable(
-            enabled = enabled,
+            enabled = enabled && !inDelay,
             onClickLabel = onClickLabel,
             role = role,
             onClick = {
                 val clickTime = System.currentTimeMillis()
-                if(lastClickTime + delay.inWholeMilliseconds <= clickTime) {
+                inDelay = lastClickTime + delay.inWholeMilliseconds > clickTime
+                if(!inDelay) {
                     lastClickTime = clickTime
                     onClick()
                 }

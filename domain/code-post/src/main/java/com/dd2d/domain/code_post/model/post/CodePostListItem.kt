@@ -9,6 +9,7 @@ data class CodePostListItem(
     val title: String,
     val description: String,
     val level: Int,
+    val commentCount: Int,
     val createdAt: DateTimeString,
 ) {
     companion object {
@@ -18,6 +19,7 @@ data class CodePostListItem(
             title = "title1",
             description = "asdasdasd",
             level = 5,
+            commentCount = 10,
             createdAt = "2025-02-08",
         )
     }

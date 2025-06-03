@@ -17,6 +17,7 @@ internal fun CodePostListItemResponseDto.toCodePostListItem(): CodePostListItem 
         title = this.title,
         description = this.description,
         level = this.level,
+        commentCount = this.commentCount,
         createdAt = this.createdDate.utcToLocalDate().format("yyyy-MM-dd"),
     )
 }

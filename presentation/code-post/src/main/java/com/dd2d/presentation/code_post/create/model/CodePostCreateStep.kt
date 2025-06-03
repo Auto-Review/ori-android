@@ -8,7 +8,7 @@ import com.dd2d.presentation.code_post.create.content.CodePostInfoInputContent
 internal enum class CodePostCreateStep {
     First {
         @Composable
-        override fun Content(createState: CodePostCreateState, modifier: Modifier) {
+        override fun Content(createState: CodePostFormState, modifier: Modifier) {
             CodePostInfoInputContent(
                 createState = createState,
                 modifier = modifier
@@ -17,7 +17,7 @@ internal enum class CodePostCreateStep {
     },
     Second {
         @Composable
-        override fun Content(createState: CodePostCreateState, modifier: Modifier) {
+        override fun Content(createState: CodePostFormState, modifier: Modifier) {
             CodePostContentInputContent(
                 createState = createState,
                 modifier = modifier
@@ -26,5 +26,5 @@ internal enum class CodePostCreateStep {
     };
 
     @Composable
-    abstract fun Content(createState: CodePostCreateState, modifier: Modifier)
+    abstract fun Content(createState: CodePostFormState, modifier: Modifier)
 }

@@ -12,6 +12,7 @@ data class CodePostUpdateRequestDto(
     val reviewDay: DateString? = null,
     val language: String? = null,
     val code: String? = null,
+    val public: Boolean? = null,
 )
 
 

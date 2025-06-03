@@ -7,5 +7,6 @@ data class CodePostCreator(
     val level: Int,
     val code: Code,
     val description: String,
+    val isPublic: Boolean,
     val reviewDate: LocalDateTime?
 )
