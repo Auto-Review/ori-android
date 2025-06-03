@@ -7,16 +7,11 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.dd2d.core.presentation.app_bar.CenterTitleTopBar
-import com.dd2d.core.presentation.dialog.CancellableConfirmDialog
 import com.dd2d.core.presentation.main_text.Main700Text
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -28,10 +23,9 @@ internal fun TILScreenTopBar(
     modifier: Modifier = Modifier
 ) {
     val keyboard = LocalSoftwareKeyboardController.current
-    var openOnBackConfirmDialog by remember { mutableStateOf(false) }
     CenterTitleTopBar(
         title = "",
-        onBack = { openOnBackConfirmDialog = true },
+        onBack = onBack,
         actions = {
             if(isCreating) {
                 CircularProgressIndicator(
@@ -58,16 +52,4 @@ internal fun TILScreenTopBar(
         },
         modifier = modifier
     )
-    if(openOnBackConfirmDialog) {
-        CancellableConfirmDialog(
-            title = "뒤로가기",
-            message = "작성한 내용은 저장되지 않습니다.\n뒤로 가시겠습니까?",
-            confirmText = "뒤로 가기",
-            onCancel = { openOnBackConfirmDialog = false },
-            onConfirm = {
-                openOnBackConfirmDialog = false
-                onBack()
-            }
-        )
-    }
 }
