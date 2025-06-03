@@ -6,11 +6,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.dd2d.core.presentation.dialog.LoadingDialog
 import com.dd2d.presentation.my.conent.MyCodePostListContent
 import com.dd2d.presentation.my.conent.MyPageScreenContent
@@ -24,11 +21,6 @@ fun MyPageScreen(
     modifier: Modifier = Modifier
 ) {
     val viewModel = hiltViewModel<MyPageViewModel>()
-    val tilListState by viewModel.tilListManager.state.collectAsStateWithLifecycle()
-
-    LaunchedEffect(key1 = Unit) {
-        viewModel.refreshTILList()
-    }
 
     Scaffold(
         containerColor = MaterialTheme.colorScheme.background,
@@ -51,10 +43,7 @@ fun MyPageScreen(
                 },
                 tilListContent = {
                     MyTILListContent(
-                        listState = tilListState,
-                        list = viewModel.tilListManager.list,
-                        requestNextPage = viewModel::nextTILPage,
-                        requestRefresh = viewModel::refreshTILList,
+                        listController = viewModel.tilListController,
                         onItemClick = { id -> navigationEvent(MyPageNavigateEvent.TIL(id)) },
                         modifier = Modifier.fillMaxSize(),
                     )
