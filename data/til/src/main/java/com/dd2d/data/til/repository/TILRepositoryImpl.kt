@@ -24,7 +24,7 @@ class TILRepositoryImpl @Inject constructor(
       .runCatching {
         if (options.search.isBlank()) tilApi.getTILList(page = options.page, size = options.take)
         else tilApi.getTILListBySearchKeyword(
-          search = options.search,
+          keyword = options.search,
           page = options.page,
           size = options.take
         )
@@ -42,7 +42,7 @@ class TILRepositoryImpl @Inject constructor(
       .runCatching {
         if (options.search.isBlank()) tilApi.getMyTILList(page = options.page, size = options.take)
         else tilApi.getMyTILListBySearchKeyword(
-          search = options.search,
+          keyword = options.search,
           page = options.page,
           size = options.take
         )

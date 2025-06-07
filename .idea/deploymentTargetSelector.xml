@@ -19,7 +19,7 @@
       <SelectionState runConfigName="CodePrev">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="CodeEditorPrev">
+      <SelectionState runConfigName="SearchScreenContentPrev">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
     </selectionStates>

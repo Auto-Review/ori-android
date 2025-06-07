@@ -35,7 +35,7 @@ class TILApi @Inject constructor(
     .bodyHandling()
 
   suspend fun getTILListBySearchKeyword(
-    search: String,
+    keyword: String,
     page: Int,
     size: Int,
   ): PagingResponseDto<TILListItemResponseDto> = client
@@ -44,7 +44,7 @@ class TILApi @Inject constructor(
       url {
         parameters.append("page", page.toString())
         parameters.append("size", size.toString())
-        parameters.append("search", search)
+        parameters.append("keyword", keyword)
       }
     }.bodyHandling()
 
@@ -62,7 +62,7 @@ class TILApi @Inject constructor(
     .bodyHandling()
 
   suspend fun getMyTILListBySearchKeyword(
-    search: String,
+    keyword: String,
     page: Int,
     size: Int,
   ): PagingResponseDto<TILListItemResponseDto> = client
@@ -71,7 +71,7 @@ class TILApi @Inject constructor(
       url {
         parameters.append("page", page.toString())
         parameters.append("size", size.toString())
-        parameters.append("search", search)
+        parameters.append("keyword", keyword)
       }
     }.bodyHandling()
 

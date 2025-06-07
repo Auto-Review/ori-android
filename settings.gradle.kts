@@ -55,3 +55,4 @@ include(":presentation:til")
 
 include(":presentation:my")
 include(":presentation:scrap")
+include(":presentation:search")

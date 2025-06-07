@@ -17,6 +17,7 @@ import com.dd2d.presentation.code_post.detail._navigation.toCodePostScreen
 import com.dd2d.presentation.code_post.review.routeCodePostReviewCreateScreen
 import com.dd2d.presentation.code_post.review.toCodePostReviewCreateScreen
 import com.dd2d.presentation.scrap.list._navigation.routeScrapScreen
+import com.dd2d.presentation.search.list._navigation.routeSearchScreen
 import com.example.presentation.til.create._navigation.routeTILCreateScreen
 import com.example.presentation.til.detail._navigation.routeTILScreen
 import com.example.presentation.til.detail._navigation.toTILScreen
@@ -65,6 +66,12 @@ internal fun AppNavHost(
       onClose = navController::safePopBackStack,
       navigateToCodePostDetail = navController::toCodePostScreen,
       navigateToTILDetail = navController::toTILScreen,
+    )
+
+    routeSearchScreen(
+      onBack = navController::safePopBackStack,
+      onCodePostDetailClick = navController::toCodePostScreen,
+      onTILDetailClick = navController::toTILScreen,
     )
   }
 }

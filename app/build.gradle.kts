@@ -118,4 +118,5 @@ dependencies {
   implementation(project(":presentation:til"))
 
   implementation(project(":presentation:scrap"))
+  implementation(project(":presentation:search"))
 }

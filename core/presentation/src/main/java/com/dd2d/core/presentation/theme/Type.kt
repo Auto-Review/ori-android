@@ -22,7 +22,12 @@ class HansTypography internal constructor(
 )
 
 val LocalHansType = staticCompositionLocalOf<HansTypography> {
-  error("No HansTypography provided")
+  HansTypography(
+    topBarTitle = TextStyle.Default,
+    tabTitle = TextStyle.Default,
+    label = TextStyle.Default,
+    banner = TextStyle.Default,
+  )
 }
 
 val hansType: HansTypography

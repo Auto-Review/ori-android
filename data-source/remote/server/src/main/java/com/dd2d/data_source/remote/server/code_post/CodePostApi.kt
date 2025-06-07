@@ -41,7 +41,7 @@ class CodePostApi @Inject constructor(
     .bodyHandling()
 
   suspend fun getCodePostListBySearchKeyword(
-    search: String,
+    keyword: String,
     page: Int,
     size: Int,
     sort: String? = null
@@ -49,7 +49,7 @@ class CodePostApi @Inject constructor(
     .get("/v1/api/post/code/search") {
       authorizationHeader(tokenManager.getAccessToken())
       url {
-        parameters.append("search", search)
+        parameters.append("keyword", keyword)
         parameters.append("page", "$page")
         parameters.append("size", "$size")
         sort?.let { parameters.append("sort", sort) }
@@ -77,7 +77,7 @@ class CodePostApi @Inject constructor(
     .bodyHandling()
 
   suspend fun getMyCodePostListBySearchKeyword(
-    search: String,
+    keyword: String,
     page: Int,
     size: Int,
     sort: String? = null
@@ -85,7 +85,7 @@ class CodePostApi @Inject constructor(
     .get("/v1/api/post/code/own/search") {
       authorizationHeader(tokenManager.getAccessToken())
       url {
-        parameters.append("search", search)
+        parameters.append("keyword", keyword)
         parameters.append("page", "$page")
         parameters.append("size", "$size")
         sort?.let { parameters.append("sort", sort) }

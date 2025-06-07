@@ -12,6 +12,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 class LazyListController<ListOption : Pageable<ListOption>, ListItem>(
+  lazyInit: Boolean = false,
   option: ListOption,
   private val scope: CoroutineScope,
   private val getList: suspend (option: ListOption) -> Result<Pagination<ListItem>>
@@ -79,6 +80,8 @@ class LazyListController<ListOption : Pageable<ListOption>, ListItem>(
   }
 
   init {
-    refresh()
+    if(!lazyInit) {
+      refresh()
+    }
   }
 }
