@@ -10,13 +10,13 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class CodePostListViewModel @Inject constructor(
-    private val codePostRepository: CodePostRepository
-): ViewModel() {
-    val listController = LazyListController(
-        option = CodePostListOptions(take = 10),
-        scope = viewModelScope,
-        getList = codePostRepository::getCodePostList,
-    )
+  private val codePostRepository: CodePostRepository
+) : ViewModel() {
+  val listController = LazyListController(
+    option = CodePostListOptions(take = 10),
+    scope = viewModelScope,
+    getList = codePostRepository::getCodePostList,
+  )
 }
 
 

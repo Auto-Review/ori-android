@@ -4,10 +4,10 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class CodePostCommentCreateRequestDto(
-    val postId: Int,
-    val body: String,
-    val isPublic: Boolean,
-    val mentionNickName: String?,
-    val mentionEmail: String?,
-    val parentId: Int?
+  val postId: Int,
+  val body: String,
+  val isPublic: Boolean,
+  val mentionNickName: String?,
+  val mentionEmail: String?,
+  val parentId: Int?
 )

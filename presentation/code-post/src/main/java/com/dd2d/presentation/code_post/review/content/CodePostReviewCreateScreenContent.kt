@@ -21,37 +21,41 @@ import com.dd2d.presentation.code_post.review.model.ReviewInputState
 
 @Composable
 internal fun CodePostReviewCreateScreenContent(
-    inputState: ReviewInputState,
-    modifier: Modifier = Modifier
+  inputState: ReviewInputState,
+  modifier: Modifier = Modifier
 ) {
-    Column(
-        verticalArrangement = Arrangement.spacedBy(24.dp),
-        modifier = modifier
-            .imePadding()
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState())
-            .padding(bottom = 40.dp)
-    ) {
-        HorizontalDivider()
-        InputItem(label = "Review", modifier = Modifier.fillMaxWidth().padding(horizontal = 24.dp)) {
-            OutlinedTextField(
-                value = inputState.review,
-                onValueChange = { inputState.review = it },
-                minLines = 5,
-                shape = MaterialTheme.shapes.small,
-                colors = MainTextFieldDefaults.outlineTextFieldColors(),
-                modifier = Modifier.fillMaxWidth()
-            )
-        }
-        InputItem(label = "Code", modifier = Modifier.fillMaxWidth().padding(horizontal = 24.dp)) {
-            CodeEditor(
-                initialCode = inputState.code,
-                onCodeChange = { inputState.code = it },
-                language = null,
-                onLanguageChange = null,
-                modifier = Modifier.fillMaxWidth(),
-                readOnly = false,
-            )
-        }
+  Column(
+    verticalArrangement = Arrangement.spacedBy(24.dp),
+    modifier = modifier
+      .imePadding()
+      .fillMaxSize()
+      .verticalScroll(rememberScrollState())
+      .padding(bottom = 40.dp)
+  ) {
+    HorizontalDivider()
+    InputItem(label = "Review", modifier = Modifier
+      .fillMaxWidth()
+      .padding(horizontal = 24.dp)) {
+      OutlinedTextField(
+        value = inputState.review,
+        onValueChange = { inputState.review = it },
+        minLines = 5,
+        shape = MaterialTheme.shapes.small,
+        colors = MainTextFieldDefaults.outlineTextFieldColors(),
+        modifier = Modifier.fillMaxWidth()
+      )
     }
+    InputItem(label = "Code", modifier = Modifier
+      .fillMaxWidth()
+      .padding(horizontal = 24.dp)) {
+      CodeEditor(
+        initialCode = inputState.code,
+        onCodeChange = { inputState.code = it },
+        language = null,
+        onLanguageChange = null,
+        modifier = Modifier.fillMaxWidth(),
+        readOnly = false,
+      )
+    }
+  }
 }

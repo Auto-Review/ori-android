@@ -18,40 +18,40 @@ import com.dd2d.core.presentation.main_text_field.MainTextFieldDefaults
 
 @Composable
 internal fun CodePostTitleInput(
-    title: String,
-    onTitleChange: (value: String) -> Unit,
-    modifier: Modifier = Modifier
+  title: String,
+  onTitleChange: (value: String) -> Unit,
+  modifier: Modifier = Modifier
 ) {
-    val fm = LocalFocusManager.current
+  val fm = LocalFocusManager.current
 
-    DisposableEffect(key1 = fm) {
-        onDispose {
-            fm.clearFocus(true)
-        }
+  DisposableEffect(key1 = fm) {
+    onDispose {
+      fm.clearFocus(true)
     }
-    TextField(
-        value = title,
-        onValueChange = onTitleChange,
-        placeholder = {
-            Main700Text(
-                text = "제목",
-                color = MaterialTheme.colorScheme.surfaceBright,
-                fontSize = 20.sp,
-                lineHeight = 24.sp
-            )
-        },
-        textStyle = TextStyle(
-            fontSize = 20.sp,
-            lineHeight = 24.sp,
-            color = MaterialTheme.colorScheme.onSurface,
-            fontWeight = FontWeight.W700
-        ),
-        singleLine = true,
-        keyboardOptions = KeyboardOptions.Default.copy(
-            imeAction = ImeAction.Done
-        ),
-        keyboardActions = KeyboardActions { fm.clearFocus(force = true) },
-        colors = MainTextFieldDefaults.textFieldColors(),
-        modifier = modifier.fillMaxWidth()
-    )
+  }
+  TextField(
+    value = title,
+    onValueChange = onTitleChange,
+    placeholder = {
+      Main700Text(
+        text = "제목",
+        color = MaterialTheme.colorScheme.surfaceBright,
+        fontSize = 20.sp,
+        lineHeight = 24.sp
+      )
+    },
+    textStyle = TextStyle(
+      fontSize = 20.sp,
+      lineHeight = 24.sp,
+      color = MaterialTheme.colorScheme.onSurface,
+      fontWeight = FontWeight.W700
+    ),
+    singleLine = true,
+    keyboardOptions = KeyboardOptions.Default.copy(
+      imeAction = ImeAction.Done
+    ),
+    keyboardActions = KeyboardActions { fm.clearFocus(force = true) },
+    colors = MainTextFieldDefaults.textFieldColors(),
+    modifier = modifier.fillMaxWidth()
+  )
 }

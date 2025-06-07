@@ -21,64 +21,64 @@ import androidx.compose.ui.unit.sp
 import com.dd2d.core.presentation.main_text.Main400Text
 
 object CodeTextFieldDefault {
-    @Composable
-    fun DefaultPlaceholder(modifier: Modifier = Modifier) {
-        Main400Text(
-            text = """
+  @Composable
+  fun DefaultPlaceholder(modifier: Modifier = Modifier) {
+    Main400Text(
+      text = """
                 fun main() {
                     println("Hello World!")
                 }
             """.trimIndent(),
-            color = Color.LightGray,
-            maxLine = Int.MAX_VALUE,
-            modifier = modifier
-        )
-    }
+      color = Color.LightGray,
+      maxLine = Int.MAX_VALUE,
+      modifier = modifier
+    )
+  }
 }
 
 @Deprecated("use [CodeEditor]")
 @Composable
 fun CodeTextField(
-    language: String,
-    codeTextState: TextFieldState,
-    modifier: Modifier = Modifier,
-    placeholder: @Composable () -> Unit = { CodeTextFieldDefault.DefaultPlaceholder() }
+  language: String,
+  codeTextState: TextFieldState,
+  modifier: Modifier = Modifier,
+  placeholder: @Composable () -> Unit = { CodeTextFieldDefault.DefaultPlaceholder() }
 ) {
-    Column(
-        verticalArrangement = Arrangement.spacedBy(8.dp),
+  Column(
+    verticalArrangement = Arrangement.spacedBy(8.dp),
+    modifier = Modifier
+      .fillMaxWidth()
+      .background(
+        MaterialTheme.colorScheme.outlineVariant,
+        shape = MaterialTheme.shapes.small
+      )
+      .padding(14.dp)
+      .then(modifier)
+  ) {
+    if (language.isNotBlank()) {
+      Row(
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
-            .fillMaxWidth()
-            .background(
-                MaterialTheme.colorScheme.outlineVariant,
-                shape = MaterialTheme.shapes.small
-            )
-            .padding(14.dp)
-            .then(modifier)
-    ){
-        if(language.isNotBlank()) {
-            Row(
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier
-                    .fillMaxWidth()
-            ) {
-                Main400Text(text = language, fontSize = 12.sp)
-            }
-        }
-        BasicTextField(
-            state = codeTextState,
-            lineLimits = TextFieldLineLimits.MultiLine(minHeightInLines = 5),
-            textStyle = TextStyle.Default.copy(
-                fontSize = 16.sp,
-            ),
-            decorator = { innerTextField ->
-                if(codeTextState.text.isEmpty()) {
-                    placeholder()
-                }
-                innerTextField()
-            },
-            cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
-            modifier = Modifier.fillMaxWidth()
-        )
+          .fillMaxWidth()
+      ) {
+        Main400Text(text = language, fontSize = 12.sp)
+      }
     }
+    BasicTextField(
+      state = codeTextState,
+      lineLimits = TextFieldLineLimits.MultiLine(minHeightInLines = 5),
+      textStyle = TextStyle.Default.copy(
+        fontSize = 16.sp,
+      ),
+      decorator = { innerTextField ->
+        if (codeTextState.text.isEmpty()) {
+          placeholder()
+        }
+        innerTextField()
+      },
+      cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
+      modifier = Modifier.fillMaxWidth()
+    )
+  }
 }

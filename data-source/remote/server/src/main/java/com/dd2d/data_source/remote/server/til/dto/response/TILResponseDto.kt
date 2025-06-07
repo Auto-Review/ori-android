@@ -5,11 +5,11 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class TILResponseDto(
-    val id: Int,
-    val writerId: Int,
-    val writerEmail: String,
-    val writerNickName: String,
-    val title: String,
-    val content: String,
-    val createDate: UTCString,
+  val id: Int,
+  val writerId: Int,
+  val writerEmail: String,
+  val writerNickName: String,
+  val title: String,
+  val content: String,
+  val createDate: UTCString,
 )

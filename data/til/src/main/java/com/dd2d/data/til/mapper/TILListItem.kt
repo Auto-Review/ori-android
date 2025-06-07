@@ -7,15 +7,15 @@ import com.dd2d.domain.til.model.TILAuthor
 import com.dd2d.domain.til.model.TILListItem
 
 internal fun TILListItemResponseDto.toTILListItem(): TILListItem {
-    return TILListItem(
-        id = this.id,
-        title = this.title,
-        content = this.content,
-        author = TILAuthor(
-            id = this.writerId,
-            nickname = this.writerNickName,
-            email = this.writerEmail,
-        ),
-        createdAt = this.createdDate.utcToLocalDateTime().format("yyyy-MM-dd"),
-    )
+  return TILListItem(
+    id = this.id,
+    title = this.title,
+    content = this.content,
+    author = TILAuthor(
+      id = this.writerId,
+      nickname = this.writerNickName,
+      email = this.writerEmail,
+    ),
+    createdAt = this.createdDate.utcToLocalDateTime().format("yyyy-MM-dd"),
+  )
 }

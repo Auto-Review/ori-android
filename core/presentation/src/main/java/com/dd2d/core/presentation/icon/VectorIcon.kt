@@ -11,30 +11,30 @@ import androidx.compose.ui.res.vectorResource
 
 @Composable
 fun VectorIcon(
-    icon: ImageVector,
-    modifier: Modifier = Modifier,
-    description: String? = null,
-    tint: Color = LocalContentColor.current,
+  icon: ImageVector,
+  modifier: Modifier = Modifier,
+  description: String? = null,
+  tint: Color = LocalContentColor.current,
 ) {
-    Icon(
-        imageVector = icon,
-        contentDescription = description,
-        tint = tint,
-        modifier = modifier
-    )
+  Icon(
+    imageVector = icon,
+    contentDescription = description,
+    tint = tint,
+    modifier = modifier
+  )
 }
 
 @Composable
 fun VectorIcon(
-    @DrawableRes res: Int,
-    modifier: Modifier = Modifier,
-    description: String? = null,
-    tint: Color = LocalContentColor.current,
+  @DrawableRes res: Int,
+  modifier: Modifier = Modifier,
+  description: String? = null,
+  tint: Color = LocalContentColor.current,
 ) {
-    Icon(
-        imageVector = ImageVector.vectorResource(res),
-        contentDescription = description,
-        tint = tint,
-        modifier = modifier
-    )
+  Icon(
+    imageVector = ImageVector.vectorResource(res),
+    contentDescription = description,
+    tint = tint,
+    modifier = modifier
+  )
 }

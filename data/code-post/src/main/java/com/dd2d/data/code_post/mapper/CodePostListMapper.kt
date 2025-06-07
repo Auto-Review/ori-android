@@ -7,17 +7,17 @@ import com.dd2d.domain.code_post.model.post.CodePostAuthor
 import com.dd2d.domain.code_post.model.post.CodePostListItem
 
 internal fun CodePostListItemResponseDto.toCodePostListItem(): CodePostListItem {
-    return CodePostListItem(
-        id = this.id,
-        author = CodePostAuthor(
-            id = this.writerId,
-            nickname = this.writerNickName,
-            email = this.writerEmail,
-        ),
-        title = this.title,
-        description = this.description,
-        level = this.level,
-        commentCount = this.commentCount,
-        createdAt = this.createdDate.utcToLocalDate().format("yyyy-MM-dd"),
-    )
+  return CodePostListItem(
+    id = this.id,
+    author = CodePostAuthor(
+      id = this.writerId,
+      nickname = this.writerNickName,
+      email = this.writerEmail,
+    ),
+    title = this.title,
+    description = this.description,
+    level = this.level,
+    commentCount = this.commentCount,
+    createdAt = this.createdDate.utcToLocalDate().format("yyyy-MM-dd"),
+  )
 }

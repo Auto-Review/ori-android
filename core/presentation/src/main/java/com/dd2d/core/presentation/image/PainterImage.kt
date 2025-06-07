@@ -12,21 +12,21 @@ import androidx.compose.ui.res.painterResource
 
 @Composable
 fun PainterImage(
-    @DrawableRes res: Int,
-    modifier: Modifier = Modifier,
-    description: String? = null,
-    alignment: Alignment = Alignment.Center,
-    contentScale: ContentScale = ContentScale.Crop,
-    alpha: Float = DefaultAlpha,
-    colorFilter: ColorFilter? = null
+  @DrawableRes res: Int,
+  modifier: Modifier = Modifier,
+  description: String? = null,
+  alignment: Alignment = Alignment.Center,
+  contentScale: ContentScale = ContentScale.Crop,
+  alpha: Float = DefaultAlpha,
+  colorFilter: ColorFilter? = null
 ) {
-    Image(
-        painter = painterResource(res),
-        contentDescription = description,
-        alignment = alignment,
-        contentScale = contentScale,
-        alpha = alpha,
-        colorFilter = colorFilter,
-        modifier = modifier
-    )
+  Image(
+    painter = painterResource(res),
+    contentDescription = description,
+    alignment = alignment,
+    contentScale = contentScale,
+    alpha = alpha,
+    colorFilter = colorFilter,
+    modifier = modifier
+  )
 }

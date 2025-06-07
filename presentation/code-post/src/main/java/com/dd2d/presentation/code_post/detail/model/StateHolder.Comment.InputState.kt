@@ -9,56 +9,56 @@ import com.dd2d.domain.code_post.model.comment.CodePostCommentListItem
 import com.dd2d.domain.code_post.model.comment.CodePostCommentUpdater
 
 internal class CommentInputState(private val codePostId: Int) {
-    var updateCommentId by mutableStateOf<Int?>(null)
+  var updateCommentId by mutableStateOf<Int?>(null)
 
-    var parentId: Int? = null
-    var content by mutableStateOf("")
-    var isPublic by mutableStateOf(true)
-    var mentionNickName by mutableStateOf<String?>(null)
-    var mentionEmail by mutableStateOf<String?>(null)
+  var parentId: Int? = null
+  var content by mutableStateOf("")
+  var isPublic by mutableStateOf(true)
+  var mentionNickName by mutableStateOf<String?>(null)
+  var mentionEmail by mutableStateOf<String?>(null)
 
-    val canCommit by derivedStateOf {
-        content.isNotBlank()
-    }
+  val canCommit by derivedStateOf {
+    content.isNotBlank()
+  }
 
-    fun reset() {
-        updateCommentId = null
-        parentId = null
-        content = ""
-        isPublic = true
-        mentionNickName = null
-        mentionEmail = null
-    }
+  fun reset() {
+    updateCommentId = null
+    parentId = null
+    content = ""
+    isPublic = true
+    mentionNickName = null
+    mentionEmail = null
+  }
 
-    fun prepareUpdate(target: CodePostCommentListItem) {
-        updateCommentId = target.id
-        parentId = target.parentCommentId
-        content = target.content
-        isPublic = true
-        mentionNickName = target.mentionNickname
-        mentionEmail = target.mentionEmail
-    }
+  fun prepareUpdate(target: CodePostCommentListItem) {
+    updateCommentId = target.id
+    parentId = target.parentCommentId
+    content = target.content
+    isPublic = true
+    mentionNickName = target.mentionNickname
+    mentionEmail = target.mentionEmail
+  }
 
-    fun toCreator(): CodePostCommentCreator {
-        return CodePostCommentCreator(
-            postId = codePostId,
-            parentId = parentId,
-            content = content,
-            isPublic = isPublic,
-            mentionNickName = mentionNickName,
-            mentionEmail = mentionEmail,
-        )
-    }
+  fun toCreator(): CodePostCommentCreator {
+    return CodePostCommentCreator(
+      postId = codePostId,
+      parentId = parentId,
+      content = content,
+      isPublic = isPublic,
+      mentionNickName = mentionNickName,
+      mentionEmail = mentionEmail,
+    )
+  }
 
-    fun toUpdater(): CodePostCommentUpdater {
-        if(updateCommentId == null) throw NullPointerException("updateCommentId is null")
+  fun toUpdater(): CodePostCommentUpdater {
+    if (updateCommentId == null) throw NullPointerException("updateCommentId is null")
 
-        return CodePostCommentUpdater(
-            commentId = updateCommentId!!,
-            content = content,
-            isPublic = isPublic,
-            mentionNickName = mentionNickName,
-            mentionEmail = mentionEmail,
-        )
-    }
+    return CodePostCommentUpdater(
+      commentId = updateCommentId!!,
+      content = content,
+      isPublic = isPublic,
+      mentionNickName = mentionNickName,
+      mentionEmail = mentionEmail,
+    )
+  }
 }

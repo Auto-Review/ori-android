@@ -13,29 +13,29 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data object MyPageScreenRoute : ScreenRoute, BottomBarItem {
-    override val route: ScreenRoute = this
-    override val labelRes: Int = com.dd2d.core.presentation.R.string.tab_my
-    override val iconRes: Int = com.dd2d.core.presentation.R.drawable.tab_my
+  override val route: ScreenRoute = this
+  override val labelRes: Int = com.dd2d.core.presentation.R.string.tab_my
+  override val iconRes: Int = com.dd2d.core.presentation.R.drawable.tab_my
 
-    override fun navigate(navController: NavController) {
-        navController.toMyPageScreen()
-    }
+  override fun navigate(navController: NavController) {
+    navController.toMyPageScreen()
+  }
 }
 
 fun NavGraphBuilder.routeMyPageScreen(
-    navigationEvent: (MyPageNavigateEvent) -> Unit,
-    modifier: Modifier = Modifier,
+  navigationEvent: (MyPageNavigateEvent) -> Unit,
+  modifier: Modifier = Modifier,
 ) {
-    fadeScreen<MyPageScreenRoute> {
-        MyPageScreen(
-            navigationEvent = navigationEvent,
-            modifier = modifier,
-        )
-    }
+  fadeScreen<MyPageScreenRoute> {
+    MyPageScreen(
+      navigationEvent = navigationEvent,
+      modifier = modifier,
+    )
+  }
 }
 
 fun NavController.toMyPageScreen() {
-    navigate(MyPageScreenRoute) {
-        launchSingleTop = true
-    }
+  navigate(MyPageScreenRoute) {
+    launchSingleTop = true
+  }
 }

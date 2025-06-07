@@ -14,27 +14,27 @@ import com.dd2d.core.presentation.option_selector.OptionSelector
 
 @Composable
 internal fun MainScreenFAB(
-    options: List<String>,
-    onOptionClick: (index: Int) -> Unit,
-    modifier: Modifier = Modifier,
+  options: List<String>,
+  onOptionClick: (index: Int) -> Unit,
+  modifier: Modifier = Modifier,
 ) {
-    var open by remember { mutableStateOf(false) }
-    OptionSelector(
-        open = open,
-        close = { open = false },
-        options = options,
-        onOptionSelected = {
-            open = false
-            onOptionClick(it)
-        },
-    ) {
-        FloatingActionButton(
-            shape = CircleShape,
-            containerColor = MaterialTheme.colorScheme.primary,
-            contentColor = MaterialTheme.colorScheme.onPrimary,
-            onClick = { open = !open },
-            content = { AddIcon() },
-            modifier = modifier
-        )
-    }
+  var open by remember { mutableStateOf(false) }
+  OptionSelector(
+    open = open,
+    close = { open = false },
+    options = options,
+    onOptionSelected = {
+      open = false
+      onOptionClick(it)
+    },
+  ) {
+    FloatingActionButton(
+      shape = CircleShape,
+      containerColor = MaterialTheme.colorScheme.primary,
+      contentColor = MaterialTheme.colorScheme.onPrimary,
+      onClick = { open = !open },
+      content = { AddIcon() },
+      modifier = modifier
+    )
+  }
 }

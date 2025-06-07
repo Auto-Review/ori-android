@@ -22,55 +22,58 @@ import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class CodePostCommentRepositoryImpl @Inject constructor(
-    private val codePostCommentApi: CodePostCommentApi
-): CodePostCommentRepository {
-    override fun getCodePostCommentList(option: CodePostCommentListOption): Flow<DataState<Pagination<CodePostCommentListItem>>> = flow {
-        val response = codePostCommentApi.getCodePostCommentList(
-            codePostId = option.codePostId,
-            page = option.page,
-            size = option.size
+  private val codePostCommentApi: CodePostCommentApi
+) : CodePostCommentRepository {
+  override fun getCodePostCommentList(option: CodePostCommentListOption): Flow<DataState<Pagination<CodePostCommentListItem>>> =
+    flow {
+      val response = codePostCommentApi.getCodePostCommentList(
+        codePostId = option.codePostId,
+        page = option.page,
+        size = option.size
+      )
+      emit(
+        response.toCommentPagination(
+          requestPage = option.page,
+          mapper = CodePostCommentListItemResponseDto::toCodePostCommentListItem
         )
-        emit(
-            response.toCommentPagination(
-                requestPage = option.page,
-                mapper = CodePostCommentListItemResponseDto::toCodePostCommentListItem
-            )
-        )
+      )
     }.asDataState()
 
-    override fun getCodePostCommentReplyList(option: CodePostCommentReplyListOption): Flow<DataState<Pagination<CodePostCommentListItem>>> = flow {
-        val response = codePostCommentApi.getCodePostCommentReplyList(
-            codePostId = option.codePostId,
-            parentCommentId = option.parentCommentId,
-            page = option.page,
-            size = option.size
+  override fun getCodePostCommentReplyList(option: CodePostCommentReplyListOption): Flow<DataState<Pagination<CodePostCommentListItem>>> =
+    flow {
+      val response = codePostCommentApi.getCodePostCommentReplyList(
+        codePostId = option.codePostId,
+        parentCommentId = option.parentCommentId,
+        page = option.page,
+        size = option.size
+      )
+      emit(
+        response.toCommentPagination(
+          requestPage = option.page,
+          mapper = CodePostCommentListItemResponseDto::toCodePostCommentListItem
         )
-        emit(
-            response.toCommentPagination(
-                requestPage = option.page,
-                mapper = CodePostCommentListItemResponseDto::toCodePostCommentListItem
-            )
-        )
+      )
     }.asDataState()
 
-    override fun createCodePostComment(creator: CodePostCommentCreator): Flow<DataState<Int>> = flow {
-        val response = codePostCommentApi.createCodePostComment(
-            creator = creator.toCodePostCommentCreateRequestDto()
-        )
-        emit(response)
-    }.asDataState()
+  override fun createCodePostComment(creator: CodePostCommentCreator): Flow<DataState<Int>> = flow {
+    val response = codePostCommentApi.createCodePostComment(
+      creator = creator.toCodePostCommentCreateRequestDto()
+    )
+    emit(response)
+  }.asDataState()
 
-    override fun updateCodePostComment(updater: CodePostCommentUpdater): Flow<DataState<Int>> = flow {
-        val response = codePostCommentApi.updateCodePostComment(
-            updater = updater.toCodePostCommentUpdateRequestDto()
-        )
-        emit(response)
-    }.asDataState()
+  override fun updateCodePostComment(updater: CodePostCommentUpdater): Flow<DataState<Int>> = flow {
+    val response = codePostCommentApi.updateCodePostComment(
+      updater = updater.toCodePostCommentUpdateRequestDto()
+    )
+    emit(response)
+  }.asDataState()
 
-    override fun deleteCodePostComment(deleter: CodePostCommentDeleter): Flow<DataState<Unit>> = flow {
-        codePostCommentApi.deleteCodePostComment(
-            deleter = deleter.toCodePostCommentDeleteRequestDto()
-        )
-        emit(Unit)
+  override fun deleteCodePostComment(deleter: CodePostCommentDeleter): Flow<DataState<Unit>> =
+    flow {
+      codePostCommentApi.deleteCodePostComment(
+        deleter = deleter.toCodePostCommentDeleteRequestDto()
+      )
+      emit(Unit)
     }.asDataState()
 }

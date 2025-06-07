@@ -34,79 +34,78 @@ import java.time.YearMonth
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun ScheduleScreenContent(
-    schedules: SnapshotStateMap<YearMonth, ScheduleOnYearMonth>,
-    onScheduleClick: (codePostId: Int) -> Unit,
-    onYearMonthChange: (YearMonth) -> Unit,
-    onRefresh: () -> Unit,
-    isRefreshing: Boolean,
-    modifier: Modifier = Modifier
+  schedules: SnapshotStateMap<YearMonth, ScheduleOnYearMonth>,
+  onScheduleClick: (codePostId: Int) -> Unit,
+  onYearMonthChange: (YearMonth) -> Unit,
+  onRefresh: () -> Unit,
+  isRefreshing: Boolean,
+  modifier: Modifier = Modifier
 ) {
-    var selectedDateSchedules by remember { mutableStateOf<List<Notification>>(emptyList()) }
-    val refreshState = rememberPullToRefreshState()
+  var selectedDateSchedules by remember { mutableStateOf<List<Notification>>(emptyList()) }
+  val refreshState = rememberPullToRefreshState()
 
-    PullToRefreshBox(
-        state = refreshState,
+  PullToRefreshBox(
+    state = refreshState,
+    isRefreshing = isRefreshing,
+    onRefresh = onRefresh,
+    indicator = {
+      Indicator(
+        modifier = Modifier.align(Alignment.TopCenter),
         isRefreshing = isRefreshing,
-        onRefresh = onRefresh,
-        indicator = {
-            Indicator(
-                modifier = Modifier.align(Alignment.TopCenter),
-                isRefreshing = isRefreshing,
-                state = refreshState,
-                color = MaterialTheme.colorScheme.primary,
-                containerColor = MaterialTheme.colorScheme.background
-            )
-        },
-        modifier = modifier
+        state = refreshState,
+        color = MaterialTheme.colorScheme.primary,
+        containerColor = MaterialTheme.colorScheme.background
+      )
+    },
+    modifier = modifier
+  ) {
+    Column(
+      verticalArrangement = Arrangement.Top,
+      horizontalAlignment = Alignment.Start,
+      modifier = Modifier
+        .fillMaxSize()
+        .verticalScroll(state = rememberScrollState())
+        .padding(bottom = 14.dp)
     ) {
-        Column(
-            verticalArrangement = Arrangement.Top,
-            horizontalAlignment = Alignment.Start,
-            modifier = Modifier
-                .fillMaxSize()
-                .verticalScroll(state = rememberScrollState())
-                .padding(bottom = 14.dp)
-        ) {
-            BannerComponent()
-            ScheduleCalendar(
-                schedules = schedules,
-                onDayClick = { date ->
-                    selectedDateSchedules = schedules[date.yearMonth]?.onDay(date.dayOfMonth)?: emptyList()
-                },
-                onYearMonthChange = onYearMonthChange,
-                modifier = Modifier
-                    .padding(top = 15.dp, start = 27.dp, end = 27.dp)
-            )
-            ScheduleComponent(
-                schedules = selectedDateSchedules,
-                onClick = onScheduleClick,
-                modifier = Modifier.padding(top = 20.dp, start = 27.dp, end = 27.dp)
-            )
-        }
+      BannerComponent()
+      ScheduleCalendar(
+        schedules = schedules,
+        onDayClick = { date ->
+          selectedDateSchedules = schedules[date.yearMonth]?.onDay(date.dayOfMonth) ?: emptyList()
+        },
+        onYearMonthChange = onYearMonthChange,
+        modifier = Modifier
+          .padding(top = 15.dp, start = 27.dp, end = 27.dp)
+      )
+      ScheduleComponent(
+        schedules = selectedDateSchedules,
+        onClick = onScheduleClick,
+        modifier = Modifier.padding(top = 20.dp, start = 27.dp, end = 27.dp)
+      )
     }
+  }
 }
-
 
 
 @Preview
 @Preview(locale = "ko")
 @Composable
 private fun ScheduleScreenContentPrev() {
-    val initialMonth = YearMonth.now()
-    val s = remember {
-        mutableStateMapOf(
-            initialMonth to ScheduleOnYearMonth(initialMonth, List(3) { Notification.dummy(it) })
-        )
-    }
-    AppTheme {
-        ScheduleScreenContent(
-            schedules = s,
-            onYearMonthChange = {},
-            onRefresh = {},
-            isRefreshing = false,
-            onScheduleClick = {},
-            modifier = Modifier
-                .fillMaxSize()
-        )
-    }
+  val initialMonth = YearMonth.now()
+  val s = remember {
+    mutableStateMapOf(
+      initialMonth to ScheduleOnYearMonth(initialMonth, List(3) { Notification.dummy(it) })
+    )
+  }
+  AppTheme {
+    ScheduleScreenContent(
+      schedules = s,
+      onYearMonthChange = {},
+      onRefresh = {},
+      isRefreshing = false,
+      onScheduleClick = {},
+      modifier = Modifier
+        .fillMaxSize()
+    )
+  }
 }

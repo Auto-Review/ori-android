@@ -14,29 +14,29 @@ import com.dd2d.domain.til.model.TILListItem
 
 @Composable
 internal fun TILListItemComponent(
-    item: TILListItem,
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier
+  item: TILListItem,
+  onClick: () -> Unit,
+  modifier: Modifier = Modifier
 ) {
-    Column(
-        modifier = modifier
-            .fillMaxWidth()
-            .delayedClickable(onClick = onClick)
-            .padding(horizontal = 24.dp, vertical = 16.dp)
-    ) {
-        Main500Text(
-            text = item.title,
-            color = MaterialTheme.colorScheme.onSurface,
-            fontSize = 12.sp,
-            lineHeight = 16.sp,
-            modifier = Modifier.fillMaxWidth()
-        )
-        Main500Text(
-            text = "${item.author.nickname}  ${item.createdAt} RE : [댓글 개수]",
-            color = MaterialTheme.colorScheme.surfaceBright,
-            fontSize = 10.sp,
-            lineHeight = 16.sp,
-            modifier = Modifier.fillMaxWidth()
-        )
-    }
+  Column(
+    modifier = modifier
+      .fillMaxWidth()
+      .delayedClickable(onClick = onClick)
+      .padding(horizontal = 24.dp, vertical = 16.dp)
+  ) {
+    Main500Text(
+      text = item.title,
+      color = MaterialTheme.colorScheme.onSurface,
+      fontSize = 12.sp,
+      lineHeight = 16.sp,
+      modifier = Modifier.fillMaxWidth()
+    )
+    Main500Text(
+      text = "${item.author.nickname}  ${item.createdAt} RE : [댓글 개수]",
+      color = MaterialTheme.colorScheme.surfaceBright,
+      fontSize = 10.sp,
+      lineHeight = 16.sp,
+      modifier = Modifier.fillMaxWidth()
+    )
+  }
 }

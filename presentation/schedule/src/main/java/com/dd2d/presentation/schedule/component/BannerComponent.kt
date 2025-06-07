@@ -27,46 +27,58 @@ import com.dd2d.presentation.schedule.R
 
 @Composable
 internal fun BannerComponent(
-    modifier: Modifier = Modifier,
-    background: Color = MaterialTheme.colorScheme.onSurface
+  modifier: Modifier = Modifier,
+  background: Color = MaterialTheme.colorScheme.onSurface
 ) {
-    Surface(
-        color = background,
-        modifier = modifier
+  Surface(
+    color = background,
+    modifier = modifier
+  ) {
+    Box(
+      modifier = Modifier.fillMaxWidth()
     ) {
-        Box(
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            PainterImage(res = R.drawable.banner, modifier = Modifier.align(Alignment.CenterStart))
-            Text(
-                text = buildAnnotatedString {
-                    val style1 = SpanStyle(color = Color(0xFF424242), fontSize = 18.tp, fontWeight = FontWeight.W400, fontFamily = HansFontFamily)
-                    val style2 = SpanStyle(color = Color(0xFFF4F4F4), fontSize = 18.tp, fontWeight = FontWeight.W400, fontFamily = HansFontFamily)
-                    withStyle(style1) { append("printf(\"") }
-                    withStyle(style2) { append("Review,\nRetain, Repeat") }
-                    withStyle(style1) { append("\");") }
-                },
-                softWrap = false,
-                overflow = TextOverflow.Visible,
-                modifier = Modifier.align(Alignment.CenterEnd).padding(end = 5.dp)
-            )
-        }
+      PainterImage(res = R.drawable.banner, modifier = Modifier.align(Alignment.CenterStart))
+      Text(
+        text = buildAnnotatedString {
+          val style1 = SpanStyle(
+            color = Color(0xFF424242),
+            fontSize = 18.tp,
+            fontWeight = FontWeight.W400,
+            fontFamily = HansFontFamily
+          )
+          val style2 = SpanStyle(
+            color = Color(0xFFF4F4F4),
+            fontSize = 18.tp,
+            fontWeight = FontWeight.W400,
+            fontFamily = HansFontFamily
+          )
+          withStyle(style1) { append("printf(\"") }
+          withStyle(style2) { append("Review,\nRetain, Repeat") }
+          withStyle(style1) { append("\");") }
+        },
+        softWrap = false,
+        overflow = TextOverflow.Visible,
+        modifier = Modifier
+          .align(Alignment.CenterEnd)
+          .padding(end = 5.dp)
+      )
     }
+  }
 }
 
 @Preview
 @Preview(locale = "ko")
 @Composable
 private fun BannerComponentPrev() {
-    Column(
-        verticalArrangement = Arrangement.Top,
-        horizontalAlignment = Alignment.Start,
-        modifier = Modifier
-            .fillMaxSize()
-    ) {
-        BannerComponent(
-            
-            modifier = Modifier
-        )
-    }
+  Column(
+    verticalArrangement = Arrangement.Top,
+    horizontalAlignment = Alignment.Start,
+    modifier = Modifier
+      .fillMaxSize()
+  ) {
+    BannerComponent(
+
+      modifier = Modifier
+    )
+  }
 }

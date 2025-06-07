@@ -15,14 +15,14 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class AuthUserModule {
-    @Binds
-    @Singleton
-    abstract fun bindAuthRepository(impl: AuthRepositoryImpl): AuthRepository
+  @Binds
+  @Singleton
+  abstract fun bindAuthRepository(impl: AuthRepositoryImpl): AuthRepository
 
-    @Binds
-    @Singleton
-    abstract fun bindUserRepository(impl: UserRepositoryImpl): UserRepository
+  @Binds
+  @Singleton
+  abstract fun bindUserRepository(impl: UserRepositoryImpl): UserRepository
 
-    @Binds
-    abstract fun bindSignInUseCase(impl: SignInUseCaseImpl): SignInUseCase
+  @Binds
+  abstract fun bindSignInUseCase(impl: SignInUseCaseImpl): SignInUseCase
 }

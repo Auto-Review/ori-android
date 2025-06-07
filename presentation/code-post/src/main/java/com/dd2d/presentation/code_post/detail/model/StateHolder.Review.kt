@@ -12,27 +12,28 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.launchIn
 
 internal class ReviewStateHolder(
-    private val codePostId: Int,
-    private val scope: CoroutineScope,
-    private val getReviewListFlow: (id: Int) -> Flow<DataState<List<CodePostReview>>>,
-    private val deleteReviewFlow: (deleter: CodePostReviewDeleter) -> Flow<DataState<Unit>>,
+  private val codePostId: Int,
+  private val scope: CoroutineScope,
+  private val getReviewListFlow: (id: Int) -> Flow<DataState<List<CodePostReview>>>,
+  private val deleteReviewFlow: (deleter: CodePostReviewDeleter) -> Flow<DataState<Unit>>,
 ) {
-    var reviewList by mutableStateOf<List<CodePostReview>>(emptyList())
-        private set
-    fun refresh() {
-        getReviewListFlow(codePostId)
-            .onStateSuccess { reviewList += this }
-            .launchIn(scope)
-    }
+  var reviewList by mutableStateOf<List<CodePostReview>>(emptyList())
+    private set
 
-    fun deleteReview(reviewId: Int, authorEmail: String) {
-        deleteReviewFlow(CodePostReviewDeleter(id = reviewId, email = authorEmail))
-            .onStateSuccess { reviewList = reviewList.filter { it.id != reviewId } }
-            .launchIn(scope)
-    }
+  fun refresh() {
+    getReviewListFlow(codePostId)
+      .onStateSuccess { reviewList += this }
+      .launchIn(scope)
+  }
 
-    init {
-        refresh()
-    }
+  fun deleteReview(reviewId: Int, authorEmail: String) {
+    deleteReviewFlow(CodePostReviewDeleter(id = reviewId, email = authorEmail))
+      .onStateSuccess { reviewList = reviewList.filter { it.id != reviewId } }
+      .launchIn(scope)
+  }
+
+  init {
+    refresh()
+  }
 }
 

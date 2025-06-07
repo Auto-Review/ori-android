@@ -13,19 +13,19 @@ import kotlinx.serialization.Serializable
 data class TILScreenRoute(val id: Int) : ScreenRoute
 
 fun NavGraphBuilder.routeTILScreen(
-    onBack: () -> Unit,
-    modifier: Modifier = Modifier,
+  onBack: () -> Unit,
+  modifier: Modifier = Modifier,
 ) {
-    horizontalScreen<TILScreenRoute> {
-        TILScreen(
-            onBack = onBack,
-            modifier = modifier,
-        )
-    }
+  horizontalScreen<TILScreenRoute> {
+    TILScreen(
+      onBack = onBack,
+      modifier = modifier,
+    )
+  }
 }
 
 fun NavController.toTILScreen(tilId: Int) {
-    navigate(TILScreenRoute(id = tilId)) {
-        launchSingleTop = true
-    }
+  navigate(TILScreenRoute(id = tilId)) {
+    launchSingleTop = true
+  }
 }

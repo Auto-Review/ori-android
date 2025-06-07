@@ -7,23 +7,23 @@ import com.dd2d.domain.code_post.model.post.CodePost
 import com.dd2d.domain.code_post.model.post.CodePostAuthor
 
 internal fun CodePostResponseDto.toCodePost(): CodePost {
-    return CodePost(
-        id = this.id,
-        author = CodePostAuthor(
-            id = this.writerId,
-            nickname = this.writerNickName,
-            email = this.writerEmail,
-        ),
-        title = this.title,
-        code = Code(
-            language = Code.Language.entries.find { it.value == this.language },
-            content = this.code,
-        ),
-        description = this.description,
-        reviewDate = this.reviewDay?.dateStringToLocalDate("yyyy-MM-dd")?.atStartOfDay(),
-        level = this.level,
-        isPublic = this.public,
-        isScrapped = this.bookmarked,
-        createdAt = this.createDate,
-    )
+  return CodePost(
+    id = this.id,
+    author = CodePostAuthor(
+      id = this.writerId,
+      nickname = this.writerNickName,
+      email = this.writerEmail,
+    ),
+    title = this.title,
+    code = Code(
+      language = Code.Language.entries.find { it.value == this.language },
+      content = this.code,
+    ),
+    description = this.description,
+    reviewDate = this.reviewDay?.dateStringToLocalDate("yyyy-MM-dd")?.atStartOfDay(),
+    level = this.level,
+    isPublic = this.public,
+    isScrapped = this.bookmarked,
+    createdAt = this.createDate,
+  )
 }

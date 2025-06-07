@@ -25,64 +25,64 @@ import com.dd2d.presentation.my.model.UserUpdateState
 
 @Composable
 internal fun UserComponent(
-    user: User,
-    updateState: UserUpdateState,
-    onUpdate: () -> Unit,
-    modifier: Modifier = Modifier
+  user: User,
+  updateState: UserUpdateState,
+  onUpdate: () -> Unit,
+  modifier: Modifier = Modifier
 ) {
-    val state by updateState.uiState.collectAsStateWithLifecycle()
-    var editMode by remember { mutableStateOf(false) }
-    var exception by remember { mutableStateOf<ManagedException?>(null) }
+  val state by updateState.uiState.collectAsStateWithLifecycle()
+  var editMode by remember { mutableStateOf(false) }
+  var exception by remember { mutableStateOf<ManagedException?>(null) }
 
-    LaunchedEffect(key1 = state) {
-        if(state is UIState.Success) {
-            editMode = false
-        }
-        exception = (state as? UIState.Error)?.exception
+  LaunchedEffect(key1 = state) {
+    if (state is UIState.Success) {
+      editMode = false
     }
+    exception = (state as? UIState.Error)?.exception
+  }
 
-    Surface(
-        color = MaterialTheme.colorScheme.surface,
-        shape = MaterialTheme.shapes.small,
-        modifier = modifier
+  Surface(
+    color = MaterialTheme.colorScheme.surface,
+    shape = MaterialTheme.shapes.small,
+    modifier = modifier
+  ) {
+    Box(
+      contentAlignment = Alignment.Center,
+      modifier = Modifier
+        .fillMaxWidth()
     ) {
-        Box(
-            contentAlignment = Alignment.Center,
-            modifier = Modifier
-                .fillMaxWidth()
-        ) {
-            Column(
-                verticalArrangement = Arrangement.Top,
-                horizontalAlignment = Alignment.Start,
-                modifier = Modifier
-                    .padding(horizontal = 32.dp, vertical = 20.dp)
-            ){
-                UpdatableUserDataField(
-                    onEditMode = editMode,
-                    label = "Name",
-                    originValue = user.nickname,
-                    updatableValueState = updateState.nameState,
-                    modifier = Modifier.fillMaxWidth(),
-                )
-                UserDataField(label = "Email", value = user.email, modifier = Modifier.fillMaxWidth())
-            }
-            EditButton(
-                editMode = editMode,
-                onEditModeChange = { on ->
-                    if(!on) updateState.undoUpdate()
-                    editMode = on
-                },
-                canSave = updateState.canSave,
-                onSave = onUpdate,
-                isSaving = state is UIState.Loading,
-                modifier = Modifier.align(Alignment.TopEnd)
-            )
-        }
+      Column(
+        verticalArrangement = Arrangement.Top,
+        horizontalAlignment = Alignment.Start,
+        modifier = Modifier
+          .padding(horizontal = 32.dp, vertical = 20.dp)
+      ) {
+        UpdatableUserDataField(
+          onEditMode = editMode,
+          label = "Name",
+          originValue = user.nickname,
+          updatableValueState = updateState.nameState,
+          modifier = Modifier.fillMaxWidth(),
+        )
+        UserDataField(label = "Email", value = user.email, modifier = Modifier.fillMaxWidth())
+      }
+      EditButton(
+        editMode = editMode,
+        onEditModeChange = { on ->
+          if (!on) updateState.undoUpdate()
+          editMode = on
+        },
+        canSave = updateState.canSave,
+        onSave = onUpdate,
+        isSaving = state is UIState.Loading,
+        modifier = Modifier.align(Alignment.TopEnd)
+      )
     }
+  }
 
-    exception?.let { e ->
-        ErrorDialog(exception = e, onConfirm = {exception = null})
-    }
+  exception?.let { e ->
+    ErrorDialog(exception = e, onConfirm = { exception = null })
+  }
 }
 
 

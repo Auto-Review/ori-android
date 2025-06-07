@@ -14,20 +14,20 @@ import com.dd2d.core.presentation_oauth.google.sdk.GoogleAuthSDK
 
 @Composable
 fun GoogleAuthButton(
-    onAuthSuccess: (result: OAuthResult) -> Unit,
-    modifier: Modifier = Modifier,
-    style: OAuthButtonStyle = OAuthButtonDefault.googleOAuthButtonStyle(),
-    contentPadding: PaddingValues = PaddingValues(horizontal = 12.dp, vertical = 16.dp),
+  onAuthSuccess: (result: OAuthResult) -> Unit,
+  modifier: Modifier = Modifier,
+  style: OAuthButtonStyle = OAuthButtonDefault.googleOAuthButtonStyle(),
+  contentPadding: PaddingValues = PaddingValues(horizontal = 12.dp, vertical = 16.dp),
 ) {
-    val context = LocalContext.current
-    val scope = rememberCoroutineScope()
-    val sdk = remember { GoogleAuthSDK(context, scope) }
+  val context = LocalContext.current
+  val scope = rememberCoroutineScope()
+  val sdk = remember { GoogleAuthSDK(context, scope) }
 
-    OAuthButton(
-        sdk = sdk,
-        style = style,
-        onAuthSuccess = onAuthSuccess,
-        contentPadding = contentPadding,
-        modifier = modifier,
-    )
+  OAuthButton(
+    sdk = sdk,
+    style = style,
+    onAuthSuccess = onAuthSuccess,
+    contentPadding = contentPadding,
+    modifier = modifier,
+  )
 }

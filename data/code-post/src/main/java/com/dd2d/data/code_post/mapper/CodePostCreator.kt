@@ -5,13 +5,13 @@ import com.dd2d.data_source.remote.server.code_post.dto.request.CodePostCreateRe
 import com.dd2d.domain.code_post.model.post.CodePostCreator
 
 internal fun CodePostCreator.toCorePostCreateRequestDto(): CodePostCreateRequestDto {
-    return CodePostCreateRequestDto(
-        title = this.title,
-        level = this.level,
-        description = this.description,
-        language = this.code.language!!.value,
-        code = this.code.content,
-        isPublic = this.isPublic,
-        reviewDay = this.reviewDate?.format("yyyy-MM-dd")?: "",
-    )
+  return CodePostCreateRequestDto(
+    title = this.title,
+    level = this.level,
+    description = this.description,
+    language = this.code.language!!.value,
+    code = this.code.content,
+    isPublic = this.isPublic,
+    reviewDay = this.reviewDate?.format("yyyy-MM-dd") ?: "",
+  )
 }

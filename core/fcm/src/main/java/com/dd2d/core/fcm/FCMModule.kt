@@ -11,12 +11,15 @@ import kotlin.coroutines.resumeWithException
 
 @Module
 object FCMModule {
-    fun init(context: Context) { FirebaseApp.initializeApp(context) }
-    val tokenObserver = MutableSharedFlow<String>(replay = 1)
-    suspend fun getFCMToken(): String = suspendCancellableCoroutine { conti ->
-        FirebaseMessaging.getInstance().token
-            .addOnSuccessListener { token -> conti.resume(token) }
-            .addOnCanceledListener { conti.cancel() }
-            .addOnFailureListener { conti.resumeWithException(it) }
-    }
+  fun init(context: Context) {
+    FirebaseApp.initializeApp(context)
+  }
+
+  val tokenObserver = MutableSharedFlow<String>(replay = 1)
+  suspend fun getFCMToken(): String = suspendCancellableCoroutine { conti ->
+    FirebaseMessaging.getInstance().token
+      .addOnSuccessListener { token -> conti.resume(token) }
+      .addOnCanceledListener { conti.cancel() }
+      .addOnFailureListener { conti.resumeWithException(it) }
+  }
 }

@@ -26,61 +26,61 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun MainPagerTab(
-    pagerState: PagerState,
-    tabs: List<String>,
-    modifier: Modifier = Modifier,
-    pageSpacing: Dp = 0.dp,
-    contentPadding: PaddingValues = PaddingValues(),
-    containerColor: Color = MaterialTheme.colorScheme.background,
-    contentColor: Color = MaterialTheme.colorScheme.onBackground,
-    pageContent: @Composable PagerScope.(page: Int) -> Unit,
+  pagerState: PagerState,
+  tabs: List<String>,
+  modifier: Modifier = Modifier,
+  pageSpacing: Dp = 0.dp,
+  contentPadding: PaddingValues = PaddingValues(),
+  containerColor: Color = MaterialTheme.colorScheme.background,
+  contentColor: Color = MaterialTheme.colorScheme.onBackground,
+  pageContent: @Composable PagerScope.(page: Int) -> Unit,
 ) {
-    val scope = rememberCoroutineScope()
-    Column(
-        verticalArrangement = Arrangement.Top,
-        horizontalAlignment = Alignment.Start,
-        modifier = modifier
-    ){
-        TabRow(
-            selectedTabIndex = pagerState.currentPage,
-            modifier = Modifier.fillMaxWidth(),
-            indicator = { tabPositions ->
-                if(pagerState.currentPage < tabPositions.size) {
-                    TabRowDefaults.SecondaryIndicator(
-                        color = contentColor,
-                        height = 3.dp,
-                        modifier = Modifier.tabIndicatorOffset(tabPositions[pagerState.currentPage])
-                    )
-                }
-            },
-            containerColor = containerColor,
-            contentColor = contentColor,
-        ) {
-            tabs.forEachIndexed { index, tab ->
-                Tab(
-                    selected = index == pagerState.currentPage,
-                    onClick = {
-                        scope.launch {
-                            pagerState.animateScrollToPage(index)
-                        }
-                    },
-                ) {
-                    Text(
-                        text = tab,
-                        style = LocalHansType.current.tabTitle,
-                        modifier = Modifier.padding(vertical = 16.dp)
-                    )
-                }
-            }
+  val scope = rememberCoroutineScope()
+  Column(
+    verticalArrangement = Arrangement.Top,
+    horizontalAlignment = Alignment.Start,
+    modifier = modifier
+  ) {
+    TabRow(
+      selectedTabIndex = pagerState.currentPage,
+      modifier = Modifier.fillMaxWidth(),
+      indicator = { tabPositions ->
+        if (pagerState.currentPage < tabPositions.size) {
+          TabRowDefaults.SecondaryIndicator(
+            color = contentColor,
+            height = 3.dp,
+            modifier = Modifier.tabIndicatorOffset(tabPositions[pagerState.currentPage])
+          )
         }
-
-        HorizontalPager(
-            state = pagerState,
-            key = { index -> tabs[index] },
-            contentPadding = contentPadding,
-            pageContent = pageContent,
-            pageSpacing = pageSpacing,
-            modifier = Modifier.fillMaxWidth()
-        )
+      },
+      containerColor = containerColor,
+      contentColor = contentColor,
+    ) {
+      tabs.forEachIndexed { index, tab ->
+        Tab(
+          selected = index == pagerState.currentPage,
+          onClick = {
+            scope.launch {
+              pagerState.animateScrollToPage(index)
+            }
+          },
+        ) {
+          Text(
+            text = tab,
+            style = LocalHansType.current.tabTitle,
+            modifier = Modifier.padding(vertical = 16.dp)
+          )
+        }
+      }
     }
+
+    HorizontalPager(
+      state = pagerState,
+      key = { index -> tabs[index] },
+      contentPadding = contentPadding,
+      pageContent = pageContent,
+      pageSpacing = pageSpacing,
+      modifier = Modifier.fillMaxWidth()
+    )
+  }
 }

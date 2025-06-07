@@ -5,8 +5,8 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class CodePostReviewResponseDto(
-    val id: Int,
-    val description: String,
-    val code: String,
-    val createdAt: UTCString,
+  val id: Int,
+  val description: String,
+  val code: String,
+  val createdAt: UTCString,
 )

@@ -5,10 +5,10 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class CodePostScrapListResponseDto(
-    val id: Int,
-    val codePostId: Int,
-    val codePostTitle: String,
-    val commentCount: Int,
-    val writer: String,
-    val updateAt: UTCString
+  val id: Int,
+  val codePostId: Int,
+  val codePostTitle: String,
+  val commentCount: Int,
+  val writer: String,
+  val updateAt: UTCString
 )

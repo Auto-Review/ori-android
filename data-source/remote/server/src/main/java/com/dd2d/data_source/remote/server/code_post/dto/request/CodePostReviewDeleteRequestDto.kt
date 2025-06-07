@@ -5,6 +5,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class CodePostReviewDeleteRequestDto(
-    val id: Int,
-    val email: String
+  val id: Int,
+  val email: String
 )

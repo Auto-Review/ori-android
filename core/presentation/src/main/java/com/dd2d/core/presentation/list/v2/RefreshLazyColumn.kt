@@ -34,80 +34,80 @@ import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.launchIn
 
 @Composable
-fun <Option: Pageable<Option>, ListItem: Any> RefreshLazyColumn(
-    controller: LazyListController<Option, ListItem>,
-    modifier: Modifier = Modifier,
-    lazyState: LazyListState = rememberLazyListState(),
-    refreshState: PullToRefreshState = rememberPullToRefreshState(),
-    indicator: @Composable (BoxScope.() -> Unit) = {
-        RefreshLazyListIndicator(
-            isRefreshing = (controller.state as? LazyListControllerState.Loading)?.loadType == LoadType.Refresh,
-            refreshState = refreshState,
-            modifier = Modifier.align(Alignment.TopCenter)
-        )
-    },
-    contentPadding: PaddingValues = PaddingValues(0.dp),
-    verticalArrangement: Arrangement.Vertical = Arrangement.Top,
-    horizontalAlignment: Alignment.Horizontal = Alignment.Start,
-    userScrollEnabled: Boolean = true,
-    reverseLayout: Boolean = false,
-    flingBehavior: FlingBehavior = ScrollableDefaults.flingBehavior(),
-    content: LazyListScope.() -> Unit,
+fun <Option : Pageable<Option>, ListItem : Any> RefreshLazyColumn(
+  controller: LazyListController<Option, ListItem>,
+  modifier: Modifier = Modifier,
+  lazyState: LazyListState = rememberLazyListState(),
+  refreshState: PullToRefreshState = rememberPullToRefreshState(),
+  indicator: @Composable (BoxScope.() -> Unit) = {
+    RefreshLazyListIndicator(
+      isRefreshing = (controller.state as? LazyListControllerState.Loading)?.loadType == LoadType.Refresh,
+      refreshState = refreshState,
+      modifier = Modifier.align(Alignment.TopCenter)
+    )
+  },
+  contentPadding: PaddingValues = PaddingValues(0.dp),
+  verticalArrangement: Arrangement.Vertical = Arrangement.Top,
+  horizontalAlignment: Alignment.Horizontal = Alignment.Start,
+  userScrollEnabled: Boolean = true,
+  reverseLayout: Boolean = false,
+  flingBehavior: FlingBehavior = ScrollableDefaults.flingBehavior(),
+  content: LazyListScope.() -> Unit,
 ) {
-    var isLoading by remember { mutableStateOf(false) }
-    val isRefreshing by remember(controller) {
-        derivedStateOf {
-            (controller.state as? LazyListControllerState.Loading)?.loadType == LoadType.Refresh
+  var isLoading by remember { mutableStateOf(false) }
+  val isRefreshing by remember(controller) {
+    derivedStateOf {
+      (controller.state as? LazyListControllerState.Loading)?.loadType == LoadType.Refresh
+    }
+  }
+
+  LaunchedEffect(key1 = Unit) {
+    snapshotFlow { controller.state }
+      .collect { state ->
+        if (state is LazyListControllerState.Idle) {
+          isLoading = false
         }
+      }
+
+  }
+
+  LaunchedEffect(key1 = Unit) {
+    val lastIndexFlow = snapshotFlow {
+      lazyState.layoutInfo.visibleItemsInfo.lastOrNull()?.index
     }
 
-    LaunchedEffect(key1 = Unit) {
-        snapshotFlow { controller.state }
-            .collect { state ->
-                if(state is LazyListControllerState.Idle) {
-                    isLoading = false
-                }
-            }
-
-    }
-
-    LaunchedEffect(key1 = Unit) {
-        val lastIndexFlow = snapshotFlow {
-            lazyState.layoutInfo.visibleItemsInfo.lastOrNull()?.index
+    snapshotFlow { controller.loadNextPageTriggerIndex }
+      .filterNotNull()
+      .filter { controller.canLoadNext }
+      .combine(
+        flow = lastIndexFlow.filterNotNull(),
+        transform = { triggerIndex, lastIndex ->
+          if (!isLoading && lastIndex >= triggerIndex) {
+            isLoading = true
+            controller.nextPage()
+          }
         }
+      )
+      .launchIn(this)
+  }
 
-        snapshotFlow { controller.loadNextPageTriggerIndex }
-            .filterNotNull()
-            .filter { controller.canLoadNext }
-            .combine(
-                flow = lastIndexFlow.filterNotNull(),
-                transform = { triggerIndex, lastIndex ->
-                    if(!isLoading && lastIndex >= triggerIndex) {
-                        isLoading = true
-                        controller.nextPage()
-                    }
-                }
-            )
-            .launchIn(this)
-    }
-
-    PullToRefreshBox(
-        state = refreshState,
-        isRefreshing = isRefreshing,
-        onRefresh = controller::refresh,
-        indicator = indicator,
-        modifier = modifier
-    ) {
-        LazyColumn(
-            state = lazyState,
-            contentPadding = contentPadding,
-            verticalArrangement = verticalArrangement,
-            horizontalAlignment = horizontalAlignment,
-            userScrollEnabled = userScrollEnabled,
-            reverseLayout = reverseLayout,
-            flingBehavior = flingBehavior,
-            content = content,
-            modifier = Modifier.matchParentSize()
-        )
-    }
+  PullToRefreshBox(
+    state = refreshState,
+    isRefreshing = isRefreshing,
+    onRefresh = controller::refresh,
+    indicator = indicator,
+    modifier = modifier
+  ) {
+    LazyColumn(
+      state = lazyState,
+      contentPadding = contentPadding,
+      verticalArrangement = verticalArrangement,
+      horizontalAlignment = horizontalAlignment,
+      userScrollEnabled = userScrollEnabled,
+      reverseLayout = reverseLayout,
+      flingBehavior = flingBehavior,
+      content = content,
+      modifier = Modifier.matchParentSize()
+    )
+  }
 }

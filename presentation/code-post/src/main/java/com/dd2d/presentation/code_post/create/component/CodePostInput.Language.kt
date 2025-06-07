@@ -13,24 +13,24 @@ import com.dd2d.domain.code_post.model.post.Code
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 internal fun CodePostLanguageInput(
-    languages: List<Code.Language>,
-    selectedLanguage: Code.Language?,
-    onSelectedLanguageChange: (value: Code.Language) -> Unit,
-    modifier: Modifier = Modifier
+  languages: List<Code.Language>,
+  selectedLanguage: Code.Language?,
+  onSelectedLanguageChange: (value: Code.Language) -> Unit,
+  modifier: Modifier = Modifier
 ) {
-    InputItem(label = "사용 언어", modifier = modifier) {
-        FlowRow(
-            horizontalArrangement = Arrangement.spacedBy(6.dp),
-            verticalArrangement = Arrangement.spacedBy(4.dp),
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            languages.forEach { language ->
-                SelectableLabel(
-                    label = language.label,
-                    isSelected = selectedLanguage == language,
-                    onClick = { onSelectedLanguageChange(language) }
-                )
-            }
-        }
+  InputItem(label = "사용 언어", modifier = modifier) {
+    FlowRow(
+      horizontalArrangement = Arrangement.spacedBy(6.dp),
+      verticalArrangement = Arrangement.spacedBy(4.dp),
+      modifier = Modifier.fillMaxWidth()
+    ) {
+      languages.forEach { language ->
+        SelectableLabel(
+          label = language.label,
+          isSelected = selectedLanguage == language,
+          onClick = { onSelectedLanguageChange(language) }
+        )
+      }
     }
+  }
 }

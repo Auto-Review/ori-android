@@ -18,38 +18,39 @@ import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class CodePostReviewRepositoryImpl @Inject constructor(
-    private val codePostReviewApi: CodePostReviewApi
-): CodePostReviewRepository {
-    override fun getCodePostReviewList(codePostId: Int): Flow<DataState<List<CodePostReview>>> = flow {
-        val response = codePostReviewApi.getCodePostReviewList(
-                codePostId = codePostId
-        )
-        emit(response.map(CodePostReviewResponseDto::toCodePostReview))
+  private val codePostReviewApi: CodePostReviewApi
+) : CodePostReviewRepository {
+  override fun getCodePostReviewList(codePostId: Int): Flow<DataState<List<CodePostReview>>> =
+    flow {
+      val response = codePostReviewApi.getCodePostReviewList(
+        codePostId = codePostId
+      )
+      emit(response.map(CodePostReviewResponseDto::toCodePostReview))
     }.asDataState()
 
-    override fun getCodePostReview(id: Int): Flow<DataState<CodePostReview>> = flow {
-        val response = codePostReviewApi.getCodePostReview(id = id)
-        emit(response.toCodePostReview())
-    }.asDataState()
+  override fun getCodePostReview(id: Int): Flow<DataState<CodePostReview>> = flow {
+    val response = codePostReviewApi.getCodePostReview(id = id)
+    emit(response.toCodePostReview())
+  }.asDataState()
 
-    override fun createCodePostReview(creator: CodePostReviewCreator): Flow<DataState<Unit>> = flow {
-        val response = codePostReviewApi.createCodePostReview(
-            creator = creator.toCodePostReviewCreateRequestDto()
-        )
-        emit(Unit)
-    }.asDataState()
+  override fun createCodePostReview(creator: CodePostReviewCreator): Flow<DataState<Unit>> = flow {
+    val response = codePostReviewApi.createCodePostReview(
+      creator = creator.toCodePostReviewCreateRequestDto()
+    )
+    emit(Unit)
+  }.asDataState()
 
-    override fun updateCodePostReview(updater: CodePostReviewUpdater): Flow<DataState<Unit>> = flow {
-        val response = codePostReviewApi.updateCodePostReview(
-            updater = updater.toCodePostReviewUpdateRequestDto()
-        )
-        emit(Unit)
-    }.asDataState()
+  override fun updateCodePostReview(updater: CodePostReviewUpdater): Flow<DataState<Unit>> = flow {
+    val response = codePostReviewApi.updateCodePostReview(
+      updater = updater.toCodePostReviewUpdateRequestDto()
+    )
+    emit(Unit)
+  }.asDataState()
 
-    override fun deleteCodePostReview(deleter: CodePostReviewDeleter): Flow<DataState<Unit>> = flow {
-        codePostReviewApi.deleteCodePostReview(
-            deleter = deleter.toCodePostReviewDeleteRequestDto()
-        )
-        emit(Unit)
-    }.asDataState()
+  override fun deleteCodePostReview(deleter: CodePostReviewDeleter): Flow<DataState<Unit>> = flow {
+    codePostReviewApi.deleteCodePostReview(
+      deleter = deleter.toCodePostReviewDeleteRequestDto()
+    )
+    emit(Unit)
+  }.asDataState()
 }

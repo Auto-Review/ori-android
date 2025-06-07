@@ -13,11 +13,11 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class TILModule {
-    @Binds
-    @Singleton
-    abstract fun bindTILRepository(impl: TILRepositoryImpl): TILRepository
+  @Binds
+  @Singleton
+  abstract fun bindTILRepository(impl: TILRepositoryImpl): TILRepository
 
-    @Binds
-    @Singleton
-    abstract fun bindTILScrapRepository(impl: TILScrapRepositoryImpl): TILScrapRepository
+  @Binds
+  @Singleton
+  abstract fun bindTILScrapRepository(impl: TILScrapRepositoryImpl): TILScrapRepository
 }

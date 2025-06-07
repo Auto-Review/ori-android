@@ -6,9 +6,9 @@ import com.dd2d.domain.auth_user.user.model.UserUpdater
 import kotlinx.coroutines.flow.Flow
 
 interface UserRepository {
-    fun me(): Flow<DataState<User>>
-    fun updateMe(update: UserUpdater): Flow<DataState<Boolean>>
-    suspend fun updateFCMToken(fcmToken: String): Result<Unit>
+  fun me(): Flow<DataState<User>>
+  fun updateMe(update: UserUpdater): Flow<DataState<Boolean>>
+  suspend fun updateFCMToken(fcmToken: String): Result<Unit>
 
-    suspend fun removeLocalData()
+  suspend fun removeLocalData()
 }

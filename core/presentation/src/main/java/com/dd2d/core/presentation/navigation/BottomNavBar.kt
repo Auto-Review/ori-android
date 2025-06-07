@@ -20,47 +20,47 @@ import com.dd2d.core.presentation.theme.tp
 
 @Composable
 fun BottomNavBar(
-	navController: NavController,
-	items: List<BottomBarItem>,
-	initialTabIndex: Int,
-	colors: NavigationBarItemColors,
-	modifier: Modifier = Modifier,
+  navController: NavController,
+  items: List<BottomBarItem>,
+  initialTabIndex: Int,
+  colors: NavigationBarItemColors,
+  modifier: Modifier = Modifier,
 ) {
-	var currentTab by rememberSaveable { mutableIntStateOf(initialTabIndex) }
+  var currentTab by rememberSaveable { mutableIntStateOf(initialTabIndex) }
 
-	NavigationBar(
-		containerColor = MaterialTheme.colorScheme.onSurface,
-		modifier = modifier
-	) {
-		items.forEachIndexed { index, item ->
-			val isSelected = currentTab == index
+  NavigationBar(
+    containerColor = MaterialTheme.colorScheme.onSurface,
+    modifier = modifier
+  ) {
+    items.forEachIndexed { index, item ->
+      val isSelected = currentTab == index
 
-			val iconRes = if(isSelected) item.selectedIconRes else item.iconRes
-			val labelRes = if(isSelected) item.selectedLabelRes else item.labelRes
+      val iconRes = if (isSelected) item.selectedIconRes else item.iconRes
+      val labelRes = if (isSelected) item.selectedLabelRes else item.labelRes
 
-			NavigationBarItem(
-				selected = isSelected,
-				onClick = {
-					if(!isSelected) {
-						currentTab = index
-						item.navigate(navController)
-					}
-			    },
-				enabled = item.enabled,
-				icon = { iconRes?.let { VectorIcon(res = iconRes) } },
-				label = {
-					labelRes?.let {
-						Text(
-							text = stringResource(labelRes),
-							color = Color.Unspecified,
-							fontSize = 10.tp,
-							lineHeight = 12.tp,
-							fontWeight = if(isSelected) FontWeight.W700 else FontWeight.W500
-						)
-					}
-				},
-				colors = colors
-			)
-		}
-	}
+      NavigationBarItem(
+        selected = isSelected,
+        onClick = {
+          if (!isSelected) {
+            currentTab = index
+            item.navigate(navController)
+          }
+        },
+        enabled = item.enabled,
+        icon = { iconRes?.let { VectorIcon(res = iconRes) } },
+        label = {
+          labelRes?.let {
+            Text(
+              text = stringResource(labelRes),
+              color = Color.Unspecified,
+              fontSize = 10.tp,
+              lineHeight = 12.tp,
+              fontWeight = if (isSelected) FontWeight.W700 else FontWeight.W500
+            )
+          }
+        },
+        colors = colors
+      )
+    }
+  }
 }

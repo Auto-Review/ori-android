@@ -23,50 +23,50 @@ import com.dd2d.core.presentation.main_text.Main700Text
 
 @Composable
 fun OptionSelector(
-    open: Boolean,
-    close: () -> Unit,
-    options: List<String>,
-    onOptionSelected: (index: Int) -> Unit,
-    modifier: Modifier = Modifier,
-    shape: Shape = RectangleShape,
-    containerColor: Color = MaterialTheme.colorScheme.background,
-    elevation: Dp = 5.dp,
-    border: BorderStroke? = null,
-    popupProperties: PopupProperties = PopupProperties(),
-    scrollState: ScrollState = rememberScrollState(),
-    parentContent: @Composable () -> Unit,
+  open: Boolean,
+  close: () -> Unit,
+  options: List<String>,
+  onOptionSelected: (index: Int) -> Unit,
+  modifier: Modifier = Modifier,
+  shape: Shape = RectangleShape,
+  containerColor: Color = MaterialTheme.colorScheme.background,
+  elevation: Dp = 5.dp,
+  border: BorderStroke? = null,
+  popupProperties: PopupProperties = PopupProperties(),
+  scrollState: ScrollState = rememberScrollState(),
+  parentContent: @Composable () -> Unit,
 ) {
-    Row(
-        horizontalArrangement = Arrangement.Start,
-        verticalAlignment = Alignment.Top,
-        modifier = Modifier
+  Row(
+    horizontalArrangement = Arrangement.Start,
+    verticalAlignment = Alignment.Top,
+    modifier = Modifier
+  ) {
+    parentContent()
+    DropdownMenu(
+      expanded = open,
+      onDismissRequest = close,
+      modifier = modifier,
+      offset = DpOffset.Unspecified,
+      scrollState = scrollState,
+      properties = popupProperties,
+      shape = shape,
+      containerColor = containerColor,
+      tonalElevation = elevation,
+      shadowElevation = elevation,
+      border = border,
     ) {
-        parentContent()
-        DropdownMenu(
-            expanded = open,
-            onDismissRequest = close,
-            modifier = modifier,
-            offset = DpOffset.Unspecified,
-            scrollState = scrollState,
-            properties = popupProperties,
-            shape = shape,
-            containerColor = containerColor,
-            tonalElevation = elevation,
-            shadowElevation = elevation,
-            border = border,
-        ) {
-            options.forEachIndexed { index, option ->
-                DropdownMenuItem(
-                    text = {
-                        Main700Text(
-                            text = option,
-                            lineHeight = 24.sp,
-                            color = MaterialTheme.colorScheme.onSurface
-                        )
-                    },
-                    onClick = { onOptionSelected(index) }
-                )
-            }
-        }
+      options.forEachIndexed { index, option ->
+        DropdownMenuItem(
+          text = {
+            Main700Text(
+              text = option,
+              lineHeight = 24.sp,
+              color = MaterialTheme.colorScheme.onSurface
+            )
+          },
+          onClick = { onOptionSelected(index) }
+        )
+      }
     }
+  }
 }

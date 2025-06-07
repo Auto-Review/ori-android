@@ -7,12 +7,13 @@ import java.time.Year
 import java.time.ZoneOffset
 
 @OptIn(ExperimentalMaterial3Api::class)
-internal  class SelectableDates: SelectableDates {
-    override fun isSelectableDate(utcTimeMillis: Long): Boolean {
-        return LocalDate.now().atStartOfDay().toInstant(ZoneOffset.UTC).epochSecond * 1000 <= utcTimeMillis
-    }
+internal class SelectableDates : SelectableDates {
+  override fun isSelectableDate(utcTimeMillis: Long): Boolean {
+    return LocalDate.now().atStartOfDay()
+      .toInstant(ZoneOffset.UTC).epochSecond * 1000 <= utcTimeMillis
+  }
 
-    override fun isSelectableYear(year: Int): Boolean {
-        return Year.now().value <= year
-    }
+  override fun isSelectableYear(year: Int): Boolean {
+    return Year.now().value <= year
+  }
 }

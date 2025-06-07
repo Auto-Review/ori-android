@@ -14,69 +14,69 @@ import com.dd2d.core.presentation.R
 
 @Composable
 fun BackIcon(
-    modifier: Modifier = Modifier,
-    description: String? = stringResource(R.string.back),
-    tint: Color = LocalContentColor.current
+  modifier: Modifier = Modifier,
+  description: String? = stringResource(R.string.back),
+  tint: Color = LocalContentColor.current
 ) {
-    VectorIcon(
-        icon = Icons.AutoMirrored.Default.ArrowBack,
-        description = description,
-        tint = tint,
-        modifier = modifier
-    )
+  VectorIcon(
+    icon = Icons.AutoMirrored.Default.ArrowBack,
+    description = description,
+    tint = tint,
+    modifier = modifier
+  )
 }
 
 @Composable
 fun CloseIcon(
-    modifier: Modifier = Modifier,
-    description: String? = stringResource(R.string.close),
-    tint: Color = LocalContentColor.current
+  modifier: Modifier = Modifier,
+  description: String? = stringResource(R.string.close),
+  tint: Color = LocalContentColor.current
 ) {
-    VectorIcon(
-        icon = Icons.Default.Close,
-        description = description,
-        tint = tint,
-        modifier = modifier
-    )
+  VectorIcon(
+    icon = Icons.Default.Close,
+    description = description,
+    tint = tint,
+    modifier = modifier
+  )
 }
 
 @Composable
 fun AddIcon(
-    modifier: Modifier = Modifier,
-    description: String? = stringResource(R.string.add),
-    tint: Color = LocalContentColor.current
+  modifier: Modifier = Modifier,
+  description: String? = stringResource(R.string.add),
+  tint: Color = LocalContentColor.current
 ) {
-    VectorIcon(
-        icon = Icons.Default.Add,
-        description = description,
-        tint = tint,
-        modifier = modifier
-    )
+  VectorIcon(
+    icon = Icons.Default.Add,
+    description = description,
+    tint = tint,
+    modifier = modifier
+  )
 }
 
 @Composable
 fun DetailIcon(
-    modifier: Modifier = Modifier,
-    tint: Color = LocalContentColor.current
+  modifier: Modifier = Modifier,
+  tint: Color = LocalContentColor.current
 ) {
-    VectorIcon(
-        icon = Icons.AutoMirrored.Default.KeyboardArrowRight,
-        description = null,
-        tint = tint,
-        modifier = modifier
-    )
+  VectorIcon(
+    icon = Icons.AutoMirrored.Default.KeyboardArrowRight,
+    description = null,
+    tint = tint,
+    modifier = modifier
+  )
 }
 
 @Composable
 fun BookmarkIcon(
-    onBookMark: Boolean,
-    modifier: Modifier = Modifier,
-    tint: Color = LocalContentColor.current
+  onBookMark: Boolean,
+  modifier: Modifier = Modifier,
+  tint: Color = LocalContentColor.current
 ) {
-    VectorIcon(
-        res = if(onBookMark) R.drawable.bookmark_fill else R.drawable.bookmark,
-        description = null,
-        tint = tint,
-        modifier = modifier
-    )
+  VectorIcon(
+    res = if (onBookMark) R.drawable.bookmark_fill else R.drawable.bookmark,
+    description = null,
+    tint = tint,
+    modifier = modifier
+  )
 }

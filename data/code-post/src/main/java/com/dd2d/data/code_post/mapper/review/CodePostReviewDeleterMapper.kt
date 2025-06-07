@@ -4,8 +4,8 @@ import com.dd2d.data_source.remote.server.code_post.dto.request.CodePostReviewDe
 import com.dd2d.domain.code_post.model.review.CodePostReviewDeleter
 
 internal fun CodePostReviewDeleter.toCodePostReviewDeleteRequestDto(): CodePostReviewDeleteRequestDto {
-    return CodePostReviewDeleteRequestDto(
-        id = this.id,
-        email = this.email,
-    )
+  return CodePostReviewDeleteRequestDto(
+    id = this.id,
+    email = this.email,
+  )
 }

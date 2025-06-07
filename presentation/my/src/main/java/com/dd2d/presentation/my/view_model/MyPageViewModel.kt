@@ -20,38 +20,40 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class MyPageViewModel @Inject constructor(
-    private val userRepository: UserRepository,
-    private val codePostRepository: CodePostRepository,
-    private val tilRepository: TILRepository,
-): ViewModel() {
-    var me by mutableStateOf<User?>(null); private set
-    private fun refreshMe() {
-        userRepository.me()
-            .onStateSuccess { 
-                me = this
-                userUpdateState.initUser(this)
-            }
-            .launchIn(viewModelScope)
-    }
+  private val userRepository: UserRepository,
+  private val codePostRepository: CodePostRepository,
+  private val tilRepository: TILRepository,
+) : ViewModel() {
+  var me by mutableStateOf<User?>(null); private set
+  private fun refreshMe() {
+    userRepository.me()
+      .onStateSuccess {
+        me = this
+        userUpdateState.initUser(this)
+      }
+      .launchIn(viewModelScope)
+  }
 
-    val userUpdateState = UserUpdateState()
-    fun updateUser() {
-        userUpdateState.taskFlow(userRepository::updateMe)
-            .onStateSuccess { refreshMe() }
-            .launchIn(viewModelScope)
-    }
+  val userUpdateState = UserUpdateState()
+  fun updateUser() {
+    userUpdateState.taskFlow(userRepository::updateMe)
+      .onStateSuccess { refreshMe() }
+      .launchIn(viewModelScope)
+  }
 
-    val codePostListController = LazyListController(
-        option = CodePostListOptions(),
-        scope = viewModelScope,
-        getList = codePostRepository::getMyCodePostList,
-    )
+  val codePostListController = LazyListController(
+    option = CodePostListOptions(),
+    scope = viewModelScope,
+    getList = codePostRepository::getMyCodePostList,
+  )
 
-    val tilListController = LazyListController(
-        option = TILListOptions(),
-        scope = viewModelScope,
-        getList = tilRepository::getMyTILList,
-    )
+  val tilListController = LazyListController(
+    option = TILListOptions(),
+    scope = viewModelScope,
+    getList = tilRepository::getMyTILList,
+  )
 
-    init { refreshMe() }
+  init {
+    refreshMe()
+  }
 }

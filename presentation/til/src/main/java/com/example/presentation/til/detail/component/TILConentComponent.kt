@@ -21,59 +21,59 @@ import com.dd2d.domain.til.model.TIL
 
 @Composable
 internal fun TILContentComponent(
-    til: TIL,
-    modifier: Modifier = Modifier
+  til: TIL,
+  modifier: Modifier = Modifier
 ) {
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .heightIn(min = 300.dp)
-            .border(
-                width = 1.dp,
-                color = MaterialTheme.colorScheme.outlineVariant,
-                shape = MaterialTheme.shapes.medium
-            )
-            .padding(horizontal = 14.dp, vertical = 17.dp)
+  Column(
+    modifier = Modifier
+      .fillMaxWidth()
+      .heightIn(min = 300.dp)
+      .border(
+        width = 1.dp,
+        color = MaterialTheme.colorScheme.outlineVariant,
+        shape = MaterialTheme.shapes.medium
+      )
+      .padding(horizontal = 14.dp, vertical = 17.dp)
+  ) {
+    Row(
+      verticalAlignment = Alignment.CenterVertically,
+      horizontalArrangement = Arrangement.SpaceBetween,
+      modifier = Modifier.fillMaxWidth()
     ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween,
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Main400Text(
-                text = "${til.author.nickname}   ${til.createdAt}",
-                color = Color.Black,
-                fontSize = 12.sp,
-                lineHeight = 16.8.sp,
-            )
-            Main400Text(
-                text = "[공개범위]",
-                color = MaterialTheme.colorScheme.surfaceBright,
-                fontSize = 12.sp,
-                lineHeight = 16.8.sp,
-            )
-        }
-
-        Main400Text(
-            text = til.content,
-            color = MaterialTheme.colorScheme.onSurface,
-            fontSize = 12.sp,
-            lineHeight = 16.8.sp,
-            maxLine = Int.MAX_VALUE,
-            modifier = Modifier
-                .padding(top = 12.dp)
-                .fillMaxWidth()
-        )
+      Main400Text(
+        text = "${til.author.nickname}   ${til.createdAt}",
+        color = Color.Black,
+        fontSize = 12.sp,
+        lineHeight = 16.8.sp,
+      )
+      Main400Text(
+        text = "[공개범위]",
+        color = MaterialTheme.colorScheme.surfaceBright,
+        fontSize = 12.sp,
+        lineHeight = 16.8.sp,
+      )
     }
+
+    Main400Text(
+      text = til.content,
+      color = MaterialTheme.colorScheme.onSurface,
+      fontSize = 12.sp,
+      lineHeight = 16.8.sp,
+      maxLine = Int.MAX_VALUE,
+      modifier = Modifier
+        .padding(top = 12.dp)
+        .fillMaxWidth()
+    )
+  }
 }
 
 @Preview(showBackground = true)
 @Composable
 private fun TILContentComponentPrev() {
-    AppTheme {
-        TILContentComponent(
-            til = TIL.dummy(),
-            modifier = Modifier
-        )
-    }
+  AppTheme {
+    TILContentComponent(
+      til = TIL.dummy(),
+      modifier = Modifier
+    )
+  }
 }

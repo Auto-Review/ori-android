@@ -13,21 +13,21 @@ import kotlinx.serialization.Serializable
 data class CodePostCreateScreenRoute(val updateCodePostId: Int?) : ScreenRoute
 
 fun NavGraphBuilder.routeCodePostCreateScreen(
-    onBack: () -> Unit,
-    moveToCodePost: (codePostId: Int) -> Unit,
-    modifier: Modifier = Modifier,
+  onBack: () -> Unit,
+  moveToCodePost: (codePostId: Int) -> Unit,
+  modifier: Modifier = Modifier,
 ) {
-    horizontalScreen<CodePostCreateScreenRoute> {
-        CodePostCreateScreen(
-            onBack = onBack,
-            moveToCodePost = moveToCodePost,
-            modifier = modifier,
-        )
-    }
+  horizontalScreen<CodePostCreateScreenRoute> {
+    CodePostCreateScreen(
+      onBack = onBack,
+      moveToCodePost = moveToCodePost,
+      modifier = modifier,
+    )
+  }
 }
 
 fun NavController.toCodePostCreateScreen(updateCodePostId: Int? = null) {
-    navigate(CodePostCreateScreenRoute(updateCodePostId)) {
-        launchSingleTop = true
-    }
+  navigate(CodePostCreateScreenRoute(updateCodePostId)) {
+    launchSingleTop = true
+  }
 }

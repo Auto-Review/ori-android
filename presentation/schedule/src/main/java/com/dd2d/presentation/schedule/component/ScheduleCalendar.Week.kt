@@ -14,36 +14,36 @@ import java.time.DayOfWeek
 
 @Composable
 internal fun Week(
-    modifier: Modifier = Modifier,
-    weeks: List<DayOfWeek> = daysOfWeek(),
-    weekColor: Color = Color(0xFFB5BEC6)
+  modifier: Modifier = Modifier,
+  weeks: List<DayOfWeek> = daysOfWeek(),
+  weekColor: Color = Color(0xFFB5BEC6)
 ) {
-    Row(
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = modifier
-    ) {
-        weeks.forEach { week ->
-            Main600Text(
-                text = getWeekText(dayOfWeek = week),
-                fontSize = 10.tp,
-                lineHeight = 12.tp,
-                color = weekColor,
-                textAlign = TextAlign.Center,
-                modifier = Modifier.weight(1F)
-            )
-        }
+  Row(
+    horizontalArrangement = Arrangement.SpaceBetween,
+    verticalAlignment = Alignment.CenterVertically,
+    modifier = modifier
+  ) {
+    weeks.forEach { week ->
+      Main600Text(
+        text = getWeekText(dayOfWeek = week),
+        fontSize = 10.tp,
+        lineHeight = 12.tp,
+        color = weekColor,
+        textAlign = TextAlign.Center,
+        modifier = Modifier.weight(1F)
+      )
     }
+  }
 }
 
 private fun getWeekText(dayOfWeek: DayOfWeek): String {
-    return when(dayOfWeek) {
-        DayOfWeek.SUNDAY -> "SUN"
-        DayOfWeek.MONDAY -> "MON"
-        DayOfWeek.TUESDAY -> "TUE"
-        DayOfWeek.WEDNESDAY -> "WED"
-        DayOfWeek.THURSDAY -> "THU"
-        DayOfWeek.FRIDAY -> "FRI"
-        DayOfWeek.SATURDAY -> "SAT"
-    }
+  return when (dayOfWeek) {
+    DayOfWeek.SUNDAY -> "SUN"
+    DayOfWeek.MONDAY -> "MON"
+    DayOfWeek.TUESDAY -> "TUE"
+    DayOfWeek.WEDNESDAY -> "WED"
+    DayOfWeek.THURSDAY -> "THU"
+    DayOfWeek.FRIDAY -> "FRI"
+    DayOfWeek.SATURDAY -> "SAT"
+  }
 }

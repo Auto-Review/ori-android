@@ -24,76 +24,79 @@ import com.dd2d.presentation.my.model.UserUpdateState
 
 @Composable
 internal fun MyPageScreenContent(
-    user: User,
-    userUpdateState: UserUpdateState,
-    onUserUpdate: () -> Unit,
-    codePostListContent: @Composable () -> Unit,
-    tilListContent: @Composable () -> Unit,
-    modifier: Modifier = Modifier
+  user: User,
+  userUpdateState: UserUpdateState,
+  onUserUpdate: () -> Unit,
+  codePostListContent: @Composable () -> Unit,
+  tilListContent: @Composable () -> Unit,
+  modifier: Modifier = Modifier
 ) {
-    val tabs = listOf("MY CODE", "MY TIL")
-    val pagerState = rememberPagerState { tabs.size }
+  val tabs = listOf("MY CODE", "MY TIL")
+  val pagerState = rememberPagerState { tabs.size }
 
-    Column(modifier = modifier){
-        Text(
-            text = "// MY PAGE",
-            style = LocalHansType.current.label,
-            modifier = Modifier.padding(top = 24.dp, start = 27.dp, end = 27.dp)
-        )
-        UserComponent(
-            user = user,
-            updateState = userUpdateState,
-            onUpdate = onUserUpdate,
-            modifier = Modifier.fillMaxWidth()
-                .padding(top = 16.dp, start = 27.dp, end = 27.dp)
-        )
-        MainPagerTab(
-            pagerState = pagerState,
-            tabs = tabs,
-            pageSpacing = 24.dp,
-            modifier = Modifier.fillMaxWidth().padding(top = 32.dp)
-        ) { page ->
-            when(page) {
-                0 -> codePostListContent()
-                1 -> tilListContent()
-            }
-        }
+  Column(modifier = modifier) {
+    Text(
+      text = "// MY PAGE",
+      style = LocalHansType.current.label,
+      modifier = Modifier.padding(top = 24.dp, start = 27.dp, end = 27.dp)
+    )
+    UserComponent(
+      user = user,
+      updateState = userUpdateState,
+      onUpdate = onUserUpdate,
+      modifier = Modifier
+        .fillMaxWidth()
+        .padding(top = 16.dp, start = 27.dp, end = 27.dp)
+    )
+    MainPagerTab(
+      pagerState = pagerState,
+      tabs = tabs,
+      pageSpacing = 24.dp,
+      modifier = Modifier
+        .fillMaxWidth()
+        .padding(top = 32.dp)
+    ) { page ->
+      when (page) {
+        0 -> codePostListContent()
+        1 -> tilListContent()
+      }
     }
+  }
 }
 
 @Preview
 @Preview(locale = "ko")
 @Composable
 private fun MyPageScreenContentPrev() {
-    val list = remember {
-        Pagination(
-            list = List(30) {
-                CodePostListItem.dummy(it)
-            },
-            currentPage = 1,
-            totalPage = 1,
-            totalItemCount = 30,
+  val list = remember {
+    Pagination(
+      list = List(30) {
+        CodePostListItem.dummy(it)
+      },
+      currentPage = 1,
+      totalPage = 1,
+      totalItemCount = 30,
+    )
+  }
+  AppTheme {
+    MyPageScreenContent(
+      user = User.dummy(),
+      userUpdateState = UserUpdateState(),
+      onUserUpdate = {},
+      codePostListContent = {
+        MyCodePostListContent(
+          listController = LazyListController(
+            option = CodePostListOptions(),
+            scope = rememberCoroutineScope(),
+            getList = {
+              Result.success(list)
+            }
+          ),
+          onItemClick = {},
         )
-    }
-    AppTheme {
-        MyPageScreenContent(
-            user = User.dummy(),
-            userUpdateState = UserUpdateState(),
-            onUserUpdate = {},
-            codePostListContent = {
-                MyCodePostListContent(
-                    listController = LazyListController(
-                        option = CodePostListOptions(),
-                        scope = rememberCoroutineScope(),
-                        getList = {
-                            Result.success(list)
-                        }
-                    ),
-                    onItemClick = {},
-                )
-            },
-            tilListContent = {},
-            modifier = Modifier
-        )
-    }
+      },
+      tilListContent = {},
+      modifier = Modifier
+    )
+  }
 }

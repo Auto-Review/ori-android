@@ -17,51 +17,53 @@ import com.dd2d.domain.code_post.model.post.CodePost
 
 @Composable
 internal fun CodePostHeaderComponent(
-    codePost: CodePost,
-    modifier: Modifier = Modifier
+  codePost: CodePost,
+  modifier: Modifier = Modifier
 ) {
-    Column(
-        modifier = modifier
-            .padding(top = 10.dp)
-            .fillMaxWidth()
-            .border(
-                width = 1.dp,
-                color = MaterialTheme.colorScheme.outlineVariant,
-                shape = MaterialTheme.shapes.medium
-            )
-            .padding(horizontal = 12.dp, vertical = 15.dp)
+  Column(
+    modifier = modifier
+      .padding(top = 10.dp)
+      .fillMaxWidth()
+      .border(
+        width = 1.dp,
+        color = MaterialTheme.colorScheme.outlineVariant,
+        shape = MaterialTheme.shapes.medium
+      )
+      .padding(horizontal = 12.dp, vertical = 15.dp)
+  ) {
+    Main400Text(
+      text = codePost.author.nickname,
+      color = MaterialTheme.colorScheme.onSurface,
+      fontSize = 12.sp,
+      lineHeight = 16.8.sp,
+    )
+    Main400Text(
+      text = codePost.description,
+      color = MaterialTheme.colorScheme.onSurface,
+      fontSize = 12.sp,
+      lineHeight = 16.8.sp,
+      maxLine = Int.MAX_VALUE,
+      modifier = Modifier.padding(top = 4.dp)
+    )
+    Row(
+      verticalAlignment = Alignment.CenterVertically,
+      horizontalArrangement = Arrangement.SpaceBetween,
+      modifier = Modifier
+        .fillMaxWidth()
+        .padding(top = 8.dp)
     ) {
-        Main400Text(
-            text = codePost.author.nickname,
-            color = MaterialTheme.colorScheme.onSurface,
-            fontSize = 12.sp,
-            lineHeight = 16.8.sp,
-        )
-        Main400Text(
-            text = codePost.description,
-            color = MaterialTheme.colorScheme.onSurface,
-            fontSize = 12.sp,
-            lineHeight = 16.8.sp,
-            maxLine = Int.MAX_VALUE,
-            modifier = Modifier.padding(top = 4.dp)
-        )
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween,
-            modifier = Modifier.fillMaxWidth().padding(top = 8.dp)
-        ) {
-            Main400Text(
-                text = codePost.code.language?.label?: "-",
-                color = MaterialTheme.colorScheme.surfaceBright,
-                fontSize = 12.sp,
-                lineHeight = 16.8.sp,
-            )
-            Main400Text(
-                text = if(codePost.isPublic) "공개" else "비공개",
-                color = MaterialTheme.colorScheme.surfaceBright,
-                fontSize = 12.sp,
-                lineHeight = 16.8.sp,
-            )
-        }
+      Main400Text(
+        text = codePost.code.language?.label ?: "-",
+        color = MaterialTheme.colorScheme.surfaceBright,
+        fontSize = 12.sp,
+        lineHeight = 16.8.sp,
+      )
+      Main400Text(
+        text = if (codePost.isPublic) "공개" else "비공개",
+        color = MaterialTheme.colorScheme.surfaceBright,
+        fontSize = 12.sp,
+        lineHeight = 16.8.sp,
+      )
     }
+  }
 }

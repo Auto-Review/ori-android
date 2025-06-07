@@ -4,5 +4,5 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class CodePostToggleScrapRequestDto(
-    val codePostId: Int,
+  val codePostId: Int,
 )

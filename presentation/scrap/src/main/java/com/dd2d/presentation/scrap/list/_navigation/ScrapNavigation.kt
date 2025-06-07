@@ -13,23 +13,23 @@ import kotlinx.serialization.Serializable
 data object ScrapScreenRoute : ScreenRoute
 
 fun NavGraphBuilder.routeScrapScreen(
-    onClose: () -> Unit,
-    navigateToCodePostDetail: (codePostId: Int) -> Unit,
-    navigateToTILDetail: (tilId: Int) -> Unit,
-    modifier: Modifier = Modifier,
+  onClose: () -> Unit,
+  navigateToCodePostDetail: (codePostId: Int) -> Unit,
+  navigateToTILDetail: (tilId: Int) -> Unit,
+  modifier: Modifier = Modifier,
 ) {
-    horizontalScreen<ScrapScreenRoute> {
-        ScrapScreen(
-            onClose = onClose,
-            navigateToCodePostDetail = navigateToCodePostDetail,
-            navigateToTILDetail = navigateToTILDetail,
-            modifier = modifier,
-        )
-    }
+  horizontalScreen<ScrapScreenRoute> {
+    ScrapScreen(
+      onClose = onClose,
+      navigateToCodePostDetail = navigateToCodePostDetail,
+      navigateToTILDetail = navigateToTILDetail,
+      modifier = modifier,
+    )
+  }
 }
 
 fun NavController.toScrapScreen() {
-    navigate(ScrapScreenRoute) {
-        launchSingleTop = true
-    }
+  navigate(ScrapScreenRoute) {
+    launchSingleTop = true
+  }
 }

@@ -14,34 +14,34 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 fun Main400Text(
-    text: String,
-    modifier: Modifier = Modifier,
-    color: Color = Color.Unspecified,
-    fontSize: TextUnit = 14.sp,
-    textStyle: TextStyle = LocalTextStyle.current,
-    fontFamily: FontFamily? = null,
-    textAlign: TextAlign = TextAlign.Start,
-    overFlow: TextOverflow = TextOverflow.Ellipsis,
-    softWrap: Boolean = true,
-    maxLine: Int = 1,
-    minLine: Int = 1,
-    lineHeight: TextUnit = TextUnit. Unspecified,
-    letterSpacing: TextUnit = TextUnit.Unspecified,
+  text: String,
+  modifier: Modifier = Modifier,
+  color: Color = Color.Unspecified,
+  fontSize: TextUnit = 14.sp,
+  textStyle: TextStyle = LocalTextStyle.current,
+  fontFamily: FontFamily? = null,
+  textAlign: TextAlign = TextAlign.Start,
+  overFlow: TextOverflow = TextOverflow.Ellipsis,
+  softWrap: Boolean = true,
+  maxLine: Int = 1,
+  minLine: Int = 1,
+  lineHeight: TextUnit = TextUnit.Unspecified,
+  letterSpacing: TextUnit = TextUnit.Unspecified,
 ) {
-    MainText(
-        text = text,
-        modifier = modifier,
-        fontSize = fontSize,
-        color = color,
-        fontWeight = FontWeight.W400,
-        overFlow = overFlow,
-        textAlign = textAlign,
-        softWrap = softWrap,
-        maxLine = maxLine,
-        minLine = minLine,
-        lineHeight = lineHeight,
-        letterSpacing = letterSpacing,
-        textStyle = textStyle,
-        fontFamily = fontFamily
-    )
+  MainText(
+    text = text,
+    modifier = modifier,
+    fontSize = fontSize,
+    color = color,
+    fontWeight = FontWeight.W400,
+    overFlow = overFlow,
+    textAlign = textAlign,
+    softWrap = softWrap,
+    maxLine = maxLine,
+    minLine = minLine,
+    lineHeight = lineHeight,
+    letterSpacing = letterSpacing,
+    textStyle = textStyle,
+    fontFamily = fontFamily
+  )
 }

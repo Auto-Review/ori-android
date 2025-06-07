@@ -14,27 +14,27 @@ import com.dd2d.presentation.scrap.list._navigation.toScrapScreen
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun MainScreenTopBar(
-    appNavController: NavController,
-    modifier: Modifier = Modifier
+  appNavController: NavController,
+  modifier: Modifier = Modifier
 ) {
-    TopAppBar(
-        title = { PainterImage(res = com.dd2d.core.presentation.R.drawable.logo) },
-        actions = {
-            VectorIconButton(res = com.dd2d.core.presentation.R.drawable.search) {
+  TopAppBar(
+    title = { PainterImage(res = com.dd2d.core.presentation.R.drawable.logo) },
+    actions = {
+      VectorIconButton(res = com.dd2d.core.presentation.R.drawable.search) {
 
-            }
-            VectorIconButton(
-                res = com.dd2d.core.presentation.R.drawable.scrap,
-                onClick = appNavController::toScrapScreen
-            )
-            VectorIconButton(res = com.dd2d.core.presentation.R.drawable.off_notification) {
+      }
+      VectorIconButton(
+        res = com.dd2d.core.presentation.R.drawable.scrap,
+        onClick = appNavController::toScrapScreen
+      )
+      VectorIconButton(res = com.dd2d.core.presentation.R.drawable.off_notification) {
 
-            }
-        },
-        colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = MaterialTheme.colorScheme.background,
-            actionIconContentColor = MaterialTheme.colorScheme.onSurface,
-        ),
-        modifier = modifier
-    )
+      }
+    },
+    colors = TopAppBarDefaults.topAppBarColors(
+      containerColor = MaterialTheme.colorScheme.background,
+      actionIconContentColor = MaterialTheme.colorScheme.onSurface,
+    ),
+    modifier = modifier
+  )
 }

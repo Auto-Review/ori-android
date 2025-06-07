@@ -13,18 +13,21 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class SignInUseCaseImpl @Inject constructor(
-    private val authRepository: AuthRepository,
-    private val dataStoreManager: DataStoreManager,
-    private val tokenManager: TokenManager,
-): SignInUseCase {
-    override fun invoke(request: AuthRequester): Flow<DataState<Unit>> {
-        return authRepository.auth(request)
-            .mapSuccess {
-                tokenManager.saveAuthToken(
-                    accessToken = this.accessToken,
-                    refreshToken = this.refreshToken,
-                )
-                dataStoreManager.saveValueByKey(key = Keys.getAuthStateKey(), value = AuthState.SignIn.ordinal)
-            }
-    }
+  private val authRepository: AuthRepository,
+  private val dataStoreManager: DataStoreManager,
+  private val tokenManager: TokenManager,
+) : SignInUseCase {
+  override fun invoke(request: AuthRequester): Flow<DataState<Unit>> {
+    return authRepository.auth(request)
+      .mapSuccess {
+        tokenManager.saveAuthToken(
+          accessToken = this.accessToken,
+          refreshToken = this.refreshToken,
+        )
+        dataStoreManager.saveValueByKey(
+          key = Keys.getAuthStateKey(),
+          value = AuthState.SignIn.ordinal
+        )
+      }
+  }
 }

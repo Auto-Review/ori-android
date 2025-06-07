@@ -5,6 +5,6 @@ import com.dd2d.domain.code_post.model.scrap.CodePostScrapListItem
 import com.dd2d.domain.code_post.model.scrap.CodePostScrapListOption
 
 interface CodePostScrapRepository {
-    suspend fun toggleScrap(codePostId: Int): Result<Unit>
-    suspend fun getMyCodePostScrapList(option: CodePostScrapListOption): Result<Pagination<CodePostScrapListItem>>
+  suspend fun toggleScrap(codePostId: Int): Result<Unit>
+  suspend fun getMyCodePostScrapList(option: CodePostScrapListOption): Result<Pagination<CodePostScrapListItem>>
 }

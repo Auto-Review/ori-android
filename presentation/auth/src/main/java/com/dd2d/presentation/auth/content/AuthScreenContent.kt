@@ -32,57 +32,57 @@ import com.dd2d.core.presentation_oauth.google.model.OAuthResult
 
 @Composable
 internal fun AuthScreenContent(
-    requestAuth: (OAuthResult) -> Unit,
-    modifier: Modifier = Modifier
+  requestAuth: (OAuthResult) -> Unit,
+  modifier: Modifier = Modifier
 ) {
 
-    var oAuthException by remember { mutableStateOf<ManagedException?>(null) }
-    Surface(
-        color = MaterialTheme.colorScheme.onBackground,
-        modifier = modifier
+  var oAuthException by remember { mutableStateOf<ManagedException?>(null) }
+  Surface(
+    color = MaterialTheme.colorScheme.onBackground,
+    modifier = modifier
+  ) {
+    Column(
+      verticalArrangement = Arrangement.spacedBy(12.dp),
+      horizontalAlignment = Alignment.CenterHorizontally,
+      modifier = Modifier
+        .fillMaxSize()
+        .padding(horizontal = 58.dp)
     ) {
-        Column(
-            verticalArrangement = Arrangement.spacedBy(12.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(horizontal = 58.dp)
-        ){
-            Spacer(Modifier.fillMaxHeight(0.3F))
-            PainterImage(res = R.drawable.logo_inverse, modifier = Modifier.align(Alignment.Start))
-            GoogleAuthButton(
-                onAuthSuccess = requestAuth,
-                style = OAuthButtonDefault.googleOAuthButtonStyle(
-                    text = stringResource(com.dd2d.core.presentation_oauth.R.string.auth_with_google),
-                    textStyle = TextStyle(fontSize = 16.sp),
-                    shape = RoundedCornerShape(4.dp)
-                )
-            )
-        }
+      Spacer(Modifier.fillMaxHeight(0.3F))
+      PainterImage(res = R.drawable.logo_inverse, modifier = Modifier.align(Alignment.Start))
+      GoogleAuthButton(
+        onAuthSuccess = requestAuth,
+        style = OAuthButtonDefault.googleOAuthButtonStyle(
+          text = stringResource(com.dd2d.core.presentation_oauth.R.string.auth_with_google),
+          textStyle = TextStyle(fontSize = 16.sp),
+          shape = RoundedCornerShape(4.dp)
+        )
+      )
     }
+  }
 
-    oAuthException?.let { e ->
-        ErrorDialog(exception = e) {
-            oAuthException = null
-        }
+  oAuthException?.let { e ->
+    ErrorDialog(exception = e) {
+      oAuthException = null
     }
+  }
 }
 
 @Preview
 @Preview(locale = "ko")
 @Composable
 private fun AuthScreenContentPrev() {
-    AppTheme {
-        Column(
-            verticalArrangement = Arrangement.Top,
-            horizontalAlignment = Alignment.Start,
-            modifier = Modifier
-                .fillMaxSize()
-        ) {
-            AuthScreenContent(
-                requestAuth = {},
-                modifier = Modifier.fillMaxSize()
-            )
-        }
+  AppTheme {
+    Column(
+      verticalArrangement = Arrangement.Top,
+      horizontalAlignment = Alignment.Start,
+      modifier = Modifier
+        .fillMaxSize()
+    ) {
+      AuthScreenContent(
+        requestAuth = {},
+        modifier = Modifier.fillMaxSize()
+      )
     }
+  }
 }

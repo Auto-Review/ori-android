@@ -22,35 +22,35 @@ import com.dd2d.presentation.auth.view_model.AuthViewModel
 
 @Composable
 fun AuthScreen(
-    onAuthSuccess: () -> Unit,
-    modifier: Modifier = Modifier
+  onAuthSuccess: () -> Unit,
+  modifier: Modifier = Modifier
 ) {
-    val viewModel = hiltViewModel<AuthViewModel>()
-    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+  val viewModel = hiltViewModel<AuthViewModel>()
+  val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    var exception by remember { mutableStateOf<ManagedException?>(null) }
+  var exception by remember { mutableStateOf<ManagedException?>(null) }
 
-    LaunchedEffect(key1 = uiState) {
-        exception = (uiState as? UIState.Error)?.exception
-        if(uiState is UIState.Success) {
-            onAuthSuccess()
-        }
+  LaunchedEffect(key1 = uiState) {
+    exception = (uiState as? UIState.Error)?.exception
+    if (uiState is UIState.Success) {
+      onAuthSuccess()
     }
+  }
 
-    Scaffold(
-        containerColor = MaterialTheme.colorScheme.onBackground,
-        modifier = modifier
-    ) { inner ->
-        AuthScreenContent(
-            requestAuth = viewModel::auth,
-            modifier = Modifier
-                .consumeWindowInsets(inner)
-                .fillMaxSize()
-                .padding(inner)
-        )
-    }
+  Scaffold(
+    containerColor = MaterialTheme.colorScheme.onBackground,
+    modifier = modifier
+  ) { inner ->
+    AuthScreenContent(
+      requestAuth = viewModel::auth,
+      modifier = Modifier
+        .consumeWindowInsets(inner)
+        .fillMaxSize()
+        .padding(inner)
+    )
+  }
 
-    exception?.let { e ->
-        ErrorDialog(exception = e, onConfirm = viewModel::stateToIdle)
-    }
+  exception?.let { e ->
+    ErrorDialog(exception = e, onConfirm = viewModel::stateToIdle)
+  }
 }

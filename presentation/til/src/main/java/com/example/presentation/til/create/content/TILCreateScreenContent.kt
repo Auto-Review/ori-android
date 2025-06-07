@@ -27,56 +27,65 @@ import com.example.presentation.til.create.model.TILCreateState
 
 @Composable
 internal fun TILCreateScreenContent(
-    createState: TILCreateState,
-    modifier: Modifier = Modifier
+  createState: TILCreateState,
+  modifier: Modifier = Modifier
 ) {
-    Column(
-        verticalArrangement = Arrangement.SpaceBetween,
-        modifier = modifier
-            .imePadding()
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState())
-            .padding(bottom = 40.dp)
-    ) {
-        Column {
-            HorizontalDivider()
-            TitleInput(
-                title = createState.title,
-                onTitleChange = { createState.title = it },
-                modifier = Modifier.fillMaxWidth().padding(horizontal = 24.dp)
-            )
-            HorizontalDivider()
-            ContentInput(
-                content = createState.content,
-                onContentChange = { createState.content = it },
-                modifier = Modifier.fillMaxWidth().fillMaxHeight().padding(horizontal = 24.dp)
-            )
-        }
-        Column(verticalArrangement = Arrangement.spacedBy(24.dp)) {
-            HorizontalDivider()
-            PublishSettingInput(
-                isPrivate = createState.isPrivate,
-                onIsPrivateChange = { createState.isPrivate = it },
-                modifier = Modifier.fillMaxWidth().padding(horizontal = 24.dp)
-            )
-            ReviewDateInput(
-                reviewDate = createState.reviewDate,
-                onReviewDateChange = { createState.reviewDate = it },
-                modifier = Modifier.fillMaxWidth().padding(horizontal = 24.dp)
-            )
-        }
+  Column(
+    verticalArrangement = Arrangement.SpaceBetween,
+    modifier = modifier
+      .imePadding()
+      .fillMaxSize()
+      .verticalScroll(rememberScrollState())
+      .padding(bottom = 40.dp)
+  ) {
+    Column {
+      HorizontalDivider()
+      TitleInput(
+        title = createState.title,
+        onTitleChange = { createState.title = it },
+        modifier = Modifier
+          .fillMaxWidth()
+          .padding(horizontal = 24.dp)
+      )
+      HorizontalDivider()
+      ContentInput(
+        content = createState.content,
+        onContentChange = { createState.content = it },
+        modifier = Modifier
+          .fillMaxWidth()
+          .fillMaxHeight()
+          .padding(horizontal = 24.dp)
+      )
     }
+    Column(verticalArrangement = Arrangement.spacedBy(24.dp)) {
+      HorizontalDivider()
+      PublishSettingInput(
+        isPrivate = createState.isPrivate,
+        onIsPrivateChange = { createState.isPrivate = it },
+        modifier = Modifier
+          .fillMaxWidth()
+          .padding(horizontal = 24.dp)
+      )
+      ReviewDateInput(
+        reviewDate = createState.reviewDate,
+        onReviewDateChange = { createState.reviewDate = it },
+        modifier = Modifier
+          .fillMaxWidth()
+          .padding(horizontal = 24.dp)
+      )
+    }
+  }
 }
 
 @Preview
 @Composable
 private fun TILCreateScreenContentPrev() {
-    AppTheme {
-        Box(modifier = Modifier.background(Color.White)) {
-            TILCreateScreenContent(
-                createState = remember { TILCreateState() },
-                modifier = Modifier
-            )
-        }
+  AppTheme {
+    Box(modifier = Modifier.background(Color.White)) {
+      TILCreateScreenContent(
+        createState = remember { TILCreateState() },
+        modifier = Modifier
+      )
     }
+  }
 }

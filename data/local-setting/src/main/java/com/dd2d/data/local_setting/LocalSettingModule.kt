@@ -11,7 +11,7 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class LocalSettingModule {
-    @Binds
-    @Singleton
-    abstract fun bindLocalSettingRepository(impl: LocalSettingRepositoryImpl): LocalSettingRepository
+  @Binds
+  @Singleton
+  abstract fun bindLocalSettingRepository(impl: LocalSettingRepositoryImpl): LocalSettingRepository
 }

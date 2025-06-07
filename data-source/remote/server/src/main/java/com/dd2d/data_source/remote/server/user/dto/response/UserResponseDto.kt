@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class UserResponseDto(
-    val id: Int,
-    val nickname: String,
-    val email: String,
+  val id: Int,
+  val nickname: String,
+  val email: String,
 )

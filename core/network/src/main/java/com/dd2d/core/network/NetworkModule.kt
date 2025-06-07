@@ -29,60 +29,63 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
-    private val _onAuthExpired = MutableSharedFlow<Unit>()
-    val onAuthExpired = _onAuthExpired.asSharedFlow()
+  private val _onAuthExpired = MutableSharedFlow<Unit>()
+  val onAuthExpired = _onAuthExpired.asSharedFlow()
 
-    @Provides
-    @Singleton
-    @Named("server_client")
-    fun provideHttpClient(tokenManager: TokenManager): HttpClient {
-        return HttpClient(OkHttp) {
-            defaultRequest {
-                contentType(ContentType.Application.Json)
-                url("http://ec2-43-200-245-141.ap-northeast-2.compute.amazonaws.com:8080")
+  @Provides
+  @Singleton
+  @Named("server_client")
+  fun provideHttpClient(tokenManager: TokenManager): HttpClient {
+    return HttpClient(OkHttp) {
+      defaultRequest {
+        contentType(ContentType.Application.Json)
+        url("http://ec2-43-200-245-141.ap-northeast-2.compute.amazonaws.com:8080")
+      }
+      install(ContentNegotiation) {
+        json(
+          json = Json {
+            ignoreUnknownKeys = true
+            prettyPrint = true
+            coerceInputValues = true
+          }
+        )
+      }
+      install(Auth) {
+        bearer {
+          refreshTokens {
+            val accessToken = tokenManager.getAccessToken()
+            val refreshToken = tokenManager.getRefreshToken()
+
+            val response = tryReissue(accessToken, refreshToken)
+
+            val newAccessToken = response?.headers?.get("accesstoken")?.substringAfter(" ")
+            val newRefreshToken = response?.headers?.get("refreshtoken")
+
+            if (newAccessToken == null) {
+              _onAuthExpired.emit(Unit)
+              return@refreshTokens null
             }
-            install(ContentNegotiation) {
-                json(
-                    json = Json {
-                        ignoreUnknownKeys = true
-                        prettyPrint = true
-                        coerceInputValues = true
-                    }
-                )
-            }
-            install(Auth) {
-                bearer {
-                    refreshTokens {
-                        val accessToken = tokenManager.getAccessToken()
-                        val refreshToken = tokenManager.getRefreshToken()
 
-                        val response = tryReissue(accessToken, refreshToken)
-
-                        val newAccessToken = response?.headers?.get("accesstoken")?.substringAfter(" ")
-                        val newRefreshToken = response?.headers?.get("refreshtoken")
-
-                        if(newAccessToken == null) {
-                            _onAuthExpired.emit(Unit)
-                            return@refreshTokens null
-                        }
-
-                        tokenManager.saveAuthToken(accessToken = newAccessToken, refreshToken = newRefreshToken)
-                        BearerTokens(newAccessToken, newRefreshToken)
-                    }
-                }
-            }
+            tokenManager.saveAuthToken(accessToken = newAccessToken, refreshToken = newRefreshToken)
+            BearerTokens(newAccessToken, newRefreshToken)
+          }
         }
+      }
     }
+  }
 
-    private suspend fun RefreshTokensParams.tryReissue(accessToken: String, refreshToken: String): HttpResponse? {
-        return runCatching {
-            client.get(urlString = "/v1/api/auth/reissued") {
-                markAsRefreshTokenRequest()
-                headers {
-                    append(HttpHeaders.Authorization, "Bearer $accessToken")
-                    append("refreshToken", refreshToken)
-                }
-            }
-        }.getOrNull()
-    }
+  private suspend fun RefreshTokensParams.tryReissue(
+    accessToken: String,
+    refreshToken: String
+  ): HttpResponse? {
+    return runCatching {
+      client.get(urlString = "/v1/api/auth/reissued") {
+        markAsRefreshTokenRequest()
+        headers {
+          append(HttpHeaders.Authorization, "Bearer $accessToken")
+          append("refreshToken", refreshToken)
+        }
+      }
+    }.getOrNull()
+  }
 }

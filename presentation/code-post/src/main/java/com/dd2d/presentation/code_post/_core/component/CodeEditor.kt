@@ -37,99 +37,99 @@ import dev.snipme.kodeview.view.material3.CodeEditText
 
 @Composable
 fun CodeEditor(
-    initialCode: String,
-    onCodeChange: (String) -> Unit,
-    language: Code.Language?,
-    onLanguageChange: ((Code.Language) -> Unit)?,
-    modifier: Modifier = Modifier,
-    readOnly: Boolean = false,
-    theme: SyntaxTheme = SyntaxThemes.darcula(darkMode = false),
+  initialCode: String,
+  onCodeChange: (String) -> Unit,
+  language: Code.Language?,
+  onLanguageChange: ((Code.Language) -> Unit)?,
+  modifier: Modifier = Modifier,
+  readOnly: Boolean = false,
+  theme: SyntaxTheme = SyntaxThemes.darcula(darkMode = false),
 ) {
-    val languageSyntax = remember(language) {
-        SyntaxLanguage.valueOf(language?.name?: SyntaxLanguage.DEFAULT.name)
-    }
+  val languageSyntax = remember(language) {
+    SyntaxLanguage.valueOf(language?.name ?: SyntaxLanguage.DEFAULT.name)
+  }
 
-    var highlights by remember {
-        mutableStateOf(
-            Highlights.Builder()
-                .code(initialCode)
-                .theme(theme)
-                .language(languageSyntax)
-                .build()
-        )
-    }
+  var highlights by remember {
+    mutableStateOf(
+      Highlights.Builder()
+        .code(initialCode)
+        .theme(theme)
+        .language(languageSyntax)
+        .build()
+    )
+  }
 
-    var openLanguageSelector by remember { mutableStateOf(false) }
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-            .background(
-                color = MaterialTheme.colorScheme.surface,
-                shape = RoundedCornerShape(16.dp)
-            )
-            .padding(vertical = 10.dp)
+  var openLanguageSelector by remember { mutableStateOf(false) }
+  Column(
+    modifier = modifier
+      .fillMaxSize()
+      .background(
+        color = MaterialTheme.colorScheme.surface,
+        shape = RoundedCornerShape(16.dp)
+      )
+      .padding(vertical = 10.dp)
+  ) {
+    Row(
+      verticalAlignment = Alignment.CenterVertically,
+      modifier = Modifier
+        .padding(horizontal = 16.dp)
+        .widthIn(min = 100.dp)
+        .clickable(indication = null, interactionSource = null) { openLanguageSelector = true }
     ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier
-                .padding(horizontal = 16.dp)
-                .widthIn(min = 100.dp)
-                .clickable(indication = null, interactionSource = null) { openLanguageSelector = true }
-        ) {
-            Text(text = language?.label?: "[select language]", fontSize = 12.tp)
-            onLanguageChange?.let {
-                VectorIcon(
-                    icon = Icons.Default.KeyboardArrowDown,
-                    modifier = Modifier
-                        .padding(start = 4.dp)
-                        .size(15.dp)
-                )
-                OptionSelector2(
-                    open = openLanguageSelector,
-                    close = { openLanguageSelector = false },
-                    options = Code.Language.entries.map(Code.Language::label),
-                    onOptionSelected = { index ->
-                        onLanguageChange(Code.Language.entries[index])
-                        openLanguageSelector = false
-                    },
-                )
-            }
-        }
-
-        CodeEditText(
-            highlights = highlights,
-            onValueChange = { codeValue ->
-                highlights = highlights.getBuilder().code(codeValue).build()
-                onCodeChange(codeValue)
-            },
-            readOnly = readOnly,
-            colors = TextFieldDefaults.colors(
-                focusedContainerColor = Color.Transparent,
-                unfocusedContainerColor = Color.Transparent,
-                focusedIndicatorColor = Color.Transparent,
-                unfocusedIndicatorColor = Color.Transparent,
-            ),
-            minLines = 10,
-            modifier = Modifier.fillMaxSize()
+      Text(text = language?.label ?: "[select language]", fontSize = 12.tp)
+      onLanguageChange?.let {
+        VectorIcon(
+          icon = Icons.Default.KeyboardArrowDown,
+          modifier = Modifier
+            .padding(start = 4.dp)
+            .size(15.dp)
         )
+        OptionSelector2(
+          open = openLanguageSelector,
+          close = { openLanguageSelector = false },
+          options = Code.Language.entries.map(Code.Language::label),
+          onOptionSelected = { index ->
+            onLanguageChange(Code.Language.entries[index])
+            openLanguageSelector = false
+          },
+        )
+      }
     }
+
+    CodeEditText(
+      highlights = highlights,
+      onValueChange = { codeValue ->
+        highlights = highlights.getBuilder().code(codeValue).build()
+        onCodeChange(codeValue)
+      },
+      readOnly = readOnly,
+      colors = TextFieldDefaults.colors(
+        focusedContainerColor = Color.Transparent,
+        unfocusedContainerColor = Color.Transparent,
+        focusedIndicatorColor = Color.Transparent,
+        unfocusedIndicatorColor = Color.Transparent,
+      ),
+      minLines = 10,
+      modifier = Modifier.fillMaxSize()
+    )
+  }
 }
 
 
 @Preview
 @Composable
 private fun CodeEditorPrev() {
-    AppTheme {
-        CodeEditor(
-            initialCode = """
+  AppTheme {
+    CodeEditor(
+      initialCode = """
                 int a = 1;
                 int b = 2;
                 int c = a + b;
             """.trimIndent(),
-            onCodeChange = {},
-            language = Code.Language.CPP,
-            onLanguageChange = {},
-            modifier = Modifier
-        )
-    }
+      onCodeChange = {},
+      language = Code.Language.CPP,
+      onLanguageChange = {},
+      modifier = Modifier
+    )
+  }
 }

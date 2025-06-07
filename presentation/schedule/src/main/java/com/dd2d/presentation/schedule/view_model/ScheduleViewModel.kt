@@ -22,29 +22,33 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class ScheduleViewModel @Inject constructor(
-    private val notificationRepository: NotificationRepository,
-): ViewModel(), UIStateManager {
-    override val uiState = MutableStateFlow<UIState>(UIState.Idle)
+  private val notificationRepository: NotificationRepository,
+) : ViewModel(), UIStateManager {
+  override val uiState = MutableStateFlow<UIState>(UIState.Idle)
 
-    val schedules = mutableStateMapOf<YearMonth, ScheduleOnYearMonth>()
+  val schedules = mutableStateMapOf<YearMonth, ScheduleOnYearMonth>()
 
-    private val yearMonth = MutableStateFlow(YearMonth.now())
-    fun updateYearMonth(value: YearMonth) = yearMonth.update { value }
+  private val yearMonth = MutableStateFlow(YearMonth.now())
+  fun updateYearMonth(value: YearMonth) = yearMonth.update { value }
 
-    var isRefreshing by mutableStateOf(false); private set
-    fun refresh() {
-        notificationRepository.getMyNotificationOnDate(yearMonth.value)
-            .onStateLoading { isRefreshing = true }
-            .onStateSuccess {
-                schedules[yearMonth.value] = ScheduleOnYearMonth(yearMonth.value, this)
-                isRefreshing = false
-            }
-            .launchIn(viewModelScope)
-    }
+  var isRefreshing by mutableStateOf(false); private set
+  fun refresh() {
+    notificationRepository.getMyNotificationOnDate(yearMonth.value)
+      .onStateLoading { isRefreshing = true }
+      .onStateSuccess {
+        schedules[yearMonth.value] = ScheduleOnYearMonth(yearMonth.value, this)
+        isRefreshing = false
+      }
+      .launchIn(viewModelScope)
+  }
 
-    init {
-        val manager = ScheduleCacheManager()
-        manager.scheduleCacheTaskFlow(yearMonth, schedules, notificationRepository::getMyNotificationOnDate).launchIn(viewModelScope)
-        manager.cachedScheduleManageTaskFlow(yearMonth, schedules).launchIn(viewModelScope)
-    }
+  init {
+    val manager = ScheduleCacheManager()
+    manager.scheduleCacheTaskFlow(
+      yearMonth,
+      schedules,
+      notificationRepository::getMyNotificationOnDate
+    ).launchIn(viewModelScope)
+    manager.cachedScheduleManageTaskFlow(yearMonth, schedules).launchIn(viewModelScope)
+  }
 }

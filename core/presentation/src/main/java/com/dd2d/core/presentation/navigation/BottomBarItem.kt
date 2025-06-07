@@ -62,25 +62,25 @@ import androidx.navigation.NavController
  * @property enabled 아이템의 활성화 여부. 기본적으로 `true`
  */
 interface BottomBarItem {
-	val route: ScreenRoute
+  val route: ScreenRoute
 
-	@get:StringRes
-	val labelRes: Int?
+  @get:StringRes
+  val labelRes: Int?
 
-	@get:StringRes
-	val selectedLabelRes: Int?
-		get() = labelRes
-	
-	@get:DrawableRes
-	val iconRes: Int?
+  @get:StringRes
+  val selectedLabelRes: Int?
+    get() = labelRes
 
-	@get:DrawableRes
-	val selectedIconRes: Int?
-		get() = iconRes
-	
-	val enabled: Boolean
-		get() = true
+  @get:DrawableRes
+  val iconRes: Int?
 
-	/** 아이템 클릭 시 이동하기 위해 호출되는 함수. */
-	fun navigate(navController: NavController)
+  @get:DrawableRes
+  val selectedIconRes: Int?
+    get() = iconRes
+
+  val enabled: Boolean
+    get() = true
+
+  /** 아이템 클릭 시 이동하기 위해 호출되는 함수. */
+  fun navigate(navController: NavController)
 }

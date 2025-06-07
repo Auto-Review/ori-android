@@ -23,48 +23,48 @@ import com.example.presentation.til.detail._navigation.toTILScreen
 
 @Composable
 internal fun AppNavHost(
-    startDestination: ScreenRoute,
-    modifier: Modifier = Modifier
+  startDestination: ScreenRoute,
+  modifier: Modifier = Modifier
 ) {
-    val navController = rememberNavController()
+  val navController = rememberNavController()
 
-    AuthExpireHandler(onConfirm = navController::toAuthScreen)
+  AuthExpireHandler(onConfirm = navController::toAuthScreen)
 
-    DefaultNavHost(
-        navController = navController,
-        startDestination = startDestination,
-        modifier = modifier
-    ) {
-        routeAuthScreen(onAuthSuccess = navController::toMainScreen)
+  DefaultNavHost(
+    navController = navController,
+    startDestination = startDestination,
+    modifier = modifier
+  ) {
+    routeAuthScreen(onAuthSuccess = navController::toMainScreen)
 
-        routeMainScreen(appNavController = navController)
+    routeMainScreen(appNavController = navController)
 
-        routeCodePostScreen(
-            onBack = navController::safePopBackStack,
-            onReviewCreateClick = { id ->
-                navController.toCodePostReviewCreateScreen(codePostId = id, reviewId = null)
-            },
-            onReviewUpdateClick = { codePostId, reviewId ->
-                navController.toCodePostReviewCreateScreen(codePostId = codePostId, reviewId = reviewId)
-            },
-            onCodePostUpdateClick = navController::toCodePostCreateScreen
-        )
-        routeCodePostCreateScreen(
-            onBack = navController::safePopBackStack,
-            moveToCodePost = navController::toCodePostScreen
-        )
-        routeCodePostReviewCreateScreen(onBack = navController::safePopBackStack)
+    routeCodePostScreen(
+      onBack = navController::safePopBackStack,
+      onReviewCreateClick = { id ->
+        navController.toCodePostReviewCreateScreen(codePostId = id, reviewId = null)
+      },
+      onReviewUpdateClick = { codePostId, reviewId ->
+        navController.toCodePostReviewCreateScreen(codePostId = codePostId, reviewId = reviewId)
+      },
+      onCodePostUpdateClick = navController::toCodePostCreateScreen
+    )
+    routeCodePostCreateScreen(
+      onBack = navController::safePopBackStack,
+      moveToCodePost = navController::toCodePostScreen
+    )
+    routeCodePostReviewCreateScreen(onBack = navController::safePopBackStack)
 
-        routeTILCreateScreen(
-            onBack = navController::safePopBackStack,
-            navigateToTILDetail = navController::toTILScreen
-        )
-        routeTILScreen(onBack = navController::safePopBackStack)
+    routeTILCreateScreen(
+      onBack = navController::safePopBackStack,
+      navigateToTILDetail = navController::toTILScreen
+    )
+    routeTILScreen(onBack = navController::safePopBackStack)
 
-        routeScrapScreen(
-            onClose = navController::safePopBackStack,
-            navigateToCodePostDetail = navController::toCodePostScreen,
-            navigateToTILDetail = navController::toTILScreen,
-        )
-    }
+    routeScrapScreen(
+      onClose = navController::safePopBackStack,
+      navigateToCodePostDetail = navController::toCodePostScreen,
+      navigateToTILDetail = navController::toTILScreen,
+    )
+  }
 }

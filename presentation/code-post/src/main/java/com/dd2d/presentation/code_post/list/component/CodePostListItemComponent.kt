@@ -20,48 +20,48 @@ import com.dd2d.domain.code_post.model.post.CodePostListItem
 
 @Composable
 internal fun CodePostListItemComponent(
-    codePost: CodePostListItem,
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier
+  codePost: CodePostListItem,
+  onClick: () -> Unit,
+  modifier: Modifier = Modifier
 ) {
-    Column(
-        modifier = modifier
-            .fillMaxWidth()
-            .delayedClickable(onClick = onClick)
-            .padding(horizontal = 24.dp, vertical = 16.dp)
-    ) {
-        Main500Text(
-            text = codePost.title,
-            color = MaterialTheme.colorScheme.onSurface,
-            fontSize = 12.sp,
-            lineHeight = 16.sp,
-            modifier = Modifier.fillMaxWidth()
-        )
-        Main500Text(
-            text = "${codePost.author.nickname}  ${codePost.createdAt} RE : ${codePost.commentCount}",
-            color = MaterialTheme.colorScheme.surfaceBright,
-            fontSize = 10.sp,
-            lineHeight = 16.sp,
-            modifier = Modifier.fillMaxWidth()
-        )
-    }
+  Column(
+    modifier = modifier
+      .fillMaxWidth()
+      .delayedClickable(onClick = onClick)
+      .padding(horizontal = 24.dp, vertical = 16.dp)
+  ) {
+    Main500Text(
+      text = codePost.title,
+      color = MaterialTheme.colorScheme.onSurface,
+      fontSize = 12.sp,
+      lineHeight = 16.sp,
+      modifier = Modifier.fillMaxWidth()
+    )
+    Main500Text(
+      text = "${codePost.author.nickname}  ${codePost.createdAt} RE : ${codePost.commentCount}",
+      color = MaterialTheme.colorScheme.surfaceBright,
+      fontSize = 10.sp,
+      lineHeight = 16.sp,
+      modifier = Modifier.fillMaxWidth()
+    )
+  }
 }
 
 @Preview(showBackground = true)
 @Preview(locale = "ko", uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun CodePostListItemComponentPrev() {
-    AppTheme {
-        Column(
-            verticalArrangement = Arrangement.Top,
-            horizontalAlignment = Alignment.Start,
-            modifier = Modifier
-                .fillMaxSize()
-        ) {
-            CodePostListItemComponent(
-                codePost = CodePostListItem.dummy(),
-                onClick = {},
-            )
-        }
+  AppTheme {
+    Column(
+      verticalArrangement = Arrangement.Top,
+      horizontalAlignment = Alignment.Start,
+      modifier = Modifier
+        .fillMaxSize()
+    ) {
+      CodePostListItemComponent(
+        codePost = CodePostListItem.dummy(),
+        onClick = {},
+      )
     }
+  }
 }

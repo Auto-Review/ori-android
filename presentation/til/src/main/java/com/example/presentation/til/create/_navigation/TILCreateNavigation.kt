@@ -13,21 +13,21 @@ import kotlinx.serialization.Serializable
 data object TILCreateScreenRoute : ScreenRoute
 
 fun NavGraphBuilder.routeTILCreateScreen(
-    onBack: () -> Unit,
-    navigateToTILDetail: (id: Int) -> Unit,
-    modifier: Modifier = Modifier,
+  onBack: () -> Unit,
+  navigateToTILDetail: (id: Int) -> Unit,
+  modifier: Modifier = Modifier,
 ) {
-    horizontalScreen<TILCreateScreenRoute> {
-        TILCreateScreen(
-            onBack = onBack,
-            navigateToTILDetail = navigateToTILDetail,
-            modifier = modifier,
-        )
-    }
+  horizontalScreen<TILCreateScreenRoute> {
+    TILCreateScreen(
+      onBack = onBack,
+      navigateToTILDetail = navigateToTILDetail,
+      modifier = modifier,
+    )
+  }
 }
 
 fun NavController.toTILCreateScreen() {
-    navigate(TILCreateScreenRoute) {
-        launchSingleTop = true
-    }
+  navigate(TILCreateScreenRoute) {
+    launchSingleTop = true
+  }
 }

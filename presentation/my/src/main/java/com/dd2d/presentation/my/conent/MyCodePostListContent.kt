@@ -24,32 +24,34 @@ import com.dd2d.presentation.my.component.CodePostListItemComponent
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun MyCodePostListContent(
-    listController: LazyListController<CodePostListOptions, CodePostListItem>,
-    onItemClick: (id: Int) -> Unit,
-    modifier: Modifier = Modifier
+  listController: LazyListController<CodePostListOptions, CodePostListItem>,
+  onItemClick: (id: Int) -> Unit,
+  modifier: Modifier = Modifier
 ) {
-    Surface(
-        color = MaterialTheme.colorScheme.background,
-        modifier = modifier
+  Surface(
+    color = MaterialTheme.colorScheme.background,
+    modifier = modifier
+  ) {
+    com.dd2d.core.presentation.list.v2.RefreshLazyColumn(
+      controller = listController,
+      contentPadding = PaddingValues(vertical = 16.dp),
+      modifier = Modifier.fillMaxSize()
     ) {
-        com.dd2d.core.presentation.list.v2.RefreshLazyColumn(
-            controller = listController,
-            contentPadding = PaddingValues(vertical = 16.dp),
-            modifier = Modifier.fillMaxSize()
-        ) {
-            items(
-                items = listController.list,
-                key = CodePostListItem::id
-            ) { item ->
-                CodePostListItemComponent(
-                    item = item,
-                    onClick = { onItemClick(item.id) },
-                    modifier = Modifier.fillMaxWidth().animateItem()
-                )
-                HorizontalDivider()
-            }
-        }
+      items(
+        items = listController.list,
+        key = CodePostListItem::id
+      ) { item ->
+        CodePostListItemComponent(
+          item = item,
+          onClick = { onItemClick(item.id) },
+          modifier = Modifier
+            .fillMaxWidth()
+            .animateItem()
+        )
+        HorizontalDivider()
+      }
     }
+  }
 }
 
 
@@ -57,27 +59,27 @@ internal fun MyCodePostListContent(
 @Preview(locale = "ko")
 @Composable
 private fun MyCodeListContentPrev() {
-    val list = remember {
-        Pagination(
-            list = List(30) {
-                CodePostListItem.dummy(it)
-            },
-            currentPage = 1,
-            totalPage = 1,
-            totalItemCount = 30,
-        )
-    }
-    AppTheme {
-        MyCodePostListContent(
-            listController = LazyListController(
-                option = CodePostListOptions(),
-                scope = rememberCoroutineScope(),
-                getList = {
-                    Result.success(list)
-                }
-            ),
-            onItemClick = {},
-            modifier = Modifier
-        )
-    }
+  val list = remember {
+    Pagination(
+      list = List(30) {
+        CodePostListItem.dummy(it)
+      },
+      currentPage = 1,
+      totalPage = 1,
+      totalItemCount = 30,
+    )
+  }
+  AppTheme {
+    MyCodePostListContent(
+      listController = LazyListController(
+        option = CodePostListOptions(),
+        scope = rememberCoroutineScope(),
+        getList = {
+          Result.success(list)
+        }
+      ),
+      onItemClick = {},
+      modifier = Modifier
+    )
+  }
 }

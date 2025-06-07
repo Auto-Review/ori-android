@@ -20,31 +20,31 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AppViewModel @Inject constructor(
-    private val authRepository: AuthRepository,
-): ViewModel() {
-    var startDestination by mutableStateOf<ScreenRoute?>(null)
-    
-    private fun initAuthStateObserver() {
-        authRepository.getAuthState()
-            .onEach { state ->
-                startDestination = when(state) {
-                    AuthState.SignOut -> AuthScreenRoute
-                    AuthState.SignIn -> MainScreenRoute(selectedTabIndex = 2)
-                }
-            }
-            .launchIn(viewModelScope)
-    }
-    
-    private fun checkFCMToken() {
-        if(BuildConfig.DEBUG) {
-            viewModelScope.launch {
-                FCMModule.getFCMToken()
-            }
-        }
-    }
+  private val authRepository: AuthRepository,
+) : ViewModel() {
+  var startDestination by mutableStateOf<ScreenRoute?>(null)
 
-    init {
-        initAuthStateObserver()
-        checkFCMToken()
+  private fun initAuthStateObserver() {
+    authRepository.getAuthState()
+      .onEach { state ->
+        startDestination = when (state) {
+          AuthState.SignOut -> AuthScreenRoute
+          AuthState.SignIn -> MainScreenRoute(selectedTabIndex = 2)
+        }
+      }
+      .launchIn(viewModelScope)
+  }
+
+  private fun checkFCMToken() {
+    if (BuildConfig.DEBUG) {
+      viewModelScope.launch {
+        FCMModule.getFCMToken()
+      }
     }
+  }
+
+  init {
+    initAuthStateObserver()
+    checkFCMToken()
+  }
 }

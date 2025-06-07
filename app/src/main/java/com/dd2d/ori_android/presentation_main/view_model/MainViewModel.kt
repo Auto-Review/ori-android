@@ -10,7 +10,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    savedStateHandle: SavedStateHandle
+  savedStateHandle: SavedStateHandle
 ) : ViewModel() {
-    val route = savedStateHandle.toRoute<MainScreenRoute>()
+  val route = savedStateHandle.toRoute<MainScreenRoute>()
 }

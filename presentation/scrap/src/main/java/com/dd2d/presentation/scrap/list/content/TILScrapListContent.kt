@@ -16,27 +16,29 @@ import com.dd2d.domain.til.model.TILScrapListOption
 @ExperimentalMaterial3Api
 @Composable
 internal fun TILScrapListContent(
-    listController: LazyListController<TILScrapListOption, TILListItem>,
-    onDetailClick: (tilId: Int) -> Unit,
-    modifier: Modifier = Modifier
+  listController: LazyListController<TILScrapListOption, TILListItem>,
+  onDetailClick: (tilId: Int) -> Unit,
+  modifier: Modifier = Modifier
 ) {
-    RefreshLazyColumn(
-        controller = listController,
-        modifier = modifier.fillMaxSize()
-    ) {
-        items(
-            items = listController.list,
-            key = TILListItem::id
-        ) { item ->
-            PostListItemComponent(
-                title = item.title,
-                authorName = item.author.nickname,
-                createdAt = item.createdAt,
-                commentCount = null,
-                onClick = { onDetailClick(item.id) },
-                modifier = Modifier.animateItem().fillMaxWidth(),
-            )
-            HorizontalDivider()
-        }
+  RefreshLazyColumn(
+    controller = listController,
+    modifier = modifier.fillMaxSize()
+  ) {
+    items(
+      items = listController.list,
+      key = TILListItem::id
+    ) { item ->
+      PostListItemComponent(
+        title = item.title,
+        authorName = item.author.nickname,
+        createdAt = item.createdAt,
+        commentCount = null,
+        onClick = { onDetailClick(item.id) },
+        modifier = Modifier
+          .animateItem()
+          .fillMaxWidth(),
+      )
+      HorizontalDivider()
     }
+  }
 }

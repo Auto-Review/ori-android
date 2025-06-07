@@ -19,32 +19,32 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-    private val appViewModel by viewModels<AppViewModel>()
+  private val appViewModel by viewModels<AppViewModel>()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        enableEdgeToEdge()
+  override fun onCreate(savedInstanceState: Bundle?) {
+    enableEdgeToEdge()
 
-        super.onCreate(savedInstanceState)
+    super.onCreate(savedInstanceState)
 
-        setContent {
-            AppTheme {
-                CompositionLocalProvider(
-                    LocalDensity provides Density(LocalDensity.current.density, 1F),
-                    LocalHansType provides hansType
-                ) {
-                    Surface(
-                        color = MaterialTheme.colorScheme.surface,
-                        modifier = Modifier.fillMaxSize()
-                    ) {
-                        appViewModel.startDestination?.let { destination ->
-                            AppNavHost(
-                                startDestination = destination,
-                                modifier = Modifier.fillMaxSize()
-                            )
-                        }
-                    }
-                }
+    setContent {
+      AppTheme {
+        CompositionLocalProvider(
+          LocalDensity provides Density(LocalDensity.current.density, 1F),
+          LocalHansType provides hansType
+        ) {
+          Surface(
+            color = MaterialTheme.colorScheme.surface,
+            modifier = Modifier.fillMaxSize()
+          ) {
+            appViewModel.startDestination?.let { destination ->
+              AppNavHost(
+                startDestination = destination,
+                modifier = Modifier.fillMaxSize()
+              )
             }
+          }
         }
+      }
     }
+  }
 }

@@ -15,39 +15,39 @@ import com.dd2d.core.presentation.theme.LocalHansType
 
 @Composable
 fun MainTab(
-    tabs: List<String>,
-    selectedTabIndex: Int,
-    onTabClick: (Int) -> Unit,
-    modifier: Modifier = Modifier,
-    containerColor: Color = MaterialTheme.colorScheme.background,
-    contentColor: Color = MaterialTheme.colorScheme.onBackground
+  tabs: List<String>,
+  selectedTabIndex: Int,
+  onTabClick: (Int) -> Unit,
+  modifier: Modifier = Modifier,
+  containerColor: Color = MaterialTheme.colorScheme.background,
+  contentColor: Color = MaterialTheme.colorScheme.onBackground
 ) {
-    TabRow(
-        selectedTabIndex = selectedTabIndex,
-        modifier = modifier,
-        indicator = { tabPositions ->
-            if(selectedTabIndex < tabPositions.size) {
-                TabRowDefaults.SecondaryIndicator(
-                    color = contentColor,
-                    height = 3.dp,
-                    modifier = Modifier.tabIndicatorOffset(tabPositions[selectedTabIndex])
-                )
-            }
-        },
-        containerColor = containerColor,
-        contentColor = contentColor,
-    ) {
-        tabs.forEachIndexed { index, tab ->
-            Tab(
-                selected = index == selectedTabIndex,
-                onClick = { onTabClick(index) },
-            ) {
-                Text(
-                    text = tab,
-                    style = LocalHansType.current.tabTitle,
-                    modifier = Modifier.padding(vertical = 16.dp)
-                )
-            }
-        }
+  TabRow(
+    selectedTabIndex = selectedTabIndex,
+    modifier = modifier,
+    indicator = { tabPositions ->
+      if (selectedTabIndex < tabPositions.size) {
+        TabRowDefaults.SecondaryIndicator(
+          color = contentColor,
+          height = 3.dp,
+          modifier = Modifier.tabIndicatorOffset(tabPositions[selectedTabIndex])
+        )
+      }
+    },
+    containerColor = containerColor,
+    contentColor = contentColor,
+  ) {
+    tabs.forEachIndexed { index, tab ->
+      Tab(
+        selected = index == selectedTabIndex,
+        onClick = { onTabClick(index) },
+      ) {
+        Text(
+          text = tab,
+          style = LocalHansType.current.tabTitle,
+          modifier = Modifier.padding(vertical = 16.dp)
+        )
+      }
     }
+  }
 }

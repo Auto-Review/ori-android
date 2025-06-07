@@ -5,15 +5,15 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class CodePostListItemResponseDto(
-    val id: Int,
-    val writerId: Int,
-    val writerEmail: String,
-    val writerNickName: String,
-    val title: String,
-    val level: Int,
-    val commentCount: Int,
-    val reviewCount: Int,
-    val description: String,
-    val createdDate: UTCString,
-    val public: Boolean,
+  val id: Int,
+  val writerId: Int,
+  val writerEmail: String,
+  val writerNickName: String,
+  val title: String,
+  val level: Int,
+  val commentCount: Int,
+  val reviewCount: Int,
+  val description: String,
+  val createdDate: UTCString,
+  val public: Boolean,
 )

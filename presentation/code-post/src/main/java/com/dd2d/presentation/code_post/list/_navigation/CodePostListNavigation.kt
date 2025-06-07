@@ -12,29 +12,29 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data object CodePostListScreenRoute : ScreenRoute, BottomBarItem {
-    override val route: ScreenRoute = this
-    override val labelRes: Int = com.dd2d.core.presentation.R.string.tab_code
-    override val iconRes: Int = com.dd2d.core.presentation.R.drawable.tab_code
+  override val route: ScreenRoute = this
+  override val labelRes: Int = com.dd2d.core.presentation.R.string.tab_code
+  override val iconRes: Int = com.dd2d.core.presentation.R.drawable.tab_code
 
-    override fun navigate(navController: NavController) {
-        navController.toCodePostListScreen()
-    }
+  override fun navigate(navController: NavController) {
+    navController.toCodePostListScreen()
+  }
 }
 
 fun NavGraphBuilder.routeCodePostListScreen(
-    onDetailClick: (id: Int) -> Unit,
-    modifier: Modifier = Modifier,
+  onDetailClick: (id: Int) -> Unit,
+  modifier: Modifier = Modifier,
 ) {
-    fadeScreen<CodePostListScreenRoute> {
-        CodePostListScreen(
-            onCodePostClick = onDetailClick,
-            modifier = modifier,
-        )
-    }
+  fadeScreen<CodePostListScreenRoute> {
+    CodePostListScreen(
+      onCodePostClick = onDetailClick,
+      modifier = modifier,
+    )
+  }
 }
 
 fun NavController.toCodePostListScreen() {
-    navigate(CodePostListScreenRoute) {
-        launchSingleTop = true
-    }
+  navigate(CodePostListScreenRoute) {
+    launchSingleTop = true
+  }
 }

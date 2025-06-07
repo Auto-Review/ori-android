@@ -5,9 +5,9 @@ import com.dd2d.core.fcm.FCMModule
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
-class App: Application() {
-    override fun onCreate() {
-        super.onCreate()
-        FCMModule.init(this@App)
-    }
+class App : Application() {
+  override fun onCreate() {
+    super.onCreate()
+    FCMModule.init(this@App)
+  }
 }

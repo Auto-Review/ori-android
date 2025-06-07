@@ -19,45 +19,46 @@ import com.example.presentation.til.detail.view_model.TILViewModel
 
 @Composable
 fun TILScreen(
-    onBack: () ->Unit,
-    modifier: Modifier = Modifier
+  onBack: () -> Unit,
+  modifier: Modifier = Modifier
 ) {
-    val viewModel = hiltViewModel<TILViewModel>()
-    val userState by viewModel.userState.collectAsStateWithLifecycle()
-    val tilState by viewModel.tilState.collectAsStateWithLifecycle()
-    val isAuthor by viewModel.isAuthor.collectAsStateWithLifecycle()
+  val viewModel = hiltViewModel<TILViewModel>()
+  val userState by viewModel.userState.collectAsStateWithLifecycle()
+  val tilState by viewModel.tilState.collectAsStateWithLifecycle()
+  val isAuthor by viewModel.isAuthor.collectAsStateWithLifecycle()
 
-    Scaffold(
-        topBar = {
-            PostTapBar(
-                title = (tilState as? Stateful.Success<TIL>)?.data?.title ?: "",
-                onBack = onBack,
-                isScrapped = viewModel.isScrapped,
-                toggleScrap = viewModel::scrap,
-                isAuthor = isAuthor,
-                onUpdateClick = {},
-                onDeleteClick = {},
-            )
-        },
-        modifier = modifier
-    ) { inner ->
-        when(tilState) {
-            is Stateful.Loading -> LoadingDialog()
-            is Stateful.Error -> {
-                ErrorDialog(
-                    throwable = (tilState as Stateful.Error).cause,
-                    onConfirm = onBack
-                )
-            }
-            is Stateful.Success -> {
-                TILScreenContent(
-                    til = (tilState as Stateful.Success).data,
-                    modifier = Modifier
-                        .consumeWindowInsets(inner)
-                        .fillMaxSize()
-                        .padding(inner)
-                )
-            }
-        }
+  Scaffold(
+    topBar = {
+      PostTapBar(
+        title = (tilState as? Stateful.Success<TIL>)?.data?.title ?: "",
+        onBack = onBack,
+        isScrapped = viewModel.isScrapped,
+        toggleScrap = viewModel::scrap,
+        isAuthor = isAuthor,
+        onUpdateClick = {},
+        onDeleteClick = {},
+      )
+    },
+    modifier = modifier
+  ) { inner ->
+    when (tilState) {
+      is Stateful.Loading -> LoadingDialog()
+      is Stateful.Error -> {
+        ErrorDialog(
+          throwable = (tilState as Stateful.Error).cause,
+          onConfirm = onBack
+        )
+      }
+
+      is Stateful.Success -> {
+        TILScreenContent(
+          til = (tilState as Stateful.Success).data,
+          modifier = Modifier
+            .consumeWindowInsets(inner)
+            .fillMaxSize()
+            .padding(inner)
+        )
+      }
     }
+  }
 }

@@ -17,42 +17,41 @@ import com.dd2d.presentation.my.view_model.MyPageViewModel
 
 @Composable
 fun MyPageScreen(
-    navigationEvent: (MyPageNavigateEvent) -> Unit,
-    modifier: Modifier = Modifier
+  navigationEvent: (MyPageNavigateEvent) -> Unit,
+  modifier: Modifier = Modifier
 ) {
-    val viewModel = hiltViewModel<MyPageViewModel>()
+  val viewModel = hiltViewModel<MyPageViewModel>()
 
-    Scaffold(
-        containerColor = MaterialTheme.colorScheme.background,
-        modifier = modifier
-    ){ inner ->
-        if(viewModel.me == null) {
-            LoadingDialog()
-        }
-        else {
-            MyPageScreenContent(
-                user = viewModel.me!!,
-                userUpdateState = viewModel.userUpdateState,
-                onUserUpdate = viewModel::updateUser,
-                codePostListContent = {
-                    MyCodePostListContent(
-                        listController = viewModel.codePostListController,
-                        onItemClick = { id -> navigationEvent(MyPageNavigateEvent.CodePost(id)) },
-                        modifier = Modifier.fillMaxSize(),
-                    )
-                },
-                tilListContent = {
-                    MyTILListContent(
-                        listController = viewModel.tilListController,
-                        onItemClick = { id -> navigationEvent(MyPageNavigateEvent.TIL(id)) },
-                        modifier = Modifier.fillMaxSize(),
-                    )
-                },
-                modifier = Modifier
-                    .consumeWindowInsets(inner)
-                    .fillMaxSize()
-                    .padding(inner)
-            )
-        }
+  Scaffold(
+    containerColor = MaterialTheme.colorScheme.background,
+    modifier = modifier
+  ) { inner ->
+    if (viewModel.me == null) {
+      LoadingDialog()
+    } else {
+      MyPageScreenContent(
+        user = viewModel.me!!,
+        userUpdateState = viewModel.userUpdateState,
+        onUserUpdate = viewModel::updateUser,
+        codePostListContent = {
+          MyCodePostListContent(
+            listController = viewModel.codePostListController,
+            onItemClick = { id -> navigationEvent(MyPageNavigateEvent.CodePost(id)) },
+            modifier = Modifier.fillMaxSize(),
+          )
+        },
+        tilListContent = {
+          MyTILListContent(
+            listController = viewModel.tilListController,
+            onItemClick = { id -> navigationEvent(MyPageNavigateEvent.TIL(id)) },
+            modifier = Modifier.fillMaxSize(),
+          )
+        },
+        modifier = Modifier
+          .consumeWindowInsets(inner)
+          .fillMaxSize()
+          .padding(inner)
+      )
     }
+  }
 }

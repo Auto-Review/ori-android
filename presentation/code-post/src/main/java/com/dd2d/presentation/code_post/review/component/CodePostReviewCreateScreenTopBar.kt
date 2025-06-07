@@ -21,49 +21,50 @@ import com.dd2d.presentation.code_post.review.view_model.CodePostReviewCreateVie
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun CodePostReviewCreateScreenTopBar(
-    viewModel: CodePostReviewCreateViewModel,
-    uiState: UIState,
-    onBack: () -> Unit,
-    modifier: Modifier = Modifier,
-    title: String = "Review"
+  viewModel: CodePostReviewCreateViewModel,
+  uiState: UIState,
+  onBack: () -> Unit,
+  modifier: Modifier = Modifier,
+  title: String = "Review"
 ) {
-    val keyboard = LocalSoftwareKeyboardController.current
-    val createMode = viewModel.route.reviewId == null
+  val keyboard = LocalSoftwareKeyboardController.current
+  val createMode = viewModel.route.reviewId == null
 
-    fun backEvent() {
-        keyboard?.hide()
-        onBack()
-    }
+  fun backEvent() {
+    keyboard?.hide()
+    onBack()
+  }
 
-    BackHandler(enabled = uiState !is UIState.Loading, onBack = ::backEvent)
+  BackHandler(enabled = uiState !is UIState.Loading, onBack = ::backEvent)
 
-    CenterTitleTopBar(
-        title = title,
-        onBack = ::backEvent,
-        actions = {
-            AnimatedVisibility(
-                visible = viewModel.inputState.canSubmit,
-                modifier = Modifier.padding(end = 12.dp)
-            ) {
-                if(uiState is UIState.Loading) { LoadingIndicator(width = 2.dp, modifier = Modifier.size(12.dp)) }
-                else {
-                    Main700Text(
-                        text = if(createMode) "완료" else "수정",
-                        color = MaterialTheme.colorScheme.onSurface,
-                        fontSize = 12.sp,
-                        lineHeight = 24.sp,
-                        modifier = Modifier
-                            .delayedClickable(
-                                onClick = {
-                                    keyboard?.hide()
-                                    if (createMode) viewModel.create() else viewModel.update()
-                                }
-                            )
-                            .padding(5.dp)
-                    )
+  CenterTitleTopBar(
+    title = title,
+    onBack = ::backEvent,
+    actions = {
+      AnimatedVisibility(
+        visible = viewModel.inputState.canSubmit,
+        modifier = Modifier.padding(end = 12.dp)
+      ) {
+        if (uiState is UIState.Loading) {
+          LoadingIndicator(width = 2.dp, modifier = Modifier.size(12.dp))
+        } else {
+          Main700Text(
+            text = if (createMode) "완료" else "수정",
+            color = MaterialTheme.colorScheme.onSurface,
+            fontSize = 12.sp,
+            lineHeight = 24.sp,
+            modifier = Modifier
+              .delayedClickable(
+                onClick = {
+                  keyboard?.hide()
+                  if (createMode) viewModel.create() else viewModel.update()
                 }
-            }
-        },
-        modifier = modifier
-    )
+              )
+              .padding(5.dp)
+          )
+        }
+      }
+    },
+    modifier = modifier
+  )
 }

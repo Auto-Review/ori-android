@@ -22,32 +22,38 @@ import com.dd2d.presentation.code_post.review.view_model.CodePostReviewCreateVie
 
 @Composable
 fun CodePostReviewCreateScreen(
-    onBack: () -> Unit,
-    modifier: Modifier = Modifier
+  onBack: () -> Unit,
+  modifier: Modifier = Modifier
 ) {
-    val viewModel = hiltViewModel<CodePostReviewCreateViewModel>()
-    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+  val viewModel = hiltViewModel<CodePostReviewCreateViewModel>()
+  val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    var exception by remember { mutableStateOf<ManagedException?>(null) }
+  var exception by remember { mutableStateOf<ManagedException?>(null) }
 
-    LaunchedEffect(key1 = uiState) {
-        exception = (uiState as? UIState.Error)?.exception
-    }
+  LaunchedEffect(key1 = uiState) {
+    exception = (uiState as? UIState.Error)?.exception
+  }
 
-    Scaffold(
-        topBar = { CodePostReviewCreateScreenTopBar(viewModel = viewModel, uiState = uiState, onBack = onBack) },
-        modifier = modifier
-    ) { inner ->
-        CodePostReviewCreateScreenContent(
-            inputState = viewModel.inputState,
-            modifier = Modifier
-                .consumeWindowInsets(inner)
-                .fillMaxSize()
-                .padding(inner)
-        )
-    }
+  Scaffold(
+    topBar = {
+      CodePostReviewCreateScreenTopBar(
+        viewModel = viewModel,
+        uiState = uiState,
+        onBack = onBack
+      )
+    },
+    modifier = modifier
+  ) { inner ->
+    CodePostReviewCreateScreenContent(
+      inputState = viewModel.inputState,
+      modifier = Modifier
+        .consumeWindowInsets(inner)
+        .fillMaxSize()
+        .padding(inner)
+    )
+  }
 
-    exception?.let { e ->
-        ErrorDialog(exception = e, onConfirm = viewModel::stateToIdle)
-    }
+  exception?.let { e ->
+    ErrorDialog(exception = e, onConfirm = viewModel::stateToIdle)
+  }
 }

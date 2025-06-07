@@ -10,16 +10,16 @@ import javax.inject.Inject
 import javax.inject.Named
 
 class AuthApi @Inject constructor(
-    @Named("server_client") private val client: HttpClient
+  @Named("server_client") private val client: HttpClient
 ) {
-    suspend fun auth(body: AuthRequestDto): AuthResponseDto = client
-        .post("/v1/api/auth/token") {
-            setBody(body)
-        }
-        .headerHandling { headers ->
-            AuthResponseDto(
-                accessToken = headers["accesstoken"],
-                refreshToken = headers["refreshtoken"]
-            )
-        }
+  suspend fun auth(body: AuthRequestDto): AuthResponseDto = client
+    .post("/v1/api/auth/token") {
+      setBody(body)
+    }
+    .headerHandling { headers ->
+      AuthResponseDto(
+        accessToken = headers["accesstoken"],
+        refreshToken = headers["refreshtoken"]
+      )
+    }
 }

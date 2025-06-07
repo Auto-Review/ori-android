@@ -36,105 +36,105 @@ import kotlinx.coroutines.launch
 
 @Composable
 internal fun CommentInputFieldComponent(
-    nickname: String?,
-    content: String,
-    onContentChange: (String) -> Unit,
-    canCommit: Boolean,
-    onCommit: () -> Unit,
-    isCommiting: Boolean,
-    modifier: Modifier = Modifier
+  nickname: String?,
+  content: String,
+  onContentChange: (String) -> Unit,
+  canCommit: Boolean,
+  onCommit: () -> Unit,
+  isCommiting: Boolean,
+  modifier: Modifier = Modifier
 ) {
-    Column(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(top = 10.dp)
-            .border(
-                width = 1.dp,
-                color = MaterialTheme.colorScheme.outlineVariant,
-                shape = MaterialTheme.shapes.small
-            )
-            .padding(12.dp)
-    ) {
-        nickname?.let {
-            Main600Text(
-                text = nickname,
-                color = MaterialTheme.colorScheme.onSurface,
-                fontSize = 12.sp,
-                lineHeight = 16.8.sp,
-            )
-        }
-        BasicTextField(
-            value = content,
-            onValueChange = onContentChange,
-            cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
-            textStyle = TextStyle(
-                color = MaterialTheme.colorScheme.onSurface,
-                fontSize = 12.sp,
-                lineHeight = 16.8.sp,
-                fontWeight = FontWeight.W400,
-            ),
-            maxLines = 5,
-            decorationBox = { innerTextField ->
-                if(content.isBlank()) {
-                    Main400Text(
-                        text = "악플, 잘못된 정보는 경고없이 삭제될 수 있습니다.",
-                        color = MaterialTheme.colorScheme.surfaceBright,
-                        fontSize = 12.sp,
-                        lineHeight = 16.8.sp,
-                    )
-                }
-                innerTextField()
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 8.dp)
-        )
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.End,
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Main700Text(
-                text = "COMMIT",
-                color = MaterialTheme.colorScheme.onSurface,
-                fontSize = 12.sp,
-                lineHeight = 24.sp,
-                modifier = Modifier
-                    .graphicsLayer {
-                        alpha = if (canCommit) 1f else 0.5f
-                    }
-                    .clickable(enabled = canCommit && !isCommiting, onClick = onCommit)
-                    .padding(horizontal = 4.dp)
-            )
-            AnimatedVisibility(visible = isCommiting) {
-                LoadingIndicator(width = 2.dp, modifier = Modifier.size(12.dp))
-            }
-        }
+  Column(
+    modifier = modifier
+      .fillMaxWidth()
+      .padding(top = 10.dp)
+      .border(
+        width = 1.dp,
+        color = MaterialTheme.colorScheme.outlineVariant,
+        shape = MaterialTheme.shapes.small
+      )
+      .padding(12.dp)
+  ) {
+    nickname?.let {
+      Main600Text(
+        text = nickname,
+        color = MaterialTheme.colorScheme.onSurface,
+        fontSize = 12.sp,
+        lineHeight = 16.8.sp,
+      )
     }
+    BasicTextField(
+      value = content,
+      onValueChange = onContentChange,
+      cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
+      textStyle = TextStyle(
+        color = MaterialTheme.colorScheme.onSurface,
+        fontSize = 12.sp,
+        lineHeight = 16.8.sp,
+        fontWeight = FontWeight.W400,
+      ),
+      maxLines = 5,
+      decorationBox = { innerTextField ->
+        if (content.isBlank()) {
+          Main400Text(
+            text = "악플, 잘못된 정보는 경고없이 삭제될 수 있습니다.",
+            color = MaterialTheme.colorScheme.surfaceBright,
+            fontSize = 12.sp,
+            lineHeight = 16.8.sp,
+          )
+        }
+        innerTextField()
+      },
+      modifier = Modifier
+        .fillMaxWidth()
+        .padding(vertical = 8.dp)
+    )
+    Row(
+      verticalAlignment = Alignment.CenterVertically,
+      horizontalArrangement = Arrangement.End,
+      modifier = Modifier.fillMaxWidth()
+    ) {
+      Main700Text(
+        text = "COMMIT",
+        color = MaterialTheme.colorScheme.onSurface,
+        fontSize = 12.sp,
+        lineHeight = 24.sp,
+        modifier = Modifier
+          .graphicsLayer {
+            alpha = if (canCommit) 1f else 0.5f
+          }
+          .clickable(enabled = canCommit && !isCommiting, onClick = onCommit)
+          .padding(horizontal = 4.dp)
+      )
+      AnimatedVisibility(visible = isCommiting) {
+        LoadingIndicator(width = 2.dp, modifier = Modifier.size(12.dp))
+      }
+    }
+  }
 }
 
 @Preview
 @Composable
 private fun CommentInputFieldComponentPrev() {
-    var isCommiting by remember { mutableStateOf(false) }
+  var isCommiting by remember { mutableStateOf(false) }
 
-    val scope = rememberCoroutineScope()
+  val scope = rememberCoroutineScope()
 
-    AppTheme {
-        CommentInputFieldComponent(
-            nickname = "nickname",
-            content = "content",
-            onContentChange = {},
-            canCommit = true,
-            onCommit = {
-                scope.launch {
-                    isCommiting = true
-                    delay(1000)
-                    isCommiting = false
-                }
-            },
-            isCommiting = isCommiting,
-            modifier = Modifier
-        )
-    }
+  AppTheme {
+    CommentInputFieldComponent(
+      nickname = "nickname",
+      content = "content",
+      onContentChange = {},
+      canCommit = true,
+      onCommit = {
+        scope.launch {
+          isCommiting = true
+          delay(1000)
+          isCommiting = false
+        }
+      },
+      isCommiting = isCommiting,
+      modifier = Modifier
+    )
+  }
 }

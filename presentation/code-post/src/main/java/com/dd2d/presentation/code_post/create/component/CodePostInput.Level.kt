@@ -20,41 +20,42 @@ import com.dd2d.presentation.code_post.R
 
 @Composable
 internal fun CodePostLevelInput(
-    level: Int,
-    onLevelChange: (value: Int) -> Unit,
-    maxLevel: Int,
-    modifier: Modifier = Modifier
+  level: Int,
+  onLevelChange: (value: Int) -> Unit,
+  maxLevel: Int,
+  modifier: Modifier = Modifier
 ) {
-    val starSize = 33.dp
-    InputItem(label = "난이도", modifier = modifier) {
-        Row(
-            horizontalArrangement = Arrangement.spacedBy(6.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier
-        ) {
-            repeat(maxLevel) { index ->
-                PainterImage(
-                    res = if(level >= index + 1) R.drawable.star_fill else R.drawable.star,
-                    modifier = Modifier.size(starSize)
-                        .clickable(indication = null, interactionSource = null) {
-                            onLevelChange(index + 1)
-                        }
-                )
+  val starSize = 33.dp
+  InputItem(label = "난이도", modifier = modifier) {
+    Row(
+      horizontalArrangement = Arrangement.spacedBy(6.dp),
+      verticalAlignment = Alignment.CenterVertically,
+      modifier = Modifier
+    ) {
+      repeat(maxLevel) { index ->
+        PainterImage(
+          res = if (level >= index + 1) R.drawable.star_fill else R.drawable.star,
+          modifier = Modifier
+            .size(starSize)
+            .clickable(indication = null, interactionSource = null) {
+              onLevelChange(index + 1)
             }
-        }
+        )
+      }
     }
+  }
 }
 
 @Preview
 @Composable
 private fun CodePostLevelInputPrev() {
-    var level by remember { mutableStateOf(0) }
-    AppTheme {
-        CodePostLevelInput(
-            level = level,
-            onLevelChange = {level = it},
-            maxLevel = 5,
-            modifier = Modifier
-        )
-    }
+  var level by remember { mutableStateOf(0) }
+  AppTheme {
+    CodePostLevelInput(
+      level = level,
+      onLevelChange = { level = it },
+      maxLevel = 5,
+      modifier = Modifier
+    )
+  }
 }

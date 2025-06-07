@@ -15,23 +15,22 @@ import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class AuthRepositoryImpl @Inject constructor(
-    private val authApi: AuthApi,
-    private val dataStoreManager: DataStoreManager,
-): AuthRepository {
-    override fun auth(requester: AuthRequester): Flow<DataState<AuthResult>> = flow {
-        val response = authApi.auth(requester.toAuthRequestDto())
+  private val authApi: AuthApi,
+  private val dataStoreManager: DataStoreManager,
+) : AuthRepository {
+  override fun auth(requester: AuthRequester): Flow<DataState<AuthResult>> = flow {
+    val response = authApi.auth(requester.toAuthRequestDto())
 
-        emit(
-            AuthResult(
-                accessToken = response.accessToken?.substringAfter(" ")?: " ",
-                refreshToken = response.refreshToken?: ""
-            )
-        )
-    }.asDataState()
+    emit(
+      AuthResult(
+        accessToken = response.accessToken?.substringAfter(" ") ?: " ",
+        refreshToken = response.refreshToken ?: ""
+      )
+    )
+  }.asDataState()
 
-
-    override fun getAuthState(): Flow<AuthState> = flow {
-        val ordinal = dataStoreManager.getValueByKey(key = Keys.getAuthStateKey(), default = -1)
-        emit(AuthState.entries.getOrElse(ordinal) { AuthState.SignOut })
-    }
+  override fun getAuthState(): Flow<AuthState> = flow {
+    val ordinal = dataStoreManager.getValueByKey(key = Keys.getAuthStateKey(), default = -1)
+    emit(AuthState.entries.getOrElse(ordinal) { AuthState.SignOut })
+  }
 }

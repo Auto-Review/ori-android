@@ -35,78 +35,78 @@ import com.example.presentation.til.list._navigation.routeTILListScreen
 
 @Composable
 private fun bottomBarColors(): NavigationBarItemColors {
-    return remember {
-        NavigationBarItemColors(
-            selectedIconColor = Color.White,
-            selectedTextColor = Color.White,
-            unselectedIconColor = Color.White.copy(alpha = 0.5F),
-            unselectedTextColor = Color.White.copy(alpha = 0.5F),
-            selectedIndicatorColor = Color.Transparent,
-            disabledIconColor = Color.Unspecified,
-            disabledTextColor = Color.Unspecified,
-        )
-    }
+  return remember {
+    NavigationBarItemColors(
+      selectedIconColor = Color.White,
+      selectedTextColor = Color.White,
+      unselectedIconColor = Color.White.copy(alpha = 0.5F),
+      unselectedTextColor = Color.White.copy(alpha = 0.5F),
+      selectedIndicatorColor = Color.Transparent,
+      disabledIconColor = Color.Unspecified,
+      disabledTextColor = Color.Unspecified,
+    )
+  }
 }
 
 @Composable
 fun MainScreen(
-    appNavController: NavController,
-    modifier: Modifier = Modifier,
+  appNavController: NavController,
+  modifier: Modifier = Modifier,
 ) {
-    val viewModel = hiltViewModel<MainViewModel>()
-    val navController = rememberNavController()
-    val bottomBarItems = remember {
-        listOf<BottomBarItem>(
-            CodePostListScreenRoute,
-            TILListScreenRoute,
-            ScheduleScreenRoute,
-            MyPageScreenRoute,
-        )
-    }
+  val viewModel = hiltViewModel<MainViewModel>()
+  val navController = rememberNavController()
+  val bottomBarItems = remember {
+    listOf<BottomBarItem>(
+      CodePostListScreenRoute,
+      TILListScreenRoute,
+      ScheduleScreenRoute,
+      MyPageScreenRoute,
+    )
+  }
 
-    Scaffold(
-        contentColor = MaterialTheme.colorScheme.background,
-        topBar = { MainScreenTopBar(appNavController = appNavController) },
-        floatingActionButton = {
-            MainScreenFAB(
-                options = listOf("CODE", "TIL"),
-                onOptionClick = { index ->
-                    when(index) {
-                        0 -> appNavController.toCodePostCreateScreen()
-                        1 -> appNavController.toTILCreateScreen()
-                    }
-                },
-            )
+  Scaffold(
+    contentColor = MaterialTheme.colorScheme.background,
+    topBar = { MainScreenTopBar(appNavController = appNavController) },
+    floatingActionButton = {
+      MainScreenFAB(
+        options = listOf("CODE", "TIL"),
+        onOptionClick = { index ->
+          when (index) {
+            0 -> appNavController.toCodePostCreateScreen()
+            1 -> appNavController.toTILCreateScreen()
+          }
         },
-        bottomBar = {
-            BottomNavBar(
-                navController = navController,
-                items = bottomBarItems,
-                initialTabIndex = viewModel.route.selectedTabIndex,
-                colors = bottomBarColors()
-            )
-        },
-        modifier = modifier
-    ){ inner ->
-        DefaultNavHost(
-            navController = navController,
-            startDestination = bottomBarItems[viewModel.route.selectedTabIndex].route,
-            modifier = Modifier
-                .consumeWindowInsets(inner)
-                .fillMaxSize()
-                .padding(inner)
-        ) {
-            routeCodePostListScreen(onDetailClick = appNavController::toCodePostScreen)
-            routeTILListScreen(onTILClick = appNavController::toTILScreen)
-            routeScheduleScreen(onScheduleClick = appNavController::toCodePostScreen)
-            routeMyPageScreen(
-                navigationEvent = { event ->
-                    when(event) {
-                        is MyPageNavigateEvent.CodePost -> appNavController.toCodePostScreen(codePostId = event.id)
-                        is MyPageNavigateEvent.TIL -> appNavController.toTILScreen(tilId = event.id)
-                    }
-                }
-            )
+      )
+    },
+    bottomBar = {
+      BottomNavBar(
+        navController = navController,
+        items = bottomBarItems,
+        initialTabIndex = viewModel.route.selectedTabIndex,
+        colors = bottomBarColors()
+      )
+    },
+    modifier = modifier
+  ) { inner ->
+    DefaultNavHost(
+      navController = navController,
+      startDestination = bottomBarItems[viewModel.route.selectedTabIndex].route,
+      modifier = Modifier
+        .consumeWindowInsets(inner)
+        .fillMaxSize()
+        .padding(inner)
+    ) {
+      routeCodePostListScreen(onDetailClick = appNavController::toCodePostScreen)
+      routeTILListScreen(onTILClick = appNavController::toTILScreen)
+      routeScheduleScreen(onScheduleClick = appNavController::toCodePostScreen)
+      routeMyPageScreen(
+        navigationEvent = { event ->
+          when (event) {
+            is MyPageNavigateEvent.CodePost -> appNavController.toCodePostScreen(codePostId = event.id)
+            is MyPageNavigateEvent.TIL -> appNavController.toTILScreen(tilId = event.id)
+          }
         }
+      )
     }
+  }
 }

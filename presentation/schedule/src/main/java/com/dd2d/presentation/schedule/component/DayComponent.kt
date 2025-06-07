@@ -1,4 +1,3 @@
-
 package com.dd2d.presentation.schedule.component
 
 import androidx.compose.foundation.background
@@ -20,37 +19,37 @@ import com.dd2d.core.presentation.theme.tp
 
 @Composable
 internal fun BoxScope.DayComponent(
-    dayText: String,
-    isSelected: Boolean,
-    hasSchedule: Boolean,
-    selectedDayTextColor: Color,
-    scheduleOnDayColor: Color,
-    dayColor: Color,
-    selectedDayBackgroundShape: Shape,
-    selectedDayBackground: Color,
-    modifier: Modifier = Modifier,
-    onClick: () -> Unit,
+  dayText: String,
+  isSelected: Boolean,
+  hasSchedule: Boolean,
+  selectedDayTextColor: Color,
+  scheduleOnDayColor: Color,
+  dayColor: Color,
+  selectedDayBackgroundShape: Shape,
+  selectedDayBackground: Color,
+  modifier: Modifier = Modifier,
+  onClick: () -> Unit,
 ) {
-    Box(
-        contentAlignment = Alignment.Center,
-        modifier = modifier
-            .align(Alignment.Center)
-            .aspectRatio(1F)
-            .fillMaxWidth()
-            .padding(5.dp)
-            .clip(selectedDayBackgroundShape)
-            .clickable(onClick = onClick)
-            .background(color = if(isSelected) selectedDayBackground else Color.Transparent)
-    ) {
-        Main600Text(
-            text = dayText,
-            color = when {
-                isSelected -> selectedDayTextColor
-                hasSchedule-> scheduleOnDayColor
-                else -> dayColor
-            },
-            fontSize = 18.tp,
-            lineHeight = 18.tp,
-        )
-    }
+  Box(
+    contentAlignment = Alignment.Center,
+    modifier = modifier
+      .align(Alignment.Center)
+      .aspectRatio(1F)
+      .fillMaxWidth()
+      .padding(5.dp)
+      .clip(selectedDayBackgroundShape)
+      .clickable(onClick = onClick)
+      .background(color = if (isSelected) selectedDayBackground else Color.Transparent)
+  ) {
+    Main600Text(
+      text = dayText,
+      color = when {
+        isSelected -> selectedDayTextColor
+        hasSchedule -> scheduleOnDayColor
+        else -> dayColor
+      },
+      fontSize = 18.tp,
+      lineHeight = 18.tp,
+    )
+  }
 }

@@ -21,32 +21,32 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun RowSurface(
-    modifier: Modifier = Modifier,
-    shape: Shape = RectangleShape,
-    color: Color = MaterialTheme.colorScheme.surface,
-    contentColor: Color = contentColorFor(color),
-    elevation: Dp = 0.dp,
-    border: BorderStroke? = null,
-    verticalAlignment: Alignment.Vertical = Alignment.Top,
-    horizontalArrangement: Arrangement.Horizontal = Arrangement.Start,
-    contentPadding: PaddingValues = PaddingValues(),
-    content: @Composable RowScope.() -> Unit
+  modifier: Modifier = Modifier,
+  shape: Shape = RectangleShape,
+  color: Color = MaterialTheme.colorScheme.surface,
+  contentColor: Color = contentColorFor(color),
+  elevation: Dp = 0.dp,
+  border: BorderStroke? = null,
+  verticalAlignment: Alignment.Vertical = Alignment.Top,
+  horizontalArrangement: Arrangement.Horizontal = Arrangement.Start,
+  contentPadding: PaddingValues = PaddingValues(),
+  content: @Composable RowScope.() -> Unit
 ) {
-    Surface(
-        shape = shape,
-        color = color,
-        contentColor = contentColor,
-        shadowElevation = elevation,
-        border = border,
-        modifier = modifier,
-    ) {
-        Row(
-            horizontalArrangement = horizontalArrangement,
-            verticalAlignment = verticalAlignment,
-            content = content,
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(contentPadding)
-        )
-    }
+  Surface(
+    shape = shape,
+    color = color,
+    contentColor = contentColor,
+    shadowElevation = elevation,
+    border = border,
+    modifier = modifier,
+  ) {
+    Row(
+      horizontalArrangement = horizontalArrangement,
+      verticalAlignment = verticalAlignment,
+      content = content,
+      modifier = Modifier
+        .fillMaxSize()
+        .padding(contentPadding)
+    )
+  }
 }

@@ -21,38 +21,42 @@ import com.dd2d.presentation.code_post.create.model.CodePostFormState
 
 @Composable
 internal fun CodePostContentInputContent(
-    createState: CodePostFormState,
-    modifier: Modifier = Modifier
+  createState: CodePostFormState,
+  modifier: Modifier = Modifier
 ) {
-    Column(
-        verticalArrangement = Arrangement.spacedBy(24.dp),
-        modifier = modifier
-            .imePadding()
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState())
-            .padding(bottom = 40.dp)
-    ) {
-        HorizontalDivider()
-        CodePostDescriptionInput(
-            descriptionTextState = createState.descriptionTextState,
-            modifier = Modifier.fillMaxWidth().padding(horizontal = 24.dp)
-        )
-        CodePostCodeInput(
-            language = createState.language,
-            onLanguageChange = { createState.language = it },
-            codeTextState = createState.codeTextState,
-            modifier = Modifier.fillMaxWidth().padding(horizontal = 24.dp)
-        )
-    }
+  Column(
+    verticalArrangement = Arrangement.spacedBy(24.dp),
+    modifier = modifier
+      .imePadding()
+      .fillMaxSize()
+      .verticalScroll(rememberScrollState())
+      .padding(bottom = 40.dp)
+  ) {
+    HorizontalDivider()
+    CodePostDescriptionInput(
+      descriptionTextState = createState.descriptionTextState,
+      modifier = Modifier
+        .fillMaxWidth()
+        .padding(horizontal = 24.dp)
+    )
+    CodePostCodeInput(
+      language = createState.language,
+      onLanguageChange = { createState.language = it },
+      codeTextState = createState.codeTextState,
+      modifier = Modifier
+        .fillMaxWidth()
+        .padding(horizontal = 24.dp)
+    )
+  }
 }
 
 @Preview
 @Composable
 private fun CodePostContentInputContentPrev() {
-    AppTheme {
-        CodePostContentInputContent(
-            createState = remember { CodePostFormState() },
-            modifier = Modifier
-        )
-    }
+  AppTheme {
+    CodePostContentInputContent(
+      createState = remember { CodePostFormState() },
+      modifier = Modifier
+    )
+  }
 }

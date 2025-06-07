@@ -24,7 +24,7 @@ jobs:
       - name: Decode And Save Keystore Base64 # app.keystoer.jks 키 값을 디코드 해서 app/ksystore.jks로 저장한다. (생략 가능)
         run: |
           echo "${{ secrets.KEY_STORE_BASE64 }}" | base64 --decode > app/keystore.jks
-          
+
       - name: Create google-services.json
         run: |
           cat <<EOF > app/google-services.json

@@ -17,52 +17,52 @@ import androidx.compose.ui.unit.dp
 @Composable
 
 fun VectorIconButton(
-    icon: ImageVector,
-    modifier: Modifier = Modifier,
-    enabled: Boolean = true,
-    interactionSource: MutableInteractionSource? = null,
-    colors: IconButtonColors = IconButtonDefaults.iconButtonColors(),
-    description: String? = null,
-    iconSize: Dp = 24.dp,
-    onClick: () -> Unit,
+  icon: ImageVector,
+  modifier: Modifier = Modifier,
+  enabled: Boolean = true,
+  interactionSource: MutableInteractionSource? = null,
+  colors: IconButtonColors = IconButtonDefaults.iconButtonColors(),
+  description: String? = null,
+  iconSize: Dp = 24.dp,
+  onClick: () -> Unit,
 ) {
-    IconButton(
-        onClick = onClick,
-        interactionSource = interactionSource,
-        enabled = enabled,
-        colors = colors,
-        modifier = modifier
-    ) {
-        Icon(
-            imageVector = icon,
-            contentDescription = description,
-            modifier = Modifier.size(iconSize)
-        )
-    }
+  IconButton(
+    onClick = onClick,
+    interactionSource = interactionSource,
+    enabled = enabled,
+    colors = colors,
+    modifier = modifier
+  ) {
+    Icon(
+      imageVector = icon,
+      contentDescription = description,
+      modifier = Modifier.size(iconSize)
+    )
+  }
 }
 
 @Composable
 fun VectorIconButton(
-    @DrawableRes res: Int,
-    modifier: Modifier = Modifier,
-    enabled: Boolean = true,
-    interactionSource: MutableInteractionSource? = null,
-    colors: IconButtonColors = IconButtonDefaults.iconButtonColors(),
-    description: String? = null,
-    iconSize: Dp = 24.dp,
-    onClick: () -> Unit,
+  @DrawableRes res: Int,
+  modifier: Modifier = Modifier,
+  enabled: Boolean = true,
+  interactionSource: MutableInteractionSource? = null,
+  colors: IconButtonColors = IconButtonDefaults.iconButtonColors(),
+  description: String? = null,
+  iconSize: Dp = 24.dp,
+  onClick: () -> Unit,
 ) {
-    IconButton(
-        onClick = onClick,
-        interactionSource = interactionSource,
-        enabled = enabled,
-        colors = colors,
-        modifier = modifier
-    ) {
-        Icon(
-            imageVector = ImageVector.vectorResource(id = res),
-            contentDescription = description,
-            modifier = Modifier.size(iconSize)
-        )
-    }
+  IconButton(
+    onClick = onClick,
+    interactionSource = interactionSource,
+    enabled = enabled,
+    colors = colors,
+    modifier = modifier
+  ) {
+    Icon(
+      imageVector = ImageVector.vectorResource(id = res),
+      contentDescription = description,
+      modifier = Modifier.size(iconSize)
+    )
+  }
 }

@@ -13,18 +13,18 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class ScrapViewModel @Inject constructor(
-    private val codePostScrapRepository: CodePostScrapRepository,
-    private val tilScrapRepository: TILScrapRepository
+  private val codePostScrapRepository: CodePostScrapRepository,
+  private val tilScrapRepository: TILScrapRepository
 ) : ViewModel() {
-    val codePostScrapListController = LazyListController(
-        option = CodePostScrapListOption(),
-        scope = viewModelScope,
-        getList = codePostScrapRepository::getMyCodePostScrapList,
-    )
+  val codePostScrapListController = LazyListController(
+    option = CodePostScrapListOption(),
+    scope = viewModelScope,
+    getList = codePostScrapRepository::getMyCodePostScrapList,
+  )
 
-    val tilScrapListController = LazyListController(
-        option = TILScrapListOption(),
-        scope = viewModelScope,
-        getList = tilScrapRepository::getMyScrapList,
-    )
+  val tilScrapListController = LazyListController(
+    option = TILScrapListOption(),
+    scope = viewModelScope,
+    getList = tilScrapRepository::getMyScrapList,
+  )
 }

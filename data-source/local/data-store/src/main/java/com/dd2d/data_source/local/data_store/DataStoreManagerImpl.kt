@@ -14,43 +14,43 @@ import javax.inject.Inject
 private val Context.dataStore by preferencesDataStore("data_store")
 
 class DataStoreManagerImpl @Inject constructor(
-    @ApplicationContext context: Context
-): DataStoreManager {
-    private val dataStore = context.dataStore
+  @ApplicationContext context: Context
+) : DataStoreManager {
+  private val dataStore = context.dataStore
 
-    override suspend fun <T> saveValueByKey(key: Preferences.Key<T>, value: T) {
-        dataStore.edit { pref ->
-            pref[key] = value
-        }
+  override suspend fun <T> saveValueByKey(key: Preferences.Key<T>, value: T) {
+    dataStore.edit { pref ->
+      pref[key] = value
     }
+  }
 
-    override suspend fun <T> getValueByKey(key: Preferences.Key<T>): T? {
-        return dataStore.data
-            .map { pref ->
-                pref[key]
-            }
-            .catch {
-                emit(null)
-            }
-            .firstOrNull()
-    }
+  override suspend fun <T> getValueByKey(key: Preferences.Key<T>): T? {
+    return dataStore.data
+      .map { pref ->
+        pref[key]
+      }
+      .catch {
+        emit(null)
+      }
+      .firstOrNull()
+  }
 
-    override suspend fun <T> getValueByKey(key: Preferences.Key<T>, default: T): T {
-        return dataStore.data
-            .map { pref ->
-                pref[key]
-            }
-            .catch {
-                emit(default)
-            }
-            .firstOrNull()?: default
-    }
+  override suspend fun <T> getValueByKey(key: Preferences.Key<T>, default: T): T {
+    return dataStore.data
+      .map { pref ->
+        pref[key]
+      }
+      .catch {
+        emit(default)
+      }
+      .firstOrNull() ?: default
+  }
 
-    override suspend fun <T> removeValueByKey(vararg keys: Preferences.Key<T>) {
-        dataStore.edit { pref ->
-            for(key in keys) {
-                pref.remove(key)
-            }
-        }
+  override suspend fun <T> removeValueByKey(vararg keys: Preferences.Key<T>) {
+    dataStore.edit { pref ->
+      for (key in keys) {
+        pref.remove(key)
+      }
     }
+  }
 }

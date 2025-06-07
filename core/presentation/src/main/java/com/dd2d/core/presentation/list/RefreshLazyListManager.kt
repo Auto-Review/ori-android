@@ -16,71 +16,74 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 
 @Suppress("MemberVisibilityCanBePrivate")
-class RefreshLazyListManager <ListOptions, ListItemModel>(
-    initialState: RefreshLazyListState = RefreshLazyListState.Success,
-    initialListOption: ListOptions,
-    private val scope: CoroutineScope,
-    private val flow: (options: ListOptions) -> Flow<DataState<Pagination<ListItemModel>>>,
-    lazyInit: Boolean = false,
+class RefreshLazyListManager<ListOptions, ListItemModel>(
+  initialState: RefreshLazyListState = RefreshLazyListState.Success,
+  initialListOption: ListOptions,
+  private val scope: CoroutineScope,
+  private val flow: (options: ListOptions) -> Flow<DataState<Pagination<ListItemModel>>>,
+  lazyInit: Boolean = false,
 ) {
-    private val _state = MutableStateFlow(initialState)
-    val state = _state.asStateFlow()
+  private val _state = MutableStateFlow(initialState)
+  val state = _state.asStateFlow()
 
-    var options = initialListOption
-        private set
+  var options = initialListOption
+    private set
 
-    val list = mutableStateListOf<ListItemModel>()
-    var isLastPage by mutableStateOf(false)
-        private set
-    var totalItem by mutableIntStateOf(0)
-        private set
-    var totalPage by mutableIntStateOf(0)
-        private set
+  val list = mutableStateListOf<ListItemModel>()
+  var isLastPage by mutableStateOf(false)
+    private set
+  var totalItem by mutableIntStateOf(0)
+    private set
+  var totalPage by mutableIntStateOf(0)
+    private set
 
-    private fun getList(
-        options: ListOptions,
-        isRefresh: Boolean = false,
-    ) {
-        flow(options)
-            .onEach { state ->
-                when(state) {
-                    is DataState.Loading -> {
-                        _state.update {
-                            if(isRefresh) RefreshLazyListState.Refreshing
-                            else RefreshLazyListState.Loading
-                        }
-                    }
-                    is DataState.Error -> _state.update { RefreshLazyListState.Error(state.exception) }
-                    is DataState.Success -> {
-                        if(isRefresh) { list.clear() }
-
-                        with(state.data) {
-                            this@RefreshLazyListManager.list.addAll(this.list)
-                            this@RefreshLazyListManager.isLastPage = this.currentPage >= this.totalPage
-                            this@RefreshLazyListManager.totalPage = this.totalPage
-                            this@RefreshLazyListManager.totalItem = this.totalItemCount
-                        }
-
-                        this@RefreshLazyListManager.options = options
-                        _state.update { RefreshLazyListState.Success }
-                    }
-                }
+  private fun getList(
+    options: ListOptions,
+    isRefresh: Boolean = false,
+  ) {
+    flow(options)
+      .onEach { state ->
+        when (state) {
+          is DataState.Loading -> {
+            _state.update {
+              if (isRefresh) RefreshLazyListState.Refreshing
+              else RefreshLazyListState.Loading
             }
-            .launchIn(scope)
-    }
+          }
 
-    fun refresh(options: ListOptions) {
-        getList(options = options, isRefresh = true)
-    }
+          is DataState.Error -> _state.update { RefreshLazyListState.Error(state.exception) }
+          is DataState.Success -> {
+            if (isRefresh) {
+              list.clear()
+            }
 
-    fun loadMore(options: ListOptions) {
-        if(isLastPage) return
-        getList(options = options, isRefresh = false)
-    }
+            with(state.data) {
+              this@RefreshLazyListManager.list.addAll(this.list)
+              this@RefreshLazyListManager.isLastPage = this.currentPage >= this.totalPage
+              this@RefreshLazyListManager.totalPage = this.totalPage
+              this@RefreshLazyListManager.totalItem = this.totalItemCount
+            }
 
-    init {
-        if(!lazyInit) {
-            getList(options = options, isRefresh = false)
+            this@RefreshLazyListManager.options = options
+            _state.update { RefreshLazyListState.Success }
+          }
         }
+      }
+      .launchIn(scope)
+  }
+
+  fun refresh(options: ListOptions) {
+    getList(options = options, isRefresh = true)
+  }
+
+  fun loadMore(options: ListOptions) {
+    if (isLastPage) return
+    getList(options = options, isRefresh = false)
+  }
+
+  init {
+    if (!lazyInit) {
+      getList(options = options, isRefresh = false)
     }
+  }
 }

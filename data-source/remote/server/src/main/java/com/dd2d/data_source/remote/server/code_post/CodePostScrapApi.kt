@@ -14,26 +14,26 @@ import javax.inject.Inject
 import javax.inject.Named
 
 class CodePostScrapApi @Inject constructor(
-    @Named("server_client") private val client: HttpClient,
-    private val tokenManager: TokenManager
+  @Named("server_client") private val client: HttpClient,
+  private val tokenManager: TokenManager
 ) {
-    suspend fun toggleScrap(
-        body: CodePostToggleScrapRequestDto
-    ): Unit = client
-        .put(urlString = "/v1/api/post/code/bookmark") {
-            authorizationHeader(tokenManager.getAccessToken())
-            setBody(body)
-        }.bodyHandling()
+  suspend fun toggleScrap(
+    body: CodePostToggleScrapRequestDto
+  ): Unit = client
+    .put(urlString = "/v1/api/post/code/bookmark") {
+      authorizationHeader(tokenManager.getAccessToken())
+      setBody(body)
+    }.bodyHandling()
 
-    suspend fun getMyScrap(
-        page: Int,
-        size: Int,
-    ): PagingResponseDto<CodePostScrapListResponseDto> = client
-        .get(urlString = "/v1/api/post/code/bookmark/list") {
-            authorizationHeader(tokenManager.getAccessToken())
-            url {
-                parameters.append("page", "$page")
-                parameters.append("size", "$size")
-            }
-        }.bodyHandling()
+  suspend fun getMyScrap(
+    page: Int,
+    size: Int,
+  ): PagingResponseDto<CodePostScrapListResponseDto> = client
+    .get(urlString = "/v1/api/post/code/bookmark/list") {
+      authorizationHeader(tokenManager.getAccessToken())
+      url {
+        parameters.append("page", "$page")
+        parameters.append("size", "$size")
+      }
+    }.bodyHandling()
 }

@@ -17,28 +17,28 @@ import java.net.NoRouteToHostException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 
-sealed interface DataState <out T> {
-    data object Loading: DataState<Nothing>
-    data class Error(val exception: ManagedException): DataState<Nothing>
-    data class Success<T>(val data: T): DataState<T>
+sealed interface DataState<out T> {
+  data object Loading : DataState<Nothing>
+  data class Error(val exception: ManagedException) : DataState<Nothing>
+  data class Success<T>(val data: T) : DataState<T>
 }
 
 inline fun <reified T> Flow<T>.asDataState(flowOn: CoroutineDispatcher = Dispatchers.IO) = this
-    .flowOn(flowOn)
-    .map<T, DataState<T>> { DataState.Success(it) }
-    .onStart { emit(DataState.Loading) }
-    .catch { error ->
-        error.printStackTrace()
-        val exception = when(error) {
-            is ManagedException -> error
+  .flowOn(flowOn)
+  .map<T, DataState<T>> { DataState.Success(it) }
+  .onStart { emit(DataState.Loading) }
+  .catch { error ->
+    error.printStackTrace()
+    val exception = when (error) {
+      is ManagedException -> error
 
-            is UnknownHostException -> UserException.NetworkException(code = 1, cause = error)
-            is SocketTimeoutException -> UserException.NetworkException(code = 2, cause = error)
-            is ConnectException -> UserException.NetworkException(code = 3, cause = error)
-            is NoRouteToHostException -> UserException.NetworkException(code = 4, cause = error)
-            is InterruptedIOException -> UserException.NetworkException(code = 5, cause = error)
-            is IOException -> UserException.NetworkException(code = 6, cause = error)
-            else -> ClientException.UnknownException(code = -1, cause = error)
-        }
-        emit(DataState.Error(exception))
+      is UnknownHostException -> UserException.NetworkException(code = 1, cause = error)
+      is SocketTimeoutException -> UserException.NetworkException(code = 2, cause = error)
+      is ConnectException -> UserException.NetworkException(code = 3, cause = error)
+      is NoRouteToHostException -> UserException.NetworkException(code = 4, cause = error)
+      is InterruptedIOException -> UserException.NetworkException(code = 5, cause = error)
+      is IOException -> UserException.NetworkException(code = 6, cause = error)
+      else -> ClientException.UnknownException(code = -1, cause = error)
     }
+    emit(DataState.Error(exception))
+  }

@@ -12,23 +12,23 @@ import com.dd2d.core.presentation.theme.AppTheme
 
 @Composable
 fun LoadingIndicator(
-    modifier: Modifier = Modifier,
-    width: Dp = 4.dp
+  modifier: Modifier = Modifier,
+  width: Dp = 4.dp
 ) {
-    CircularProgressIndicator(
-        color = MaterialTheme.colorScheme.primary,
-        strokeWidth = width,
-        strokeCap = StrokeCap.Round,
-        trackColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.5F),
-        modifier = modifier
-    )
+  CircularProgressIndicator(
+    color = MaterialTheme.colorScheme.primary,
+    strokeWidth = width,
+    strokeCap = StrokeCap.Round,
+    trackColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.5F),
+    modifier = modifier
+  )
 }
 
 @Preview
 @Composable
 private fun LoadingIndicatorPrev() {
-    AppTheme {
-        LoadingIndicator(
-        )
-    }
+  AppTheme {
+    LoadingIndicator(
+    )
+  }
 }

@@ -11,22 +11,22 @@ import androidx.navigation.compose.NavHost
 
 @Composable
 fun DefaultNavHost(
-	navController: NavHostController,
-	startDestination: ScreenRoute,
-	modifier: Modifier = Modifier,
-	contentAlignment: Alignment = Alignment.TopCenter,
-	builder: NavGraphBuilder.() -> Unit
+  navController: NavHostController,
+  startDestination: ScreenRoute,
+  modifier: Modifier = Modifier,
+  contentAlignment: Alignment = Alignment.TopCenter,
+  builder: NavGraphBuilder.() -> Unit
 ) {
-	NavHost(
-		navController = navController,
-		startDestination = startDestination,
-		contentAlignment = contentAlignment,
-		enterTransition = { EnterTransition.None },
-		exitTransition = { ExitTransition.None },
-		popEnterTransition = { EnterTransition.None },
-		popExitTransition = { ExitTransition.None },
-		sizeTransform = null,
-		modifier = modifier,
-		builder = builder,
-	)
+  NavHost(
+    navController = navController,
+    startDestination = startDestination,
+    contentAlignment = contentAlignment,
+    enterTransition = { EnterTransition.None },
+    exitTransition = { ExitTransition.None },
+    popEnterTransition = { EnterTransition.None },
+    popExitTransition = { ExitTransition.None },
+    sizeTransform = null,
+    modifier = modifier,
+    builder = builder,
+  )
 }

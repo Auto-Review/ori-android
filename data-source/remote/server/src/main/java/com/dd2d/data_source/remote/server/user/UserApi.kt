@@ -16,26 +16,26 @@ import javax.inject.Inject
 import javax.inject.Named
 
 class UserApi @Inject constructor(
-    @Named("server_client")private val  client: HttpClient,
-    private val tokenManager: TokenManager
+  @Named("server_client") private val client: HttpClient,
+  private val tokenManager: TokenManager
 ) {
-    suspend fun me(): UserResponseDto = client
-        .get(urlString = "/v1/api/profile/info") {
-            authorizationHeader(tokenManager.getAccessToken())
-        }
-        .bodyHandling()
+  suspend fun me(): UserResponseDto = client
+    .get(urlString = "/v1/api/profile/info") {
+      authorizationHeader(tokenManager.getAccessToken())
+    }
+    .bodyHandling()
 
-    suspend fun updateMe(body: UserUpdateRequestDto): Boolean = client
-        .put(urlString = "/v1/api/profile") {
-            authorizationHeader(tokenManager.getAccessToken())
-            setBody(body)
-        }
-        .isSuccessOrThrow()
+  suspend fun updateMe(body: UserUpdateRequestDto): Boolean = client
+    .put(urlString = "/v1/api/profile") {
+      authorizationHeader(tokenManager.getAccessToken())
+      setBody(body)
+    }
+    .isSuccessOrThrow()
 
-    suspend fun setFCMToken(body: FCMUpdateRequestDto): Boolean = client
-        .post("/v1/api/fcm") {
-            authorizationHeader(tokenManager.getAccessToken())
-            setBody(body)
-        }
-        .isSuccessOrThrow()
+  suspend fun setFCMToken(body: FCMUpdateRequestDto): Boolean = client
+    .post("/v1/api/fcm") {
+      authorizationHeader(tokenManager.getAccessToken())
+      setBody(body)
+    }
+    .isSuccessOrThrow()
 }

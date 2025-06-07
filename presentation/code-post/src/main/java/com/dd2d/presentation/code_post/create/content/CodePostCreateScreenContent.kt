@@ -24,30 +24,32 @@ import com.dd2d.presentation.code_post.create.model.CodePostFormState
 
 @Composable
 internal fun CodePostCreateScreenContent(
-    createState: CodePostFormState,
-    modifier: Modifier = Modifier
+  createState: CodePostFormState,
+  modifier: Modifier = Modifier
 ) {
-    AnimatedContent(
-        targetState = createState.step,
-        transitionSpec = {
-            when {
-                targetState.ordinal > initialState.ordinal -> { // 다음 단계로
-                    slideInHorizontally { it } togetherWith  slideOutHorizontally { -it }
-                }
-                targetState.ordinal < initialState.ordinal -> { // 이전 단계로
-                    slideInHorizontally { -it } togetherWith  slideOutHorizontally { it }
-                }
-                else -> EnterTransition.None togetherWith ExitTransition.None
-            }
-        },
-        modifier = modifier
-    ) { step ->
-        step.Content(
-            createState = createState,
-            modifier = Modifier
-                .fillMaxSize()
-        )
-    }
+  AnimatedContent(
+    targetState = createState.step,
+    transitionSpec = {
+      when {
+        targetState.ordinal > initialState.ordinal -> { // 다음 단계로
+          slideInHorizontally { it } togetherWith slideOutHorizontally { -it }
+        }
+
+        targetState.ordinal < initialState.ordinal -> { // 이전 단계로
+          slideInHorizontally { -it } togetherWith slideOutHorizontally { it }
+        }
+
+        else -> EnterTransition.None togetherWith ExitTransition.None
+      }
+    },
+    modifier = modifier
+  ) { step ->
+    step.Content(
+      createState = createState,
+      modifier = Modifier
+        .fillMaxSize()
+    )
+  }
 }
 
 @Preview
@@ -55,19 +57,19 @@ internal fun CodePostCreateScreenContent(
 @Composable
 private fun CodePostCreateScreenContentPrev() {
 
-    val s = rememberCoroutineScope()
-    var isLoading by remember { mutableStateOf(false) }
-    AppTheme {
-        Column(
-            verticalArrangement = Arrangement.Top,
-            horizontalAlignment = Alignment.Start,
-            modifier = Modifier
-                .fillMaxSize()
-        ) {
-            CodePostCreateScreenContent(
-                createState = remember { CodePostFormState() },
-                modifier = Modifier
-            )
-        }
+  val s = rememberCoroutineScope()
+  var isLoading by remember { mutableStateOf(false) }
+  AppTheme {
+    Column(
+      verticalArrangement = Arrangement.Top,
+      horizontalAlignment = Alignment.Start,
+      modifier = Modifier
+        .fillMaxSize()
+    ) {
+      CodePostCreateScreenContent(
+        createState = remember { CodePostFormState() },
+        modifier = Modifier
+      )
     }
+  }
 }

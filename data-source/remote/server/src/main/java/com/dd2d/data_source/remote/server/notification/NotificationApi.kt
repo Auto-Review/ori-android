@@ -12,41 +12,41 @@ import javax.inject.Inject
 import javax.inject.Named
 
 class NotificationApi @Inject constructor(
-    @Named("server_client") private val client: HttpClient,
-    private val tokenManager: TokenManager,
+  @Named("server_client") private val client: HttpClient,
+  private val tokenManager: TokenManager,
 ) {
-    suspend fun getMyNotificationList(): List<NotificationResponseDto> = client
-        .get(urlString = "/v1/api/notification/own") {
-            authorizationHeader(tokenManager.getAccessToken())
-        }
-        .bodyHandling()
+  suspend fun getMyNotificationList(): List<NotificationResponseDto> = client
+    .get(urlString = "/v1/api/notification/own") {
+      authorizationHeader(tokenManager.getAccessToken())
+    }
+    .bodyHandling()
 
-    suspend fun getMyUncheckedNotificationList(): List<NotificationResponseDto> = client
-        .get(urlString = "/v1/api/notification/own/unchecked") {
-            authorizationHeader(tokenManager.getAccessToken())
-        }
-        .bodyHandling()
+  suspend fun getMyUncheckedNotificationList(): List<NotificationResponseDto> = client
+    .get(urlString = "/v1/api/notification/own/unchecked") {
+      authorizationHeader(tokenManager.getAccessToken())
+    }
+    .bodyHandling()
 
-    suspend fun getMyNotificationOnDate(year: Int, month: Int): List<NotificationResponseDto> = client
-        .get(urlString = "/v1/api/notification/own/date") {
-            authorizationHeader(tokenManager.getAccessToken())
-            url {
-                parameters.append("year", year.toString())
-                parameters.append("month", month.toString())
-            }
-        }
-        .bodyHandling()
+  suspend fun getMyNotificationOnDate(year: Int, month: Int): List<NotificationResponseDto> = client
+    .get(urlString = "/v1/api/notification/own/date") {
+      authorizationHeader(tokenManager.getAccessToken())
+      url {
+        parameters.append("year", year.toString())
+        parameters.append("month", month.toString())
+      }
+    }
+    .bodyHandling()
 
-    suspend fun toggleNotificationCheckState(notificationId: Int): Int = client
-        .put(urlString = "/v1/api/notification") {
-            authorizationHeader(tokenManager.getAccessToken())
-            url { parameters.append(name = "id", value = "$notificationId") }
-        }
-        .bodyHandling()
+  suspend fun toggleNotificationCheckState(notificationId: Int): Int = client
+    .put(urlString = "/v1/api/notification") {
+      authorizationHeader(tokenManager.getAccessToken())
+      url { parameters.append(name = "id", value = "$notificationId") }
+    }
+    .bodyHandling()
 
-    suspend fun deleteNotification(id: Int): Unit = client
-        .delete(urlString = "/v1/api/notification/${id}") {
-            authorizationHeader(tokenManager.getAccessToken())
-        }
-        .bodyHandling()
+  suspend fun deleteNotification(id: Int): Unit = client
+    .delete(urlString = "/v1/api/notification/${id}") {
+      authorizationHeader(tokenManager.getAccessToken())
+    }
+    .bodyHandling()
 }

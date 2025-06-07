@@ -16,28 +16,28 @@ import com.dd2d.core.presentation.main_text.Main700Text
 
 @Composable
 internal fun SelectableLabel(
-    label: String,
-    isSelected: Boolean,
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier,
-    selectedColor: Color = MaterialTheme.colorScheme.onSurface,
-    unselectedColor: Color = MaterialTheme.colorScheme.outlineVariant,
-    shape: Shape = MaterialTheme.shapes.small
+  label: String,
+  isSelected: Boolean,
+  onClick: () -> Unit,
+  modifier: Modifier = Modifier,
+  selectedColor: Color = MaterialTheme.colorScheme.onSurface,
+  unselectedColor: Color = MaterialTheme.colorScheme.outlineVariant,
+  shape: Shape = MaterialTheme.shapes.small
 ) {
-    Main700Text(
-        text = label,
-        color = selectedColor,
-        fontSize = 12.sp,
-        lineHeight = 24.sp,
-        textAlign = TextAlign.Center,
-        modifier = modifier
-            .clip(shape)
-            .border(
-                width = if(isSelected) 2.dp else 1.dp,
-                color = if(isSelected) selectedColor else unselectedColor,
-                shape = shape
-            )
-            .clickable(onClick = onClick)
-            .padding(horizontal = 16.dp, vertical = 8.dp)
-    )
+  Main700Text(
+    text = label,
+    color = selectedColor,
+    fontSize = 12.sp,
+    lineHeight = 24.sp,
+    textAlign = TextAlign.Center,
+    modifier = modifier
+      .clip(shape)
+      .border(
+        width = if (isSelected) 2.dp else 1.dp,
+        color = if (isSelected) selectedColor else unselectedColor,
+        shape = shape
+      )
+      .clickable(onClick = onClick)
+      .padding(horizontal = 16.dp, vertical = 8.dp)
+  )
 }

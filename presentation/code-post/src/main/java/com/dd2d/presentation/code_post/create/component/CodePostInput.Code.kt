@@ -10,20 +10,20 @@ import com.dd2d.presentation.code_post._core.component.CodeEditor
 
 @Composable
 internal fun CodePostCodeInput(
-    language: Code.Language?,
-    onLanguageChange: (Code.Language) -> Unit,
-    codeTextState: TextFieldState,
-    modifier: Modifier = Modifier
+  language: Code.Language?,
+  onLanguageChange: (Code.Language) -> Unit,
+  codeTextState: TextFieldState,
+  modifier: Modifier = Modifier
 ) {
-    InputItem(label = "Code", modifier = modifier) {
-        CodeEditor(
-            initialCode = codeTextState.text.toString(),
-            onCodeChange = { value ->
-                codeTextState.edit { replace(start = 0, end = length, text = value) }
-            },
-            language = language,
-            onLanguageChange = onLanguageChange,
-            modifier = Modifier.fillMaxSize(),
-        )
-    }
+  InputItem(label = "Code", modifier = modifier) {
+    CodeEditor(
+      initialCode = codeTextState.text.toString(),
+      onCodeChange = { value ->
+        codeTextState.edit { replace(start = 0, end = length, text = value) }
+      },
+      language = language,
+      onLanguageChange = onLanguageChange,
+      modifier = Modifier.fillMaxSize(),
+    )
+  }
 }

@@ -24,67 +24,75 @@ import com.dd2d.core.presentation.theme.AppTheme
 
 @Composable
 fun MainDialog(
-    title: String,
-    message: String?,
-    onDismiss: () -> Unit,
-    modifier: Modifier = Modifier,
-    containerColor: Color = MaterialTheme.colorScheme.background,
-    textAlign: TextAlign = TextAlign.Start,
-    shape: Shape = RoundedCornerShape(15.dp),
-    dismissButton: @Composable (() -> Unit)? = null,
-    confirmButton: @Composable () -> Unit,
+  title: String,
+  message: String?,
+  onDismiss: () -> Unit,
+  modifier: Modifier = Modifier,
+  containerColor: Color = MaterialTheme.colorScheme.background,
+  textAlign: TextAlign = TextAlign.Start,
+  shape: Shape = RoundedCornerShape(15.dp),
+  dismissButton: @Composable (() -> Unit)? = null,
+  confirmButton: @Composable () -> Unit,
 ) {
 
-    AlertDialog(
-        modifier = modifier,
-        shape = shape,
-        title = {
-            Main600Text(
-                text = title,
-                fontSize = 18.sp,
-                textAlign = textAlign,
-                modifier = Modifier.fillMaxWidth()
-            )
-        },
-        containerColor = containerColor,
-        text = message?.let { {
-            Main400Text(
-                text = message,
-                fontSize = 16.sp,
-                maxLine = Int.MAX_VALUE,
-                textAlign = textAlign,
-                modifier = Modifier.fillMaxWidth()
-            )
-        } },
-        onDismissRequest = onDismiss,
-        dismissButton = dismissButton,
-        confirmButton = confirmButton
-    )
+  AlertDialog(
+    modifier = modifier,
+    shape = shape,
+    title = {
+      Main600Text(
+        text = title,
+        fontSize = 18.sp,
+        textAlign = textAlign,
+        modifier = Modifier.fillMaxWidth()
+      )
+    },
+    containerColor = containerColor,
+    text = message?.let {
+      {
+        Main400Text(
+          text = message,
+          fontSize = 16.sp,
+          maxLine = Int.MAX_VALUE,
+          textAlign = textAlign,
+          modifier = Modifier.fillMaxWidth()
+        )
+      }
+    },
+    onDismissRequest = onDismiss,
+    dismissButton = dismissButton,
+    confirmButton = confirmButton
+  )
 }
 
 @Preview
 @Preview(locale = "ko", uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun MainDialogPrev() {
-    AppTheme {
-        Column(
-            verticalArrangement = Arrangement.Top,
-            horizontalAlignment = Alignment.Start,
-            modifier = Modifier
-        ) {
-            MainDialog(
-                title = "title",
+  AppTheme {
+    Column(
+      verticalArrangement = Arrangement.Top,
+      horizontalAlignment = Alignment.Start,
+      modifier = Modifier
+    ) {
+      MainDialog(
+        title = "title",
 //            message = "message",
-                message = "sadadsasd\nsdfs \nsdfsdf",
-                onDismiss = {},
-                modifier = Modifier,
-                dismissButton = {
-                    Main400Text(text = "123", color = MaterialTheme.colorScheme.onSurface, modifier = Modifier.clickable {  }.padding(horizontal = 12.dp, vertical = 6.dp))
-                },
-                confirmButton = {
-                    Main400Text(text = "123")
-                }
-            )
+        message = "sadadsasd\nsdfs \nsdfsdf",
+        onDismiss = {},
+        modifier = Modifier,
+        dismissButton = {
+          Main400Text(
+            text = "123",
+            color = MaterialTheme.colorScheme.onSurface,
+            modifier = Modifier
+              .clickable { }
+              .padding(horizontal = 12.dp, vertical = 6.dp)
+          )
+        },
+        confirmButton = {
+          Main400Text(text = "123")
         }
+      )
     }
+  }
 }

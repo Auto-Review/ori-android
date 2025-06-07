@@ -25,58 +25,68 @@ import com.dd2d.presentation.code_post.create.model.CodePostFormState
 
 @Composable
 internal fun CodePostInfoInputContent(
-    createState: CodePostFormState,
-    modifier: Modifier = Modifier
+  createState: CodePostFormState,
+  modifier: Modifier = Modifier
 ) {
-    Column(
-        verticalArrangement = Arrangement.spacedBy(24.dp),
-        modifier = modifier
-            .imePadding()
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState())
-            .padding(bottom = 40.dp)
-    ) {
-        Column {
-            HorizontalDivider()
-            CodePostTitleInput(
-                title = createState.title,
-                onTitleChange = { createState.title = it },
-                modifier = Modifier.fillMaxWidth().padding(horizontal = 24.dp)
-            )
-            HorizontalDivider()
-        }
-        CodePostLevelInput(
-            level = createState.level,
-            onLevelChange = { createState.level = it },
-            maxLevel = createState.maxLevel,
-            modifier = Modifier.fillMaxWidth().padding(horizontal = 24.dp)
-        )
-        CodePostLanguageInput(
-            languages = Code.Language.entries,
-            selectedLanguage = createState.language,
-            onSelectedLanguageChange = { createState.language = it },
-            modifier = Modifier.fillMaxWidth().padding(horizontal = 24.dp)
-        )
-        PublishSettingInput(
-            isPublic = createState.isPublic,
-            onIsPublicChange = { createState.isPublic = it },
-            modifier = Modifier.fillMaxWidth().padding(horizontal = 24.dp)
-        )
-        ReviewDateInput(
-            reviewDate = createState.reviewDate,
-            onReviewDateChange = { createState.reviewDate = it },
-            modifier = Modifier.fillMaxWidth().padding(horizontal = 24.dp)
-        )
+  Column(
+    verticalArrangement = Arrangement.spacedBy(24.dp),
+    modifier = modifier
+      .imePadding()
+      .fillMaxSize()
+      .verticalScroll(rememberScrollState())
+      .padding(bottom = 40.dp)
+  ) {
+    Column {
+      HorizontalDivider()
+      CodePostTitleInput(
+        title = createState.title,
+        onTitleChange = { createState.title = it },
+        modifier = Modifier
+          .fillMaxWidth()
+          .padding(horizontal = 24.dp)
+      )
+      HorizontalDivider()
     }
+    CodePostLevelInput(
+      level = createState.level,
+      onLevelChange = { createState.level = it },
+      maxLevel = createState.maxLevel,
+      modifier = Modifier
+        .fillMaxWidth()
+        .padding(horizontal = 24.dp)
+    )
+    CodePostLanguageInput(
+      languages = Code.Language.entries,
+      selectedLanguage = createState.language,
+      onSelectedLanguageChange = { createState.language = it },
+      modifier = Modifier
+        .fillMaxWidth()
+        .padding(horizontal = 24.dp)
+    )
+    PublishSettingInput(
+      isPublic = createState.isPublic,
+      onIsPublicChange = { createState.isPublic = it },
+      modifier = Modifier
+        .fillMaxWidth()
+        .padding(horizontal = 24.dp)
+    )
+    ReviewDateInput(
+      reviewDate = createState.reviewDate,
+      onReviewDateChange = { createState.reviewDate = it },
+      modifier = Modifier
+        .fillMaxWidth()
+        .padding(horizontal = 24.dp)
+    )
+  }
 }
 
 @Preview(showBackground = true)
 @Composable
 private fun CodePostInfoInputContentPrev() {
-    AppTheme {
-        CodePostInfoInputContent(
-            createState = remember { CodePostFormState() },
-            modifier = Modifier.fillMaxSize()
-        )
-    }
+  AppTheme {
+    CodePostInfoInputContent(
+      createState = remember { CodePostFormState() },
+      modifier = Modifier.fillMaxSize()
+    )
+  }
 }

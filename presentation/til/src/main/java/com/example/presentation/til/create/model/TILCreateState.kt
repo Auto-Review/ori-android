@@ -8,21 +8,21 @@ import com.dd2d.domain.til.model.TILCreator
 import java.time.LocalDateTime
 
 internal class TILCreateState {
-    var title by mutableStateOf("")
-    var content by mutableStateOf("")
-    var isPrivate by mutableStateOf(false)
-    var reviewDate by mutableStateOf<LocalDateTime?>(null)
+  var title by mutableStateOf("")
+  var content by mutableStateOf("")
+  var isPrivate by mutableStateOf(false)
+  var reviewDate by mutableStateOf<LocalDateTime?>(null)
 
-    val canCreate by derivedStateOf {
-        title.isNotBlank() && content.isNotBlank()
-    }
+  val canCreate by derivedStateOf {
+    title.isNotBlank() && content.isNotBlank()
+  }
 
-    var isCreating by mutableStateOf(false)
+  var isCreating by mutableStateOf(false)
 
-    fun toTILCreator(): TILCreator {
-        return TILCreator(
-            title = title,
-            content = content,
-        )
-    }
+  fun toTILCreator(): TILCreator {
+    return TILCreator(
+      title = title,
+      content = content,
+    )
+  }
 }

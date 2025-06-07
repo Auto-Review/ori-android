@@ -42,104 +42,104 @@ import java.time.ZoneId
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun ReviewDateInput(
-    reviewDate: LocalDateTime?,
-    onReviewDateChange: (value: LocalDateTime?) -> Unit,
-    modifier: Modifier = Modifier
+  reviewDate: LocalDateTime?,
+  onReviewDateChange: (value: LocalDateTime?) -> Unit,
+  modifier: Modifier = Modifier
 ) {
-    val selectableDate = remember { SelectableDates() }
+  val selectableDate = remember { SelectableDates() }
 
-    var setReviewDate by remember { mutableStateOf(false) }
-    var openDatePicker by remember { mutableStateOf(false) }
-    val datePickerState = rememberDatePickerState(
-        initialSelectedDateMillis = System.currentTimeMillis(),
-        selectableDates = selectableDate
-    )
+  var setReviewDate by remember { mutableStateOf(false) }
+  var openDatePicker by remember { mutableStateOf(false) }
+  val datePickerState = rememberDatePickerState(
+    initialSelectedDateMillis = System.currentTimeMillis(),
+    selectableDates = selectableDate
+  )
 
-    Column(modifier = modifier) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
-            modifier = Modifier
-        ) {
-            Main700Text(
-                text = "리뷰 설정",
-                color = MaterialTheme.colorScheme.onSurface,
-                fontSize = 12.sp,
-                lineHeight = 24.sp,
-            )
-            Checkbox(
-                checked = setReviewDate,
-                onCheckedChange = {
-                    setReviewDate = it
-                    onReviewDateChange(if(it) LocalDateTime.now() else null)
-                },
-                colors = CheckboxDefaults.colors(
-                    checkedColor = MaterialTheme.colorScheme.primary,
-                )
-            )
-        }
-        AnimatedVisibility(visible = setReviewDate) {
-            val reviewDateText = reviewDate?.format("yyyy년 M월 d일")?: "-년 -월 -일"
-            val shape = MaterialTheme.shapes.small
-            Main700Text(
-                text = reviewDateText,
-                color = MaterialTheme.colorScheme.onSurface,
-                fontSize = 12.sp,
-                lineHeight = 24.sp,
-                textAlign = TextAlign.Center,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clip(shape)
-                    .border(width = 1.dp, color = MaterialTheme.colorScheme.outlineVariant, shape = shape)
-                    .clickable {
-                        openDatePicker = true
-                    }
-                    .padding(horizontal = 16.dp, vertical = 8.dp)
-            )
-        }
-
-        if(openDatePicker) {
-            Box(modifier = Modifier.fillMaxWidth(0.8F)) {
-                DatePickerDialog(
-                    onDismissRequest = { openDatePicker = false },
-                    confirmButton = {
-                        TextButton(
-                            onClick = {
-                                openDatePicker = false
-                                datePickerState.selectedDateMillis?.toLocalDateTime().let(onReviewDateChange)
-                            }
-                        ) {
-                            Text(text = "확인")
-                        }
-                    },
-                    dismissButton = {
-                        TextButton(onClick = { openDatePicker = false }) {
-                            Text(text = "취소")
-                        }
-                    },
-                    shape = MaterialTheme.shapes.medium,
-                    colors = DatePickerDefaults.colors(
-                        containerColor = MaterialTheme.colorScheme.background,
-                    ),
-                    modifier = Modifier.scale(0.8F)
-                ) {
-                    DatePicker(
-                        state = datePickerState,
-                        headline = null,
-                        showModeToggle = false,
-                        title = null,
-                        colors = DatePickerDefaults.colors(
-                            containerColor = MaterialTheme.colorScheme.background,
-                        ),
-                    )
-                }
-            }
-        }
+  Column(modifier = modifier) {
+    Row(
+      verticalAlignment = Alignment.CenterVertically,
+      horizontalArrangement = Arrangement.spacedBy(8.dp),
+      modifier = Modifier
+    ) {
+      Main700Text(
+        text = "리뷰 설정",
+        color = MaterialTheme.colorScheme.onSurface,
+        fontSize = 12.sp,
+        lineHeight = 24.sp,
+      )
+      Checkbox(
+        checked = setReviewDate,
+        onCheckedChange = {
+          setReviewDate = it
+          onReviewDateChange(if (it) LocalDateTime.now() else null)
+        },
+        colors = CheckboxDefaults.colors(
+          checkedColor = MaterialTheme.colorScheme.primary,
+        )
+      )
     }
+    AnimatedVisibility(visible = setReviewDate) {
+      val reviewDateText = reviewDate?.format("yyyy년 M월 d일") ?: "-년 -월 -일"
+      val shape = MaterialTheme.shapes.small
+      Main700Text(
+        text = reviewDateText,
+        color = MaterialTheme.colorScheme.onSurface,
+        fontSize = 12.sp,
+        lineHeight = 24.sp,
+        textAlign = TextAlign.Center,
+        modifier = Modifier
+          .fillMaxWidth()
+          .clip(shape)
+          .border(width = 1.dp, color = MaterialTheme.colorScheme.outlineVariant, shape = shape)
+          .clickable {
+            openDatePicker = true
+          }
+          .padding(horizontal = 16.dp, vertical = 8.dp)
+      )
+    }
+
+    if (openDatePicker) {
+      Box(modifier = Modifier.fillMaxWidth(0.8F)) {
+        DatePickerDialog(
+          onDismissRequest = { openDatePicker = false },
+          confirmButton = {
+            TextButton(
+              onClick = {
+                openDatePicker = false
+                datePickerState.selectedDateMillis?.toLocalDateTime().let(onReviewDateChange)
+              }
+            ) {
+              Text(text = "확인")
+            }
+          },
+          dismissButton = {
+            TextButton(onClick = { openDatePicker = false }) {
+              Text(text = "취소")
+            }
+          },
+          shape = MaterialTheme.shapes.medium,
+          colors = DatePickerDefaults.colors(
+            containerColor = MaterialTheme.colorScheme.background,
+          ),
+          modifier = Modifier.scale(0.8F)
+        ) {
+          DatePicker(
+            state = datePickerState,
+            headline = null,
+            showModeToggle = false,
+            title = null,
+            colors = DatePickerDefaults.colors(
+              containerColor = MaterialTheme.colorScheme.background,
+            ),
+          )
+        }
+      }
+    }
+  }
 }
 
 private fun Long.toLocalDateTime(): LocalDateTime {
-    return Instant.ofEpochMilli(this)
-        .atZone(ZoneId.systemDefault()) // 시스템 기본 시간대 적용
-        .toLocalDateTime()
+  return Instant.ofEpochMilli(this)
+    .atZone(ZoneId.systemDefault()) // 시스템 기본 시간대 적용
+    .toLocalDateTime()
 }

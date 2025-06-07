@@ -6,13 +6,13 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class CodePostCommentListItemResponseDto(
-    val id: Int,
-    val parentId: Int?,
-    val writerId: Int,
-    val writerNickName: String,
-    val writerEmail: String,
-    val mentionNickName: String?,
-    val mentionEmail: String?,
-    val body: String,
-    val createdAt: UTCString,
+  val id: Int,
+  val parentId: Int?,
+  val writerId: Int,
+  val writerNickName: String,
+  val writerEmail: String,
+  val mentionNickName: String?,
+  val mentionEmail: String?,
+  val body: String,
+  val createdAt: UTCString,
 )

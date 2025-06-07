@@ -15,24 +15,24 @@ import com.dd2d.core.presentation.theme.LocalHansType
 
 @Composable
 internal fun ScrapTopBar(
-    onBack: () -> Unit,
-    modifier: Modifier = Modifier
+  onBack: () -> Unit,
+  modifier: Modifier = Modifier
 ) {
-    CenterAlignedTopAppBar(
-        title = {
-            Text(
-                text = "//SCRAP",
-                style = LocalHansType.current.topBarTitle
-            )
-        },
-        colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-            containerColor = MaterialTheme.colorScheme.background
-        ),
-        navigationIcon = {
-            IconButton(onClick = onBack) {
-                BackIcon(tint = MaterialTheme.colorScheme.onBackground)
-            }
-        },
-        modifier = modifier
-    )
+  CenterAlignedTopAppBar(
+    title = {
+      Text(
+        text = "//SCRAP",
+        style = LocalHansType.current.topBarTitle
+      )
+    },
+    colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+      containerColor = MaterialTheme.colorScheme.background
+    ),
+    navigationIcon = {
+      IconButton(onClick = onBack) {
+        BackIcon(tint = MaterialTheme.colorScheme.onBackground)
+      }
+    },
+    modifier = modifier
+  )
 }

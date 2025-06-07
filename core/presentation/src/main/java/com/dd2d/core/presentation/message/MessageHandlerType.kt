@@ -24,66 +24,66 @@ import com.dd2d.core.presentation.main_text.Main500Text
 import com.dd2d.core.presentation.main_text.Main600Text
 
 interface MessageHandlerType {
-    @Composable
-    fun DialogType(
-        message: Message.Dialog,
-        onDismiss: () -> Unit
-    )
+  @Composable
+  fun DialogType(
+    message: Message.Dialog,
+    onDismiss: () -> Unit
+  )
 }
 
-object DefaultMessageHandlerType: MessageHandlerType {
-    @OptIn(ExperimentalLayoutApi::class)
-    @Composable
-    override fun DialogType(message: Message.Dialog, onDismiss: () -> Unit) {
-        Dialog(onDismissRequest = onDismiss) {
-            Column(
-                modifier = Modifier
-                    .background(
-                        color = Color.White,
-                        shape = RoundedCornerShape(15.dp)
-                    )
-                    .padding(24.dp)
-            ) {
-                message.title?.let { title ->
-                    Main600Text(
-                        text = title,
-                        fontSize = 18.sp,
-                        textAlign = TextAlign.Start,
-                        modifier = Modifier.fillMaxWidth()
-                    )
-                }
-                message.content?.let { content ->
-                    if (message.title != null) {
-                        Spacer(Modifier.height(16.dp))
-                    }
-                    Main400Text(
-                        text = content,
-                        fontSize = 16.sp,
-                        maxLine = Int.MAX_VALUE,
-                        textAlign = TextAlign.Start,
-                        modifier = Modifier.fillMaxWidth()
-                    )
-                }
-
-                FlowRow(
-                    maxItemsInEachRow = 3,
-                    horizontalArrangement = Arrangement.spacedBy(4.dp, Alignment.End),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 12.dp)
-                ) {
-                    message.actions.forEach { action ->
-                        Main500Text(
-                            text = action.text,
-                            color = action.textColor,
-                            fontSize = 16.sp,
-                            modifier = Modifier
-                                .clickable(onClick = { action.onClick(onDismiss) })
-                                .padding(horizontal = 12.dp, vertical = 6.dp)
-                        )
-                    }
-                }
-            }
+object DefaultMessageHandlerType : MessageHandlerType {
+  @OptIn(ExperimentalLayoutApi::class)
+  @Composable
+  override fun DialogType(message: Message.Dialog, onDismiss: () -> Unit) {
+    Dialog(onDismissRequest = onDismiss) {
+      Column(
+        modifier = Modifier
+          .background(
+            color = Color.White,
+            shape = RoundedCornerShape(15.dp)
+          )
+          .padding(24.dp)
+      ) {
+        message.title?.let { title ->
+          Main600Text(
+            text = title,
+            fontSize = 18.sp,
+            textAlign = TextAlign.Start,
+            modifier = Modifier.fillMaxWidth()
+          )
         }
+        message.content?.let { content ->
+          if (message.title != null) {
+            Spacer(Modifier.height(16.dp))
+          }
+          Main400Text(
+            text = content,
+            fontSize = 16.sp,
+            maxLine = Int.MAX_VALUE,
+            textAlign = TextAlign.Start,
+            modifier = Modifier.fillMaxWidth()
+          )
+        }
+
+        FlowRow(
+          maxItemsInEachRow = 3,
+          horizontalArrangement = Arrangement.spacedBy(4.dp, Alignment.End),
+          modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 12.dp)
+        ) {
+          message.actions.forEach { action ->
+            Main500Text(
+              text = action.text,
+              color = action.textColor,
+              fontSize = 16.sp,
+              modifier = Modifier
+                .clickable(onClick = { action.onClick(onDismiss) })
+                .padding(horizontal = 12.dp, vertical = 6.dp)
+            )
+          }
+        }
+      }
     }
+  }
 }

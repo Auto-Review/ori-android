@@ -12,19 +12,19 @@ import com.dd2d.presentation.code_post.list.view_model.CodePostListViewModel
 
 @Composable
 fun CodePostListScreen(
-    onCodePostClick: (id: Int) ->Unit,
-    modifier: Modifier = Modifier,
+  onCodePostClick: (id: Int) -> Unit,
+  modifier: Modifier = Modifier,
 ) {
-    val viewModel = hiltViewModel<CodePostListViewModel>()
+  val viewModel = hiltViewModel<CodePostListViewModel>()
 
-    Scaffold(modifier = modifier) { inner ->
-        CodePostListScreenContent(
-            listController = viewModel.listController,
-            onDetailClick = onCodePostClick,
-            modifier = Modifier
-                .consumeWindowInsets(inner)
-                .fillMaxSize()
-                .padding(inner)
-        )
-    }
+  Scaffold(modifier = modifier) { inner ->
+    CodePostListScreenContent(
+      listController = viewModel.listController,
+      onDetailClick = onCodePostClick,
+      modifier = Modifier
+        .consumeWindowInsets(inner)
+        .fillMaxSize()
+        .padding(inner)
+    )
+  }
 }

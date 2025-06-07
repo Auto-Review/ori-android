@@ -24,74 +24,73 @@ import com.dd2d.core.presentation.main_text.Main700Text
 
 @Composable
 internal fun UpdatableUserDataField(
-    onEditMode: Boolean,
-    label: String,
-    originValue: String,
-    updatableValueState: TextFieldState,
-    modifier: Modifier = Modifier
+  onEditMode: Boolean,
+  label: String,
+  originValue: String,
+  updatableValueState: TextFieldState,
+  modifier: Modifier = Modifier
 ) {
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = modifier
-    ) {
-        Main700Text(
-            text = label,
-            fontSize = 12.sp,
-            lineHeight = 24.sp,
-            color = MaterialTheme.colorScheme.onSurface,
-            modifier = Modifier.fillMaxWidth(0.2F)
+  Row(
+    verticalAlignment = Alignment.CenterVertically,
+    modifier = modifier
+  ) {
+    Main700Text(
+      text = label,
+      fontSize = 12.sp,
+      lineHeight = 24.sp,
+      color = MaterialTheme.colorScheme.onSurface,
+      modifier = Modifier.fillMaxWidth(0.2F)
+    )
+    if (onEditMode) {
+      EditField(
+        textFieldState = updatableValueState,
+        placeholder = "Input $label",
+        style = TextStyle(
+          fontSize = 12.sp,
+          lineHeight = 24.sp,
+          color = MaterialTheme.colorScheme.onSurface,
         )
-        if(onEditMode) {
-            EditField(
-                textFieldState = updatableValueState,
-                placeholder = "Input $label",
-                style = TextStyle(
-                    fontSize = 12.sp,
-                    lineHeight = 24.sp,
-                    color = MaterialTheme.colorScheme.onSurface,
-                )
-            )
-        }
-        else {
-            Main500Text(
-                text = originValue,
-                fontSize = 12.sp,
-                lineHeight = 24.sp,
-                color = MaterialTheme.colorScheme.onSurface,
-            )
-        }
+      )
+    } else {
+      Main500Text(
+        text = originValue,
+        fontSize = 12.sp,
+        lineHeight = 24.sp,
+        color = MaterialTheme.colorScheme.onSurface,
+      )
     }
+  }
 }
 
 @Composable
 private fun EditField(
-    textFieldState: TextFieldState,
-    modifier: Modifier = Modifier,
-    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
-    keyboardAction: KeyboardActionHandler? = null,
-    placeholder: String? = null,
-    style: TextStyle = TextStyle.Default,
+  textFieldState: TextFieldState,
+  modifier: Modifier = Modifier,
+  keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+  keyboardAction: KeyboardActionHandler? = null,
+  placeholder: String? = null,
+  style: TextStyle = TextStyle.Default,
 ) {
-    val focus = remember { FocusRequester() }
-    LaunchedEffect(key1 = Unit) {
-        focus.requestFocus()
-    }
-    BasicTextField(
-        state = textFieldState,
-        textStyle = style,
-        lineLimits = TextFieldLineLimits.SingleLine,
-        keyboardOptions = keyboardOptions,
-        onKeyboardAction = keyboardAction,
-        cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
-        decorator = { innerTextField ->
-            innerTextField()
-            if(textFieldState.text.isEmpty() && placeholder != null) {
-                Text(
-                    text = placeholder,
-                    style = style.copy(color = style.color.copy(alpha = 0.5F))
-                )
-            }
-        },
-        modifier = modifier.focusRequester(focus),
-    )
+  val focus = remember { FocusRequester() }
+  LaunchedEffect(key1 = Unit) {
+    focus.requestFocus()
+  }
+  BasicTextField(
+    state = textFieldState,
+    textStyle = style,
+    lineLimits = TextFieldLineLimits.SingleLine,
+    keyboardOptions = keyboardOptions,
+    onKeyboardAction = keyboardAction,
+    cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
+    decorator = { innerTextField ->
+      innerTextField()
+      if (textFieldState.text.isEmpty() && placeholder != null) {
+        Text(
+          text = placeholder,
+          style = style.copy(color = style.color.copy(alpha = 0.5F))
+        )
+      }
+    },
+    modifier = modifier.focusRequester(focus),
+  )
 }

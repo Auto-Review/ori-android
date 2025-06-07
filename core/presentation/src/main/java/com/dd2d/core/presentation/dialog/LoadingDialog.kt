@@ -17,36 +17,36 @@ import com.dd2d.core.presentation.theme.AppTheme
 
 @Composable
 fun LoadingDialog() {
-    Box(
-        contentAlignment = Alignment.Center,
-        modifier = Modifier.fillMaxSize()
-    ) {
-        CircularProgressIndicator(
-            color = MaterialTheme.colorScheme.primary,
-            strokeWidth = 4.dp,
-            trackColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.5F),
-            strokeCap = StrokeCap.Round,
-            modifier = Modifier
-                .size(40.dp)
-        )
-    }
+  Box(
+    contentAlignment = Alignment.Center,
+    modifier = Modifier.fillMaxSize()
+  ) {
+    CircularProgressIndicator(
+      color = MaterialTheme.colorScheme.primary,
+      strokeWidth = 4.dp,
+      trackColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.5F),
+      strokeCap = StrokeCap.Round,
+      modifier = Modifier
+        .size(40.dp)
+    )
+  }
 }
 
 @Preview(showBackground = true)
-@Preview(locale = "ko",showBackground = true)
+@Preview(locale = "ko", showBackground = true)
 @Composable
 private fun LoadingDialogPrev() {
-    AppTheme {
+  AppTheme {
 
-        Column(
-            verticalArrangement = Arrangement.Top,
-            horizontalAlignment = Alignment.Start,
-            modifier = Modifier
-                .fillMaxSize()
-        ) {
-            LoadingDialog(
+    Column(
+      verticalArrangement = Arrangement.Top,
+      horizontalAlignment = Alignment.Start,
+      modifier = Modifier
+        .fillMaxSize()
+    ) {
+      LoadingDialog(
 
-            )
-        }
+      )
     }
+  }
 }

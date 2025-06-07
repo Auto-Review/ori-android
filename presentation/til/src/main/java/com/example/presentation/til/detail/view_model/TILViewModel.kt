@@ -27,46 +27,46 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class TILViewModel @Inject constructor(
-    savedStateHandle: SavedStateHandle,
-    userRepository: UserRepository,
-    tilRepository: TILRepository,
-    private val tilScrapRepository: TILScrapRepository,
+  savedStateHandle: SavedStateHandle,
+  userRepository: UserRepository,
+  tilRepository: TILRepository,
+  private val tilScrapRepository: TILScrapRepository,
 ) : ViewModel() {
-    private val route = savedStateHandle.toRoute<TILScreenRoute>()
+  private val route = savedStateHandle.toRoute<TILScreenRoute>()
 
-    val userState = userRepository.me()
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5000),
-            initialValue = DataState.Loading
-        )
-
-    val tilState = tilRepository
-        .withStatefulResult { getTIL(id = route.id) }
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5000),
-            initialValue = Stateful.Loading
-        )
-
-    val isAuthor = combine(
-        flow = userState.filterIsInstance<DataState.Success<User>>(),
-        flow2 = tilState.filterIsInstance<Stateful.Success<TIL>>(),
-        transform = { user, codePost ->
-            user.data.id == codePost.data.author.id
-        }
-    ).stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(5000),
-        initialValue = false
+  val userState = userRepository.me()
+    .stateIn(
+      scope = viewModelScope,
+      started = SharingStarted.WhileSubscribed(5000),
+      initialValue = DataState.Loading
     )
 
-    var isScrapped by mutableStateOf(false)
+  val tilState = tilRepository
+    .withStatefulResult { getTIL(id = route.id) }
+    .stateIn(
+      scope = viewModelScope,
+      started = SharingStarted.WhileSubscribed(5000),
+      initialValue = Stateful.Loading
+    )
 
-    fun scrap() {
-        tilScrapRepository
-            .withStatefulResult { scrap(tilId = route.id) }
-            .onSuccess { isScrapped = !isScrapped }
-            .launchIn(viewModelScope)
+  val isAuthor = combine(
+    flow = userState.filterIsInstance<DataState.Success<User>>(),
+    flow2 = tilState.filterIsInstance<Stateful.Success<TIL>>(),
+    transform = { user, codePost ->
+      user.data.id == codePost.data.author.id
     }
+  ).stateIn(
+    scope = viewModelScope,
+    started = SharingStarted.WhileSubscribed(5000),
+    initialValue = false
+  )
+
+  var isScrapped by mutableStateOf(false)
+
+  fun scrap() {
+    tilScrapRepository
+      .withStatefulResult { scrap(tilId = route.id) }
+      .onSuccess { isScrapped = !isScrapped }
+      .launchIn(viewModelScope)
+  }
 }

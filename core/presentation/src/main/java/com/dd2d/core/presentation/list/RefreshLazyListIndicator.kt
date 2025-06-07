@@ -12,15 +12,15 @@ import androidx.compose.ui.Modifier
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BoxScope.RefreshLazyListIndicator(
-    isRefreshing: Boolean,
-    refreshState: PullToRefreshState,
-    modifier: Modifier = Modifier
+  isRefreshing: Boolean,
+  refreshState: PullToRefreshState,
+  modifier: Modifier = Modifier
 ) {
-    Indicator(
-        modifier = modifier.align(Alignment.TopCenter),
-        isRefreshing = isRefreshing,
-        color = MaterialTheme.colorScheme.primary,
-        containerColor = MaterialTheme.colorScheme.surfaceContainer,
-        state = refreshState
-    )
+  Indicator(
+    modifier = modifier.align(Alignment.TopCenter),
+    isRefreshing = isRefreshing,
+    color = MaterialTheme.colorScheme.primary,
+    containerColor = MaterialTheme.colorScheme.surfaceContainer,
+    state = refreshState
+  )
 }

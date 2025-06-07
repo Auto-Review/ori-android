@@ -14,24 +14,24 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import javax.inject.Inject
 
-internal class TILCreateSuccessResult(val id: Int): ActionResult
+internal class TILCreateSuccessResult(val id: Int) : ActionResult
 
 @HiltViewModel
 internal class TILCreateViewModel @Inject constructor(
-    private val tilRepository: TILRepository,
+  private val tilRepository: TILRepository,
 ) : ViewModel() {
-    val actionBus = CommonActionResultBus()
+  val actionBus = CommonActionResultBus()
 
-    val createState = TILCreateState()
+  val createState = TILCreateState()
 
-    fun create() {
-        tilRepository
-            .withStatefulResult { createTIL(createState.toTILCreator()) }
-            .onLoadingStateChanged { createState.isCreating = it }
-            .onError(actionBus::emitFailure)
-            .onSuccess { id ->
-                actionBus.newResult(TILCreateSuccessResult(id))
-            }
-            .launchIn(viewModelScope)
-    }
+  fun create() {
+    tilRepository
+      .withStatefulResult { createTIL(createState.toTILCreator()) }
+      .onLoadingStateChanged { createState.isCreating = it }
+      .onError(actionBus::emitFailure)
+      .onSuccess { id ->
+        actionBus.newResult(TILCreateSuccessResult(id))
+      }
+      .launchIn(viewModelScope)
+  }
 }

@@ -33,181 +33,179 @@ import com.dd2d.presentation.code_post.create.model.CodePostFormActionCompleteRe
 import com.dd2d.presentation.code_post.create.view_model.CodePostCreateViewModel
 
 private fun MessageHolder.backConfirmDialog(onBack: () -> Unit) {
-    dialogOf {
-        title = "뒤로가기"
-        content = "작성한 내용은 저장되지 않습니다.\n뒤로 가시겠습니까?"
-        addAction { text = "취소" }
-        addAction {
-            text = "뒤로가기"
-            onClick = { dismissRequest ->
-                dismissRequest()
-                onBack()
-            }
-        }
+  dialogOf {
+    title = "뒤로가기"
+    content = "작성한 내용은 저장되지 않습니다.\n뒤로 가시겠습니까?"
+    addAction { text = "취소" }
+    addAction {
+      text = "뒤로가기"
+      onClick = { dismissRequest ->
+        dismissRequest()
+        onBack()
+      }
     }
+  }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CodePostCreateScreen(
-    onBack: () -> Unit,
-    moveToCodePost: (postId: Int) -> Unit,
-    modifier: Modifier = Modifier
+  onBack: () -> Unit,
+  moveToCodePost: (postId: Int) -> Unit,
+  modifier: Modifier = Modifier
 ) {
-    val viewModel = hiltViewModel<CodePostCreateViewModel>()
-    val messageHolder = rememberMessageHolder()
+  val viewModel = hiltViewModel<CodePostCreateViewModel>()
+  val messageHolder = rememberMessageHolder()
 
-    fun backEvent() {
-        messageHolder.backConfirmDialog(onBack = onBack)
-    }
+  fun backEvent() {
+    messageHolder.backConfirmDialog(onBack = onBack)
+  }
 
-    LaunchedEffect(key1 = Unit) {
-        viewModel.actionBus.collectResult { result ->
-            val submitAction = if(viewModel.isCreateMode) "생성" else "수정"
-            when(result) {
-                is CommonActionResult.ActionFailure -> {
-                    messageHolder.defaultDialogOf {
-                        title = "게시물 $submitAction 실패"
-                        content = result.exception.message
-                    }
+  LaunchedEffect(key1 = Unit) {
+    viewModel.actionBus.collectResult { result ->
+      val submitAction = if (viewModel.isCreateMode) "생성" else "수정"
+      when (result) {
+        is CommonActionResult.ActionFailure -> {
+          messageHolder.defaultDialogOf {
+            title = "게시물 $submitAction 실패"
+            content = result.exception.message
+          }
+        }
+
+        is CodePostFormActionCompleteResult -> {
+          messageHolder.dialogOf {
+            title = "게시물을 ${submitAction}했습니다."
+            if (result.codePostId == null) {
+              addAction {
+                text = "확인"
+                onClick = { dismissRequest ->
+                  dismissRequest()
+                  onBack()
                 }
-                is CodePostFormActionCompleteResult -> {
-                    messageHolder.dialogOf {
-                        title = "게시물을 ${submitAction}했습니다."
-                        if(result.codePostId == null) {
-                            addAction {
-                                text = "확인"
-                                onClick = { dismissRequest ->
-                                    dismissRequest()
-                                    onBack()
-                                }
-                            }
-                        }
-                        else {
-                            content = "게시물로 이동할까요?"
-                            addAction {
-                                text = "아니오"
-                                onClick = { dismissRequest ->
-                                    dismissRequest()
-                                    onBack()
-                                }
-                            }
-                            addAction {
-                                text = "이동하기"
-                                onClick = { dismissRequest ->
-                                    dismissRequest()
-                                    onBack()
-                                    moveToCodePost(result.codePostId)
-                                }
-                            }
-                        }
-                    }
+              }
+            } else {
+              content = "게시물로 이동할까요?"
+              addAction {
+                text = "아니오"
+                onClick = { dismissRequest ->
+                  dismissRequest()
+                  onBack()
                 }
+              }
+              addAction {
+                text = "이동하기"
+                onClick = { dismissRequest ->
+                  dismissRequest()
+                  onBack()
+                  moveToCodePost(result.codePostId)
+                }
+              }
             }
+          }
         }
+      }
     }
+  }
 
-    MessageHandler(messageHolder = messageHolder)
-    BackHandler(onBack = ::backEvent)
+  MessageHandler(messageHolder = messageHolder)
+  BackHandler(onBack = ::backEvent)
 
-    Scaffold(
-        topBar = {
-            CenterTitleTopBar(
-                title = if(viewModel.isCreateMode) "생성" else "수정",
-                onBack = ::backEvent,
-                actions = {
-                    CodePostCreateStepButton(
-                        currentStep = viewModel.formState.step,
-                        onNextStep = viewModel.formState::nextStep,
-                        onPrevStep = viewModel.formState::prevStep,
-                        canComplete = viewModel.formState.canSubmit,
-                        onComplete = viewModel::submit,
-                        isLoading = viewModel.formState.isSubmitting
-                    )
-                }
-            )
-        },
-        modifier = modifier
-    ) { inner ->
-        if(viewModel.isLoading) {
-            LoadingDialog()
+  Scaffold(
+    topBar = {
+      CenterTitleTopBar(
+        title = if (viewModel.isCreateMode) "생성" else "수정",
+        onBack = ::backEvent,
+        actions = {
+          CodePostCreateStepButton(
+            currentStep = viewModel.formState.step,
+            onNextStep = viewModel.formState::nextStep,
+            onPrevStep = viewModel.formState::prevStep,
+            canComplete = viewModel.formState.canSubmit,
+            onComplete = viewModel::submit,
+            isLoading = viewModel.formState.isSubmitting
+          )
         }
-        else {
-            CodePostCreateScreenContent(
-                createState = viewModel.formState,
-                modifier = Modifier
-                    .consumeWindowInsets(inner)
-                    .fillMaxSize()
-                    .padding(inner)
-            )
-        }
+      )
+    },
+    modifier = modifier
+  ) { inner ->
+    if (viewModel.isLoading) {
+      LoadingDialog()
+    } else {
+      CodePostCreateScreenContent(
+        createState = viewModel.formState,
+        modifier = Modifier
+          .consumeWindowInsets(inner)
+          .fillMaxSize()
+          .padding(inner)
+      )
     }
+  }
 }
 
 @Composable
 private fun CodePostCreateStepButton(
-    currentStep: CodePostCreateStep,
-    onNextStep: () -> Unit,
-    onPrevStep: () -> Unit,
-    onComplete:() -> Unit,
-    isLoading: Boolean,
-    canComplete: Boolean,
-    modifier: Modifier = Modifier
+  currentStep: CodePostCreateStep,
+  onNextStep: () -> Unit,
+  onPrevStep: () -> Unit,
+  onComplete: () -> Unit,
+  isLoading: Boolean,
+  canComplete: Boolean,
+  modifier: Modifier = Modifier
 ) {
-    val keyboard = LocalSoftwareKeyboardController.current
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = modifier
-    ) {
-        if(isLoading) {
-            CircularProgressIndicator(
-                color = MaterialTheme.colorScheme.primary,
-                strokeWidth = 2.dp,
-                trackColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.5F),
-                modifier = Modifier.size(24.dp)
-            )
+  val keyboard = LocalSoftwareKeyboardController.current
+  Row(
+    verticalAlignment = Alignment.CenterVertically,
+    modifier = modifier
+  ) {
+    if (isLoading) {
+      CircularProgressIndicator(
+        color = MaterialTheme.colorScheme.primary,
+        strokeWidth = 2.dp,
+        trackColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.5F),
+        modifier = Modifier.size(24.dp)
+      )
+    } else {
+      if (currentStep.ordinal > 0) {
+        Main700Text(
+          text = "이전",
+          color = MaterialTheme.colorScheme.onSurface,
+          fontSize = 12.sp,
+          lineHeight = 24.sp,
+          modifier = Modifier
+            .clickable(onClick = onPrevStep)
+            .padding(10.dp)
+        )
+      }
+      if (currentStep.ordinal in 0..<CodePostCreateStep.entries.lastIndex) {
+        Main700Text(
+          text = "다음",
+          color = MaterialTheme.colorScheme.onSurface,
+          fontSize = 12.sp,
+          lineHeight = 24.sp,
+          modifier = Modifier
+            .clickable(onClick = onNextStep)
+            .padding(10.dp)
+        )
+      }
+      if (currentStep.ordinal == CodePostCreateStep.entries.lastIndex) {
+        AnimatedVisibility(
+          visible = canComplete
+        ) {
+          Main700Text(
+            text = "완료",
+            color = MaterialTheme.colorScheme.onSurface,
+            fontSize = 12.sp,
+            lineHeight = 24.sp,
+            modifier = Modifier
+              .clickable(enabled = canComplete) {
+                keyboard?.hide()
+                onComplete()
+              }
+              .padding(10.dp)
+          )
         }
-        else {
-            if(currentStep.ordinal > 0) {
-                Main700Text(
-                    text = "이전",
-                    color = MaterialTheme.colorScheme.onSurface,
-                    fontSize = 12.sp,
-                    lineHeight = 24.sp,
-                    modifier = Modifier
-                        .clickable(onClick = onPrevStep)
-                        .padding(10.dp)
-                )
-            }
-            if(currentStep.ordinal in 0..<CodePostCreateStep.entries.lastIndex) {
-                Main700Text(
-                    text = "다음",
-                    color = MaterialTheme.colorScheme.onSurface,
-                    fontSize = 12.sp,
-                    lineHeight = 24.sp,
-                    modifier = Modifier
-                        .clickable(onClick = onNextStep)
-                        .padding(10.dp)
-                )
-            }
-            if(currentStep.ordinal == CodePostCreateStep.entries.lastIndex) {
-                AnimatedVisibility(
-                    visible = canComplete
-                ) {
-                    Main700Text(
-                        text = "완료",
-                        color = MaterialTheme.colorScheme.onSurface,
-                        fontSize = 12.sp,
-                        lineHeight = 24.sp,
-                        modifier = Modifier
-                            .clickable(enabled = canComplete) {
-                                keyboard?.hide()
-                                onComplete()
-                            }
-                            .padding(10.dp)
-                    )
-                }
-            }
-        }
+      }
     }
+  }
 }

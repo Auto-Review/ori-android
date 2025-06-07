@@ -12,23 +12,23 @@ import com.dd2d.core.presentation.main_text.Main500Text
 
 @Composable
 fun ConfirmDialog(
-    title: String,
-    message: String?,
-    confirmText: String = stringResource(R.string.confirm),
-    onConfirm: () -> Unit,
+  title: String,
+  message: String?,
+  confirmText: String = stringResource(R.string.confirm),
+  onConfirm: () -> Unit,
 ) {
-    MainDialog(
-        title = title,
-        message = message,
-        onDismiss = onConfirm,
-        confirmButton = {
-            Main500Text(
-                text = confirmText,
-                fontSize = 16.sp,
-                modifier = Modifier
-                    .clickable(onClick = onConfirm)
-                    .padding(horizontal = 12.dp, vertical = 6.dp)
-            )
-        }
-    )
+  MainDialog(
+    title = title,
+    message = message,
+    onDismiss = onConfirm,
+    confirmButton = {
+      Main500Text(
+        text = confirmText,
+        fontSize = 16.sp,
+        modifier = Modifier
+          .clickable(onClick = onConfirm)
+          .padding(horizontal = 12.dp, vertical = 6.dp)
+      )
+    }
+  )
 }

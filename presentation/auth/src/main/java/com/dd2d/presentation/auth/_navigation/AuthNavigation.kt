@@ -13,19 +13,19 @@ import kotlinx.serialization.Serializable
 data object AuthScreenRoute : ScreenRoute
 
 fun NavGraphBuilder.routeAuthScreen(
-    onAuthSuccess: () -> Unit,
-    modifier: Modifier = Modifier,
+  onAuthSuccess: () -> Unit,
+  modifier: Modifier = Modifier,
 ) {
-    horizontalScreen<AuthScreenRoute> {
-        AuthScreen(
-            onAuthSuccess = onAuthSuccess,
-            modifier = modifier,
-        )
-    }
+  horizontalScreen<AuthScreenRoute> {
+    AuthScreen(
+      onAuthSuccess = onAuthSuccess,
+      modifier = modifier,
+    )
+  }
 }
 
 fun NavController.toAuthScreen() {
-    navigate(AuthScreenRoute) {
-        launchSingleTop = true
-    }
+  navigate(AuthScreenRoute) {
+    launchSingleTop = true
+  }
 }

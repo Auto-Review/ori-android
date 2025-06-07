@@ -12,25 +12,25 @@ import com.dd2d.domain.code_post.repository.CodePostScrapRepository
 import javax.inject.Inject
 
 class CodePostScrapRepositoryImpl @Inject constructor(
-    private val codePostScrapApi: CodePostScrapApi
-): CodePostScrapRepository {
-    override suspend fun toggleScrap(codePostId: Int): Result<Unit> {
-        return codePostScrapApi
-            .runCatching {
-                toggleScrap(body = CodePostToggleScrapRequestDto(codePostId = codePostId))
-            }
-    }
+  private val codePostScrapApi: CodePostScrapApi
+) : CodePostScrapRepository {
+  override suspend fun toggleScrap(codePostId: Int): Result<Unit> {
+    return codePostScrapApi
+      .runCatching {
+        toggleScrap(body = CodePostToggleScrapRequestDto(codePostId = codePostId))
+      }
+  }
 
-    override suspend fun getMyCodePostScrapList(option: CodePostScrapListOption): Result<Pagination<CodePostScrapListItem>> {
-        return codePostScrapApi
-            .runCatching {
-                getMyScrap(page = option.page, size = option.take)
-            }
-            .mapCatching { response ->
-                response.toPagination(
-                    requestPage = option.page,
-                    mapper = CodePostScrapListResponseDto::toCodePostScrapListItem
-                )
-            }
-    }
+  override suspend fun getMyCodePostScrapList(option: CodePostScrapListOption): Result<Pagination<CodePostScrapListItem>> {
+    return codePostScrapApi
+      .runCatching {
+        getMyScrap(page = option.page, size = option.take)
+      }
+      .mapCatching { response ->
+        response.toPagination(
+          requestPage = option.page,
+          mapper = CodePostScrapListResponseDto::toCodePostScrapListItem
+        )
+      }
+  }
 }

@@ -32,88 +32,88 @@ import com.dd2d.core.presentation.theme.AppTheme
 import kotlin.time.Duration.Companion.seconds
 
 private enum class AuthorAction(val label: String) {
-    Delete(label = "삭제"),
-    Update(label = "수정"),
+  Delete(label = "삭제"),
+  Update(label = "수정"),
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PostTapBar(
-    title: String,
-    onBack: () -> Unit,
-    isScrapped: Boolean,
-    toggleScrap: () -> Unit,
-    isAuthor: Boolean,
-    onUpdateClick: () -> Unit,
-    onDeleteClick: () -> Unit,
-    modifier: Modifier = Modifier
+  title: String,
+  onBack: () -> Unit,
+  isScrapped: Boolean,
+  toggleScrap: () -> Unit,
+  isAuthor: Boolean,
+  onUpdateClick: () -> Unit,
+  onDeleteClick: () -> Unit,
+  modifier: Modifier = Modifier
 ) {
-    var openMenu by remember { mutableStateOf(false) }
+  var openMenu by remember { mutableStateOf(false) }
 
-    TopAppBar(
-        title = {
-            Main700Text(
-                text = title,
-                color = MaterialTheme.colorScheme.onSurface,
-                fontSize = 20.sp,
-                lineHeight = 24.sp,
-            )
-        },
-        navigationIcon = {
-            IconButton(onClick = onBack) {
-                BackIcon()
+  TopAppBar(
+    title = {
+      Main700Text(
+        text = title,
+        color = MaterialTheme.colorScheme.onSurface,
+        fontSize = 20.sp,
+        lineHeight = 24.sp,
+      )
+    },
+    navigationIcon = {
+      IconButton(onClick = onBack) {
+        BackIcon()
+      }
+    },
+    actions = {
+      BookmarkIcon(
+        onBookMark = isScrapped,
+        modifier = Modifier
+          .clip(CircleShape)
+          .size(40.dp)
+          .delayedClickable(
+            delay = 0.5.seconds,
+            onClick = toggleScrap,
+            indication = ripple(bounded = false, radius = 60.dp)
+          )
+          .padding(10.dp)
+      )
+      if (isAuthor) {
+        VectorIconButton(icon = Icons.Default.MoreVert, onClick = { openMenu = true })
+        OptionSelector2(
+          open = openMenu,
+          close = { openMenu = false },
+          options = AuthorAction.entries.map(AuthorAction::label),
+          onOptionSelected = { index ->
+            when (AuthorAction.entries[index]) {
+              AuthorAction.Delete -> onDeleteClick()
+              AuthorAction.Update -> onUpdateClick()
             }
-        },
-        actions = {
-            BookmarkIcon(
-                onBookMark = isScrapped,
-                modifier = Modifier
-                    .clip(CircleShape)
-                    .size(40.dp)
-                    .delayedClickable(
-                        delay = 0.5.seconds,
-                        onClick = toggleScrap,
-                        indication = ripple(bounded = false, radius = 60.dp)
-                    )
-                    .padding(10.dp)
-            )
-            if(isAuthor) {
-                VectorIconButton(icon = Icons.Default.MoreVert, onClick = { openMenu = true })
-                OptionSelector2(
-                    open = openMenu,
-                    close = { openMenu = false },
-                    options = AuthorAction.entries.map(AuthorAction::label),
-                    onOptionSelected = { index ->
-                        when(AuthorAction.entries[index]) {
-                            AuthorAction.Delete -> onDeleteClick()
-                            AuthorAction.Update -> onUpdateClick()
-                        }
-                    },
-                )
-            }
-        },
-        colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = MaterialTheme.colorScheme.background,
-            navigationIconContentColor = MaterialTheme.colorScheme.onSurfaceVariant,
-            actionIconContentColor = MaterialTheme.colorScheme.onSurfaceVariant,
-        ),
-        modifier = modifier.fillMaxWidth(),
-    )
+          },
+        )
+      }
+    },
+    colors = TopAppBarDefaults.topAppBarColors(
+      containerColor = MaterialTheme.colorScheme.background,
+      navigationIconContentColor = MaterialTheme.colorScheme.onSurfaceVariant,
+      actionIconContentColor = MaterialTheme.colorScheme.onSurfaceVariant,
+    ),
+    modifier = modifier.fillMaxWidth(),
+  )
 }
 
 @Preview
 @Composable
 private fun PostTapBarPrev() {
-    AppTheme {
-        PostTapBar(
-            title = "게시물 제목",
-            onBack = {},
-            isScrapped = false,
-            toggleScrap = {},
-            isAuthor = true,
-            onUpdateClick = {},
-            onDeleteClick = {},
-            modifier = Modifier
-        )
-    }
+  AppTheme {
+    PostTapBar(
+      title = "게시물 제목",
+      onBack = {},
+      isScrapped = false,
+      toggleScrap = {},
+      isAuthor = true,
+      onUpdateClick = {},
+      onDeleteClick = {},
+      modifier = Modifier
+    )
+  }
 }

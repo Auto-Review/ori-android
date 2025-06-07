@@ -12,39 +12,43 @@ import androidx.compose.runtime.setValue
 
 @Composable
 fun MessageHandler(
-    messageHolder: MessageHolder,
-    messageHandlerType: MessageHandlerType = DefaultMessageHandlerType
+  messageHolder: MessageHolder,
+  messageHandlerType: MessageHandlerType = DefaultMessageHandlerType
 ) {
-    var message by remember { mutableStateOf<Message?>(null) }
-    val snackbarHostState = remember { SnackbarHostState() }
+  var message by remember { mutableStateOf<Message?>(null) }
+  val snackbarHostState = remember { SnackbarHostState() }
 
-    SnackbarHost(snackbarHostState)
-    LaunchedEffect(key1 = messageHolder) {
-        messageHolder.messages.collect { msg ->
-            when(msg) {
-                is Message.Snackbar -> {
-                    val snackbarResult = snackbarHostState.showSnackbar(
-                        message = msg.content,
-                        actionLabel = msg.actionLabel,
-                        withDismissAction = msg.onDismiss != null,
-                        duration = msg.duration,
-                    )
-                    when(snackbarResult) {
-                        SnackbarResult.Dismissed -> msg.onDismiss?.invoke()
-                        SnackbarResult.ActionPerformed -> msg.action?.invoke()
-                    }
-                }
-                else -> message = msg
-            }
+  SnackbarHost(snackbarHostState)
+  LaunchedEffect(key1 = messageHolder) {
+    messageHolder.messages.collect { msg ->
+      when (msg) {
+        is Message.Snackbar -> {
+          val snackbarResult = snackbarHostState.showSnackbar(
+            message = msg.content,
+            actionLabel = msg.actionLabel,
+            withDismissAction = msg.onDismiss != null,
+            duration = msg.duration,
+          )
+          when (snackbarResult) {
+            SnackbarResult.Dismissed -> msg.onDismiss?.invoke()
+            SnackbarResult.ActionPerformed -> msg.action?.invoke()
+          }
         }
-    }
 
-    message?.let { msg ->
-        when(msg) {
-            is Message.Dialog -> {
-                messageHandlerType.DialogType(message = msg, onDismiss = { message = null })
-            }
-            else -> { /** do nothing */ }
-        }
+        else -> message = msg
+      }
     }
+  }
+
+  message?.let { msg ->
+    when (msg) {
+      is Message.Dialog -> {
+        messageHandlerType.DialogType(message = msg, onDismiss = { message = null })
+      }
+
+      else -> {
+        /** do nothing */
+      }
+    }
+  }
 }

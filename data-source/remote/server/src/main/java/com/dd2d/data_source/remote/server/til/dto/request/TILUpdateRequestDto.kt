@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class TILUpdateRequestDto(
-    val id: Int,
-    val title: String? = null,
-    val content: String? = null,
+  val id: Int,
+  val title: String? = null,
+  val content: String? = null,
 )

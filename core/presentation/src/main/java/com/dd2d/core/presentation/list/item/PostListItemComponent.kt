@@ -14,33 +14,33 @@ import com.dd2d.core.presentation.main_text.Main500Text
 
 @Composable
 fun PostListItemComponent(
-    title: String,
-    authorName: String,
-    createdAt: DateString,
-    commentCount: Int?,
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier,
+  title: String,
+  authorName: String,
+  createdAt: DateString,
+  commentCount: Int?,
+  onClick: () -> Unit,
+  modifier: Modifier = Modifier,
 ) {
-    Column(
-        modifier = modifier
-            .fillMaxWidth()
-            .delayedClickable(onClick = onClick)
-            .padding(horizontal = 24.dp, vertical = 16.dp)
-    ) {
-        Main500Text(
-            text = title,
-            color = MaterialTheme.colorScheme.onSurface,
-            fontSize = 12.sp,
-            lineHeight = 16.sp,
-            modifier = Modifier.fillMaxWidth()
-        )
-        val commentCountText = commentCount?.let { " RE : $it" }?: ""
-        Main500Text(
-            text = "$authorName  $createdAt$commentCountText",
-            color = MaterialTheme.colorScheme.surfaceBright,
-            fontSize = 10.sp,
-            lineHeight = 16.sp,
-            modifier = Modifier.fillMaxWidth()
-        )
-    }
+  Column(
+    modifier = modifier
+      .fillMaxWidth()
+      .delayedClickable(onClick = onClick)
+      .padding(horizontal = 24.dp, vertical = 16.dp)
+  ) {
+    Main500Text(
+      text = title,
+      color = MaterialTheme.colorScheme.onSurface,
+      fontSize = 12.sp,
+      lineHeight = 16.sp,
+      modifier = Modifier.fillMaxWidth()
+    )
+    val commentCountText = commentCount?.let { " RE : $it" } ?: ""
+    Main500Text(
+      text = "$authorName  $createdAt$commentCountText",
+      color = MaterialTheme.colorScheme.surfaceBright,
+      fontSize = 10.sp,
+      lineHeight = 16.sp,
+      modifier = Modifier.fillMaxWidth()
+    )
+  }
 }

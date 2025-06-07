@@ -23,44 +23,45 @@ import com.dd2d.presentation.code_post.R
 
 @Composable
 internal fun CodeComponent(
-    code: Code,
-    modifier: Modifier = Modifier
+  code: Code,
+  modifier: Modifier = Modifier
 ) {
-    val clipboard = LocalClipboardManager.current
-    Column(
-        modifier = modifier
-            .padding(top = 10.dp)
-            .fillMaxWidth()
-            .background(MaterialTheme.colorScheme.outlineVariant, shape = MaterialTheme.shapes.small)
-            .padding(horizontal = 8.dp, vertical = 12.dp)
-    ){
-        Row(
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.fillMaxWidth()
-                .padding(horizontal = 12.dp)
-        ) {
-            Main400Text(
-                text = code.language?.label?: "-",
-                color = MaterialTheme.colorScheme.onSurface,
-                fontSize = 12.sp,
-                lineHeight = 16.8.sp
-            )
-            VectorIconButton(
-                res = R.drawable.copy,
-                iconSize = 16.dp
-            ) {
-                clipboard.setText(
-                    AnnotatedString(code.content)
-                )
-            }
-        }
-        Text(
-            text = code.content,
-            color = Color.LightGray,
-            fontSize = 16.sp,
-            lineHeight = 24.sp,
-            modifier = Modifier.padding(horizontal = 12.dp)
+  val clipboard = LocalClipboardManager.current
+  Column(
+    modifier = modifier
+      .padding(top = 10.dp)
+      .fillMaxWidth()
+      .background(MaterialTheme.colorScheme.outlineVariant, shape = MaterialTheme.shapes.small)
+      .padding(horizontal = 8.dp, vertical = 12.dp)
+  ) {
+    Row(
+      horizontalArrangement = Arrangement.SpaceBetween,
+      verticalAlignment = Alignment.CenterVertically,
+      modifier = Modifier
+        .fillMaxWidth()
+        .padding(horizontal = 12.dp)
+    ) {
+      Main400Text(
+        text = code.language?.label ?: "-",
+        color = MaterialTheme.colorScheme.onSurface,
+        fontSize = 12.sp,
+        lineHeight = 16.8.sp
+      )
+      VectorIconButton(
+        res = R.drawable.copy,
+        iconSize = 16.dp
+      ) {
+        clipboard.setText(
+          AnnotatedString(code.content)
         )
+      }
     }
+    Text(
+      text = code.content,
+      color = Color.LightGray,
+      fontSize = 16.sp,
+      lineHeight = 24.sp,
+      modifier = Modifier.padding(horizontal = 12.dp)
+    )
+  }
 }

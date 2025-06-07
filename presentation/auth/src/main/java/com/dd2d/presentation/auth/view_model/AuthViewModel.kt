@@ -20,21 +20,21 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class AuthViewModel @Inject constructor(
-    private val signInUseCase: SignInUseCase,
-    private val userRepository: UserRepository,
-): ViewModel(), UIStateManager {
-    override val uiState = MutableStateFlow<UIState>(UIState.Idle)
+  private val signInUseCase: SignInUseCase,
+  private val userRepository: UserRepository,
+) : ViewModel(), UIStateManager {
+  override val uiState = MutableStateFlow<UIState>(UIState.Idle)
 
-    fun auth(oAuthResult: OAuthResult) {
-        signInUseCase(request = AuthRequester(oAuthToken = oAuthResult.token))
-            .onEachState(
-                onLoading = { uiState.stateToLoading() },
-                onError = { uiState.stateToError(it) },
-                onSuccess = {
-                    userRepository.updateFCMToken(FCMModule.getFCMToken())
-                    uiState.stateToSuccess()
-                },
-            )
-            .launchIn(viewModelScope)
-    }
+  fun auth(oAuthResult: OAuthResult) {
+    signInUseCase(request = AuthRequester(oAuthToken = oAuthResult.token))
+      .onEachState(
+        onLoading = { uiState.stateToLoading() },
+        onError = { uiState.stateToError(it) },
+        onSuccess = {
+          userRepository.updateFCMToken(FCMModule.getFCMToken())
+          uiState.stateToSuccess()
+        },
+      )
+      .launchIn(viewModelScope)
+  }
 }

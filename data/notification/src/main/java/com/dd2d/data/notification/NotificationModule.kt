@@ -11,7 +11,7 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class NotificationModule {
-    @Binds
-    @Singleton
-    abstract fun bindNotificationRepository(impl: NotificationRepositoryImpl): NotificationRepository
+  @Binds
+  @Singleton
+  abstract fun bindNotificationRepository(impl: NotificationRepositoryImpl): NotificationRepository
 }

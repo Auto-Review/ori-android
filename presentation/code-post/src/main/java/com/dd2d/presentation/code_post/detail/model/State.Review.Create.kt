@@ -8,17 +8,17 @@ import com.dd2d.core.presentation.state.UIStateManager
 import com.dd2d.domain.code_post.model.review.CodePostReviewCreator
 import kotlinx.coroutines.flow.MutableStateFlow
 
-internal class ReviewCreateState: UIStateManager {
-    override val uiState = MutableStateFlow<UIState>(UIState.Idle)
+internal class ReviewCreateState : UIStateManager {
+  override val uiState = MutableStateFlow<UIState>(UIState.Idle)
 
-    var content by mutableStateOf("")
-    var description by mutableStateOf("")
-    
-    fun toCreator(codePostId: Int): CodePostReviewCreator {
-        return CodePostReviewCreator(
-            codePostId = codePostId,
-            review = description,
-            code = content,
-        )
-    }
+  var content by mutableStateOf("")
+  var description by mutableStateOf("")
+
+  fun toCreator(codePostId: Int): CodePostReviewCreator {
+    return CodePostReviewCreator(
+      codePostId = codePostId,
+      review = description,
+      code = content,
+    )
+  }
 }

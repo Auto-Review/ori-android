@@ -13,19 +13,19 @@ import kotlinx.serialization.Serializable
 data class MainScreenRoute(val selectedTabIndex: Int) : ScreenRoute
 
 fun NavGraphBuilder.routeMainScreen(
-    appNavController: NavController,
-    modifier: Modifier = Modifier,
+  appNavController: NavController,
+  modifier: Modifier = Modifier,
 ) {
-    fadeScreen<MainScreenRoute> {
-        MainScreen(
-            appNavController = appNavController,
-            modifier = modifier,
-        )
-    }
+  fadeScreen<MainScreenRoute> {
+    MainScreen(
+      appNavController = appNavController,
+      modifier = modifier,
+    )
+  }
 }
 
 fun NavController.toMainScreen(selectedTabIndex: Int = 2) {
-    navigate(MainScreenRoute(selectedTabIndex = selectedTabIndex)) {
-        launchSingleTop = true
-    }
+  navigate(MainScreenRoute(selectedTabIndex = selectedTabIndex)) {
+    launchSingleTop = true
+  }
 }

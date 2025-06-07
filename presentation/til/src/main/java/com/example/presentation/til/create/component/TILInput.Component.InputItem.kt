@@ -10,17 +10,17 @@ import com.dd2d.core.presentation.main_text.Main700Text
 
 @Composable
 internal inline fun InputItem(
-    label: String,
-    modifier: Modifier = Modifier,
-    content: @Composable ColumnScope.() -> Unit
+  label: String,
+  modifier: Modifier = Modifier,
+  content: @Composable ColumnScope.() -> Unit
 ) {
-    Column(modifier = modifier) {
-        Main700Text(
-            text = label,
-            color = MaterialTheme.colorScheme.onSurface,
-            fontSize = 12.sp,
-            lineHeight = 24.sp,
-        )
-        content()
-    }
+  Column(modifier = modifier) {
+    Main700Text(
+      text = label,
+      color = MaterialTheme.colorScheme.onSurface,
+      fontSize = 12.sp,
+      lineHeight = 24.sp,
+    )
+    content()
+  }
 }

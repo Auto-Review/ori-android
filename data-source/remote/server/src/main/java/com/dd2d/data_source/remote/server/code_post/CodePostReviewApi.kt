@@ -17,39 +17,39 @@ import javax.inject.Inject
 import javax.inject.Named
 
 class CodePostReviewApi @Inject constructor(
-    @Named("server_client") private val client: HttpClient,
-    private val tokenManager: TokenManager
+  @Named("server_client") private val client: HttpClient,
+  private val tokenManager: TokenManager
 ) {
-    suspend fun getCodePostReviewList(codePostId: Int): List<CodePostReviewResponseDto> = client
-        .get(urlString = "/v1/api/review/${codePostId}/list") {
-            authorizationHeader(tokenManager.getAccessToken())
-        }
-        .bodyHandling()
+  suspend fun getCodePostReviewList(codePostId: Int): List<CodePostReviewResponseDto> = client
+    .get(urlString = "/v1/api/review/${codePostId}/list") {
+      authorizationHeader(tokenManager.getAccessToken())
+    }
+    .bodyHandling()
 
-    suspend fun getCodePostReview(id: Int): CodePostReviewResponseDto = client
-        .get(urlString = "/v1/api/review/detail/${id}") {
-            authorizationHeader(tokenManager.getAccessToken())
-        }
-        .bodyHandling()
+  suspend fun getCodePostReview(id: Int): CodePostReviewResponseDto = client
+    .get(urlString = "/v1/api/review/detail/${id}") {
+      authorizationHeader(tokenManager.getAccessToken())
+    }
+    .bodyHandling()
 
-    suspend fun createCodePostReview(creator: CodePostReviewCreateRequestDto): String = client
-        .post(urlString = "/v1/api/review") {
-            authorizationHeader(tokenManager.getAccessToken())
-            setBody(creator)
-        }
-        .bodyHandling()
+  suspend fun createCodePostReview(creator: CodePostReviewCreateRequestDto): String = client
+    .post(urlString = "/v1/api/review") {
+      authorizationHeader(tokenManager.getAccessToken())
+      setBody(creator)
+    }
+    .bodyHandling()
 
-    suspend fun updateCodePostReview(updater: CodePostReviewUpdateRequestDto): String = client
-        .put(urlString = "/v1/api/review") {
-            authorizationHeader(tokenManager.getAccessToken())
-            setBody(updater)
-        }
-        .bodyHandling()
+  suspend fun updateCodePostReview(updater: CodePostReviewUpdateRequestDto): String = client
+    .put(urlString = "/v1/api/review") {
+      authorizationHeader(tokenManager.getAccessToken())
+      setBody(updater)
+    }
+    .bodyHandling()
 
-    suspend fun deleteCodePostReview(deleter: CodePostReviewDeleteRequestDto): String = client
-        .delete(urlString = "/v1/api/review") {
-            authorizationHeader(tokenManager.getAccessToken())
-            setBody(deleter)
-        }
-        .bodyHandling()
+  suspend fun deleteCodePostReview(deleter: CodePostReviewDeleteRequestDto): String = client
+    .delete(urlString = "/v1/api/review") {
+      authorizationHeader(tokenManager.getAccessToken())
+      setBody(deleter)
+    }
+    .bodyHandling()
 }

@@ -10,26 +10,26 @@ import java.time.YearMonth
 
 @Composable
 internal fun YearMonth(
-    yearMonth: YearMonth,
-    modifier: Modifier = Modifier
+  yearMonth: YearMonth,
+  modifier: Modifier = Modifier
 ) {
-    Box(
-        contentAlignment = Alignment.Center,
-        modifier = modifier
-    ) {
-        Text(text = yearMonth.label, fontSize = 14.sp)
-    }
+  Box(
+    contentAlignment = Alignment.Center,
+    modifier = modifier
+  ) {
+    Text(text = yearMonth.label, fontSize = 14.sp)
+  }
 }
 
 private val YearMonth.label: String
-    get() {
-        val monthText = when(monthValue) {
-            1 -> "January";   2 -> "February";   3 -> "March"
-            4 -> "April";     5 -> "May";        6 -> "June"
-            7 -> "July";      8 -> "August";     9 -> "September"
-            10 -> "October";  11 -> "November";  12 -> "December"
-            else -> ""
-        }
-
-        return "$monthText $year"
+  get() {
+    val monthText = when (monthValue) {
+      1 -> "January"; 2 -> "February"; 3 -> "March"
+      4 -> "April"; 5 -> "May"; 6 -> "June"
+      7 -> "July"; 8 -> "August"; 9 -> "September"
+      10 -> "October"; 11 -> "November"; 12 -> "December"
+      else -> ""
     }
+
+    return "$monthText $year"
+  }

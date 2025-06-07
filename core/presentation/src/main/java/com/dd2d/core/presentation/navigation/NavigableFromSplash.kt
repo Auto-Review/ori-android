@@ -37,6 +37,6 @@ import androidx.navigation.NavController
  * @see ScreenRoute
  */
 interface NavigableFromSplash {
-	/** 다음 화면으로 이동*/
-	fun navigate(navController: NavController)
+  /** 다음 화면으로 이동*/
+  fun navigate(navController: NavController)
 }

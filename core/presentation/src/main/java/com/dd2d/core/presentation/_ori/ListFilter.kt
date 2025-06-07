@@ -22,44 +22,44 @@ import com.dd2d.core.presentation.slot_main_text.SlotMain500Text
 
 @Composable
 fun ListFilter(
-    currentValue: String,
-    values: List<String>,
-    onValueClick: (index: Int) -> Unit,
-    modifier: Modifier = Modifier
+  currentValue: String,
+  values: List<String>,
+  onValueClick: (index: Int) -> Unit,
+  modifier: Modifier = Modifier
 ) {
-    var open by remember { mutableStateOf(false) }
-    OptionSelector(
-        open = open,
-        close = { open = !open },
-        options = values,
-        onOptionSelected = {
-            open = false
-            onValueClick(it)
-        },
-        modifier = modifier,
-        containerColor = MaterialTheme.colorScheme.background,
-    ) {
-        SlotMain500Text(
-            text = currentValue,
-            color = Color.White,
-            fontSize = 12.sp,
-            lineHeight = 24.sp,
-            letterSpacing = 2.sp,
-            suffixStartPadding = 4.dp,
-            suffix = {
-                VectorIcon(
-                    icon = Icons.Default.KeyboardArrowDown,
-                    tint = Color.White,
-                    modifier = Modifier.size(16.dp)
-                )
-            },
-            modifier = Modifier
-                .background(
-                    color = MaterialTheme.colorScheme.onSurface,
-                    shape = MaterialTheme.shapes.extraSmall
-                )
-                .clickable { open = !open }
-                .padding(horizontal = 10.dp, vertical = 8.dp)
+  var open by remember { mutableStateOf(false) }
+  OptionSelector(
+    open = open,
+    close = { open = !open },
+    options = values,
+    onOptionSelected = {
+      open = false
+      onValueClick(it)
+    },
+    modifier = modifier,
+    containerColor = MaterialTheme.colorScheme.background,
+  ) {
+    SlotMain500Text(
+      text = currentValue,
+      color = Color.White,
+      fontSize = 12.sp,
+      lineHeight = 24.sp,
+      letterSpacing = 2.sp,
+      suffixStartPadding = 4.dp,
+      suffix = {
+        VectorIcon(
+          icon = Icons.Default.KeyboardArrowDown,
+          tint = Color.White,
+          modifier = Modifier.size(16.dp)
         )
-    }
+      },
+      modifier = Modifier
+        .background(
+          color = MaterialTheme.colorScheme.onSurface,
+          shape = MaterialTheme.shapes.extraSmall
+        )
+        .clickable { open = !open }
+        .padding(horizontal = 10.dp, vertical = 8.dp)
+    )
+  }
 }

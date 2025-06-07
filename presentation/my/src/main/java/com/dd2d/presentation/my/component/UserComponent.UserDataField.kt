@@ -13,26 +13,26 @@ import com.dd2d.core.presentation.main_text.Main700Text
 
 @Composable
 internal fun UserDataField(
-    label: String,
-    value: String,
-    modifier: Modifier = Modifier
+  label: String,
+  value: String,
+  modifier: Modifier = Modifier
 ) {
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = modifier
-    ) {
-        Main700Text(
-            text = label,
-            fontSize = 12.sp,
-            lineHeight = 24.sp,
-            color = MaterialTheme.colorScheme.onSurface,
-            modifier = Modifier.fillMaxWidth(0.2F)
-        )
-        Main500Text(
-            text = value,
-            fontSize = 12.sp,
-            lineHeight = 24.sp,
-            color = MaterialTheme.colorScheme.onSurface,
-        )
-    }
+  Row(
+    verticalAlignment = Alignment.CenterVertically,
+    modifier = modifier
+  ) {
+    Main700Text(
+      text = label,
+      fontSize = 12.sp,
+      lineHeight = 24.sp,
+      color = MaterialTheme.colorScheme.onSurface,
+      modifier = Modifier.fillMaxWidth(0.2F)
+    )
+    Main500Text(
+      text = value,
+      fontSize = 12.sp,
+      lineHeight = 24.sp,
+      color = MaterialTheme.colorScheme.onSurface,
+    )
+  }
 }

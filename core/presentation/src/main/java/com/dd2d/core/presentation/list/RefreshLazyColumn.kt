@@ -47,91 +47,91 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RefreshLazyColumn(
-    onRefresh: () -> Unit,
-    onNextPage: () -> Unit,
-    isLoading: Boolean,
-    modifier: Modifier = Modifier,
-    refreshState: PullToRefreshState = rememberPullToRefreshState(),
-    isRefreshing: Boolean = false,
-    indicator: @Composable (BoxScope.() -> Unit) = {
-        RefreshLazyListIndicator(
-            isRefreshing = isRefreshing,
-            refreshState = refreshState,
-            modifier = Modifier.align(Alignment.TopCenter)
-        )
-    },
-    lazyState: LazyListState = rememberLazyListState(),
-    contentPadding: PaddingValues = PaddingValues(0.dp),
-    verticalArrangement: Arrangement.Vertical = Arrangement.Top,
-    horizontalAlignment: Alignment.Horizontal = Alignment.Start,
-    userScrollEnabled: Boolean = true,
-    reverseLayout: Boolean = false,
-    flingBehavior: FlingBehavior = ScrollableDefaults.flingBehavior(),
-    enableMoveTopButton: Boolean = true,
-    content: LazyListScope.() -> Unit,
+  onRefresh: () -> Unit,
+  onNextPage: () -> Unit,
+  isLoading: Boolean,
+  modifier: Modifier = Modifier,
+  refreshState: PullToRefreshState = rememberPullToRefreshState(),
+  isRefreshing: Boolean = false,
+  indicator: @Composable (BoxScope.() -> Unit) = {
+    RefreshLazyListIndicator(
+      isRefreshing = isRefreshing,
+      refreshState = refreshState,
+      modifier = Modifier.align(Alignment.TopCenter)
+    )
+  },
+  lazyState: LazyListState = rememberLazyListState(),
+  contentPadding: PaddingValues = PaddingValues(0.dp),
+  verticalArrangement: Arrangement.Vertical = Arrangement.Top,
+  horizontalAlignment: Alignment.Horizontal = Alignment.Start,
+  userScrollEnabled: Boolean = true,
+  reverseLayout: Boolean = false,
+  flingBehavior: FlingBehavior = ScrollableDefaults.flingBehavior(),
+  enableMoveTopButton: Boolean = true,
+  content: LazyListScope.() -> Unit,
 ) {
-    val scope = rememberCoroutineScope()
-    val isVisibleMoveTopButton by remember(key1 = lazyState) {
-        derivedStateOf { lazyState.canScrollBackward && !lazyState.isScrollInProgress }
-    }
+  val scope = rememberCoroutineScope()
+  val isVisibleMoveTopButton by remember(key1 = lazyState) {
+    derivedStateOf { lazyState.canScrollBackward && !lazyState.isScrollInProgress }
+  }
 
-    var innerLoading by remember { mutableStateOf(false) }
-    LaunchedEffect(key1 = isLoading, key2 = isRefreshing) {
-        innerLoading = isLoading || isRefreshing
-    }
+  var innerLoading by remember { mutableStateOf(false) }
+  LaunchedEffect(key1 = isLoading, key2 = isRefreshing) {
+    innerLoading = isLoading || isRefreshing
+  }
 
-    LaunchedEffect(key1 = lazyState) {
-        snapshotFlow { lazyState.layoutInfo.visibleItemsInfo.lastOrNull()?.index?: 0 }
-            .filter { lastIndex ->
-                lastIndex >= lazyState.layoutInfo.totalItemsCount * 0.5F
-            }
-            .collect {
-                if(!innerLoading) {
-                    innerLoading = true
-                    onNextPage()
-                }
-            }
-    }
-
-    PullToRefreshBox(
-        state = refreshState,
-        isRefreshing = isRefreshing,
-        onRefresh = onRefresh,
-        indicator = indicator,
-        modifier = modifier
-    ) {
-        LazyColumn(
-            state = lazyState,
-            contentPadding = contentPadding,
-            verticalArrangement = verticalArrangement,
-            horizontalAlignment = horizontalAlignment,
-            userScrollEnabled = userScrollEnabled,
-            reverseLayout = reverseLayout,
-            flingBehavior = flingBehavior,
-            content = content,
-            modifier = Modifier.matchParentSize()
-        )
-        AnimatedVisibility(
-            visible = enableMoveTopButton && isVisibleMoveTopButton,
-            enter = fadeIn(),
-            exit = fadeOut(),
-            modifier = Modifier
-                .navigationBarsPadding()
-                .offset(y = (-20).dp)
-                .align(Alignment.BottomCenter)
-                .size(30.dp)
-        ) {
-            Icon(
-                imageVector = Icons.Default.KeyboardArrowUp,
-                contentDescription = "맨 위로 이동",
-                tint = MaterialTheme.colorScheme.primary,
-                modifier = Modifier
-                    .fillMaxSize()
-                    .clip(CircleShape)
-                    .background(color = MaterialTheme.colorScheme.surface)
-                    .border(width = 1.dp, color = MaterialTheme.colorScheme.outlineVariant)
-                    .clickable { scope.launch { lazyState.animateScrollToItem(0) } }
-            )
+  LaunchedEffect(key1 = lazyState) {
+    snapshotFlow { lazyState.layoutInfo.visibleItemsInfo.lastOrNull()?.index ?: 0 }
+      .filter { lastIndex ->
+        lastIndex >= lazyState.layoutInfo.totalItemsCount * 0.5F
+      }
+      .collect {
+        if (!innerLoading) {
+          innerLoading = true
+          onNextPage()
         }
+      }
+  }
+
+  PullToRefreshBox(
+    state = refreshState,
+    isRefreshing = isRefreshing,
+    onRefresh = onRefresh,
+    indicator = indicator,
+    modifier = modifier
+  ) {
+    LazyColumn(
+      state = lazyState,
+      contentPadding = contentPadding,
+      verticalArrangement = verticalArrangement,
+      horizontalAlignment = horizontalAlignment,
+      userScrollEnabled = userScrollEnabled,
+      reverseLayout = reverseLayout,
+      flingBehavior = flingBehavior,
+      content = content,
+      modifier = Modifier.matchParentSize()
+    )
+    AnimatedVisibility(
+      visible = enableMoveTopButton && isVisibleMoveTopButton,
+      enter = fadeIn(),
+      exit = fadeOut(),
+      modifier = Modifier
+        .navigationBarsPadding()
+        .offset(y = (-20).dp)
+        .align(Alignment.BottomCenter)
+        .size(30.dp)
+    ) {
+      Icon(
+        imageVector = Icons.Default.KeyboardArrowUp,
+        contentDescription = "맨 위로 이동",
+        tint = MaterialTheme.colorScheme.primary,
+        modifier = Modifier
+          .fillMaxSize()
+          .clip(CircleShape)
+          .background(color = MaterialTheme.colorScheme.surface)
+          .border(width = 1.dp, color = MaterialTheme.colorScheme.outlineVariant)
+          .clickable { scope.launch { lazyState.animateScrollToItem(0) } }
+      )
     }
+  }
 }

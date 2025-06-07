@@ -17,27 +17,27 @@ import com.example.presentation.til.detail.component.TILContentComponent
 
 @Composable
 internal fun TILScreenContent(
-    til: TIL,
-    modifier: Modifier = Modifier
+  til: TIL,
+  modifier: Modifier = Modifier
 ) {
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState())
-            .padding(horizontal = 24.dp, vertical = 8.dp)
-    ) {
-        TILContentComponent(til = til)
-    }
+  Column(
+    modifier = modifier
+      .fillMaxSize()
+      .verticalScroll(rememberScrollState())
+      .padding(horizontal = 24.dp, vertical = 8.dp)
+  ) {
+    TILContentComponent(til = til)
+  }
 }
 
 @Preview(showBackground = true)
 @Composable
 private fun TILScreenContentPrev() {
-    AppTheme {
-        TILScreenContent(
-            til = TIL.dummy(),
-            modifier = Modifier
-                .background(Color.White)
-        )
-    }
+  AppTheme {
+    TILScreenContent(
+      til = TIL.dummy(),
+      modifier = Modifier
+        .background(Color.White)
+    )
+  }
 }

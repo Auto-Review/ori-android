@@ -22,70 +22,70 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun ColumnSurface(
-    modifier: Modifier = Modifier,
-    shape: Shape = RectangleShape,
-    color: Color = MaterialTheme.colorScheme.surface,
-    contentColor: Color = contentColorFor(color),
-    elevation: Dp = 0.dp,
-    border: BorderStroke? = null,
-    verticalArrangement: Arrangement.Vertical = Arrangement.Top,
-    horizontalAlignment: Alignment.Horizontal = Alignment.Start,
-    contentPadding: PaddingValues = PaddingValues(),
-    content: @Composable ColumnScope.() -> Unit
+  modifier: Modifier = Modifier,
+  shape: Shape = RectangleShape,
+  color: Color = MaterialTheme.colorScheme.surface,
+  contentColor: Color = contentColorFor(color),
+  elevation: Dp = 0.dp,
+  border: BorderStroke? = null,
+  verticalArrangement: Arrangement.Vertical = Arrangement.Top,
+  horizontalAlignment: Alignment.Horizontal = Alignment.Start,
+  contentPadding: PaddingValues = PaddingValues(),
+  content: @Composable ColumnScope.() -> Unit
 ) {
-    Surface(
-        shape = shape,
-        color = color,
-        contentColor = contentColor,
-        shadowElevation = elevation,
-        border = border,
-        modifier = modifier,
-    ) {
-        Column(
-            verticalArrangement = verticalArrangement,
-            horizontalAlignment = horizontalAlignment,
-            content = content,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(contentPadding)
-        )
-    }
+  Surface(
+    shape = shape,
+    color = color,
+    contentColor = contentColor,
+    shadowElevation = elevation,
+    border = border,
+    modifier = modifier,
+  ) {
+    Column(
+      verticalArrangement = verticalArrangement,
+      horizontalAlignment = horizontalAlignment,
+      content = content,
+      modifier = Modifier
+        .fillMaxWidth()
+        .padding(contentPadding)
+    )
+  }
 }
 
 @Composable
 fun ColumnSurface(
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier,
-    interactionSource: MutableInteractionSource? = null,
-    enabled: Boolean = true,
-    shape: Shape = RectangleShape,
-    color: Color = MaterialTheme.colorScheme.surface,
-    contentColor: Color = contentColorFor(color),
-    elevation: Dp = 0.dp,
-    border: BorderStroke? = null,
-    verticalArrangement: Arrangement.Vertical = Arrangement.Top,
-    horizontalAlignment: Alignment.Horizontal = Alignment.Start,
-    contentPadding: PaddingValues = PaddingValues(),
-    content: @Composable ColumnScope.() -> Unit
+  onClick: () -> Unit,
+  modifier: Modifier = Modifier,
+  interactionSource: MutableInteractionSource? = null,
+  enabled: Boolean = true,
+  shape: Shape = RectangleShape,
+  color: Color = MaterialTheme.colorScheme.surface,
+  contentColor: Color = contentColorFor(color),
+  elevation: Dp = 0.dp,
+  border: BorderStroke? = null,
+  verticalArrangement: Arrangement.Vertical = Arrangement.Top,
+  horizontalAlignment: Alignment.Horizontal = Alignment.Start,
+  contentPadding: PaddingValues = PaddingValues(),
+  content: @Composable ColumnScope.() -> Unit
 ) {
-    Surface(
-        onClick = onClick,
-        enabled = enabled,
-        interactionSource = interactionSource,
-        shape = shape,
-        color = color,
-        contentColor = contentColor,
-        shadowElevation = elevation,
-        border = border,
-        modifier = modifier,
-    ) {
-        Column(
-            verticalArrangement = verticalArrangement,
-            horizontalAlignment = horizontalAlignment,
-            content = content,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(contentPadding)
-        )
-    }
+  Surface(
+    onClick = onClick,
+    enabled = enabled,
+    interactionSource = interactionSource,
+    shape = shape,
+    color = color,
+    contentColor = contentColor,
+    shadowElevation = elevation,
+    border = border,
+    modifier = modifier,
+  ) {
+    Column(
+      verticalArrangement = verticalArrangement,
+      horizontalAlignment = horizontalAlignment,
+      content = content,
+      modifier = Modifier
+        .fillMaxWidth()
+        .padding(contentPadding)
+    )
+  }
 }

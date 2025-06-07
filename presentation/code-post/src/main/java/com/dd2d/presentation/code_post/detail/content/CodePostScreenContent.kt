@@ -33,116 +33,124 @@ import kotlinx.coroutines.launch
 
 @Composable
 internal fun CodePostScreenContent(
-    user: User?,
-    codePost: CodePost,
-    reviewStateHolder: ReviewStateHolder,
-    onReviewCreateClick: () -> Unit,
-    onReviewUpdateClick: (reviewId: Int) -> Unit,
-    commentStateHolder: CommentStateHolder,
-    modifier: Modifier = Modifier
+  user: User?,
+  codePost: CodePost,
+  reviewStateHolder: ReviewStateHolder,
+  onReviewCreateClick: () -> Unit,
+  onReviewUpdateClick: (reviewId: Int) -> Unit,
+  commentStateHolder: CommentStateHolder,
+  modifier: Modifier = Modifier
 ) {
-    val pagerState = rememberPagerState { reviewStateHolder.reviewList.size + 1 }
-    val scope = rememberCoroutineScope()
+  val pagerState = rememberPagerState { reviewStateHolder.reviewList.size + 1 }
+  val scope = rememberCoroutineScope()
 
-    Column(
-        modifier = modifier
-            .imePadding()
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState())
-            .padding(horizontal = 24.dp, vertical = 8.dp)
-    ) {
-        CodePostLevelComponent(
-            level = codePost.level,
-            onReviewCreateClick = if(user?.id == codePost.author.id) onReviewCreateClick else null
-        )
-        ReviewListComponent(
-            controllable = codePost.author.id == user?.id,
-            reviewList = reviewStateHolder.reviewList,
-            focusedReviewIndex = if(pagerState.currentPage == 0) null else pagerState.currentPage - 1,
-            onReviewClick = { index ->
-                scope.launch {
-                    if(index == null) pagerState.scrollToPage(0)
-                    else pagerState.scrollToPage(index + 1)
-                }
-            },
-            onEditClick = onReviewUpdateClick,
-            onDeleteClick = { id ->
-                user?.let {
-                    reviewStateHolder.deleteReview(reviewId = id, authorEmail = user.email)
-                }
-            },
-        )
-        HorizontalPager(
-            state = pagerState,
-            verticalAlignment = Alignment.Top,
-            pageSpacing = 16.dp,
-        ) { page ->
-            if(page == 0) {
-                Column {
-                    CodePostHeaderComponent(codePost = codePost)
-                    CodeEditor(
-                        initialCode = codePost.code.content,
-                        onCodeChange = {},
-                        language = codePost.code.language,
-                        onLanguageChange = null,
-                        readOnly = true,
-                        modifier = Modifier.padding(top = 10.dp).fillMaxWidth(),
-                    )
-                }
-            }
-            else {
-                val review = reviewStateHolder.reviewList[page - 1]
-                Column {
-                    CodePostHeaderComponent(codePost = codePost.copy(description = review.review))
-                    CodeEditor(
-                        initialCode = codePost.code.content,
-                        onCodeChange = {},
-                        language = codePost.code.language,
-                        onLanguageChange = null,
-                        readOnly = true,
-                        modifier = Modifier.padding(top = 10.dp).fillMaxWidth(),
-                    )
-                }
-            }
+  Column(
+    modifier = modifier
+      .imePadding()
+      .fillMaxSize()
+      .verticalScroll(rememberScrollState())
+      .padding(horizontal = 24.dp, vertical = 8.dp)
+  ) {
+    CodePostLevelComponent(
+      level = codePost.level,
+      onReviewCreateClick = if (user?.id == codePost.author.id) onReviewCreateClick else null
+    )
+    ReviewListComponent(
+      controllable = codePost.author.id == user?.id,
+      reviewList = reviewStateHolder.reviewList,
+      focusedReviewIndex = if (pagerState.currentPage == 0) null else pagerState.currentPage - 1,
+      onReviewClick = { index ->
+        scope.launch {
+          if (index == null) pagerState.scrollToPage(0)
+          else pagerState.scrollToPage(index + 1)
         }
-        CommentComposition(
-            user = user,
-            commentStateHolder = commentStateHolder,
+      },
+      onEditClick = onReviewUpdateClick,
+      onDeleteClick = { id ->
+        user?.let {
+          reviewStateHolder.deleteReview(reviewId = id, authorEmail = user.email)
+        }
+      },
+    )
+    HorizontalPager(
+      state = pagerState,
+      verticalAlignment = Alignment.Top,
+      pageSpacing = 16.dp,
+    ) { page ->
+      if (page == 0) {
+        Column {
+          CodePostHeaderComponent(codePost = codePost)
+          CodeEditor(
+            initialCode = codePost.code.content,
+            onCodeChange = {},
+            language = codePost.code.language,
+            onLanguageChange = null,
+            readOnly = true,
             modifier = Modifier
-                .padding(top = 30.dp)
-                .fillMaxWidth()
-        )
+              .padding(top = 10.dp)
+              .fillMaxWidth(),
+          )
+        }
+      } else {
+        val review = reviewStateHolder.reviewList[page - 1]
+        Column {
+          CodePostHeaderComponent(codePost = codePost.copy(description = review.review))
+          CodeEditor(
+            initialCode = codePost.code.content,
+            onCodeChange = {},
+            language = codePost.code.language,
+            onLanguageChange = null,
+            readOnly = true,
+            modifier = Modifier
+              .padding(top = 10.dp)
+              .fillMaxWidth(),
+          )
+        }
+      }
     }
+    CommentComposition(
+      user = user,
+      commentStateHolder = commentStateHolder,
+      modifier = Modifier
+        .padding(top = 30.dp)
+        .fillMaxWidth()
+    )
+  }
 }
-
 
 
 @Preview(showBackground = true)
 @Composable
 private fun CodePostScreenContentPrev() {
-    val id = 1
-    val scope = rememberCoroutineScope()
+  val id = 1
+  val scope = rememberCoroutineScope()
 
-    val reviewStateHolder = ReviewStateHolder(id, scope, { emptyFlow() }, { emptyFlow() })
-    val commentStateHolder = CommentStateHolder(id, scope, { emptyFlow() }, { emptyFlow() }, { emptyFlow() }, { emptyFlow() })
+  val reviewStateHolder = ReviewStateHolder(id, scope, { emptyFlow() }, { emptyFlow() })
+  val commentStateHolder = CommentStateHolder(
+    id,
+    scope,
+    { emptyFlow() },
+    { emptyFlow() },
+    { emptyFlow() },
+    { emptyFlow() })
 
-    AppTheme {
-        Column(
-            verticalArrangement = Arrangement.Top,
-            horizontalAlignment = Alignment.Start,
-            modifier = Modifier
-                .fillMaxSize()
-                .background(Color.White)
-        ) {
-            CodePostScreenContent(
-                user = User.dummy(),
-                codePost = CodePost.dummy(),
-                reviewStateHolder = reviewStateHolder,
-                onReviewCreateClick = {},
-                onReviewUpdateClick = {},
-                commentStateHolder = commentStateHolder,
-                modifier = Modifier
-            )
-        }
+  AppTheme {
+    Column(
+      verticalArrangement = Arrangement.Top,
+      horizontalAlignment = Alignment.Start,
+      modifier = Modifier
+        .fillMaxSize()
+        .background(Color.White)
+    ) {
+      CodePostScreenContent(
+        user = User.dummy(),
+        codePost = CodePost.dummy(),
+        reviewStateHolder = reviewStateHolder,
+        onReviewCreateClick = {},
+        onReviewUpdateClick = {},
+        commentStateHolder = commentStateHolder,
+        modifier = Modifier
+      )
     }
+  }
 }

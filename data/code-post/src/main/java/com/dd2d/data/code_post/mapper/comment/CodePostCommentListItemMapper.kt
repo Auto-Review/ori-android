@@ -7,13 +7,17 @@ import com.dd2d.domain.code_post.model.comment.CodePostCommentAuthor
 import com.dd2d.domain.code_post.model.comment.CodePostCommentListItem
 
 internal fun CodePostCommentListItemResponseDto.toCodePostCommentListItem(): CodePostCommentListItem {
-    return CodePostCommentListItem(
-        id = this.id,
-        parentCommentId = this.id,
-        author = CodePostCommentAuthor(id = this.writerId, nickname = this.writerNickName, email = this.writerEmail),
-        mentionNickname = this.mentionNickName,
-        mentionEmail = this.mentionEmail,
-        content = this.body,
-        createdAt = this.createdAt.utcToLocalDateTime().format("yyyy-MM-dd HH:mm")
-    )
+  return CodePostCommentListItem(
+    id = this.id,
+    parentCommentId = this.id,
+    author = CodePostCommentAuthor(
+      id = this.writerId,
+      nickname = this.writerNickName,
+      email = this.writerEmail
+    ),
+    mentionNickname = this.mentionNickName,
+    mentionEmail = this.mentionEmail,
+    content = this.body,
+    createdAt = this.createdAt.utcToLocalDateTime().format("yyyy-MM-dd HH:mm")
+  )
 }

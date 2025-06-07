@@ -16,23 +16,23 @@ import com.dd2d.core.presentation._ori.InputItem
 
 @Composable
 internal fun CodePostDescriptionInput(
-    descriptionTextState: TextFieldState,
-    modifier: Modifier = Modifier
+  descriptionTextState: TextFieldState,
+  modifier: Modifier = Modifier
 ) {
-    InputItem(label = "Description", modifier = modifier) {
-        BasicTextField(
-            state = descriptionTextState,
-            lineLimits = TextFieldLineLimits.MultiLine(minHeightInLines = 5),
-            cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
-            modifier = Modifier
-                .fillMaxSize()
-                .clip(shape = MaterialTheme.shapes.small)
-                .border(
-                    width = 1.dp,
-                    color = MaterialTheme.colorScheme.outline,
-                    shape = MaterialTheme.shapes.small
-                )
-                .padding(14.dp)
+  InputItem(label = "Description", modifier = modifier) {
+    BasicTextField(
+      state = descriptionTextState,
+      lineLimits = TextFieldLineLimits.MultiLine(minHeightInLines = 5),
+      cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
+      modifier = Modifier
+        .fillMaxSize()
+        .clip(shape = MaterialTheme.shapes.small)
+        .border(
+          width = 1.dp,
+          color = MaterialTheme.colorScheme.outline,
+          shape = MaterialTheme.shapes.small
         )
-    }
+        .padding(14.dp)
+    )
+  }
 }

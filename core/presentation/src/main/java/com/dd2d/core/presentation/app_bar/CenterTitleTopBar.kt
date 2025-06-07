@@ -18,34 +18,34 @@ import com.dd2d.core.presentation.main_text.Main500Text
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CenterTitleTopBar(
-    title: String,
-    modifier: Modifier = Modifier,
-    onBack: (() -> Unit)? = null,
-    useCloseIcon: Boolean = false,
-    actions: @Composable RowScope.() -> Unit = {},
-    colors: TopAppBarColors =  TopAppBarDefaults.centerAlignedTopAppBarColors(
-        containerColor = MaterialTheme.colorScheme.background,
-    ),
-    scrollBehavior: TopAppBarScrollBehavior? = null
+  title: String,
+  modifier: Modifier = Modifier,
+  onBack: (() -> Unit)? = null,
+  useCloseIcon: Boolean = false,
+  actions: @Composable RowScope.() -> Unit = {},
+  colors: TopAppBarColors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+    containerColor = MaterialTheme.colorScheme.background,
+  ),
+  scrollBehavior: TopAppBarScrollBehavior? = null
 ) {
-    CenterAlignedTopAppBar(
-        title = {
-            Main500Text(
-                text = title,
-                fontSize = 18.sp
-            )
-        },
-        modifier = modifier,
-        navigationIcon = {
-            if (onBack != null) {
-                IconButton(onClick = onBack) {
-                    if(useCloseIcon) CloseIcon()
-                    else BackIcon()
-                }
-            }
-        },
-        actions = actions,
-        colors = colors,
-        scrollBehavior = scrollBehavior,
-    )
+  CenterAlignedTopAppBar(
+    title = {
+      Main500Text(
+        text = title,
+        fontSize = 18.sp
+      )
+    },
+    modifier = modifier,
+    navigationIcon = {
+      if (onBack != null) {
+        IconButton(onClick = onBack) {
+          if (useCloseIcon) CloseIcon()
+          else BackIcon()
+        }
+      }
+    },
+    actions = actions,
+    colors = colors,
+    scrollBehavior = scrollBehavior,
+  )
 }

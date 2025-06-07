@@ -14,26 +14,26 @@ import com.dd2d.core.presentation.dialog.ConfirmDialog
 
 @Composable
 internal fun AuthExpireHandler(
-    onConfirm: () -> Unit,
+  onConfirm: () -> Unit,
 ) {
-    val lifecycleOwner = LocalLifecycleOwner.current
-    var openConfirmDialog by rememberSaveable { mutableStateOf(false) }
-    LaunchedEffect(lifecycleOwner) {
-        lifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-            NetworkModule.onAuthExpired.collect {
-                openConfirmDialog = true
-            }
-        }
+  val lifecycleOwner = LocalLifecycleOwner.current
+  var openConfirmDialog by rememberSaveable { mutableStateOf(false) }
+  LaunchedEffect(lifecycleOwner) {
+    lifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+      NetworkModule.onAuthExpired.collect {
+        openConfirmDialog = true
+      }
     }
+  }
 
-    if(openConfirmDialog) {
-        ConfirmDialog(
-            title = "로그인이 만료되었습니다.",
-            message= null,
-            onConfirm = {
-                openConfirmDialog = false
-                onConfirm()
-            },
-        )
-    }
+  if (openConfirmDialog) {
+    ConfirmDialog(
+      title = "로그인이 만료되었습니다.",
+      message = null,
+      onConfirm = {
+        openConfirmDialog = false
+        onConfirm()
+      },
+    )
+  }
 }

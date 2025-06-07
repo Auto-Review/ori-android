@@ -17,42 +17,44 @@ import com.dd2d.domain.code_post.model.post.CodePostListItem
 
 @Composable
 internal fun CodePostListItemComponent(
-    item: CodePostListItem,
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier
+  item: CodePostListItem,
+  onClick: () -> Unit,
+  modifier: Modifier = Modifier
 ) {
+  Row(
+    horizontalArrangement = Arrangement.SpaceBetween,
+    verticalAlignment = Alignment.CenterVertically,
+    modifier = modifier
+      .delayedClickable(onClick = onClick)
+      .padding(horizontal = 24.dp, vertical = 7.dp)
+  ) {
+    Main500Text(
+      text = item.title,
+      color = MaterialTheme.colorScheme.onSurface,
+      fontSize = 12.sp,
+      lineHeight = 24.sp,
+      modifier = Modifier
+        .weight(1F)
+        .basicMarquee()
+    )
     Row(
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = modifier
-            .delayedClickable(onClick = onClick)
-            .padding(horizontal = 24.dp, vertical = 7.dp)
+      horizontalArrangement = Arrangement.spacedBy(15.dp),
+      verticalAlignment = Alignment.Top,
+      modifier = Modifier
     ) {
-        Main500Text(
-            text = item.title,
-            color = MaterialTheme.colorScheme.onSurface,
-            fontSize = 12.sp,
-            lineHeight = 24.sp,
-            modifier = Modifier.weight(1F).basicMarquee()
-        )
-        Row(
-            horizontalArrangement = Arrangement.spacedBy(15.dp),
-            verticalAlignment = Alignment.Top,
-            modifier = Modifier
-        ) {
-            Main500Text(
-                text = "RE: ${item.commentCount}",
-                color = MaterialTheme.colorScheme.surfaceBright,
-                fontSize = 12.sp,
-                lineHeight = 24.sp,
-            )
-            Main500Text(
-                text = item.createdAt,
-                color = MaterialTheme.colorScheme.surfaceBright,
-                fontSize = 12.sp,
-                lineHeight = 24.sp,
-                textAlign = TextAlign.End,
-            )
-        }
+      Main500Text(
+        text = "RE: ${item.commentCount}",
+        color = MaterialTheme.colorScheme.surfaceBright,
+        fontSize = 12.sp,
+        lineHeight = 24.sp,
+      )
+      Main500Text(
+        text = item.createdAt,
+        color = MaterialTheme.colorScheme.surfaceBright,
+        fontSize = 12.sp,
+        lineHeight = 24.sp,
+        textAlign = TextAlign.End,
+      )
     }
+  }
 }

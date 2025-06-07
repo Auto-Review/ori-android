@@ -16,29 +16,29 @@ import com.dd2d.domain.code_post.model.scrap.CodePostScrapListOption
 @ExperimentalMaterial3Api
 @Composable
 internal fun CodePostScrapListContent(
-    listController: LazyListController<CodePostScrapListOption, CodePostScrapListItem>,
-    onDetailClick: (tilId: Int) -> Unit,
-    modifier: Modifier = Modifier
+  listController: LazyListController<CodePostScrapListOption, CodePostScrapListItem>,
+  onDetailClick: (tilId: Int) -> Unit,
+  modifier: Modifier = Modifier
 ) {
-    RefreshLazyColumn(
-        controller = listController,
-        modifier = modifier.fillMaxSize()
-    ) {
-        items(
-            items = listController.list,
-            key = CodePostScrapListItem::id
-        ) { item ->
-            PostListItemComponent(
-                title = item.codePostTitle,
-                authorName = item.writer,
-                createdAt = item.createdAt,
-                commentCount = item.commentCount,
-                onClick = { onDetailClick(item.codePostId) },
-                modifier = Modifier
-                    .animateItem()
-                    .fillMaxWidth(),
-            )
-            HorizontalDivider()
-        }
+  RefreshLazyColumn(
+    controller = listController,
+    modifier = modifier.fillMaxSize()
+  ) {
+    items(
+      items = listController.list,
+      key = CodePostScrapListItem::id
+    ) { item ->
+      PostListItemComponent(
+        title = item.codePostTitle,
+        authorName = item.writer,
+        createdAt = item.createdAt,
+        commentCount = item.commentCount,
+        onClick = { onDetailClick(item.codePostId) },
+        modifier = Modifier
+          .animateItem()
+          .fillMaxWidth(),
+      )
+      HorizontalDivider()
     }
+  }
 }

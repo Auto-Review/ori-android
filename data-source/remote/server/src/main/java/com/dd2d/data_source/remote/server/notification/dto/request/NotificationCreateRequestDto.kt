@@ -5,6 +5,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class NotificationCreateRequestDto(
-    val codePostId: Int,
-    val reviewDay: String
+  val codePostId: Int,
+  val reviewDay: String
 )

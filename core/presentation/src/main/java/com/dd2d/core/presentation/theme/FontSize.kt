@@ -6,10 +6,10 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 
 val Int.tp: TextUnit
-    @Composable get() = with(LocalDensity.current) { this@tp.dp.toSp() }
+  @Composable get() = with(LocalDensity.current) { this@tp.dp.toSp() }
 
 val Float.tp: TextUnit
-    @Composable get() = with(LocalDensity.current) { this@tp.dp.toSp() }
+  @Composable get() = with(LocalDensity.current) { this@tp.dp.toSp() }
 
 val Double.tp: TextUnit
-    @Composable get() = with(LocalDensity.current) { this@tp.dp.toSp() }
+  @Composable get() = with(LocalDensity.current) { this@tp.dp.toSp() }

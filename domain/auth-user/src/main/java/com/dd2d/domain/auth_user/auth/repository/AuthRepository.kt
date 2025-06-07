@@ -7,6 +7,6 @@ import com.dd2d.domain.auth_user.auth.model.AuthState
 import kotlinx.coroutines.flow.Flow
 
 interface AuthRepository {
-    fun auth(requester: AuthRequester): Flow<DataState<AuthResult>>
-    fun getAuthState(): Flow<AuthState>
+  fun auth(requester: AuthRequester): Flow<DataState<AuthResult>>
+  fun getAuthState(): Flow<AuthState>
 }

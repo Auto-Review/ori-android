@@ -11,13 +11,13 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class TILListViewModel @Inject constructor(
-    private val tilRepository: TILRepository,
+  private val tilRepository: TILRepository,
 ) : ViewModel() {
-    val tilListController = LazyListController(
-        option = TILListOptions(),
-        scope = viewModelScope,
-        getList = tilRepository::getTILList,
-    )
+  val tilListController = LazyListController(
+    option = TILListOptions(),
+    scope = viewModelScope,
+    getList = tilRepository::getTILList,
+  )
 
 //    val listManager = RefreshLazyListManager(
 //        initialListOption = TILListOptions(),

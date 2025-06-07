@@ -5,10 +5,10 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class NotificationResponseDto(
-    val id: Int,
-    val codePostId: Int,
-    val content: String,
-    val executeTime: String,
-    val status: String,
-    val checked: Boolean
+  val id: Int,
+  val codePostId: Int,
+  val content: String,
+  val executeTime: String,
+  val status: String,
+  val checked: Boolean
 )

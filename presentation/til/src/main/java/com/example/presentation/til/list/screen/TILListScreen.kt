@@ -12,19 +12,19 @@ import com.example.presentation.til.list.view_model.TILListViewModel
 
 @Composable
 fun TILListScreen(
-    onTILClick: (id: Int) -> Unit,
-    modifier: Modifier = Modifier
+  onTILClick: (id: Int) -> Unit,
+  modifier: Modifier = Modifier
 ) {
-    val viewModel = hiltViewModel<TILListViewModel>()
+  val viewModel = hiltViewModel<TILListViewModel>()
 
-    Scaffold { inner ->
-        TILListScreenContent(
-            listController = viewModel.tilListController,
-            onItemClick = onTILClick,
-            modifier = modifier
-                .consumeWindowInsets(inner)
-                .fillMaxSize()
-                .padding(inner)
-        )
-    }
+  Scaffold { inner ->
+    TILListScreenContent(
+      listController = viewModel.tilListController,
+      onItemClick = onTILClick,
+      modifier = modifier
+        .consumeWindowInsets(inner)
+        .fillMaxSize()
+        .padding(inner)
+    )
+  }
 }

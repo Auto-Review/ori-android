@@ -25,71 +25,74 @@ import com.dd2d.core.presentation.theme.AppTheme
 
 @Composable
 fun MainButton(
-    text: String,
-    modifier: Modifier = Modifier.fillMaxWidth().height(54.dp),
-    shape: Shape = RectangleShape,
-    isLoading: Boolean = false,
-    enabled: Boolean = true,
-    colors: MainButtonColors = MainButtonDefaults.mainButtonColors(),
-    onClick: () -> Unit,
+  text: String,
+  modifier: Modifier = Modifier
+    .fillMaxWidth()
+    .height(54.dp),
+  shape: Shape = RectangleShape,
+  isLoading: Boolean = false,
+  enabled: Boolean = true,
+  colors: MainButtonColors = MainButtonDefaults.mainButtonColors(),
+  onClick: () -> Unit,
 ) {
-    Button(
-        onClick = onClick,
-        shape = shape,
-        colors = ButtonDefaults.buttonColors(
-            containerColor = colors.containerColor,
-            contentColor = colors.contentColor,
-            disabledContainerColor = if(isLoading) colors.loadingContainerColor else colors.disabledContainerColor,
-            disabledContentColor = if(isLoading) colors.loadingContentColor else colors.disabledContentColor
-        ),
-        enabled = enabled && !isLoading,
-        modifier = modifier
-    ) {
-        if(isLoading) {
-            CircularProgressIndicator(
-                color = MaterialTheme.colorScheme.onPrimary,
-                strokeWidth = 3.dp,
-                trackColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.5F),
-                strokeCap = StrokeCap.Round,
-                modifier = Modifier.fillMaxHeight(0.5F).aspectRatio(1F)
-            )
-        }
-        else {
-            Main600Text(
-                text = text,
-                fontSize = 18.sp
-            )
-        }
+  Button(
+    onClick = onClick,
+    shape = shape,
+    colors = ButtonDefaults.buttonColors(
+      containerColor = colors.containerColor,
+      contentColor = colors.contentColor,
+      disabledContainerColor = if (isLoading) colors.loadingContainerColor else colors.disabledContainerColor,
+      disabledContentColor = if (isLoading) colors.loadingContentColor else colors.disabledContentColor
+    ),
+    enabled = enabled && !isLoading,
+    modifier = modifier
+  ) {
+    if (isLoading) {
+      CircularProgressIndicator(
+        color = MaterialTheme.colorScheme.onPrimary,
+        strokeWidth = 3.dp,
+        trackColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.5F),
+        strokeCap = StrokeCap.Round,
+        modifier = Modifier
+          .fillMaxHeight(0.5F)
+          .aspectRatio(1F)
+      )
+    } else {
+      Main600Text(
+        text = text,
+        fontSize = 18.sp
+      )
     }
+  }
 }
 
 @Preview
 @Preview(locale = "ko")
 @Composable
 private fun MainButtonPrev() {
-    AppTheme {
-        Column(
-            verticalArrangement = Arrangement.spacedBy(40.dp),
-            horizontalAlignment = Alignment.Start,
-            modifier = Modifier
-                .fillMaxSize()
-        ) {
-            MainButton(
-                text = "테스트",
-                isLoading = false,
-                onClick = {},
-            )
-            MainButton(
-                text = "테스트",
-                isLoading = false,
-                enabled = false,
-                onClick = {},
-            )
-            MainButton(
-                text = "테스트",
-                isLoading = true,
-                onClick = {},
-            )
-        }
+  AppTheme {
+    Column(
+      verticalArrangement = Arrangement.spacedBy(40.dp),
+      horizontalAlignment = Alignment.Start,
+      modifier = Modifier
+        .fillMaxSize()
+    ) {
+      MainButton(
+        text = "테스트",
+        isLoading = false,
+        onClick = {},
+      )
+      MainButton(
+        text = "테스트",
+        isLoading = false,
+        enabled = false,
+        onClick = {},
+      )
+      MainButton(
+        text = "테스트",
+        isLoading = true,
+        onClick = {},
+      )
     }
+  }
 }

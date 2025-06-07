@@ -12,29 +12,29 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data object TILListScreenRoute : ScreenRoute, BottomBarItem {
-    override val route: ScreenRoute = this
-    override val labelRes: Int = com.dd2d.core.presentation.R.string.tab_til
-    override val iconRes: Int = com.dd2d.core.presentation.R.drawable.tab_til
+  override val route: ScreenRoute = this
+  override val labelRes: Int = com.dd2d.core.presentation.R.string.tab_til
+  override val iconRes: Int = com.dd2d.core.presentation.R.drawable.tab_til
 
-    override fun navigate(navController: NavController) {
-        navController.toTILListScreen()
-    }
+  override fun navigate(navController: NavController) {
+    navController.toTILListScreen()
+  }
 }
 
 fun NavGraphBuilder.routeTILListScreen(
-    onTILClick: (tilId: Int) -> Unit,
-    modifier: Modifier = Modifier,
+  onTILClick: (tilId: Int) -> Unit,
+  modifier: Modifier = Modifier,
 ) {
-    fadeScreen<TILListScreenRoute> {
-        TILListScreen(
-            onTILClick = onTILClick,
-            modifier = modifier,
-        )
-    }
+  fadeScreen<TILListScreenRoute> {
+    TILListScreen(
+      onTILClick = onTILClick,
+      modifier = modifier,
+    )
+  }
 }
 
 fun NavController.toTILListScreen() {
-    navigate(TILListScreenRoute) {
-        launchSingleTop = true
-    }
+  navigate(TILListScreenRoute) {
+    launchSingleTop = true
+  }
 }

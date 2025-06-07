@@ -11,14 +11,14 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.unit.dp
 
 @Composable
-internal fun BoxScope.DefaultLoadingIndicator () {
-    CircularProgressIndicator(
-        color = MaterialTheme.colorScheme.primary,
-        trackColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.5F),
-        strokeCap = StrokeCap.Round,
-        strokeWidth = 2.dp,
-        modifier = Modifier
-            .align(Alignment.CenterEnd)
-            .size(20.dp)
-    )
+internal fun BoxScope.DefaultLoadingIndicator() {
+  CircularProgressIndicator(
+    color = MaterialTheme.colorScheme.primary,
+    trackColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.5F),
+    strokeCap = StrokeCap.Round,
+    strokeWidth = 2.dp,
+    modifier = Modifier
+      .align(Alignment.CenterEnd)
+      .size(20.dp)
+  )
 }

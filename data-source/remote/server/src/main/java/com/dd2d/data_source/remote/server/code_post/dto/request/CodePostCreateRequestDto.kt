@@ -5,11 +5,11 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class CodePostCreateRequestDto(
-    val title: String,
-    val level: Int,
-    val isPublic: Boolean,
-    val reviewDay: DateString,
-    val description: String,
-    val language: String,
-    val code: String,
+  val title: String,
+  val level: Int,
+  val isPublic: Boolean,
+  val reviewDay: DateString,
+  val description: String,
+  val language: String,
+  val code: String,
 )

@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class CodePostReviewCreateRequestDto(
-    val codePostId: Int,
-    val code: String,
-    val description: String
+  val codePostId: Int,
+  val code: String,
+  val description: String
 )

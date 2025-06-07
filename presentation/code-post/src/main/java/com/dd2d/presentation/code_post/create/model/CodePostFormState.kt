@@ -12,68 +12,70 @@ import com.dd2d.domain.code_post.model.post.CodePostUpdater
 import java.time.LocalDateTime
 
 internal class CodePostFormState {
-    var step by mutableStateOf(CodePostCreateStep.First)
-        private set
-    fun prevStep() {
-        if(step == CodePostCreateStep.entries.first()) {
-            return
-        }
+  var step by mutableStateOf(CodePostCreateStep.First)
+    private set
 
-        step = CodePostCreateStep.entries[step.ordinal - 1]
-    }
-    fun nextStep() {
-        if(step == CodePostCreateStep.entries.last()) {
-            return
-        }
-
-        step = CodePostCreateStep.entries[step.ordinal + 1]
+  fun prevStep() {
+    if (step == CodePostCreateStep.entries.first()) {
+      return
     }
 
-    var title by mutableStateOf("")
-    val maxLevel = 5
-    var level by mutableIntStateOf(0)
-    var language by mutableStateOf<Code.Language?>(null)
-    var isPublic by mutableStateOf(true)
-    var reviewDate by mutableStateOf<LocalDateTime?>(null)
-    var descriptionTextState = TextFieldState()
-    var codeTextState = TextFieldState()
+    step = CodePostCreateStep.entries[step.ordinal - 1]
+  }
 
-    val canSubmit by derivedStateOf {
-        title.isNotBlank()
-                && level > 0
-                && language != null
-                && descriptionTextState.text.isNotBlank()
-                && codeTextState.text.isNotBlank()
+  fun nextStep() {
+    if (step == CodePostCreateStep.entries.last()) {
+      return
     }
 
-    var isSubmitting by mutableStateOf(false)
+    step = CodePostCreateStep.entries[step.ordinal + 1]
+  }
 
-    fun toCodePostCreator(): CodePostCreator {
-        return CodePostCreator(
-            title = title,
-            level = level,
-            code = Code(
-                language = language!!,
-                content = codeTextState.text.toString()
-            ),
-            description = descriptionTextState.text.toString(),
-            isPublic = isPublic,
-            reviewDate = reviewDate,
-        )
-    }
+  var title by mutableStateOf("")
+  val maxLevel = 5
+  var level by mutableIntStateOf(0)
+  var language by mutableStateOf<Code.Language?>(null)
+  var isPublic by mutableStateOf(true)
+  var reviewDate by mutableStateOf<LocalDateTime?>(null)
+  var descriptionTextState = TextFieldState()
+  var codeTextState = TextFieldState()
 
-    fun toCodePostUpdater(id: Int): CodePostUpdater {
-        return CodePostUpdater(
-            id = id,
-            title = title,
-            code = Code(
-                language = language,
-                content = codeTextState.text.toString(),
-            ),
-            description = descriptionTextState.text.toString(),
-            level = level,
-            isPublic = isPublic,
-            reviewDate = reviewDate,
-        )
-    }
+  val canSubmit by derivedStateOf {
+    title.isNotBlank()
+        && level > 0
+        && language != null
+        && descriptionTextState.text.isNotBlank()
+        && codeTextState.text.isNotBlank()
+  }
+
+  var isSubmitting by mutableStateOf(false)
+
+  fun toCodePostCreator(): CodePostCreator {
+    return CodePostCreator(
+      title = title,
+      level = level,
+      code = Code(
+        language = language!!,
+        content = codeTextState.text.toString()
+      ),
+      description = descriptionTextState.text.toString(),
+      isPublic = isPublic,
+      reviewDate = reviewDate,
+    )
+  }
+
+  fun toCodePostUpdater(id: Int): CodePostUpdater {
+    return CodePostUpdater(
+      id = id,
+      title = title,
+      code = Code(
+        language = language,
+        content = codeTextState.text.toString(),
+      ),
+      description = descriptionTextState.text.toString(),
+      level = level,
+      isPublic = isPublic,
+      reviewDate = reviewDate,
+    )
+  }
 }

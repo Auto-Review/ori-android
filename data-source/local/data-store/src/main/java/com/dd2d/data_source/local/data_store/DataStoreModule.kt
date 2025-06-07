@@ -11,11 +11,11 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class DataStoreModule {
-    @Binds
-    @Singleton
-    abstract fun bindDataStoreManager(impl: DataStoreManagerImpl): DataStoreManager
+  @Binds
+  @Singleton
+  abstract fun bindDataStoreManager(impl: DataStoreManagerImpl): DataStoreManager
 
-    @Binds
-    @Singleton
-    abstract fun bindTokenManager(impl: TokenManagerImpl): TokenManager
+  @Binds
+  @Singleton
+  abstract fun bindTokenManager(impl: TokenManagerImpl): TokenManager
 }

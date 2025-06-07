@@ -14,37 +14,37 @@ import javax.inject.Inject
 private val Context.dataStore by preferencesDataStore("token_manager")
 
 class TokenManagerImpl @Inject constructor(
-    @ApplicationContext private val context: Context
-): TokenManager {
-    companion object {
-        private var accessToken: String? = null
-    }
+  @ApplicationContext private val context: Context
+) : TokenManager {
+  companion object {
+    private var accessToken: String? = null
+  }
 
-    private val storage = context.dataStore
-    private val accessTokenKey = stringPreferencesKey(name = "access_token")
-    private val refreshTokenKey = stringPreferencesKey(name = "refresh_token")
+  private val storage = context.dataStore
+  private val accessTokenKey = stringPreferencesKey(name = "access_token")
+  private val refreshTokenKey = stringPreferencesKey(name = "refresh_token")
 
-    override suspend fun getAccessToken(): String {
-        return accessToken?: storage.data
-            .map { pref -> pref[accessTokenKey] }
-            .catch { emit("") }
-            .firstOrNull() ?: ""
-            .also { accessToken = it }
-    }
+  override suspend fun getAccessToken(): String {
+    return accessToken ?: storage.data
+      .map { pref -> pref[accessTokenKey] }
+      .catch { emit("") }
+      .firstOrNull() ?: ""
+      .also { accessToken = it }
+  }
 
-    override suspend fun getRefreshToken(): String {
-        return storage.data
-            .map { pref -> pref[refreshTokenKey] }
-            .catch { emit("") }
-            .firstOrNull() ?: ""
-    }
+  override suspend fun getRefreshToken(): String {
+    return storage.data
+      .map { pref -> pref[refreshTokenKey] }
+      .catch { emit("") }
+      .firstOrNull() ?: ""
+  }
 
-    override suspend fun saveAuthToken(accessToken: String, refreshToken: String?) {
-        storage.edit { pref ->
-            pref[accessTokenKey] = accessToken
-            refreshToken?.let { refresh ->
-                pref[refreshTokenKey] = refresh
-            }
-        }
+  override suspend fun saveAuthToken(accessToken: String, refreshToken: String?) {
+    storage.edit { pref ->
+      pref[accessTokenKey] = accessToken
+      refreshToken?.let { refresh ->
+        pref[refreshTokenKey] = refresh
+      }
     }
+  }
 }

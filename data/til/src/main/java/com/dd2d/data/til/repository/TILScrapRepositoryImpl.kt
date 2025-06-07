@@ -12,25 +12,28 @@ import com.dd2d.domain.til.repository.TILScrapRepository
 import javax.inject.Inject
 
 class TILScrapRepositoryImpl @Inject constructor(
-    private val tilScrapApi: TILScrapApi
-): TILScrapRepository {
-    override suspend fun getMyScrapList(option: TILScrapListOption): Result<Pagination<TILListItem>> {
-        return tilScrapApi
-            .runCatching {
-                getMyScrapList(
-                    page = option.page,
-                    size = option.take,
-                )
-            }
-            .mapCatching { response ->
-                response.toPagination(requestPage = option.page, mapper = TILListItemResponseDto::toTILListItem)
-            }
-    }
+  private val tilScrapApi: TILScrapApi
+) : TILScrapRepository {
+  override suspend fun getMyScrapList(option: TILScrapListOption): Result<Pagination<TILListItem>> {
+    return tilScrapApi
+      .runCatching {
+        getMyScrapList(
+          page = option.page,
+          size = option.take,
+        )
+      }
+      .mapCatching { response ->
+        response.toPagination(
+          requestPage = option.page,
+          mapper = TILListItemResponseDto::toTILListItem
+        )
+      }
+  }
 
-    override suspend fun scrap(tilId: Int): Result<Unit> {
-        return tilScrapApi
-            .runCatching {
-                createScrap(body = TILScrapCreateRequestDto(postId = tilId))
-            }
-    }
+  override suspend fun scrap(tilId: Int): Result<Unit> {
+    return tilScrapApi
+      .runCatching {
+        createScrap(body = TILScrapCreateRequestDto(postId = tilId))
+      }
+  }
 }

@@ -5,6 +5,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class CodePostCommentDeleteRequestDto(
-    val commentId: Int,
-    val writerId: Int
+  val commentId: Int,
+  val writerId: Int
 )

@@ -1,6 +1,5 @@
 package com.dd2d.presentation.scrap.list.content
 
-import android.util.Log
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -26,101 +25,100 @@ import com.dd2d.domain.til.model.TILScrapListOption
 import com.dd2d.presentation.scrap.list.component.ScrapTopBar
 
 private enum class Tabs(val label: String) {
-    Code(label = "CODE"),
-    TIL(label = "TIL"),
+  Code(label = "CODE"),
+  TIL(label = "TIL"),
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun ScrapScreenContent(
-    onClose: () -> Unit,
-    codePostScrapListController: LazyListController<CodePostScrapListOption, CodePostScrapListItem>,
-    onCodePostClick: (codePostId: Int) -> Unit,
-    tilScrapListController: LazyListController<TILScrapListOption, TILListItem>,
-    onTILClick: (tilId: Int) -> Unit,
-    modifier: Modifier = Modifier
+  onClose: () -> Unit,
+  codePostScrapListController: LazyListController<CodePostScrapListOption, CodePostScrapListItem>,
+  onCodePostClick: (codePostId: Int) -> Unit,
+  tilScrapListController: LazyListController<TILScrapListOption, TILListItem>,
+  onTILClick: (tilId: Int) -> Unit,
+  modifier: Modifier = Modifier
 ) {
+  val pagerState = rememberPagerState { Tabs.entries.size }
 
-    Log.d("LOG_CHECK", "ScrapScreenContent: ${codePostScrapListController.state}")
-    val pagerState = rememberPagerState { Tabs.entries.size }
-
-    Scaffold(
-        topBar = { ScrapTopBar(onBack = onClose) },
-        modifier = modifier.fillMaxSize()
-    ) { inner ->
-        MainPagerTab(
-            pagerState = pagerState,
-            tabs = Tabs.entries.map(Tabs::label),
-            modifier = Modifier
-                .consumeWindowInsets(inner)
-                .fillMaxSize()
-                .padding(inner)
-        ) { page ->
-            when(page) {
-                Tabs.Code.ordinal -> {
-                    CodePostScrapListContent(
-                        listController = codePostScrapListController,
-                        onDetailClick = onCodePostClick,
-                        modifier = Modifier.fillMaxSize()
-                    )
-                }
-                Tabs.TIL.ordinal -> {
-                    TILScrapListContent(
-                        listController = tilScrapListController,
-                        onDetailClick = onTILClick,
-                        modifier = Modifier.fillMaxSize()
-                    )
-                }
-            }
+  Scaffold(
+    topBar = { ScrapTopBar(onBack = onClose) },
+    modifier = modifier.fillMaxSize()
+  ) { inner ->
+    MainPagerTab(
+      pagerState = pagerState,
+      tabs = Tabs.entries.map(Tabs::label),
+      modifier = Modifier
+        .consumeWindowInsets(inner)
+        .fillMaxSize()
+        .padding(inner)
+    ) { page ->
+      when (page) {
+        Tabs.Code.ordinal -> {
+          CodePostScrapListContent(
+            listController = codePostScrapListController,
+            onDetailClick = onCodePostClick,
+            modifier = Modifier.fillMaxSize()
+          )
         }
+
+        Tabs.TIL.ordinal -> {
+          TILScrapListContent(
+            listController = tilScrapListController,
+            onDetailClick = onTILClick,
+            modifier = Modifier.fillMaxSize()
+          )
+        }
+      }
     }
+  }
 }
 
 @Preview
 @Composable
 private fun ScrapScreenContentPrev() {
-    val scope = rememberCoroutineScope()
-    val codePostList = remember {
-        Pagination(
-            list = List(40) {
-                CodePostScrapListItem.dummy(it)
-            },
-            currentPage = 1,
-            totalPage = 10,
-            totalItemCount = 40,
-        )
-    }
-    val tilList = remember {
-        Pagination(
-            list = List(40) {
-                TILListItem.dummy(it)
-            },
-            currentPage = 1,
-            totalPage = 10,
-            totalItemCount = 40,
-        )
-    }
-    AppTheme {
-        CompositionLocalProvider(
-            LocalHansType provides hansType
-        ) {
+  val scope = rememberCoroutineScope()
+  val codePostList = remember {
+    Pagination(
+      list = List(40) {
+        CodePostScrapListItem.dummy(it)
+      },
+      currentPage = 1,
+      totalPage = 10,
+      totalItemCount = 40,
+    )
+  }
+  val tilList = remember {
+    Pagination(
+      list = List(40) {
+        TILListItem.dummy(it)
+      },
+      currentPage = 1,
+      totalPage = 10,
+      totalItemCount = 40,
+    )
+  }
+  AppTheme {
+    CompositionLocalProvider(
+      LocalHansType provides hansType
+    ) {
 
-            ScrapScreenContent(
-                onClose = {},
-                codePostScrapListController = LazyListController(
-                    option = CodePostScrapListOption(),
-                    scope = scope,
-                    getList = { Result.success(codePostList) },
-                ),
-                onCodePostClick = {},
-                tilScrapListController = LazyListController(
-                    option = TILScrapListOption(),
-                    scope = scope,
-                    getList = { Result.success(tilList) },
-                ),
-                onTILClick = {},
-                modifier = Modifier
-            )
-        }
+      ScrapScreenContent(
+        onClose = {},
+        codePostScrapListController = LazyListController(
+          option = CodePostScrapListOption(),
+          scope = scope,
+          getList = { Result.success(codePostList) },
+        ),
+        onCodePostClick = {},
+        tilScrapListController = LazyListController(
+          option = TILScrapListOption(),
+          scope = scope,
+          getList = { Result.success(tilList) },
+        ),
+        onTILClick = {},
+        modifier = Modifier
+      )
     }
+  }
 }

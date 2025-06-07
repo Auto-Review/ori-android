@@ -21,35 +21,35 @@ import com.dd2d.presentation.schedule.view_model.ScheduleViewModel
 
 @Composable
 fun ScheduleScreen(
-    onScheduleClick: (codePostId: Int) -> Unit,
-    modifier: Modifier = Modifier
+  onScheduleClick: (codePostId: Int) -> Unit,
+  modifier: Modifier = Modifier
 ) {
-    val viewModel = hiltViewModel<ScheduleViewModel>()
+  val viewModel = hiltViewModel<ScheduleViewModel>()
 
-    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-    var exception by remember { mutableStateOf<ManagedException?>(null) }
+  val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+  var exception by remember { mutableStateOf<ManagedException?>(null) }
 
-    LaunchedEffect(uiState) {
-        exception = (uiState as? UIState.Error)?.exception
+  LaunchedEffect(uiState) {
+    exception = (uiState as? UIState.Error)?.exception
+  }
+
+  Scaffold(modifier = modifier) { inner ->
+    ScheduleScreenContent(
+      schedules = viewModel.schedules,
+      onYearMonthChange = viewModel::updateYearMonth,
+      onRefresh = viewModel::refresh,
+      isRefreshing = viewModel.isRefreshing,
+      onScheduleClick = onScheduleClick,
+      modifier = Modifier
+        .consumeWindowInsets(inner)
+        .fillMaxSize()
+        .padding(inner)
+    )
+  }
+
+  exception?.let { e ->
+    ErrorDialog(exception = e) {
+      exception = null
     }
-
-    Scaffold(modifier = modifier) { inner ->
-        ScheduleScreenContent(
-            schedules = viewModel.schedules,
-            onYearMonthChange = viewModel::updateYearMonth,
-            onRefresh = viewModel::refresh,
-            isRefreshing = viewModel.isRefreshing,
-            onScheduleClick = onScheduleClick,
-            modifier = Modifier
-                .consumeWindowInsets(inner)
-                .fillMaxSize()
-                .padding(inner)
-        )
-    }
-
-    exception?.let { e ->
-        ErrorDialog(exception = e) {
-            exception = null
-        }
-    }
+  }
 }

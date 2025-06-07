@@ -26,53 +26,53 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class CodePostReviewCreateViewModel @Inject constructor(
-    savedStateHandle: SavedStateHandle,
-    userRepository: UserRepository,
-    private val codePostReviewRepository: CodePostReviewRepository,
+  savedStateHandle: SavedStateHandle,
+  userRepository: UserRepository,
+  private val codePostReviewRepository: CodePostReviewRepository,
 ) : ViewModel(), UIStateManager {
-    override val uiState = MutableStateFlow<UIState>(UIState.Idle)
-    val route = savedStateHandle.toRoute<CodePostReviewCreateScreenRoute>()
+  override val uiState = MutableStateFlow<UIState>(UIState.Idle)
+  val route = savedStateHandle.toRoute<CodePostReviewCreateScreenRoute>()
 
-    private val user = userRepository.me()
-        .unWrap(default = null)
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.Eagerly,
-            initialValue = null,
-        )
+  private val user = userRepository.me()
+    .unWrap(default = null)
+    .stateIn(
+      scope = viewModelScope,
+      started = SharingStarted.Eagerly,
+      initialValue = null,
+    )
 
-    val inputState = ReviewInputState()
-    fun create() {
-        codePostReviewRepository
-            .createCodePostReview(creator = inputState.toCreator(codePostId = route.codePostId))
-            .onEachState(
-                onLoading = { uiState.stateToLoading() },
-                onError = { uiState.stateToError(it) },
-                onSuccess = {
-                    uiState.stateToSuccess()
-                },
-            )
-            .launchIn(viewModelScope)
+  val inputState = ReviewInputState()
+  fun create() {
+    codePostReviewRepository
+      .createCodePostReview(creator = inputState.toCreator(codePostId = route.codePostId))
+      .onEachState(
+        onLoading = { uiState.stateToLoading() },
+        onError = { uiState.stateToError(it) },
+        onSuccess = {
+          uiState.stateToSuccess()
+        },
+      )
+      .launchIn(viewModelScope)
+  }
+
+  fun update() {
+    if (user.value == null || route.reviewId == null) return
+
+    val updater = inputState.toUpdater(user.value!!, route.reviewId)
+    codePostReviewRepository.updateCodePostReview(updater = updater)
+      .onEachState(
+        onLoading = { uiState.stateToLoading() },
+        onError = { uiState.stateToError(it) },
+        onSuccess = { uiState.stateToSuccess() },
+      )
+      .launchIn(viewModelScope)
+  }
+
+  init {
+    route.reviewId?.let { id ->
+      codePostReviewRepository.getCodePostReview(id)
+        .onStateSuccess(inputState::updateOrigin)
+        .launchIn(viewModelScope)
     }
-
-    fun update() {
-        if(user.value == null || route.reviewId == null) return
-
-        val updater = inputState.toUpdater(user.value!!, route.reviewId)
-        codePostReviewRepository.updateCodePostReview(updater = updater)
-            .onEachState(
-                onLoading = { uiState.stateToLoading() },
-                onError = { uiState.stateToError(it) },
-                onSuccess = { uiState.stateToSuccess() },
-            )
-            .launchIn(viewModelScope)
-    }
-
-    init {
-        route.reviewId?.let { id ->
-            codePostReviewRepository.getCodePostReview(id)
-                .onStateSuccess(inputState::updateOrigin)
-                .launchIn(viewModelScope)
-        }
-    }
+  }
 }

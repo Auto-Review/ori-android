@@ -4,6 +4,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class UserUpdateRequestDto(
-    val id: Int,
-    val nickname: String? = null,
+  val id: Int,
+  val nickname: String? = null,
 )

@@ -18,25 +18,27 @@ import com.dd2d.presentation.my.component.TILListItemComponent
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun MyTILListContent(
-    listController: LazyListController<TILListOptions, TILListItem>,
-    onItemClick: (id: Int) -> Unit,
-    modifier: Modifier = Modifier
+  listController: LazyListController<TILListOptions, TILListItem>,
+  onItemClick: (id: Int) -> Unit,
+  modifier: Modifier = Modifier
 ) {
-    RefreshLazyColumn(
-        controller = listController,
-        contentPadding = PaddingValues(vertical = 16.dp),
-        modifier = modifier.fillMaxSize()
-    ) {
-        items(
-            items = listController.list,
-            key = TILListItem::id
-        ) { item ->
-            TILListItemComponent(
-                item = item,
-                onClick = { onItemClick(item.id) },
-                modifier = Modifier.fillMaxWidth().animateItem()
-            )
-            HorizontalDivider()
-        }
+  RefreshLazyColumn(
+    controller = listController,
+    contentPadding = PaddingValues(vertical = 16.dp),
+    modifier = modifier.fillMaxSize()
+  ) {
+    items(
+      items = listController.list,
+      key = TILListItem::id
+    ) { item ->
+      TILListItemComponent(
+        item = item,
+        onClick = { onItemClick(item.id) },
+        modifier = Modifier
+          .fillMaxWidth()
+          .animateItem()
+      )
+      HorizontalDivider()
     }
+  }
 }

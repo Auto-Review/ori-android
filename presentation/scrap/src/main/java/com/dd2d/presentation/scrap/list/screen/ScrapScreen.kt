@@ -9,18 +9,18 @@ import com.dd2d.presentation.scrap.list.view_model.ScrapViewModel
 
 @Composable
 internal fun ScrapScreen(
-    onClose: () -> Unit,
-    navigateToCodePostDetail: (codePostId: Int) -> Unit,
-    navigateToTILDetail: (tilId: Int) -> Unit,
-    modifier: Modifier = Modifier,
-    viewModel: ScrapViewModel = hiltViewModel()
+  onClose: () -> Unit,
+  navigateToCodePostDetail: (codePostId: Int) -> Unit,
+  navigateToTILDetail: (tilId: Int) -> Unit,
+  modifier: Modifier = Modifier,
+  viewModel: ScrapViewModel = hiltViewModel()
 ) {
-    ScrapScreenContent(
-        onClose = onClose,
-        codePostScrapListController = viewModel.codePostScrapListController,
-        onCodePostClick = navigateToCodePostDetail,
-        tilScrapListController = viewModel.tilScrapListController,
-        onTILClick = navigateToTILDetail,
-        modifier = modifier.fillMaxSize(),
-    )
+  ScrapScreenContent(
+    onClose = onClose,
+    codePostScrapListController = viewModel.codePostScrapListController,
+    onCodePostClick = navigateToCodePostDetail,
+    tilScrapListController = viewModel.tilScrapListController,
+    onTILClick = navigateToTILDetail,
+    modifier = modifier.fillMaxSize(),
+  )
 }

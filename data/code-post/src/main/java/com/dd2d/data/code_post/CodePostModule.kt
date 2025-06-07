@@ -17,19 +17,19 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class CodePostModule {
-    @Binds
-    @Singleton
-    abstract fun bindCodePostRepository(impl: CodePostRepositoryImpl): CodePostRepository
+  @Binds
+  @Singleton
+  abstract fun bindCodePostRepository(impl: CodePostRepositoryImpl): CodePostRepository
 
-    @Binds
-    @Singleton
-    abstract fun bindCodePostCommentRepository(impl: CodePostCommentRepositoryImpl): CodePostCommentRepository
+  @Binds
+  @Singleton
+  abstract fun bindCodePostCommentRepository(impl: CodePostCommentRepositoryImpl): CodePostCommentRepository
 
-    @Binds
-    @Singleton
-    abstract fun bindCodePostReviewRepository(impl: CodePostReviewRepositoryImpl): CodePostReviewRepository
+  @Binds
+  @Singleton
+  abstract fun bindCodePostReviewRepository(impl: CodePostReviewRepositoryImpl): CodePostReviewRepository
 
-    @Binds
-    @Singleton
-    abstract fun bindCodePostScrapRepository(impl: CodePostScrapRepositoryImpl): CodePostScrapRepository
+  @Binds
+  @Singleton
+  abstract fun bindCodePostScrapRepository(impl: CodePostScrapRepositoryImpl): CodePostScrapRepository
 }

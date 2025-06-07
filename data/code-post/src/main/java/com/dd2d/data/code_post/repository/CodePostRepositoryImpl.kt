@@ -17,65 +17,65 @@ import com.dd2d.domain.code_post.repository.CodePostRepository
 import javax.inject.Inject
 
 class CodePostRepositoryImpl @Inject constructor(
-    private val codePostApi: CodePostApi,
-): CodePostRepository {
-    override suspend fun getCodePostList(options: CodePostListOptions): Result<Pagination<CodePostListItem>> {
-        return codePostApi.runCatching {
-            val response = getCodePostList(
-                page = options.page,
-                size = options.take,
-                sortBy = options.sort.sortByValue,
-                direction = options.sort.directionValue,
-                language = options.language?.value,
-            )
-            response.toPagination(
-                requestPage = options.page,
-                mapper = CodePostListItemResponseDto::toCodePostListItem
-            )
-        }
+  private val codePostApi: CodePostApi,
+) : CodePostRepository {
+  override suspend fun getCodePostList(options: CodePostListOptions): Result<Pagination<CodePostListItem>> {
+    return codePostApi.runCatching {
+      val response = getCodePostList(
+        page = options.page,
+        size = options.take,
+        sortBy = options.sort.sortByValue,
+        direction = options.sort.directionValue,
+        language = options.language?.value,
+      )
+      response.toPagination(
+        requestPage = options.page,
+        mapper = CodePostListItemResponseDto::toCodePostListItem
+      )
     }
+  }
 
-    override suspend fun getMyCodePostList(options: CodePostListOptions): Result<Pagination<CodePostListItem>> {
-        return codePostApi
-            .runCatching {
-                getMyCodePostList(
-                    page = options.page,
-                    size = options.take,
-                    sortBy = options.sort.sortByValue,
-                    direction = options.sort.directionValue,
-                    language = options.language?.value,
+  override suspend fun getMyCodePostList(options: CodePostListOptions): Result<Pagination<CodePostListItem>> {
+    return codePostApi
+      .runCatching {
+        getMyCodePostList(
+          page = options.page,
+          size = options.take,
+          sortBy = options.sort.sortByValue,
+          direction = options.sort.directionValue,
+          language = options.language?.value,
 
-                )
-            }
-            .mapCatching { response ->
-                response.toPagination(
-                    requestPage = options.page,
-                    mapper = CodePostListItemResponseDto::toCodePostListItem
-                )
-            }
+          )
+      }
+      .mapCatching { response ->
+        response.toPagination(
+          requestPage = options.page,
+          mapper = CodePostListItemResponseDto::toCodePostListItem
+        )
+      }
+  }
+
+  override suspend fun getCodePost(id: Int): Result<CodePost> {
+    return codePostApi.runCatching {
+      getCodePost(id).toCodePost()
     }
+  }
 
-    override suspend fun getCodePost(id: Int): Result<CodePost> {
-        return codePostApi.runCatching {
-            getCodePost(id).toCodePost()
-        }
+  override suspend fun createCodePost(create: CodePostCreator): Result<Int> {
+    return codePostApi.runCatching {
+      createCodePost(create.toCorePostCreateRequestDto())
     }
+  }
 
-    override suspend fun createCodePost(create: CodePostCreator): Result<Int> {
-        return codePostApi.runCatching {
-            createCodePost(create.toCorePostCreateRequestDto())
-        }
+  override suspend fun updateCodePost(update: CodePostUpdater): Result<Unit> {
+    return codePostApi.runCatching {
+      updateCodePost(update.toCodePostUpdateRequestDto())
     }
+  }
 
-    override suspend fun updateCodePost(update: CodePostUpdater): Result<Unit> {
-        return codePostApi.runCatching {
-            updateCodePost(update.toCodePostUpdateRequestDto())
-        }
+  override suspend fun deleteCodePost(id: Int): Result<Unit> {
+    return codePostApi.runCatching {
+      deleteCodePost(id)
     }
-
-    override suspend fun deleteCodePost(id: Int): Result<Unit> {
-        return codePostApi.runCatching {
-            deleteCodePost(id)
-        }
-    }
+  }
 }

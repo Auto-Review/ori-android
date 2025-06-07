@@ -12,29 +12,29 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data object ScheduleScreenRoute : ScreenRoute, BottomBarItem {
-    override val route: ScreenRoute = this
-    override val labelRes: Int = com.dd2d.core.presentation.R.string.tab_main
-    override val iconRes: Int = com.dd2d.core.presentation.R.drawable.tab_main
+  override val route: ScreenRoute = this
+  override val labelRes: Int = com.dd2d.core.presentation.R.string.tab_main
+  override val iconRes: Int = com.dd2d.core.presentation.R.drawable.tab_main
 
-    override fun navigate(navController: NavController) {
-        navController.toScheduleScreen()
-    }
+  override fun navigate(navController: NavController) {
+    navController.toScheduleScreen()
+  }
 }
 
 fun NavGraphBuilder.routeScheduleScreen(
-    onScheduleClick: (codePostId: Int) -> Unit,
-    modifier: Modifier = Modifier,
+  onScheduleClick: (codePostId: Int) -> Unit,
+  modifier: Modifier = Modifier,
 ) {
-    fadeScreen<ScheduleScreenRoute> {
-        ScheduleScreen(
-            onScheduleClick = onScheduleClick,
-            modifier = modifier,
-        )
-    }
+  fadeScreen<ScheduleScreenRoute> {
+    ScheduleScreen(
+      onScheduleClick = onScheduleClick,
+      modifier = modifier,
+    )
+  }
 }
 
 fun NavController.toScheduleScreen() {
-    navigate(ScheduleScreenRoute) {
-        launchSingleTop = true
-    }
+  navigate(ScheduleScreenRoute) {
+    launchSingleTop = true
+  }
 }

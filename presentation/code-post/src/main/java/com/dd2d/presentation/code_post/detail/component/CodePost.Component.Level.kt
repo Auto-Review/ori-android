@@ -18,38 +18,38 @@ import com.dd2d.presentation.code_post.R
 
 @Composable
 internal fun CodePostLevelComponent(
-    level: Int,
-    onReviewCreateClick: (() -> Unit)?,
-    modifier: Modifier = Modifier
+  level: Int,
+  onReviewCreateClick: (() -> Unit)?,
+  modifier: Modifier = Modifier
 ) {
+  Row(
+    horizontalArrangement = Arrangement.SpaceBetween,
+    verticalAlignment = Alignment.CenterVertically,
+    modifier = modifier.fillMaxWidth()
+  ) {
     Row(
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = modifier.fillMaxWidth()
+      horizontalArrangement = Arrangement.spacedBy(6.dp),
+      verticalAlignment = Alignment.CenterVertically,
     ) {
-        Row(
-            horizontalArrangement = Arrangement.spacedBy(6.dp),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            repeat(5) { index ->
-                PainterImage(
-                    res = if(level >= index + 1) R.drawable.star_fill else R.drawable.star,
-                    modifier = Modifier.size(16.dp)
-                )
-            }
-        }
-
-        onReviewCreateClick?.let {
-            Main700Text(
-                text = "::Review",
-                color = MaterialTheme.colorScheme.onSurface,
-                fontSize = 12.sp,
-                lineHeight = 16.8.sp,
-                modifier = Modifier
-                    .clickable(onClick = onReviewCreateClick)
-                    .padding(horizontal = 12.dp, vertical = 8.dp)
-            )
-        }
-
+      repeat(5) { index ->
+        PainterImage(
+          res = if (level >= index + 1) R.drawable.star_fill else R.drawable.star,
+          modifier = Modifier.size(16.dp)
+        )
+      }
     }
+
+    onReviewCreateClick?.let {
+      Main700Text(
+        text = "::Review",
+        color = MaterialTheme.colorScheme.onSurface,
+        fontSize = 12.sp,
+        lineHeight = 16.8.sp,
+        modifier = Modifier
+          .clickable(onClick = onReviewCreateClick)
+          .padding(horizontal = 12.dp, vertical = 8.dp)
+      )
+    }
+
+  }
 }

@@ -32,51 +32,51 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun BottomBarScaffold(
-	bottomBar: @Composable RowScope.() -> Unit,
-	modifier: Modifier = Modifier,
-	containerColor: Color = MaterialTheme.colorScheme.background,
-	topBar: @Composable () -> Unit = {},
-	visibleBottomBar: Boolean = true,
-	bottomBarEnter: EnterTransition = slideInVertically { it } + expandVertically(),
-	bottomBarExit: ExitTransition = slideOutVertically { it } + shrinkVertically(),
-	scrollState: ScrollState = rememberScrollState(),
-	contentPadding: PaddingValues = PaddingValues(24.dp),
-	horizontalAlignment: Alignment.Horizontal = Alignment.Start,
-	verticalArrangement: Arrangement.Vertical = Arrangement.Top,
-	content: @Composable ColumnScope.() -> Unit,
+  bottomBar: @Composable RowScope.() -> Unit,
+  modifier: Modifier = Modifier,
+  containerColor: Color = MaterialTheme.colorScheme.background,
+  topBar: @Composable () -> Unit = {},
+  visibleBottomBar: Boolean = true,
+  bottomBarEnter: EnterTransition = slideInVertically { it } + expandVertically(),
+  bottomBarExit: ExitTransition = slideOutVertically { it } + shrinkVertically(),
+  scrollState: ScrollState = rememberScrollState(),
+  contentPadding: PaddingValues = PaddingValues(24.dp),
+  horizontalAlignment: Alignment.Horizontal = Alignment.Start,
+  verticalArrangement: Arrangement.Vertical = Arrangement.Top,
+  content: @Composable ColumnScope.() -> Unit,
 ) {
-	Scaffold(
-		containerColor = containerColor,
-		topBar = topBar,
-		bottomBar = {
-			AnimatedVisibility(
-				visible = visibleBottomBar,
-				enter = bottomBarEnter,
-				exit = bottomBarExit,
-			) {
-				BottomAppBar(
-					containerColor = Color.Transparent,
-					contentPadding = PaddingValues(
-						horizontal = contentPadding.calculateStartPadding(LayoutDirection.Rtl),
-						vertical = 8.dp
-					),
-					content = bottomBar,
-					modifier = Modifier.imePadding()
-				)
-			}
-		},
-		modifier = modifier
-	) { inner ->
-		Column(
-		    horizontalAlignment = horizontalAlignment,
-		    verticalArrangement = verticalArrangement,
-			content = content,
-		    modifier = Modifier
-			    .consumeWindowInsets(inner)
-			    .fillMaxSize()
-			    .padding(inner)
-			    .verticalScroll(state = scrollState)
-			    .padding(contentPadding)
-		)
-	}
+  Scaffold(
+    containerColor = containerColor,
+    topBar = topBar,
+    bottomBar = {
+      AnimatedVisibility(
+        visible = visibleBottomBar,
+        enter = bottomBarEnter,
+        exit = bottomBarExit,
+      ) {
+        BottomAppBar(
+          containerColor = Color.Transparent,
+          contentPadding = PaddingValues(
+            horizontal = contentPadding.calculateStartPadding(LayoutDirection.Rtl),
+            vertical = 8.dp
+          ),
+          content = bottomBar,
+          modifier = Modifier.imePadding()
+        )
+      }
+    },
+    modifier = modifier
+  ) { inner ->
+    Column(
+      horizontalAlignment = horizontalAlignment,
+      verticalArrangement = verticalArrangement,
+      content = content,
+      modifier = Modifier
+        .consumeWindowInsets(inner)
+        .fillMaxSize()
+        .padding(inner)
+        .verticalScroll(state = scrollState)
+        .padding(contentPadding)
+    )
+  }
 }

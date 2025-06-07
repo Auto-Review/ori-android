@@ -41,89 +41,89 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class CodePostViewModel @Inject constructor(
-    savedStateHandle: SavedStateHandle,
-    userRepository: UserRepository,
-    private val codePostRepository: CodePostRepository,
-    private val codePostScrapRepository: CodePostScrapRepository,
-    reviewRepository: CodePostReviewRepository,
-    commentRepository: CodePostCommentRepository,
-): ViewModel() {
-    val actionBus = CommonActionResultBus()
+  savedStateHandle: SavedStateHandle,
+  userRepository: UserRepository,
+  private val codePostRepository: CodePostRepository,
+  private val codePostScrapRepository: CodePostScrapRepository,
+  reviewRepository: CodePostReviewRepository,
+  commentRepository: CodePostCommentRepository,
+) : ViewModel() {
+  val actionBus = CommonActionResultBus()
 
-    val route = savedStateHandle.toRoute<CodePostScreenRoute>()
+  val route = savedStateHandle.toRoute<CodePostScreenRoute>()
 
-    val userState = userRepository.me()
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5000),
-            initialValue = DataState.Loading
-        )
-
-    val codePostState = codePostRepository
-        .withStatefulResult { getCodePost(id = route.id) }
-        .onSuccess { data -> isScrapped = data.isScrapped }
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5000),
-            initialValue = Stateful.Loading
-        )
-
-    val isAuthor = combine(
-        flow = userState.filterIsInstance<DataState.Success<User>>(),
-        flow2 = codePostState.filterIsInstance<Stateful.Success<CodePost>>(),
-        transform = { user, codePost ->
-            user.data.id == codePost.data.author.id
-        }
-    ).stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(5000),
-        initialValue = false
+  val userState = userRepository.me()
+    .stateIn(
+      scope = viewModelScope,
+      started = SharingStarted.WhileSubscribed(5000),
+      initialValue = DataState.Loading
     )
 
-    var isScrapped by mutableStateOf(false)
-    fun toggleScrap() {
-        codePostScrapRepository
-            .withStatefulResult { toggleScrap(codePostId = route.id) }
-            .onSuccess { isScrapped = !isScrapped }
-            .launchIn(viewModelScope)
-    }
-
-    var isDeleting by mutableStateOf(false)
-    private var deleteJob: Job? = null
-    fun deleteCodePost() {
-        deleteJob = codePostRepository
-            .withStatefulResult {
-                delay(3000)
-                deleteCodePost(route.id)
-            }
-            .onLoadingStateChanged { isDeleting = it }
-            .onError(actionBus::emitFailure)
-            .onSuccess { actionBus.newResult(CodePostDeleteSuccessResult()) }
-            .onCompletion { isDeleting = false }
-            .launchIn(viewModelScope)
-    }
-
-    fun cancelDelete() {
-        viewModelScope.launch {
-            deleteJob?.cancelAndJoin()
-            deleteJob = null
-            actionBus.newResult(CodePostDeleteCancelResult())
-        }
-    }
-
-    val commentStateHolder = CommentStateHolder(
-        id = route.id,
-        scope = viewModelScope,
-        getCommentListFlow = commentRepository::getCodePostCommentList,
-        createCommentFlow = commentRepository::createCodePostComment,
-        updateCommentFlow = commentRepository::updateCodePostComment,
-        deleteCommentFlow = commentRepository::deleteCodePostComment,
+  val codePostState = codePostRepository
+    .withStatefulResult { getCodePost(id = route.id) }
+    .onSuccess { data -> isScrapped = data.isScrapped }
+    .stateIn(
+      scope = viewModelScope,
+      started = SharingStarted.WhileSubscribed(5000),
+      initialValue = Stateful.Loading
     )
 
-    val reviewStateHolder = ReviewStateHolder(
-        codePostId = route.id,
-        scope = viewModelScope,
-        getReviewListFlow = reviewRepository::getCodePostReviewList,
-        deleteReviewFlow = reviewRepository::deleteCodePostReview,
-    )
+  val isAuthor = combine(
+    flow = userState.filterIsInstance<DataState.Success<User>>(),
+    flow2 = codePostState.filterIsInstance<Stateful.Success<CodePost>>(),
+    transform = { user, codePost ->
+      user.data.id == codePost.data.author.id
+    }
+  ).stateIn(
+    scope = viewModelScope,
+    started = SharingStarted.WhileSubscribed(5000),
+    initialValue = false
+  )
+
+  var isScrapped by mutableStateOf(false)
+  fun toggleScrap() {
+    codePostScrapRepository
+      .withStatefulResult { toggleScrap(codePostId = route.id) }
+      .onSuccess { isScrapped = !isScrapped }
+      .launchIn(viewModelScope)
+  }
+
+  var isDeleting by mutableStateOf(false)
+  private var deleteJob: Job? = null
+  fun deleteCodePost() {
+    deleteJob = codePostRepository
+      .withStatefulResult {
+        delay(3000)
+        deleteCodePost(route.id)
+      }
+      .onLoadingStateChanged { isDeleting = it }
+      .onError(actionBus::emitFailure)
+      .onSuccess { actionBus.newResult(CodePostDeleteSuccessResult()) }
+      .onCompletion { isDeleting = false }
+      .launchIn(viewModelScope)
+  }
+
+  fun cancelDelete() {
+    viewModelScope.launch {
+      deleteJob?.cancelAndJoin()
+      deleteJob = null
+      actionBus.newResult(CodePostDeleteCancelResult())
+    }
+  }
+
+  val commentStateHolder = CommentStateHolder(
+    id = route.id,
+    scope = viewModelScope,
+    getCommentListFlow = commentRepository::getCodePostCommentList,
+    createCommentFlow = commentRepository::createCodePostComment,
+    updateCommentFlow = commentRepository::updateCodePostComment,
+    deleteCommentFlow = commentRepository::deleteCodePostComment,
+  )
+
+  val reviewStateHolder = ReviewStateHolder(
+    codePostId = route.id,
+    scope = viewModelScope,
+    getReviewListFlow = reviewRepository::getCodePostReviewList,
+    deleteReviewFlow = reviewRepository::deleteCodePostReview,
+  )
 }

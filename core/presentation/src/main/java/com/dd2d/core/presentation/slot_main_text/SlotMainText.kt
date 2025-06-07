@@ -22,52 +22,52 @@ import com.dd2d.core.presentation.main_text.MainText
 
 @Composable
 fun SlotMainText(
-    text: String,
-    modifier: Modifier = Modifier,
-    slotVerticalAlignment: Alignment.Vertical = Alignment.CenterVertically,
-    slotHorizontalArrangement: Arrangement.Horizontal = Arrangement.SpaceBetween,
-    fillTextWidth: Boolean = false,
-    prefix: @Composable (() -> Unit)? = null,
-    prefixEndPadding: Dp = 0.dp,
-    suffix: @Composable (() -> Unit)? = null,
-    suffixStartPadding: Dp = 0.dp,
-    color: Color = Color.Black,
-    fontSize: TextUnit = 14.sp,
-    fontWeight: FontWeight = FontWeight.Normal,
-    overFlow: TextOverflow = TextOverflow.Ellipsis,
-    textAlign: TextAlign = TextAlign.Start,
-    softWrap: Boolean = true,
-    maxLine: Int = 1,
-    minLine: Int = 1,
-    lineHeight: TextUnit = TextUnit.Unspecified,
-    letterSpacing: TextUnit = TextUnit.Unspecified,
-    fontFamily: FontFamily? = null,
-    textStyle: TextStyle = LocalTextStyle.current,
+  text: String,
+  modifier: Modifier = Modifier,
+  slotVerticalAlignment: Alignment.Vertical = Alignment.CenterVertically,
+  slotHorizontalArrangement: Arrangement.Horizontal = Arrangement.SpaceBetween,
+  fillTextWidth: Boolean = false,
+  prefix: @Composable (() -> Unit)? = null,
+  prefixEndPadding: Dp = 0.dp,
+  suffix: @Composable (() -> Unit)? = null,
+  suffixStartPadding: Dp = 0.dp,
+  color: Color = Color.Black,
+  fontSize: TextUnit = 14.sp,
+  fontWeight: FontWeight = FontWeight.Normal,
+  overFlow: TextOverflow = TextOverflow.Ellipsis,
+  textAlign: TextAlign = TextAlign.Start,
+  softWrap: Boolean = true,
+  maxLine: Int = 1,
+  minLine: Int = 1,
+  lineHeight: TextUnit = TextUnit.Unspecified,
+  letterSpacing: TextUnit = TextUnit.Unspecified,
+  fontFamily: FontFamily? = null,
+  textStyle: TextStyle = LocalTextStyle.current,
 ) {
-    Row(
-        verticalAlignment = slotVerticalAlignment,
-        horizontalArrangement = slotHorizontalArrangement,
-        modifier = modifier
-    ) {
-        prefix?.invoke()
-        Spacer(Modifier.width(prefixEndPadding))
-        MainText(
-            text = text,
-            color = color,
-            fontSize = fontSize,
-            fontWeight = fontWeight,
-            overFlow = overFlow,
-            textAlign = textAlign,
-            softWrap = softWrap,
-            maxLine = maxLine,
-            minLine = minLine,
-            lineHeight = lineHeight,
-            letterSpacing = letterSpacing,
-            textStyle = textStyle,
-            fontFamily = fontFamily,
-            modifier = Modifier.weight(1F, fillTextWidth)
-        )
-        Spacer(Modifier.width(suffixStartPadding))
-        suffix?.invoke()
-    }
+  Row(
+    verticalAlignment = slotVerticalAlignment,
+    horizontalArrangement = slotHorizontalArrangement,
+    modifier = modifier
+  ) {
+    prefix?.invoke()
+    Spacer(Modifier.width(prefixEndPadding))
+    MainText(
+      text = text,
+      color = color,
+      fontSize = fontSize,
+      fontWeight = fontWeight,
+      overFlow = overFlow,
+      textAlign = textAlign,
+      softWrap = softWrap,
+      maxLine = maxLine,
+      minLine = minLine,
+      lineHeight = lineHeight,
+      letterSpacing = letterSpacing,
+      textStyle = textStyle,
+      fontFamily = fontFamily,
+      modifier = Modifier.weight(1F, fillTextWidth)
+    )
+    Spacer(Modifier.width(suffixStartPadding))
+    suffix?.invoke()
+  }
 }
