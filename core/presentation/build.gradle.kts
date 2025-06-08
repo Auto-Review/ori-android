@@ -2,6 +2,10 @@ plugins {
   alias(libs.plugins.android.library)
   alias(libs.plugins.kotlin.android)
   alias(libs.plugins.kotlin.compose)
+
+  id("kotlin-parcelize")
+  id("com.google.devtools.ksp")
+  id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -49,6 +53,10 @@ dependencies {
 
   implementation(libs.androidx.navigation.compose)
 
+  implementation(libs.hilt.android)
+  ksp(libs.hilt.android.compiler)
+
   implementation(project(":core:core"))
+  implementation(project(":core:notifier"))
   implementation("dev.snipme:kodeview:0.9.0")
 }

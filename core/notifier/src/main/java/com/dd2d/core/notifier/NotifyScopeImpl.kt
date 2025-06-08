@@ -33,24 +33,55 @@ internal data class NotifyScopeImpl(
   override var onlyAlertOnce: Boolean = false,
   override var ongoing: Boolean = false,
 ) : NotifyScope {
-  override fun createPendingIntent(
+  private val defaultFlag = PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+  override fun createActivityPendingIntent(
     context: Context,
     targetActivity: Class<out Activity>,
     requestCode: Int,
-    intentBuilder: Intent.() -> Unit,
+    intentBuilder: Intent.() -> Unit
   ): PendingIntent {
-    val intent = Intent(context, targetActivity).apply(intentBuilder)
+    val intent = Intent(context, targetActivity)
       .apply {
         flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or
             Intent.FLAG_ACTIVITY_CLEAR_TOP or
             Intent.FLAG_ACTIVITY_NEW_TASK
       }
+      .apply(intentBuilder)
 
-    return PendingIntent.getActivity(
-      context,
-      requestCode,
-      intent,
-      PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-    )
+    return PendingIntent.getActivity(context, requestCode, intent, defaultFlag)
+  }
+
+  override fun createServicePendingIntent(
+    context: Context,
+    targetActivity: Class<out Activity>,
+    requestCode: Int,
+    intentBuilder: Intent.() -> Unit
+  ): PendingIntent {
+    val intent = Intent(context, targetActivity)
+      .apply {
+        flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or
+            Intent.FLAG_ACTIVITY_CLEAR_TOP or
+            Intent.FLAG_ACTIVITY_NEW_TASK
+      }
+      .apply(intentBuilder)
+
+    return PendingIntent.getService(context, requestCode, intent, defaultFlag)
+  }
+
+  override fun createBroadcastPendingIntent(
+    context: Context,
+    targetActivity: Class<out Activity>,
+    requestCode: Int,
+    intentBuilder: Intent.() -> Unit
+  ): PendingIntent {
+    val intent = Intent(context, targetActivity)
+      .apply {
+        flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or
+            Intent.FLAG_ACTIVITY_CLEAR_TOP or
+            Intent.FLAG_ACTIVITY_NEW_TASK
+      }
+      .apply(intentBuilder)
+
+    return PendingIntent.getBroadcast(context, requestCode, intent, defaultFlag)
   }
 }

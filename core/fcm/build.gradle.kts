@@ -2,6 +2,7 @@ plugins {
   alias(libs.plugins.android.library)
   alias(libs.plugins.kotlin.android)
 
+  id("kotlin-parcelize")
   id("com.google.devtools.ksp")
   id("com.google.dagger.hilt.android")
 }
@@ -51,4 +52,5 @@ dependencies {
   ksp(libs.hilt.android.compiler)
 
   implementation(project(":core:core"))
+  implementation(project(":core:notifier"))
 }

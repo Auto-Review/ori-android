@@ -61,7 +61,7 @@ import androidx.navigation.NavController
  * @property selectedIconRes 바텀 바에 보여질 선택된아이콘. [DrawableRes]
  * @property enabled 아이템의 활성화 여부. 기본적으로 `true`
  */
-interface BottomBarItem {
+interface BottomBarItem: Navigable {
   val route: ScreenRoute
 
   @get:StringRes
@@ -82,5 +82,5 @@ interface BottomBarItem {
     get() = true
 
   /** 아이템 클릭 시 이동하기 위해 호출되는 함수. */
-  fun navigate(navController: NavController)
+  override fun navigate(navController: NavController)
 }

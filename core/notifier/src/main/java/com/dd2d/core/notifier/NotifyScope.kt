@@ -22,7 +22,21 @@ interface NotifyScope {
   var pendingIntent: PendingIntent?
 
   /** [PendingIntent] 생성 함수 */
-  fun createPendingIntent(
+  fun createActivityPendingIntent(
+    context: Context,
+    targetActivity: Class<out Activity>,
+    requestCode: Int,
+    intentBuilder: Intent.() -> Unit,
+  ): PendingIntent
+
+  fun createServicePendingIntent(
+    context: Context,
+    targetActivity: Class<out Activity>,
+    requestCode: Int,
+    intentBuilder: Intent.() -> Unit,
+  ): PendingIntent
+
+  fun createBroadcastPendingIntent(
     context: Context,
     targetActivity: Class<out Activity>,
     requestCode: Int,

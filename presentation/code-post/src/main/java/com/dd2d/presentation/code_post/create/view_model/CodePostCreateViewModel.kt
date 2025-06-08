@@ -1,5 +1,6 @@
 package com.dd2d.presentation.code_post.create.view_model
 
+import android.content.Context
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -7,6 +8,8 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
+import com.dd2d.core.presentation._ori.ReviewTarget
+import com.dd2d.core.presentation._ori.registerReviewAlarm
 import com.dd2d.core.presentation.action.CommonActionResultBus
 import com.dd2d.core.presentation.state.onError
 import com.dd2d.core.presentation.state.onLoadingStateChanged
@@ -18,12 +21,14 @@ import com.dd2d.presentation.code_post.create._navigation.CodePostCreateScreenRo
 import com.dd2d.presentation.code_post.create.model.CodePostFormActionCompleteResult
 import com.dd2d.presentation.code_post.create.model.CodePostFormState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.launchIn
 import javax.inject.Inject
 
 @HiltViewModel
 internal class CodePostCreateViewModel @Inject constructor(
   savedStateHandle: SavedStateHandle,
+  @ApplicationContext private val context: Context,
   private val codePostRepository: CodePostRepository
 ) : ViewModel() {
   val actionBus = CommonActionResultBus()
@@ -38,21 +43,7 @@ internal class CodePostCreateViewModel @Inject constructor(
       statefulResult { codePostRepository.getCodePost(updateId) }
         .onLoadingStateChanged { isLoading = it }
         .onError(actionBus::emitFailure)
-        .onSuccess { data ->
-          with(formState) {
-            title = data.title
-            level = data.level
-            language = data.code.language
-            isPublic = data.isPublic
-            reviewDate = data.reviewDate
-            descriptionTextState.edit {
-              replace(0, length, data.description)
-            }
-            codeTextState.edit {
-              replace(0, length, data.code.content)
-            }
-          }
-        }
+        .onSuccess(formState::initWith)
         .launchIn(viewModelScope)
     }
   }
@@ -76,6 +67,12 @@ internal class CodePostCreateViewModel @Inject constructor(
       .onError(actionBus::emitFailure)
       .onSuccess { resultData ->
         val codePostId = (resultData as? Int) ?: route.updateCodePostId
+        val reviewDate = formState.reviewDate
+
+        if(reviewDate != null && codePostId != null) {
+          val target = ReviewTarget.CodePost(id = codePostId, title = formState.title)
+          context.registerReviewAlarm(target = target, reviewDate = reviewDate)
+        }
         actionBus.newResult(CodePostFormActionCompleteResult(codePostId))
       }
       .launchIn(viewModelScope)

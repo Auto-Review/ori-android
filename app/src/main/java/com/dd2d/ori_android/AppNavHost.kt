@@ -1,8 +1,9 @@
 package com.dd2d.ori_android
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
-import androidx.navigation.compose.rememberNavController
+import androidx.navigation.NavHostController
 import com.dd2d.core.presentation.navigation.DefaultNavHost
 import com.dd2d.core.presentation.navigation.ScreenRoute
 import com.dd2d.core.presentation.navigation.safePopBackStack
@@ -25,11 +26,15 @@ import com.example.presentation.til.detail._navigation.toTILScreen
 @Composable
 internal fun AppNavHost(
   startDestination: ScreenRoute,
+  navController: NavHostController,
+  startAppEventHandling: () -> Unit,
   modifier: Modifier = Modifier
 ) {
-  val navController = rememberNavController()
-
   AuthExpireHandler(onConfirm = navController::toAuthScreen)
+
+  LaunchedEffect(key1 = Unit) {
+    startAppEventHandling()
+  }
 
   DefaultNavHost(
     navController = navController,

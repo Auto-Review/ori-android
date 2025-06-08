@@ -7,6 +7,7 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import com.dd2d.domain.code_post.model.post.Code
+import com.dd2d.domain.code_post.model.post.CodePost
 import com.dd2d.domain.code_post.model.post.CodePostCreator
 import com.dd2d.domain.code_post.model.post.CodePostUpdater
 import java.time.LocalDateTime
@@ -49,6 +50,20 @@ internal class CodePostFormState {
   }
 
   var isSubmitting by mutableStateOf(false)
+
+  fun initWith(data: CodePost) {
+    title = data.title
+    level = data.level
+    language = data.code.language
+    isPublic = data.isPublic
+    reviewDate = data.reviewDate
+    descriptionTextState.edit {
+      replace(0, length, data.description)
+    }
+    codeTextState.edit {
+      replace(0, length, data.code.content)
+    }
+  }
 
   fun toCodePostCreator(): CodePostCreator {
     return CodePostCreator(

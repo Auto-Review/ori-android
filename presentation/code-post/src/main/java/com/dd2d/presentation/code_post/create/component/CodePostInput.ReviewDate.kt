@@ -35,7 +35,9 @@ import com.dd2d.core.core.util.format
 import com.dd2d.core.presentation.main_text.Main700Text
 import com.dd2d.presentation.code_post.create.model.SelectableDates
 import java.time.Instant
+import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.LocalTime
 import java.time.ZoneId
 
 
@@ -106,7 +108,9 @@ internal fun ReviewDateInput(
             TextButton(
               onClick = {
                 openDatePicker = false
-                datePickerState.selectedDateMillis?.toLocalDateTime().let(onReviewDateChange)
+                val date  = datePickerState.selectedDateMillis?.toLocalDate()?: return@TextButton
+                val time = LocalTime.of(20, 0, 0)
+                onReviewDateChange(LocalDateTime.of(date, time))
               }
             ) {
               Text(text = "확인")
@@ -138,8 +142,8 @@ internal fun ReviewDateInput(
   }
 }
 
-private fun Long.toLocalDateTime(): LocalDateTime {
+private fun Long.toLocalDate(): LocalDate {
   return Instant.ofEpochMilli(this)
     .atZone(ZoneId.systemDefault()) // 시스템 기본 시간대 적용
-    .toLocalDateTime()
+    .toLocalDate()
 }
